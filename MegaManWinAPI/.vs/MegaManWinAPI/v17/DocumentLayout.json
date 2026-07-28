@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\MegaManWinAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\MegaManWinAPI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MegaManWinAPI.cpp",
+              "DocumentMoniker": "D:\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\MegaManWinAPI.cpp",
+              "ToolTip": "D:\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\MegaManWinAPI.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-28T07:30:09.222Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
