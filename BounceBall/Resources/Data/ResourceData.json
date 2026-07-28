@@ -1,0 +1,48 @@
+{
+    "LobbyScene":
+    {
+        "Lobby_BG":{ "fileName":"background_title.bmp"},
+        "Editor":{ "fileName":"mapEditor.bmp"},
+        "Play":{ "fileName":"play.bmp", "transparent": [255, 0, 255]},
+        "Title":{ "fileName":"title.bmp", "transparent": [255, 0, 255]},
+        "AStar":{ "fileName":"702_block_ani.bmp"}
+    },
+    "EditorScene":
+    {
+        "BG":{ "fileName":"background_game.bmp"},
+        "Ball":{ "fileName":"001-008_ball.bmp", "transparent": [255, 255, 255], "countX":2,"countY":4},
+        "Star":{ "fileName":"101-103_star.bmp", "transparent": [255, 255, 255], "countX":1,"countY":3},
+        "Block":{ "fileName":"201-217_block.bmp", "transparent": [255, 255, 255], "countX":3,"countY":6}
+    },
+    "GameScene":
+    {
+        "Ball":{ "fileName":"001-008_ball.bmp", "transparent": [255, 255, 255], "countX":2,"countY":4},
+        "Star":{ "fileName":"101-103_star.bmp", "transparent": [255, 255, 255], "countX":1,"countY":3},
+        "Block":{ "fileName":"201-217_block.bmp", "transparent": [255, 255, 255], "countX":3,"countY":6},
+        "BG":{ "fileName":"background_game.bmp"},
+        "DeadEffect":{ "fileName":"Deadball.bmp", "transparent": [255, 255, 255], "countX":42,"countY":1},
+        "EatStarEffect":{ "fileName":"Eat_Star.bmp", "transparent": [255, 255, 255], "countX":23,"countY":1},
+        "LevelComplete":{ "fileName":"level_complete.bmp", "transparent": [255, 255, 255]},
+        "NextStageButton":{ "fileName":"next_stage.bmp", "transparent": [255, 0, 255]},
+        "Warrior_Blue":{ "fileName":"Warrior_Blue.bmp", "transparent": [255, 0, 255], "countX":6,"countY":8}
+    },
+    "PlayerScene":
+    {
+        "BG":{ "fileName":"background_game.bmp"},
+        "Block":{ "fileName":"201-217_block.bmp", "transparent": [255, 255, 255], "countX":3,"countY":6},
+        "Player":{ "fileName":"Warrior_Blue.bmp", "transparent": [255, 0, 255], "countX":6,"countY":8, "flip":true},
+        "TileSelector":{ "fileName":"Tile_Selector.bmp", "transparent": [255, 0, 255]}
+    },
+    "Sound":
+    {
+        "B_Bauns":{ "fileName":"B_Bauns.wav", "loop":false},
+        "Bauns":{ "fileName":"Bauns.wav"},
+        "DeadS":{ "fileName":"DeadS.wav"},
+        "Select":{ "fileName":"Select.wav"},
+        "Star":{ "fileName":"Star.wav"}
+    },
+    "Font":
+    {
+        
+    }
+}
