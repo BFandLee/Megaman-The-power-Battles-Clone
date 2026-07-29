@@ -3,6 +3,7 @@
 
 #include "framework.h"
 #include "MegaManWinAPI.h"
+#include "Game.h"
 
 #define MAX_LOADSTRING 100
 
@@ -43,12 +44,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (true)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
+            // 프로그램 종료 시 루프 탈출
+            if (msg.message == WM_QUIT)
+                break;
+
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+        }
+        else
+        {
+            // Game::GetInstance()->Update();
+            // Game::GetInstance().Render();
         }
     }
 

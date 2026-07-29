@@ -15,24 +15,22 @@ void Game::Init(HWND hwnd)
 {
 	_hwnd = hwnd;
 
-	// 해당 윈도우가 그려지는 메인 HDC 도화지를 얻어오기
-	_hdc = GetDC(hwnd);
+	// 1. Direct2D 공장(Factory) 생성
+	HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &_d2dFactory);
+	if (FAILED(hr)) return;
 
-	// 더블버퍼링
-	_hdcBack = CreateCompatibleDC(_hdc);
+	// 2. 창의 클라이언트 영역 크기 구하기
+	RECT rc;
+	GetClientRect(hwnd, &rc);
+	D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
 
-	// 윈도우 크기를 가져온다. (출력용 도화지와 크기를 맞추기 위해서)
-	GetClientRect(hwnd, &_rect);
+	// 3. HWND(윈도우 창)에 그림을 그릴 수 있는 렌더 타겟 생성
+	hr = _d2dFactory->CreateHwndRenderTarget(
+		D2D1::RenderTargetProperties(),
+		D2D1::HwndRenderTargetProperties(hwnd, size),
+		&_renderTarget
+	);
 
-	// 더블버퍼링을 위한 HDC는 생성, HDC안에는 아주 작은 크기의 텍스처가 할당되어있다.
-	// 게임 크기와 맞는 텍스처를 생성해서, BackBuffer에 설정한다.
-	_bmpBack = CreateCompatibleBitmap(_hdc, _rect.right, _rect.bottom);
-
-	// 생성된 백버퍼 HDC에 맞는 텍스처를 연결한다.
-	HBITMAP prev = (HBITMAP)SelectObject(_hdcBack, _bmpBack);
-	DeleteObject(prev);	// 기존에 가지고있던 작은 텍스처는 버린다.
-
-	
 	// TimeManager
 	TimeManager::GetInstance().Init();
 
@@ -50,20 +48,20 @@ void Game::Init(HWND hwnd)
 	ResourceManager::GetInstance().Init(hwnd, currentPath);
 
 	// DataManager 초기화
-	DataManager::GetInstance().Init(currentPath);
-	DataManager::GetInstance().Load();
+	// DataManager::GetInstance().Init(currentPath);
+	// DataManager::GetInstance().Load();
 
 	// Scene 초기화
-	SceneManager::GetInstance().Init();
+	// SceneManager::GetInstance().Init();
 
 	// CollisionManager 초기화
 	CollisionManager::GetInstance().Init();
-	UIManager::GetInstance().Init();
+	// UIManager::GetInstance().Init();
 }
 
 void Game::Cleanup()
 {
-	SceneManager::GetInstance().Cleanup();
+	// SceneManager::GetInstance().Cleanup();
 
 	// 매니저들 각자 정리가 필요한것들은 정리해준다.
 	ResourceManager::GetInstance().Cleanup();
@@ -78,34 +76,48 @@ void Game::Update()
 	InputManager::GetInstance().Update();
 
 	// Scene 업데이트
-	SceneManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
+	// SceneManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
 
 	// 모든 Update가 끝나고 좌표 갱신이 완료된 후, 충돌체크 수행
-	UIManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
+	// UIManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
 	CollisionManager::GetInstance().Update();
 }
 
 void Game::Render()
 {
+	if (_renderTarget == nullptr) return;
+
+	// [Direct2D 그리기 시작]
+	_renderTarget->BeginDraw();
+
+	// 매 프레임마다 이전 잔상을 지우기 위해 검은색(혹은 원하는 색)으로 화면 덮기
+	_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+
+
 	// 각종 렌더링 로직 처리
+	// 
 	// Scene의 모든 객체 렌더링
-	SceneManager::GetInstance().Render(_hdcBack);
+	// SceneManager::GetInstance().Render(_hdcBack);
 
-	CollisionManager::GetInstance().Render(_hdcBack);
+	CollisionManager::GetInstance().Render(_renderTarget);
 
-	UIManager::GetInstance().Render(_hdcBack);
+	// UIManager::GetInstance().Render(_hdcBack);
+	
+	// [Direct2D 그리기 종료]
+	_renderTarget->EndDraw();
+}
 
-	// 현재 FPS 를 출력
-	{
-		wstring str = std::format(L"FPS({0})", TimeManager::GetInstance().GetFPS());
-		::TextOut(_hdcBack, 5, 10, str.c_str(), static_cast<int32>(str.size()));
-	}
-
-	// 모든 객체들이 백퍼에 그림을 다 그렸다.
-	// 함수 끝나기 직전->모든 렌더링이 다 끝났다
-	BitBlt(_hdc, 0, 0, _rect.right, _rect.bottom, _hdcBack, 0, 0, SRCCOPY);
-
-	PatBlt(_hdcBack, 0, 0, _rect.right, _rect.bottom, WHITENESS);
+Game:: ~Game()
+{
+	// 스마트 포인터를 사용할 수 없으므로 생성한 순서의 역순으로 직접 Release() 호출
+   if (_renderTarget) {
+	   _renderTarget->Release();
+	   _renderTarget = nullptr;
+   }
+   if (_d2dFactory) {
+	   _d2dFactory->Release();
+	   _d2dFactory = nullptr;
+   }
 }
 
 

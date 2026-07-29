@@ -10,14 +10,14 @@ public:
 	virtual void Destroy();
 
 	virtual void Update(float deltaTime);
-	virtual void Render(HDC hdc);
+	virtual void Render(ID2D1RenderTarget* renderTarget);
 	//virtual void OnHit(Actor* other) {}
 
 	// 유니티와 비슷한 충돌 3단계 함수 
-	virtual void OnEnter(Actor* other, const HitResult& hit) {}
-	virtual void OnStay(Actor* other, const HitResult& hit) {}
+	// virtual void OnEnter(Actor* other, const HitResult& hit) {}
+	// virtual void OnStay(Actor* other, const HitResult& hit) {}
 	virtual void OnExit(Actor* other) {}
-
+	
 	Vector GetPos() const { return _pos; }
 
 	// 모든 Actor는 위치갱신시 반드시 SetPos 함수를 통해서만 위치갱신이 일어난다.

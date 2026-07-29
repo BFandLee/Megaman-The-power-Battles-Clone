@@ -124,7 +124,7 @@ void CollisionManager::Update()
 	}
 }
 
-void CollisionManager::Render(HDC hdc)
+void CollisionManager::Render(ID2D1HwndRenderTarget* renderTarget)
 {
 	//if (_drawDebug)
 	//{

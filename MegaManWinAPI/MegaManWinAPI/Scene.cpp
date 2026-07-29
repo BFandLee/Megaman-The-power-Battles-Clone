@@ -168,14 +168,14 @@ void Scene::Update(float deltaTime)
 	// Ball 이동할때마다 Grid 를 갱신하도록 수정
 }
 
-void Scene::Render(HDC hdc)
+void Scene::Render(ID2D1RenderTarget* renderTarget)
 {
 	// 명확한 렌더링 순서를 지키기 위해 별도의 리스트 순서대로 그린다.
 	for (auto list : _renderList)
 	{
 		for (auto actor : list)
 		{
-			actor->Render(hdc);
+			actor->Render(renderTarget);
 		}
 	}
 

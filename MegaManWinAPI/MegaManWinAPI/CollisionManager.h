@@ -11,7 +11,7 @@ public:
 	void Init();
 	void Clear();
 	void Update();
-	void Render(HDC hdc);
+	void Render(ID2D1HwndRenderTarget* renderTarget);
 
 	// 충돌체크가 필요한 녀석들
 	void AddActor(class Actor* actor);
@@ -25,7 +25,7 @@ private:
 	void checkCollision(Actor* actor);
 	
 	// 디버깅용 라인 그리기
-	void drawGridLine(HDC hdc);
+	void drawGridLine(ID2D1HwndRenderTarget* renderTarget);
 
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
 	CollisionManager() = default;

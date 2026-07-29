@@ -39,11 +39,11 @@ void Actor::Update(float deltaTime)
 	}
 }
 
-void Actor::Render(HDC hdc)
+void Actor::Render(ID2D1RenderTarget* renderTarget)
 {
 	for (auto component : _components)
 	{
-		component->Render(hdc, GetPos());
+		component->Render(renderTarget);
 	}
 }
 

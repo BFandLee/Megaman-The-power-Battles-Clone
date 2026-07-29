@@ -21,7 +21,7 @@ public:
 	void Cleanup();
 
 	virtual void Update(float deltaTime);
-	virtual void Render(HDC hdc);
+	virtual void Render(ID2D1RenderTarget* renderTarget);
 	
 	// 모든 업데이트가 끝나고 호출되는 함수
 	void PostUpdate();

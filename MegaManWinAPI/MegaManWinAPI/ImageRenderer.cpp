@@ -10,7 +10,7 @@ void ImageRenderer::Init(wstring textureKey, int32 ix, int32 iy)
 	_iY = iy;
 }
 
-void ImageRenderer::Render(HDC hdc, Vector pos)
+void ImageRenderer::Render(ID2D1HwndRenderTarget* renderTarget, Vector pos)
 {
 	if (_texture)
 	{
@@ -26,7 +26,7 @@ void ImageRenderer::Render(HDC hdc, Vector pos)
 			srcPos.y = (float)_iY * _texture->GetFrameSize().cy;
 		}
 
-		_texture->Render(hdc, pos, srcPos);
+		_texture->Render(renderTarget, pos, srcPos);
 	}
 }
 

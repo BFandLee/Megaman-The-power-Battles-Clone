@@ -1,7 +1,6 @@
 #pragma once
-
 #include "Singleton.h"
-
+#include "pch.h"
 
 // 전체 게임 로직을 담당하는 클래스
 class Game : public Singleton<Game>
@@ -16,7 +15,7 @@ public:
 	void Update();
 	void Render();
 
-	HWND GetHwnd() const { return _hwnd; }
+	ID2D1HwndRenderTarget* GetRenderTarget() const { return _renderTarget; }
 
 private:
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
@@ -26,9 +25,8 @@ private:
 private:
 	HWND _hwnd;	// 윈도우 핸들
 	RECT _rect;		// 윈도우 크기
-	
-	HDC _hdc;		// 메인 도화지 (출력용)
-	HDC _hdcBack;	// 실시간으로 그려지는 버퍼
-	HBITMAP _bmpBack;	// back hdc가 사용하는 텍스처
+
+	ID2D1Factory* _d2dFactory = nullptr;
+	ID2D1HwndRenderTarget* _renderTarget = nullptr;
 };
 
