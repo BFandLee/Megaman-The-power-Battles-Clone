@@ -72,7 +72,6 @@ void Texture::Render(ID2D1HwndRenderTarget* renderTarget, Vector worldPos, Vecto
 		renderPos.y -= (_sizeY * 0.5f);
 	}
 
-	HDC   srcDC = _bitmapHdc;
 	int32 srcX = (int32)srcPos.x;
 	int32 srcY = (int32)srcPos.y;
 
@@ -82,36 +81,10 @@ void Texture::Render(ID2D1HwndRenderTarget* renderTarget, Vector worldPos, Vecto
 		srcX = _bitmapSizeX - (int32)srcPos.x - _frameSizeX;
 	}
 
-	if (_transparent == -1)
-	{
-		::BitBlt(hdc,
-			(int32)renderPos.x,
-			(int32)renderPos.y,
-			_sizeX,
-			_sizeY,
-			srcDC,
-			srcX, //0,
-			srcY, //0,
-			SRCCOPY);
-	}
-	else
-	{
-		::TransparentBlt(hdc,
-			(int32)renderPos.x,	// 윈도우 좌표 어디에 그릴지
-			(int32)renderPos.y, // 윈도우 좌표 어디에 그릴지
-			_sizeX, //_bitmapSizeX,       // 윈도우 좌표에 그려질 최종 크기
-			_sizeY, //_bitmapSizeY,		// 윈도우 좌표에 그려질 최종 크기
-			srcDC,			// 해당 비트맵을 그려줘
-			srcX, //0,					// 그리고 싶은 비트맵의 좌표
-			srcY, //0,					// 그리고 싶은 비트맵의 좌표
-			_frameSizeX, //_bitmapSizeX,		// 그리고 싶은 비트맵의 크기
-			_frameSizeY, //_bitmapSizeY,		// 그리고 싶은 비트맵의 크기
-			_transparent);		// 투명 키값(RGB)
-	}
 }
 
 
-void Texture::RenderScreen(HDC hdc, Vector screenPos, Vector srcPos)
+void Texture::RenderScreen(ID2D1HwndRenderTarget* renderTarget, Vector screenPos, Vector srcPos)
 {
 	if (_applyCenter)
 	{
@@ -119,30 +92,4 @@ void Texture::RenderScreen(HDC hdc, Vector screenPos, Vector srcPos)
 		screenPos.y -= (_frameSizeX * 0.5f);
 	}
 
-	if (_transparent == -1)
-	{
-		::BitBlt(hdc,
-			(int32)screenPos.x,
-			(int32)screenPos.y,
-			_frameSizeX,
-			_frameSizeY,
-			_bitmapHdc,
-			(int32)srcPos.x,
-			(int32)srcPos.y,
-			SRCCOPY);
-	}
-	else
-	{
-		::TransparentBlt(hdc,
-			(int32)screenPos.x,
-			(int32)screenPos.y,
-			_frameSizeX,
-			_frameSizeY,
-			_bitmapHdc,
-			(int32)srcPos.x,
-			(int32)srcPos.y,
-			_frameSizeX,
-			_frameSizeY,
-			_transparent);
-	}
 }

@@ -16,7 +16,7 @@ public:
 	void Render();
 
 	ID2D1HwndRenderTarget* GetRenderTarget() const { return _renderTarget; }
-
+	IWICImagingFactory* GetWICFactory() const { return _wicFactory; }
 private:
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
 	Game() = default;
@@ -28,5 +28,8 @@ private:
 
 	ID2D1Factory* _d2dFactory = nullptr;
 	ID2D1HwndRenderTarget* _renderTarget = nullptr;
+
+	// WIC 이미징 팩토리 맴버 변수 추가
+	IWICImagingFactory* _wicFactory = nullptr;
 };
 

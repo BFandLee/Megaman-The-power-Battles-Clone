@@ -5,7 +5,7 @@ class Texture
 public:
 	void Load(wstring texturePath, int32 transparent, int32 row, int32 col, float dur, bool enableFlip);
 	void Render(ID2D1HwndRenderTarget* renderTarget, Vector pos, Vector srcPos = Vector(0,0), bool flipX = false);
-	void RenderScreen(HDC hdc, Vector screenPos, Vector srcPos = Vector(0,0));
+	void RenderScreen(ID2D1HwndRenderTarget* renderTarget, Vector screenPos, Vector srcPos = Vector(0,0));
 
 	uint32 GetSizeX() const { return _sizeX; }
 	uint32 GetSizeY() const { return _sizeY; }
@@ -18,14 +18,7 @@ public:
 	void SetApplyCenter(bool apply) { _applyCenter = apply; }
 
 private:
-	HDC			_bitmapHdc = 0;
-	HBITMAP		_bitmap = 0;
-
-	// WinAPI 기본 렌더링 함수는 좌우반전(Flip)을 지원하지 않으니
-	// 반전된 이미지를 따로 저장해둔다.
-	HDC			_flipBitmapHdc = 0;
-	HBITMAP		_flipBitmap = 0;
-
+	ID2D1Bitmap* _bitmap = nullptr;
 	int32		_transparent = -1;
 	uint32		_bitmapSizeX = 0;
 	uint32		_bitmapSizeY = 0;
