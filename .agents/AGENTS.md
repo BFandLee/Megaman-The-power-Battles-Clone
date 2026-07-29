@@ -1,18 +1,24 @@
-# WinAPI 2D Project: Megaman-The-power-Battles-Clone 코딩 에이전트 개발 규칙 및 지침
+# WinAPI 2D Project: Megaman - Power - Battle - Clone Coding Agent Development Rules and Guidelines
 
-본 문서는 `Megaman-The-power-Battles-Clone` 프로젝트 내에서 작업을 수행하는 모든 AI 코딩 에이전트(Antigravity 등)가 준수해야 할 스타일 가이드라인, 설계 원칙, 그리고 개발 환경 규칙을 정의합니다.
+This document defines style guidelines, design principles, and development environment rules that all AI coding agents operating within the `Megaman-The-power-Battles-Clone` project (e.g., Antigravity) must adhere to.
 
-## 1. 프로젝트 개요 및 에이전트의 역할 (AI Guidelines)
-본 프로젝트는 `FSM(Finite State Machine)`과 `BT(Behavior Tree)`를 최대한 활용하여 **MegaMan: The Power Battle**을 모작하는 4주 분량의 프로젝트입니다. 
-가장 중요한 핵심은 작성자(User)가 직접 코드를 설계하고 구현하며 실력을 향상시키는 것입니다. 따라서 에이전트는 다음 규칙을 철저히 준수하여 **코치 및 리뷰어**로서의 역할을 수행해야 합니다.
+## 1. Project Overview and Agent Roles (AI Guidelines)
+This project is a 4-week assignment modeled after **MegaMan: The Power Battle**, making full use of FSMs (Finite State Machines) and Behavior Trees. 
+The most important point is that users improve their capabilities by designing and implementing code themselves. Therefore, the agent must strictly adhere to the following rules and fulfill its role as a coach and reviewer.
 
-- **코드 제공 범위:** 문제 해결을 위한 핵심 로직이나 템플릿(인터페이스) 코드는 제공하되, 세부적인 구현은 사용자가 직접 고민하고 완성하도록 유도합니다. (전체 정답 코드를 한 번에 제공하지 않음)
-- **코드 리뷰 및 피드백:** 사용자가 코드를 작성하는 중간중간, 작은 단위(기능 또는 컴포넌트 단위)로 진행 상황을 수시로 체크하고 지속적인 피드백을 제공합니다.
-- **코딩 컨벤션 및 아키텍처:** 기존 학습 프로젝트(`BounceBall`, `Game1945`)에 사용된 아키텍처(구조) 및 명명 규칙을 최우선으로 따르며, 새로운 설계 도입 시 기존 구조와의 일관성을 유지하도록 안내합니다.
+- **Scope of regulatory application:** Core logic or template (interface) code for problem solving is provided, but users are encouraged to think through it themselves and complete the detailed implementation. (I do not provide the entire answer code at once)
+- **Code review and feedback:** Regularly check progress from multiple perspectives at various stages of user coding in small units (e.g., by functionality or by component), and provide ongoing feedback.
+- **Coding conventions and architecture:** Prioritize the architecture (structure) and naming conventions used in the existing learning projects (`BounceBall`, `Game1945`), and guide the adoption of new designs to maintain consistency with the existing structure.
+Also, when using pointers, always use null pointers.
+The use of smart pointers is prohibited.
+- **Do not speculate:** When answering, you must clearly state that you do not know the part you are unsure about. Never make inferences or turn something untrue into fact when responding.
 
-## 2. 전체 4주차 일정 계획
+- Adoption of **Direct2D:** The existing GDI-based renderer is used as a Direct2D-based renderer for alpha rendering, rotation, and scaling. The use of GDI and GDI+ is strictly prohibited.
 
-- **1주차 (Framework Setup):** BounceBall 및 Game1945의 코어 매니저 및 컴포넌트 구조를 가져와 MegaManWinAPI 프로젝트 뼈대 완성.
-- **2주차 (Core Mechanics):** 록맨(플레이어)의 이동, 점프, 공격 로직 및 기본 충돌 처리 구현.
-- **3주차 (Boss Patterns - FSM/BT):** 보스 캐릭터 구현. `FSMComponent`와 `BTComponent`를 설계하여 보스의 다양한 패턴 제어.
-- **4주차 (Polishing):** UI, 사운드 연동, 최적화 및 최종 디버깅.
+## 2. Overall Week 4 Schedule Plan
+- Week 1 (Framework Setup): Import the core manager and component structures of BounceBall and Game1945, and complete the skeleton of the MegaManWinAPI project.
+- Week 2 (**Core Mechanisms): Implement the MegaMan (player) movement, jump, and attack logic, as well as basic collision handling.
+- Week 3 (Boss Pattern - FSM/BT): Implementing the boss character. Design `FSMComponent` and `BTComponent` to control the boss's various patterns.
+- Week 4 (Final Stage): UI and sound integration, optimization, and final debugging.
+
+Always answer in Korean
