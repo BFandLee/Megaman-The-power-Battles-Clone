@@ -109,7 +109,7 @@ void Game::Update()
 	InputManager::GetInstance().Update();
 
 	// Scene 업데이트
-	// SceneManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
+	SceneManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
 
 	// 모든 Update가 끝나고 좌표 갱신이 완료된 후, 충돌체크 수행
 	// UIManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
@@ -130,9 +130,9 @@ void Game::Render()
 	// 각종 렌더링 로직 처리
 	// 
 	// Scene의 모든 객체 렌더링
-	// SceneManager::GetInstance().Render(_hdcBack);
+	SceneManager::GetInstance().Render(_renderTarget);
 
-	CollisionManager::GetInstance().Render(_renderTarget);
+	//CollisionManager::GetInstance().Render(_renderTarget);
 
 	// UIManager::GetInstance().Render(_hdcBack);
 	

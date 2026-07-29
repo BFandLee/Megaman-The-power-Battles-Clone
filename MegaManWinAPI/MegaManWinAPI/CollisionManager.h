@@ -18,14 +18,14 @@ public:
 	void RemoveActor(class Actor* actor);
 
 private:
-	void addOverlapState(class Actor* actor1, class Actor* actor2, const HitResult& result);
+	//void addOverlapState(class Actor* actor1, class Actor* actor2, const HitResult& result);
 	void setIgnoreMask(ActorType A, ActorType B);
 
 	// actor와 인접한 셀을 훑으면서 충돌체크 수행
 	void checkCollision(Actor* actor);
 	
 	// 디버깅용 라인 그리기
-	void drawGridLine(ID2D1HwndRenderTarget* renderTarget);
+	// void drawGridLine(ID2D1HwndRenderTarget* renderTarget);
 
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
 	CollisionManager() = default;
@@ -71,7 +71,7 @@ private:
 
 
 	// Collider Type 에 맞춰서 실행해야하는 함수
-	using CheckFunc = bool(*)(Collider* a, Collider* b, HitResult& result);
-	CheckFunc DISPATCH_TABLE[(int32)ColliderType::Max][(int32)ColliderType::Max];
+	// using CheckFunc = bool(*)(Collider* a, Collider* b, HitResult& result);
+	// CheckFunc DISPATCH_TABLE[(int32)ColliderType::Max][(int32)ColliderType::Max];
 };
 

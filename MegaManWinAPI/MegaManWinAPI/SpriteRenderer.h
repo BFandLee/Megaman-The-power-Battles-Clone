@@ -8,7 +8,7 @@ class SpriteAnimRenderer : public Component
 public:
 	void Init(wstring textureKey);
 	virtual void Update(float deltaTime) override;
-	virtual void Render(HDC hdc, Vector pos) override;
+	virtual void Render(ID2D1RenderTarget* renderTarget, Vector pos) override;
 
 	bool IsEnd() const { return _isEnd; }
 	uint32 GetSizeX() const;

@@ -96,6 +96,9 @@
     <ClInclude Include="AnimatorComponent.h">
       <Filter>소스 파일\Component</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>소스 파일\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="AnimatorComponent.cpp">
       <Filter>소스 파일\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPool.cpp">
+      <Filter>소스 파일\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

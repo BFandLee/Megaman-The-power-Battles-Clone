@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ResourceManager.h"
 #include "Texture.h"
-#include "Sound.h"
+// #include "Sound.h"
 
 void ResourceManager::Init(HWND hwnd, fs::path directory)
 {
@@ -55,19 +55,19 @@ Texture* ResourceManager::GetTexture(wstring key)
 	return nullptr;
 }
 
-Sound* ResourceManager::LoadSound(const wstring& key, const wstring& path)
-{
-	if (_sounds.find(key) != _sounds.end())
-		return _sounds[key];
-
-	fs::path fullPath = _resourcePath / "Sound" / path;
-
-	Sound* sound = new Sound();
-	sound->LoadWave(fullPath);
-	_sounds[key] = sound;
-
-	return sound;
-}
+//Sound* ResourceManager::LoadSound(const wstring& key, const wstring& path)
+//{
+//	if (_sounds.find(key) != _sounds.end())
+//		return _sounds[key];
+//
+//	fs::path fullPath = _resourcePath / "Sound" / path;
+//
+//	Sound* sound = new Sound();
+//	sound->LoadWave(fullPath);
+//	_sounds[key] = sound;
+//
+//	return sound;
+//}
 
 void ResourceManager::LoadFont()
 {

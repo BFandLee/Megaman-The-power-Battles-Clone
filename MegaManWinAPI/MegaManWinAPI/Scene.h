@@ -34,7 +34,7 @@ public:
 
 	// 씬에서 관리되는 Actor중에 하나 삭제해달라고 요청
 	void DeleteActor(class Actor* actor);
-	void DeleteActorByCell(Cell cell);
+	// void DeleteActorByCell(Cell cell);	grid
 	
 	Actor* FindActorByType(ActorType type) const;
 
@@ -46,10 +46,10 @@ public:
 
 public:
 	const vector<Actor*>& GetRenderList(RenderLayer layer) const;
-	const GridInfo& GetGridInfo(const Cell& cell);
-	int32 GetGridSize() const { return _gridSize; }
+	// const GridInfo& GetGridInfo(const Cell& cell);
+	// int32 GetGridSize() const { return _gridSize; }
 
-	void UpdateGrid(Actor* actor, Vector prevPos);
+	// void UpdateGrid(Actor* actor, Vector prevPos);
 
 protected:
 	virtual void loadResources();
@@ -59,7 +59,7 @@ protected:
 	void registerActor(Actor* actor);
 	void removeActor(Actor* actor);
 
-	bool isValidCell(Cell cell) const;
+	// bool isValidCell(Cell cell) const;
 
 protected:
 	// 씬에 등장하는 모든 객체는 Actor로부터 파생된 클래스다.
@@ -77,24 +77,14 @@ protected:
 	// 제거 요청을 중복처리하지 않기 위해, set 자료구조
 	unordered_set<Actor*>	 _reservedRemove;		// vector vs map
 
-	//class Background* _bg = nullptr;
-	//class Player* _player = nullptr;
-	//vector<class Enemy*> _enemies;
-	//vector<class Bullet*> _bullets;
 
 	// 공간 분할 (Grid)
-	int32 _gridSize = BLOCK_SIZE;	// 유동적으로 수정하면 된다.
-	int32 _gridCountX = 0;
-	int32 _gridCountY = 0;
+	// int32 _gridSize = BLOCK_SIZE;	// 유동적으로 수정하면 된다.
+	// int32 _gridCountX = 0;
+	// int32 _gridCountY = 0;
 
 	// 하나의 그리드에 있는 Actor 관리
-	vector<GridInfo> _grid;
-
-	//vector<Actor*> _test1;    //1 : 메모리 연속X  / [0x01][0x02][0x10][][][]
-	//vector<Actor> _test2;		//2 : 메모리 연속	//[Actor][Actor][Actor][Actor][Actor][Actor]
-	
-	// 메모리가 연속적이지 않아서, 2차원 vector (X) -> 1차원 vector (cell(x,y))
-	//vector<vector<GridInfo>> _grid;	// 2차원 배열, [y][x]
+	// vector<GridInfo> _grid;
 
 	// 한프레임 뒤로 미뤄서 특정 함수를 호출해주는 기능
 	std::vector<std::function<void()>> _postUpdateActions;

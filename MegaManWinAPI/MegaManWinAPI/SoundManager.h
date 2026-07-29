@@ -12,9 +12,9 @@ public:
 
 	void Play(const wstring& key, bool loop = false);
 
-	LPDIRECTSOUND GetSoundDevice() { return _soundDevice; }
+	// LPDIRECTSOUND GetSoundDevice() { return _soundDevice; }
 
 private:
-	LPDIRECTSOUND _soundDevice = nullptr; // 사운드 카드
+	// LPDIRECTSOUND _soundDevice = nullptr; // 사운드 카드
 };
 

@@ -10,7 +10,7 @@ void ImageRenderer::Init(wstring textureKey, int32 ix, int32 iy)
 	_iY = iy;
 }
 
-void ImageRenderer::Render(ID2D1HwndRenderTarget* renderTarget, Vector pos)
+void ImageRenderer::Render(ID2D1RenderTarget* renderTarget, Vector pos)
 {
 	if (_texture)
 	{

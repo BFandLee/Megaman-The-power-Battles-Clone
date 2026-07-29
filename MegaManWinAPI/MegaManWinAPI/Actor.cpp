@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Component.h"
 #include "SceneManager.h"
-#include "Collider.h"
+// #include "Collider.h"
 
 Actor::~Actor()
 {
@@ -43,7 +43,7 @@ void Actor::Render(ID2D1RenderTarget* renderTarget)
 {
 	for (auto component : _components)
 	{
-		component->Render(renderTarget);
+		component->Render(renderTarget, _pos);
 	}
 }
 
@@ -57,17 +57,14 @@ void Actor::SetPos(Vector pos, bool applyGrid)
 	// 좌표가 바뀔때는 무조건 SetPos() 함수를 통해서 들어온다.
 	_pos = pos;
 
-	if (applyGrid)
-	{
-		SceneManager::GetInstance().GetScene()->UpdateGrid(this, prevPos);
-	}
+
 }
 
-void Actor::cacheCollider(Component* component)
-{
-	Collider* collider = dynamic_cast<Collider*>(component);
-	if (collider)
-	{
-		_collider = collider;	// 한번 캐싱해둔다.
-	}
-}
+//void Actor::cacheCollider(Component* component)
+//{
+//	Collider* collider = dynamic_cast<Collider*>(component);
+//	if (collider)
+//	{
+//		_collider = collider;	// 한번 캐싱해둔다.
+//	}
+//}

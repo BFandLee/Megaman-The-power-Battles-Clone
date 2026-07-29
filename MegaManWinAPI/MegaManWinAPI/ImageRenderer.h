@@ -8,7 +8,7 @@ class ImageRenderer : public Component
 {
 public:
 	void Init(wstring textureKey, int32 ix = -1, int32 iy = -1);
-	virtual void Render(ID2D1HwndRenderTarget* renderTarget, Vector pos) override;
+	virtual void Render(ID2D1RenderTarget* renderTarget, Vector pos) override;
 	void SetApplyCenter(bool apply);
 
 	uint32 GetSizeX() const;

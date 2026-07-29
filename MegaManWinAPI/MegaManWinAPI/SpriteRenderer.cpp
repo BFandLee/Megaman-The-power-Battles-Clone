@@ -70,18 +70,17 @@ void SpriteAnimRenderer::Update(float deltaTime)
 	}
 }
 
-void SpriteAnimRenderer::Render(HDC hdc, Vector pos)
+void SpriteAnimRenderer::Render(ID2D1RenderTarget* renderTarget, Vector pos)
 {
 	if (nullptr == _texture)
 		return;
 
-	SIZE frameSize = _texture->GetFrameSize();
+	// 프레임 위치에 따라 잘라낼 시작 위치 계산(출발지 계산)
+	Vector srcPos;
+	srcPos.x = _animIndexX + _texture->GetFrameSize().cx;
+	srcPos.y = _animIndexY + _texture->GetFrameSize().cy;
 
-	// 소스 비트맵에서 복사할 시작 좌표 계산
-	float srcX = _animIndexX * (float)frameSize.cx;
-	float srcY = _animIndexY * (float)frameSize.cy;
-
-	_texture->Render(hdc, pos, Vector(srcX, srcY), _flipX);
+	_texture->Render(renderTarget, pos, srcPos);
 }
 
 uint32 SpriteAnimRenderer::GetSizeX() const

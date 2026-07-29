@@ -1,9 +1,11 @@
 ﻿// MegaManWinAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-
+#include "pch.h"
+#include "Resource.h"
 #include "framework.h"
 #include "MegaManWinAPI.h"
 #include "Game.h"
+
 
 #define MAX_LOADSTRING 100
 
@@ -57,8 +59,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            // Game::GetInstance()->Update();
-            // Game::GetInstance().Render();
+            Game::GetInstance().Update();
+            Game::GetInstance().Render();
         }
     }
 
@@ -118,6 +120,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
+   Game::GetInstance().Init(hWnd);
+
    return TRUE;
 }
 
@@ -156,7 +160,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
             EndPaint(hWnd, &ps);
         }
         break;

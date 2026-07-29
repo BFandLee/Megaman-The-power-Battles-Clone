@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "GameScene.h"
-#include "EditorScene.h"
-#include "LobbyScene.h"
-#include "PlayerScene.h"
+//#include "GameScene.h"
+//#include "EditorScene.h"
+//#include "LobbyScene.h"
+//#include "PlayerScene.h"
 
 void SceneManager::Init()
 {
@@ -58,10 +58,10 @@ Scene* SceneManager::createScene(SceneType type)
 {
 	switch (type)
 	{
-	case SceneType::Lobby:	return new LobbyScene();
+	/*case SceneType::Lobby:	return new LobbyScene();
 	case SceneType::Game:	return new GameScene();
 	case SceneType::Editor:	return new EditorScene();
-	case SceneType::AStar:	return new PlayerScene();
+	case SceneType::AStar:	return new PlayerScene();*/
 	}
 
 	return nullptr;

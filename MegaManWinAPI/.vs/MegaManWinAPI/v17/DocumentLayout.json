@@ -3,16 +3,47 @@
   "WorkspaceRootPath": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\AnimatorComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\AnimatorComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\MegaManWinAPI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\AnimatorComponent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\AnimatorComponent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\ImageRenderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Visual Code\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SoundManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\SoundManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\CollisionManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\CollisionManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Scene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SpriteRenderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\SpriteRenderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SpriteRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\SpriteRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -23,60 +54,44 @@
       "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Texture.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\ImageRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Actor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Component.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Component.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\CollisionManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\CollisionManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\ImageRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SceneManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\SceneManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Actor.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SoundManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\SoundManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ResourceManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\ResourceManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Scene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GITHUB\\MEGAMAN-THE-POWER-BATTLES-CLONE\\MEGAMANWINAPI\\MEGAMANWINAPI\\JSON\\NLOHMANN\\JSON.HPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MEGAMANWINAPI\\JSON\\NLOHMANN\\JSON.HPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\Actor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\pch.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\pch.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A669450C-DB8D-46EA-8815-C10100BB35F1}|MegaManWinAPI\\MegaManWinAPI.vcxproj|solutionrelative:MegaManWinAPI\\MegaManWinAPI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -86,102 +101,292 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 13,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
+              "Title": "vector",
+              "DocumentMoniker": "D:\\Visual Code\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "RelativeDocumentMoniker": "..\\..\\..\\Visual Code\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "ToolTip": "D:\\Visual Code\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "RelativeToolTip": "..\\..\\..\\Visual Code\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "ViewState": "AgIAAHkHAAAAAAAAAAArwIkHAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-07-29T14:57:30.694Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SpriteRenderer.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SpriteRenderer.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\SpriteRenderer.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SpriteRenderer.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\SpriteRenderer.cpp",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAGwAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T14:31:55.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Texture.h",
               "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Texture.h",
               "RelativeDocumentMoniker": "MegaManWinAPI\\Texture.h",
               "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Texture.h",
               "RelativeToolTip": "MegaManWinAPI\\Texture.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-07-29T09:18:21.576Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 11,
               "Title": "Texture.cpp",
               "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Texture.cpp",
               "RelativeDocumentMoniker": "MegaManWinAPI\\Texture.cpp",
               "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Texture.cpp",
               "RelativeToolTip": "MegaManWinAPI\\Texture.cpp",
-              "ViewState": "AgIAACsAAAAAAAAAAAAqwD8AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAIwHYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-07-29T09:18:07.212Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ImageRenderer.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\ImageRenderer.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.cpp",
-              "RelativeToolTip": "MegaManWinAPI\\ImageRenderer.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-29T09:17:44.381Z",
+              "DocumentIndex": 8,
+              "Title": "Scene.h",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.h",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Scene.h",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.h",
+              "RelativeToolTip": "MegaManWinAPI\\Scene.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-07-29T08:56:46.285Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AnimatorComponent.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\AnimatorComponent.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\AnimatorComponent.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\AnimatorComponent.cpp*",
-              "RelativeToolTip": "MegaManWinAPI\\AnimatorComponent.cpp*",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAqwBUAAAAcAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "Scene.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Scene.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\Scene.cpp",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAIwBgBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-29T09:11:22.34Z",
+              "WhenOpened": "2026-07-29T08:57:56.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CollisionManager.h",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.h",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\CollisionManager.h",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.h",
+              "RelativeToolTip": "MegaManWinAPI\\CollisionManager.h",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAIwBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-07-29T08:49:20.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "CollisionManager.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\CollisionManager.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\CollisionManager.cpp",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAIwLoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T13:44:22.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "ImageRenderer.h",
               "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.h",
               "RelativeDocumentMoniker": "MegaManWinAPI\\ImageRenderer.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.h*",
-              "RelativeToolTip": "MegaManWinAPI\\ImageRenderer.h*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA4AAAAAAAAAA==",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ImageRenderer.h",
+              "RelativeToolTip": "MegaManWinAPI\\ImageRenderer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-07-29T09:10:09.614Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AnimatorComponent.h",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\AnimatorComponent.h",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\AnimatorComponent.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\AnimatorComponent.h",
-              "RelativeToolTip": "MegaManWinAPI\\AnimatorComponent.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 16,
+              "Title": "Game.h",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.h",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Game.h",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.h",
+              "RelativeToolTip": "MegaManWinAPI\\Game.h",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB0AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-07-29T09:09:19.588Z",
+              "WhenOpened": "2026-07-29T08:26:21.091Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 1,
+              "Title": "Game.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Game.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\Game.cpp",
+              "ViewState": "AgIAAFwAAAAAAAAAAAArwGwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T08:30:47.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MegaManWinAPI.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\MegaManWinAPI.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\MegaManWinAPI.cpp",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAAHUAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-28T07:30:09.222Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InputManager.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\InputManager.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\InputManager.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\InputManager.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\InputManager.cpp",
+              "ViewState": "AgIAAA8AAAAAAAAAAAArwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T14:57:36.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "SoundManager.cpp",
               "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SoundManager.cpp",
               "RelativeDocumentMoniker": "MegaManWinAPI\\SoundManager.cpp",
               "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SoundManager.cpp",
               "RelativeToolTip": "MegaManWinAPI\\SoundManager.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-07-29T09:05:00.255Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
+              "Title": "Actor.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Actor.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\Actor.cpp",
+              "ViewState": "AgIAABwAAAAAAAAAAAAnwCsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T08:56:05.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SpriteRenderer.h",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SpriteRenderer.h",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\SpriteRenderer.h",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SpriteRenderer.h",
+              "RelativeToolTip": "MegaManWinAPI\\SpriteRenderer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-07-29T13:36:01.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Component.h",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Component.h",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Component.h",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Component.h",
+              "RelativeToolTip": "MegaManWinAPI\\Component.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-07-29T14:39:27.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "SceneManager.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SceneManager.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\SceneManager.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\SceneManager.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\SceneManager.cpp",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAnwD4AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T14:23:43.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ResourceManager.cpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ResourceManager.cpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\ResourceManager.cpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ResourceManager.cpp",
+              "RelativeToolTip": "MegaManWinAPI\\ResourceManager.cpp",
+              "ViewState": "AgIAADAAAAAAAAAAAAAnwEEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-29T14:21:29.517Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "json.hpp",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Json\\nlohmann\\json.hpp",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Json\\nlohmann\\json.hpp",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Json\\nlohmann\\json.hpp",
+              "RelativeToolTip": "MegaManWinAPI\\Json\\nlohmann\\json.hpp",
+              "ViewState": "AgIAAMoeAAAAAAAAAAAnwNseAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-07-29T13:44:02.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Actor.h",
+              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.h",
+              "RelativeDocumentMoniker": "MegaManWinAPI\\Actor.h",
+              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.h",
+              "RelativeToolTip": "MegaManWinAPI\\Actor.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-07-29T08:55:33.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "ResourceManager.h",
               "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\ResourceManager.h",
               "RelativeDocumentMoniker": "MegaManWinAPI\\ResourceManager.h",
@@ -194,132 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Scene.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Scene.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.cpp*",
-              "RelativeToolTip": "MegaManWinAPI\\Scene.cpp*",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAqwK0AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-29T08:57:56.464Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Scene.h",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.h",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Scene.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Scene.h",
-              "RelativeToolTip": "MegaManWinAPI\\Scene.h",
-              "ViewState": "AgIAADEAAAAAAAAAAAAqwEUAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-07-29T08:56:46.285Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Actor.h",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.h",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Actor.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.h*",
-              "RelativeToolTip": "MegaManWinAPI\\Actor.h*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-07-29T08:55:33.627Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Component.h",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Component.h",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Component.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Component.h",
-              "RelativeToolTip": "MegaManWinAPI\\Component.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-07-29T08:55:02.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CollisionManager.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\CollisionManager.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.cpp*",
-              "RelativeToolTip": "MegaManWinAPI\\CollisionManager.cpp*",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAqwH4AAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-29T08:48:29.069Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Game.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Game.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.cpp*",
-              "RelativeToolTip": "MegaManWinAPI\\Game.cpp*",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAiwA0AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-29T08:30:47.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Game.h",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.h",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Game.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Game.h",
-              "RelativeToolTip": "MegaManWinAPI\\Game.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-07-29T08:26:21.091Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CollisionManager.h",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.h",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\CollisionManager.h",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\CollisionManager.h",
-              "RelativeToolTip": "MegaManWinAPI\\CollisionManager.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-07-29T08:49:20.528Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Actor.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\Actor.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\Actor.cpp",
-              "RelativeToolTip": "MegaManWinAPI\\Actor.cpp",
-              "ViewState": "AgIAABUAAAAAAAAAAAAqwCkAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-29T08:56:05.945Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 22,
               "Title": "pch.h",
               "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\pch.h",
               "RelativeDocumentMoniker": "MegaManWinAPI\\pch.h",
@@ -328,19 +408,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-07-29T08:11:20.734Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "MegaManWinAPI.cpp",
-              "DocumentMoniker": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp",
-              "RelativeDocumentMoniker": "MegaManWinAPI\\MegaManWinAPI.cpp",
-              "ToolTip": "D:\\GitHub\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\MegaManWinAPI\\MegaManWinAPI.cpp*",
-              "RelativeToolTip": "MegaManWinAPI\\MegaManWinAPI.cpp*",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAADwAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-28T07:30:09.222Z",
               "EditorCaption": ""
             }
           ]
