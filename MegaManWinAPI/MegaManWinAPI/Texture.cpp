@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Scene.h"
 
-void Texture::Load(wstring texturePath, int32 transparent, int32 row, int32 col, float dur, bool enableFlip)
+void Texture::Load(wstring texturePath, int32 row, int32 col, float dur, bool enableFlip)
 {
 	// 1. 만들어둔 팩토리와 renderTarget 가져오기
 	IWICImagingFactory* wicFactory = Game::GetInstance().GetWICFactory();

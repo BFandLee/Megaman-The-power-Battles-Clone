@@ -31,6 +31,12 @@
     <Filter Include="소스 파일\Component">
       <UniqueIdentifier>{43a1de8a-bab3-46f7-bf59-e10310ab4ddf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Test">
+      <UniqueIdentifier>{437368ac-bd44-46bb-abe7-90773ed3b9e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Actor">
+      <UniqueIdentifier>{6bbf8bd5-b8f0-4e62-b74d-3c5f38993f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -99,6 +105,15 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>소스 파일\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>소스 파일\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>소스 파일\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -154,6 +169,15 @@
     </ClCompile>
     <ClCompile Include="ObjectPool.cpp">
       <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>소스 파일\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>소스 파일\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

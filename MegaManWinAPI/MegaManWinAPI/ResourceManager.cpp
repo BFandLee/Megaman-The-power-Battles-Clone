@@ -27,8 +27,8 @@ void ResourceManager::Cleanup()
 	_textures.clear();
 }
 
-void ResourceManager::LoadTexture(wstring key, wstring texturePath, int32 transparent,
-								  int32 row, int32 col, float dur, bool flip)
+void ResourceManager::LoadTexture(wstring key, wstring texturePath, int32 row,
+								  int32 col, float dur, bool flip)
 {
 	if (GetTexture(key) != nullptr)
 	{
@@ -40,7 +40,7 @@ void ResourceManager::LoadTexture(wstring key, wstring texturePath, int32 transp
 
 	// 咆胶贸 积己阑 淬寸
 	Texture* texture = new Texture(); 
-	texture->Load(fullPath, transparent, row, col, dur, flip);
+	texture->Load(fullPath, row, col, dur, flip);
 
 	// 积己等 咆胶磐甫 府家胶 概聪历啊 包府 N 俺 包府
 	_textures.insert(make_pair(key, texture));

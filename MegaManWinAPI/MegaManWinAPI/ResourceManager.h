@@ -17,8 +17,8 @@ public:
 	void Cleanup();
 
 	// ≈ÿΩ∫√≥
-	void LoadTexture(wstring key, wstring texturePath, int32 transparent, 
-					 int32 row = 1, int32 col = 1, float dur = 0, bool flip = false);
+	void LoadTexture(wstring key, wstring texturePath, int32 row = 1, 
+		int32 col = 1, float dur = 0, bool flip = false);
 	class Texture* GetTexture(wstring key);
 
 

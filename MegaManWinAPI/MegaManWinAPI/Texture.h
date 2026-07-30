@@ -3,7 +3,7 @@
 class Texture
 {
 public:
-	void Load(wstring texturePath, int32 transparent, int32 row, int32 col, float dur, bool enableFlip);
+	void Load(wstring texturePath, int32 row, int32 col, float dur, bool enableFlip);
 	void Render(ID2D1RenderTarget* renderTarget, Vector pos, Vector srcPos = Vector(0,0), bool flipX = false);
 	void RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos = Vector(0,0));
 

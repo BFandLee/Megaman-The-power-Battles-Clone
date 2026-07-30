@@ -1,15 +1,29 @@
 #pragma once
 #include "Component.h"
-struct AnimationClip;	// ÇÃ·¹ÀÌ¾î ±¸Çö ½Ã ÀÚ¼¼È÷ ±¸ÇöµÉ Å¬¸³ ±¸Á¶Ã¼
+
+struct AnimationFrame
+{
+	Vector startPos;    // í…ìŠ¤ì²˜ ë‚´ ì‹œì‘ ì¢Œí‘œ(ì¢Œìƒë‹¨)
+	Vector size;        // ì˜ë¼ë‚¼ í¬ê¸°
+	Vector offset;      // ì¤‘ì‹¬ì¶• ì¡°ì •ìš© ì˜¤í”„ì…‹
+	float duration;     // í”„ë ˆì„ ìœ ì§€ ì‹œê°„
+};
+
+struct AnimationClip
+{
+	class Texture* texture = nullptr;
+	vector<AnimationFrame> frames;
+	bool bLoop = false;
+};
 
 class AnimatorComponent : public Component
 {
 	using Super = Component;
 private:
-	// ÇÃ·¹ÀÌ¾î »óÅÂ¿¡ µû¸¥ ¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³ º¸°ü
+	// í”Œë ˆì´ì–´ ìƒíƒœì— ë”°ë¥¸ ì• ë‹ˆë©”ì´ì…˜ í´ë¦½ ë³´ê´€
 	map<wstring, AnimationClip*> _clips;
 
-	// ÇöÀç Àç»ı ÁßÀÎ ¾Ö´Ï¸ŞÀÌ¼Ç°ú °ü·Ã µ¥ÀÌÅÍ
+	// í˜„ì¬ ì¬ìƒ ì¤‘ì¸ ì• ë‹ˆë©”ì´ì…˜ê³¼ ê´€ë ¨ ë°ì´í„°
 	AnimationClip* _currentClip = nullptr;
 	int32 _currentFrame = 0;
 	float _accmulatedTime = 0.0f;
@@ -18,12 +32,15 @@ public:
 	AnimatorComponent();
 	virtual ~AnimatorComponent();
 
-	// °ÔÀÓ ·çÇÁ °»½Å ¹× ±×¸®±â
+	// ê²Œì„ ë£¨í”„ ê°±ì‹  ë° ê·¸ë¦¬ê¸°
 	virtual void Update(float deletaTime) override;
 	virtual void Render(ID2D1RenderTarget* renderTarget, Vector pos) override;
 
-	// Å¬¸³ Ãß°¡ ¹× Àç»ı ÀÎÅÍÆäÀÌ½º
+	// í´ë¦½ ì¶”ê°€ ë° ì¬ìƒ ì¸í„°í˜ì´ìŠ¤
 	void AddClip(const wstring& stateName, AnimationClip* clip);
 	void Play(const wstring& stateName);
+
+	// Json íŒŒì¼ì„ ì½ì–´ì™€ ì§€ì •ëœ stateNameìœ¼ë¡œ Clipì„ ë“±ë¡í•˜ëŠ” ì¸í„°í˜ì´ìŠ¤
+	bool LoadAnimationFromJson(const wstring& stateName, wstring& jsonFilePath);
 };
 

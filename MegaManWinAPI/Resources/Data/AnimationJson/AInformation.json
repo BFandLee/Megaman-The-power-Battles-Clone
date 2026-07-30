@@ -1,0 +1,20 @@
+ { 
+    "texturePath": "sprites/Boss/megaman.png", 
+    "bLoop": true, 
+    "frames": 
+    [ 
+        { 
+            "startPos": {"x": 0, "y": 0}, 
+            "size": {"x": 50, "y": 50}, 
+            "offset": {"x": 25, "y": 25}, 
+            "duration": 0.1 
+        },
+
+        { 
+            "startPos": {"x": 50, "y": 0}, 
+            "size": {"x": 50, "y": 50}, 
+            "offset": {"x": 25, "y": 25}, 
+            "duration": 0.1 
+        } 
+    ] 
+}
