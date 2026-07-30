@@ -115,7 +115,7 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 
 }
 
-
+// UI¿ë
 void Texture::RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos)
 {
 	if (_applyCenter)

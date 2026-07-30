@@ -158,3 +158,6 @@ struct Vector
 		return *this - normal * (2.f * Dot(normal));
 	}
 };
+
+const int GWinSizeX = 800;
+const int GWinSizeY = 600;

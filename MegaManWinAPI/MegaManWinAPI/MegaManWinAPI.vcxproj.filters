@@ -34,7 +34,7 @@
     <Filter Include="소스 파일\Test">
       <UniqueIdentifier>{437368ac-bd44-46bb-abe7-90773ed3b9e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Actor">
+    <Filter Include="소스 파일\Entity\Actor">
       <UniqueIdentifier>{6bbf8bd5-b8f0-4e62-b74d-3c5f38993f23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -51,133 +51,133 @@
     <ClInclude Include="MegaManWinAPI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Core\Game.h">
       <Filter>소스 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="Core\Scene.h">
       <Filter>소스 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Actor.h">
+    <ClInclude Include="Entity\Actor\Actor.h">
       <Filter>소스 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="Entity\Component\Component.h">
       <Filter>소스 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h">
+    <ClInclude Include="Manager\CollisionManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
+    <ClInclude Include="Manager\InputManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
+    <ClInclude Include="Manager\ResourceManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="SoundManager.h">
+    <ClInclude Include="Manager\SoundManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
+    <ClInclude Include="Manager\TimeManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ImageRenderer.h">
+    <ClInclude Include="Renderer\ImageRenderer.h">
       <Filter>소스 파일\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRenderer.h">
+    <ClInclude Include="Renderer\SpriteRenderer.h">
       <Filter>소스 파일\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
+    <ClInclude Include="Util\Singleton.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Util.h">
+    <ClInclude Include="Util\Util.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="Manager\SceneManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatorComponent.h">
+    <ClInclude Include="Entity\Component\AnimatorComponent.h">
       <Filter>소스 파일\Component</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectPool.h">
+    <ClInclude Include="Entity\ObjectPool.h">
       <Filter>소스 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>소스 파일\Actor</Filter>
+    <ClInclude Include="Entity\Actor\Background.h">
+      <Filter>소스 파일\Entity\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h">
+    <ClInclude Include="Core\TestScene.h">
       <Filter>소스 파일\Test</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\Actor</Filter>
+    <ClInclude Include="Entity\Actor\Player.h">
+      <Filter>소스 파일\Entity\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Core\Game.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="Core\Scene.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Actor.cpp">
+    <ClCompile Include="Entity\Actor\Actor.cpp">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
+    <ClCompile Include="Entity\Component\Component.cpp">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
+    <ClCompile Include="Manager\CollisionManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
+    <ClCompile Include="Manager\InputManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
+    <ClCompile Include="Manager\ResourceManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
+    <ClCompile Include="Manager\SoundManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
+    <ClCompile Include="Manager\TimeManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ImageRenderer.cpp">
+    <ClCompile Include="Renderer\ImageRenderer.cpp">
       <Filter>소스 파일\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
+    <ClCompile Include="Renderer\SpriteRenderer.cpp">
       <Filter>소스 파일\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Util.cpp">
+    <ClCompile Include="Util\Util.cpp">
       <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="Manager\SceneManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>소스 파일\Util</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatorComponent.cpp">
+    <ClCompile Include="Entity\Component\AnimatorComponent.cpp">
       <Filter>소스 파일\Component</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectPool.cpp">
+    <ClCompile Include="Entity\ObjectPool.cpp">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>소스 파일\Actor</Filter>
+    <ClCompile Include="Entity\Actor\Background.cpp">
+      <Filter>소스 파일\Entity\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp">
+    <ClCompile Include="Core\TestScene.cpp">
       <Filter>소스 파일\Test</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Actor</Filter>
+    <ClCompile Include="Entity\Actor\Player.cpp">
+      <Filter>소스 파일\Entity\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
