@@ -51,7 +51,7 @@ public:
 		newComponent->SetOwner(this);
 		_components.push_back(newComponent);
 		// collider를 캐싱해두자.
-		// cacheCollider(newComponent);
+		cacheCollider(newComponent);
 
 		return newComponent;
 	}

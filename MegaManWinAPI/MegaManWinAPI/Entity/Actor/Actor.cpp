@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Component.h"
 #include "SceneManager.h"
-// #include "Collider.h"
+#include "Collider.h"
 #include "TransformComponent.h"
 #include "CollisionManager.h"
 
@@ -71,11 +71,11 @@ void Actor::SetScale(Vector scale)
 	if (_transform) _transform->SetScale(scale);
 }
 
-//void Actor::cacheCollider(Component* component)
-//{
-//	Collider* collider = dynamic_cast<Collider*>(component);
-//	if (collider)
-//	{
-//		_collider = collider;	// ÇÑ¹ø Ä³½ÌÇØµÐ´Ù.
-//	}
-//}
+void Actor::cacheCollider(Component* component)
+{
+	Collider* collider = dynamic_cast<Collider*>(component);
+	if (collider)
+	{
+		_collider = collider;	// ÇÑ¹ø Ä³½ÌÇØµÐ´Ù.
+	}
+}

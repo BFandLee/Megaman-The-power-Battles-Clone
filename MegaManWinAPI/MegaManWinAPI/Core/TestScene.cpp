@@ -5,6 +5,7 @@
 #include "Background.h"
 #include "Ground.h"
 #include "WAllActor.h"
+#include "Player.h"
 
 void TestScene::loadResources()
 {
@@ -15,6 +16,10 @@ void TestScene::loadResources()
 	ResourceManager::GetInstance().LoadTexture(
 		L"Ground",
 		L"Background\\background\\sprite_0001.png"
+	);
+	ResourceManager::GetInstance().LoadTexture(
+		L"Player",
+		L"Player\\State\\Idle_3.png"
 	);
 }
 
@@ -37,10 +42,17 @@ void TestScene::createObjects()
 	rightwall->SetSize(50, GWinSizeY);
 	AddActor(rightwall);
 
+	// 플레이어
+	Player* player = new Player();
+	player->Init();
+	player->SetPos(Vector(GWinSizeX / 2, GWinSizeY / 2));
+
 	// 생성했으면 무조건 초기화
 	bg->Init();
 	ground->Init();
+	
 
 	AddActor(bg);
 	AddActor(ground);
+	AddActor(player);
 }
