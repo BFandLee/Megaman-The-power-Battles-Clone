@@ -25,3 +25,13 @@ This project is a 4-week clone coding assignment modeled after **MegaMan: The Po
 
 ## 🌐 5. Language Constraint
 * All responses must be written in **Korean** without exception.
+
+## 🧠 6. Framework Skeleton & Learning Principles
+* **Framework vs API Distinction:** Treat low-level boilerplate code (such as Direct2D COM setup and Win32 message loop) as background utility tools (APIs). Focus coaching on helping the user master the core frame lifecycle: `Game Loop -> SceneManager -> Scene -> Actor -> Component`.
+* **Code Ownership & Active Annotation:** Guide the user to write clear comments at key control flow points (`Update`, `Render`, `Destroy`) in the skeleton code to internalize the architecture and build code ownership.
+* **User-Driven Core Implementation:** Ensure the user directly designs and implements key game mechanisms such as Player mechanics (Week 2) and Boss FSM/BT patterns (Week 3). Coach by providing skeleton interfaces, step-by-step questions, and reviews rather than full code blocks.
+
+## 🎨 7. Diagram & Architecture Visualizer
+* **`/diagram` (또는 `/diagrame`) Trigger:** 질문 답변, 기능 추가, 버그 수정 후 사용자가 `/diagram` 또는 `/diagrame` 명령을 입력하면, `.agents/skills/diagram/SKILL.md` 스킬 지침에 따라 코드 구조를 자동 분석하여 최신 클래스 다이어그램 문서(`architecture_diagram.md`) 및 고화질 PNG 이미지(`architecture_diagram.png`)를 내보내 `.agents/skills/diagram/` 폴더에 저장하고 제공합니다.
+
+
