@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Entity\Actor\Actor.h" />
+    <ClInclude Include="Entity\Actor\Ground.h" />
     <ClInclude Include="Entity\Component\AnimatorComponent.h" />
     <ClInclude Include="Entity\Actor\Background.h" />
     <ClInclude Include="Manager\CollisionManager.h" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\Actor\Actor.cpp" />
+    <ClCompile Include="Entity\Actor\Ground.cpp" />
     <ClCompile Include="Entity\Component\AnimatorComponent.cpp" />
     <ClCompile Include="Entity\Actor\Background.cpp" />
     <ClCompile Include="Manager\CollisionManager.cpp" />
