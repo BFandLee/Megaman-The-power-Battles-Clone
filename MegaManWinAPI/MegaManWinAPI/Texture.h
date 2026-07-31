@@ -4,7 +4,7 @@ class Texture
 {
 public:
 	void Load(wstring texturePath, int32 row, int32 col, float dur, bool enableFlip);
-	void Render(ID2D1RenderTarget* renderTarget, Vector pos, Vector srcPos = Vector(0,0), bool flipX = false);
+	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale = Vector(1.0f, 1.0f), bool flipX = false);
 	void RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos = Vector(0,0));
 
 	uint32 GetSizeX() const { return _sizeX; }

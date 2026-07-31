@@ -159,5 +159,5 @@ struct Vector
 	}
 };
 
-const int GWinSizeX = 800;
-const int GWinSizeY = 600;
+const int GWinSizeX = 1152;
+const int GWinSizeY = 672;

@@ -1,5 +1,4 @@
 #pragma once
-
 // Scene에 그려지는 모든 객체들은 Actor로부터 파생된다.
 class Actor
 {
@@ -18,10 +17,13 @@ public:
 	// virtual void OnStay(Actor* other, const HitResult& hit) {}
 	virtual void OnExit(Actor* other) {}
 	
-	Vector GetPos() const { return _pos; }
+	Vector GetPos() const;
 
 	// 모든 Actor는 위치갱신시 반드시 SetPos 함수를 통해서만 위치갱신이 일어난다.
-	void SetPos(Vector pos, bool applyGrid = true);
+	void SetPos(Vector pos);
+
+	Vector GetScale() const;
+	void SetScale(Vector scale);
 
 	bool GetPendingKill() const { return _pendingKill; }
 
@@ -34,7 +36,7 @@ public:
 
 	// 오브젝트 풀
 	class IObjectPool* GetPool() { return _pool; }
-	void SetPool(IObjectPool* pool) { _pool = pool; }
+	void SetPool(class IObjectPool* pool) { _pool = pool; }
 
 
 	// 초보자는 이런 구조도 괜찮다. 
@@ -44,8 +46,8 @@ public:
 	T* AddComponent()
 	{
 		T* newComponent = new T();
+		newComponent->SetOwner(this);
 		_components.push_back(newComponent);
-		
 		// collider를 캐싱해두자.
 		// cacheCollider(newComponent);
 
@@ -71,8 +73,7 @@ private:
 	void cacheCollider(class Component* component);
 
 private:
-	Vector _pos;
-
+	
 	// N개 vector, map
 	vector<class Component*> _components;
 
@@ -94,5 +95,7 @@ private:
 	// pool 태어난경우 : 본인 풀의 주소
 	//ObjectPool<Bullet> : 템플릿을 정의하는게 아니라, interface 역할의 자료형으로 선언한다.
 	IObjectPool* _pool = nullptr;
+
+	class TransformComponent* _transform = nullptr;
 };
 

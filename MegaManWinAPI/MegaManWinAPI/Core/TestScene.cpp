@@ -7,7 +7,10 @@
 
 void TestScene::loadResources()
 {
-	ResourceManager::GetInstance().LoadTexture(L"Background", L"D:\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\Resources\\sprites\\Background\\background\\sprite_0000.png");
+	ResourceManager::GetInstance().LoadTexture(
+		L"Background",
+		L"Background\\background\\sprite_0000.png"
+	);
 }
 
 void TestScene::createObjects()

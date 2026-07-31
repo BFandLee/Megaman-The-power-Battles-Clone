@@ -124,7 +124,7 @@ void Game::Render()
 	_renderTarget->BeginDraw();
 
 	// 매 프레임마다 이전 잔상을 지우기 위해 검은색(혹은 원하는 색)으로 화면 덮기
-	_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::AliceBlue));
+	_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::SkyBlue));
 
 
 	// 각종 렌더링 로직 처리

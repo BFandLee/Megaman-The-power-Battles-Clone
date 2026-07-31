@@ -2,6 +2,7 @@
 #include "ImageRenderer.h"
 #include "Texture.h"
 #include "ResourceManager.h"
+#include "Actor.h"
 
 void ImageRenderer::Init(wstring textureKey, int32 ix, int32 iy)
 {
@@ -26,7 +27,9 @@ void ImageRenderer::Render(ID2D1RenderTarget* renderTarget, Vector pos)
 			srcPos.y = (float)_iY * _texture->GetFrameSize().cy;
 		}
 
-		_texture->Render(renderTarget, pos, srcPos);
+		Vector scale = GetOwner()->GetScale();
+
+		_texture->Render(renderTarget, pos, srcPos, scale);
 	}
 }
 

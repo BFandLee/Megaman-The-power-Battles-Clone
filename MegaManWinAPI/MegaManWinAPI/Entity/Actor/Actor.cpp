@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "SceneManager.h"
 // #include "Collider.h"
+#include "TransformComponent.h"
 
 Actor::~Actor()
 {
@@ -18,7 +19,7 @@ Actor::~Actor()
 
 void Actor::Init()
 {
-
+	_transform = AddComponent<TransformComponent>();
 }
 
 // Actor 파괴(삭제) 싶으면, 무조건 Scene에 예약을 걸어서 처리한다.
@@ -43,21 +44,27 @@ void Actor::Render(ID2D1RenderTarget* renderTarget)
 {
 	for (auto component : _components)
 	{
-		component->Render(renderTarget, _pos);
+		component->Render(renderTarget, GetPos());
 	}
 }
 
-// 위치가 변경되었으니 grid 갱신도 같이 해주자.
-void Actor::SetPos(Vector pos, bool applyGrid)
+Vector Actor::GetPos() const
 {
-	// 이전 좌표를 잠깐 저장해두고
-	Vector prevPos = _pos;
+	return _transform ? _transform->GetPos() : Vector(0, 0);
+}
+// 위치가 변경되었으니 grid 갱신도 같이 해주자.
+void Actor::SetPos(Vector pos)
+{
+	if (_transform) _transform->SetPos(pos);
+}
 
-
-	// 좌표가 바뀔때는 무조건 SetPos() 함수를 통해서 들어온다.
-	_pos = pos;
-
-
+Vector Actor::GetScale() const
+{
+	return _transform ? _transform->GetScale() : Vector(1.0f, 1.0f);
+}
+void Actor::SetScale(Vector scale)
+{
+	if (_transform) _transform->SetScale(scale);
 }
 
 //void Actor::cacheCollider(Component* component)

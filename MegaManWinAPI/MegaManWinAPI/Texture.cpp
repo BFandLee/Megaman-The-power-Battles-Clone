@@ -13,10 +13,19 @@ void Texture::Load(wstring texturePath, int32 row, int32 col, float dur, bool en
 
 	// 2. 디코더 생성(이미지 파일 열기)
 	IWICBitmapDecoder* decoder = nullptr;
-	wicFactory->CreateDecoderFromFilename(
+	HRESULT hr = wicFactory->CreateDecoderFromFilename(
 		texturePath.c_str(), nullptr, GENERIC_READ,
 		WICDecodeMetadataCacheOnLoad, &decoder
 	);
+	// [방어 코드] 디코더 생성에 실패했거나 decoder가 nullptr이면 안전하게 중단!
+	if (FAILED(hr) || !decoder)
+	{
+		// 디버그 출력 창에 실패한 파일 경로 출력
+		::OutputDebugString(L"[Texture Error] Failed to load image path: ");
+		::OutputDebugString(texturePath.c_str());
+		::OutputDebugString(L"\n");
+		return;
+	}
 
 	// 3. 1번째 프레임 가져오기( 일반 이미지: 프레임 1개)
 	IWICBitmapFrameDecode* frame = nullptr;
@@ -58,8 +67,13 @@ void Texture::Load(wstring texturePath, int32 row, int32 col, float dur, bool en
 	decoder->Release();
 }
 
-void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, bool flipX)
+void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale, bool flipX)
 {
+	if (!_bitmap) return;
+
+	float destWidth = (float)_frameSizeX * scale.x;
+	float destHeight = (float)_frameSizeY * scale.y;
+
 	// 가운데 좌표기준으로 그림이 그려지게 보정해주자.
 	Vector renderPos = worldPos;
 	
@@ -67,12 +81,12 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 	float top = worldPos.y;
 	if (_applyCenter)
 	{
-		left -= (_sizeX * 0.5f);
-		top -= (_sizeY * 0.5f);
+		left -= (destWidth * 0.5f);
+		top -= (destHeight * 0.5f);
 	}
 
 	// 도착지
-	D2D1_RECT_F destRect = D2D1::RectF(left, top, left + _sizeX, top + _sizeY);
+	D2D1_RECT_F destRect = D2D1::RectF(left, top, left + destWidth, top + destHeight);
 
 	// 출발지(원본 스프라이트 시트에서 잘라낼 사각형 영역)
 	D2D1_RECT_F srcRect = D2D1::RectF(

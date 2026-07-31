@@ -8,7 +8,12 @@ public:
 	virtual void Update(float deltaTime)	 {}
 	virtual void Render(ID2D1RenderTarget* renderTarge, Vector pos) {}
 
-private:
+public:
+	void SetOwner(class Actor* owner) { _owner = owner; }
+	class Actor* GetOwner() { return _owner; }
+	
 
+private:
+	class Actor* _owner = nullptr;		// 자신이 속한 Obejct
 };
 

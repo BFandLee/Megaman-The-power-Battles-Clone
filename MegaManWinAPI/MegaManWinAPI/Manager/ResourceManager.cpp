@@ -36,7 +36,7 @@ void ResourceManager::LoadTexture(wstring key, wstring texturePath, int32 row,
 		return;
 	}
 
-	fs::path fullPath = _resourcePath / "Image" / texturePath;
+	fs::path fullPath = _resourcePath / "sprites" / texturePath;
 
 	// 텍스처 생성을 담당
 	Texture* texture = new Texture(); 
