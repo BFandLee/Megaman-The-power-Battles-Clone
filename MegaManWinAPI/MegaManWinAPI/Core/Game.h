@@ -2,10 +2,10 @@
 #include "Singleton.h"
 #include "pch.h"
 
-// ÀüÃ¼ °ÔÀÓ ·ÎÁ÷À» ´ã´çÇÏ´Â Å¬·¡½º
+// ì „ì²´ ê²Œì„ ë¡œì§ì„ ë‹´ë‹¹í•˜ëŠ” í´ë˜ìŠ¤
 class Game : public Singleton<Game>
 {
-	// Singleton °´Ã¼¸¦ 'Ä£±¸'·Î ¼±¾ğÇØ¼­ private Á¢±Ù °¡´ÉÇÏ°Ô ¿­¾îÁØ´Ù.
+	// Singleton ê°ì²´ë¥¼ 'ì¹œêµ¬'ë¡œ ì„ ì–¸í•´ì„œ private ì ‘ê·¼ ê°€ëŠ¥í•˜ê²Œ ì—´ì–´ì¤€ë‹¤.
 	friend Singleton<Game>;
 
 public:
@@ -17,19 +17,22 @@ public:
 
 	ID2D1HwndRenderTarget* GetRenderTarget() const { return _renderTarget; }
 	IWICImagingFactory* GetWICFactory() const { return _wicFactory; }
+	struct IDWriteFactory* GetDWriteFactory() const { return _dwriteFactory; }
 private:
-	// ¾Æ¹«³ª »ı¼º¸øÇÏ°Ô »ı¼ºÀÚ/¼Ò¸êÀÚ¸¦ ¼û±âÀÚ
+	// ì•„ë¬´ë‚˜ ìƒì„±ëª»í•˜ê²Œ ìƒì„±ì/ì†Œë©¸ìë¥¼ ìˆ¨ê¸°ì
 	Game() = default;
 	~Game() = default;
 
 private:
-	HWND _hwnd;	// À©µµ¿ì ÇÚµé
-	RECT _rect;		// À©µµ¿ì Å©±â
+	HWND _hwnd;	// ìœˆë„ìš° í•¸ë“¤
+	RECT _rect;		// ìœˆë„ìš° í¬ê¸°
 
 	ID2D1Factory* _d2dFactory = nullptr;
 	ID2D1HwndRenderTarget* _renderTarget = nullptr;
 
-	// WIC ÀÌ¹ÌÂ¡ ÆÑÅä¸® ¸É¹ö º¯¼ö Ãß°¡
+	// WIC ì´ë¯¸ì§• íŒ©í† ë¦¬ ë§´ë²„ ë³€ìˆ˜ ì¶”ê°€
 	IWICImagingFactory* _wicFactory = nullptr;
+	
+	// DirectWrite Factory (for ImGui)
+	struct IDWriteFactory* _dwriteFactory = nullptr;
 };
-

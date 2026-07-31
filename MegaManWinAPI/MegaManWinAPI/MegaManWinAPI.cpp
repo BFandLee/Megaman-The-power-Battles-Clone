@@ -1,10 +1,12 @@
-﻿// MegaManWinAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+// MegaManWinAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 #include "pch.h"
 #include "Resource.h"
 #include "framework.h"
 #include "MegaManWinAPI.h"
 #include "Game.h"
+#include "imgui.h"
+#include "imgui_impl_win32.h"
 
 
 #define MAX_LOADSTRING 100
@@ -141,8 +143,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
+
     switch (message)
     {
     case WM_COMMAND:

@@ -10,20 +10,26 @@
 // #include "DataManager.h"
 // #include "UIManager.h"
 #include "SoundManager.h"
+#include <dwrite.h>
+#pragma comment(lib, "dwrite.lib")
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_d2d.h"
+
 
 void Game::Init(HWND hwnd)
 {
 	_hwnd = hwnd;
 	::GetClientRect(hwnd, &_rect);
 
-	// COM ÃÊ±âÈ­
+	// COM ì´ˆê¸°í™”
 	::CoInitialize(nullptr);
 
-	// 1. Direct2D °øÀå(Factory) »ý¼º
+	// 1. Direct2D ê³µìž¥(Factory) ìƒì„±
 	HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &_d2dFactory);
 	if (FAILED(hr)) return;
 
-	// 2. WIC °øÀå »ý¼º
+	// 2. WIC ê³µìž¥ ìƒì„±
 	hr = ::CoCreateInstance(
 		CLSID_WICImagingFactory,
 		nullptr,
@@ -32,17 +38,34 @@ void Game::Init(HWND hwnd)
 	);
 	if (FAILED(hr)) return;
 
-	// 3. ·»´õ Å¸°Ù »ý¼º
+	// 3. ë Œë” íƒ€ê²Ÿ ìƒì„±
 	RECT rc;
 	GetClientRect(hwnd, &rc);
 	D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
 
-	// 3. HWND(À©µµ¿ì Ã¢)¿¡ ±×¸²À» ±×¸± ¼ö ÀÖ´Â ·»´õ Å¸°Ù »ý¼º
+	// 3. HWND(ìœˆë„ìš° ì°½)ì— ê·¸ë¦¼ì„ ê·¸ë¦´ ìˆ˜ ìžˆëŠ” ë Œë” íƒ€ê²Ÿ ìƒì„±
 	hr = _d2dFactory->CreateHwndRenderTarget(
 		D2D1::RenderTargetProperties(),
 		D2D1::HwndRenderTargetProperties(hwnd, size),
 		&_renderTarget
 	);
+
+	// DirectWrite Factory creation
+	DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&_dwriteFactory));
+
+	// ImGui Initialization
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplWin32_Init(hwnd);
+	ImGui_ImplD2D_Init(_renderTarget, _dwriteFactory, _wicFactory);
+
 
 	// TimeManager
 	TimeManager::GetInstance().Init();
@@ -54,20 +77,20 @@ void Game::Init(HWND hwnd)
 	SoundManager::GetInstance().Init(hwnd);
 
 	// full path c:// /// // /
-	// ¸®¼Ò½º ¸Å´ÏÀú ÃÊ±âÈ­
+	// ë¦¬ì†ŒìŠ¤ ë§¤ë‹ˆì € ì´ˆê¸°í™”
 	wchar_t buffer[MAX_PATH];
 	DWORD length = ::GetCurrentDirectory(MAX_PATH, buffer);
 	fs::path currentPath = fs::path(buffer) / L"../Resources/";
 	ResourceManager::GetInstance().Init(hwnd, currentPath);
 
-	// DataManager ÃÊ±âÈ­
+	// DataManager ì´ˆê¸°í™”
 	// DataManager::GetInstance().Init(currentPath);
 	// DataManager::GetInstance().Load();
 
-	// Scene ÃÊ±âÈ­
+	// Scene ì´ˆê¸°í™”
 	SceneManager::GetInstance().Init();
 
-	// CollisionManager ÃÊ±âÈ­
+	// CollisionManager ì´ˆê¸°í™”
 	CollisionManager::GetInstance().Init();
 
 	// UIManager::GetInstance().Init();
@@ -75,8 +98,8 @@ void Game::Init(HWND hwnd)
 
 void Game::Cleanup()
 {
-	// »ý¼ºÀÇ ¿ª¼øÀ¸·Î ÇØÁ¦
-	// °øÀå¿¡¼­ ·»´õÅ¸°ÙÀÌ »ý¼º‰ç±â ¶§¹®¿¡ ·»´õÅ¸°ÙÀ» ¸ÕÀú ÇØÁ¦ÇÏ°í ºÎ¸ðÀÎ °øÀåÀ» ÇØÁ¦ÇÏ´Â ¼³°è(LIFO)
+	// ìƒì„±ì˜ ì—­ìˆœìœ¼ë¡œ í•´ì œ
+	// ê³µìž¥ì—ì„œ ë Œë”íƒ€ê²Ÿì´ ìƒì„±ë¬ê¸° ë•Œë¬¸ì— ë Œë”íƒ€ê²Ÿì„ ë¨¼ì € í•´ì œí•˜ê³  ë¶€ëª¨ì¸ ê³µìž¥ì„ í•´ì œí•˜ëŠ” ì„¤ê³„(LIFO)
 	if (_wicFactory)
 	{
 		_wicFactory->Release();
@@ -92,52 +115,64 @@ void Game::Cleanup()
 		_d2dFactory->Release();
 		_d2dFactory = nullptr;
 	}
-	// COM ¶óÀÌºê·¯¸® Á¾·á
+	// COM ë¼ì´ë¸ŒëŸ¬ë¦¬ ì¢…ë£Œ
 	::CoUninitialize();
 
 	SceneManager::GetInstance().Cleanup();
 
-	// ¸Å´ÏÀúµé °¢ÀÚ Á¤¸®°¡ ÇÊ¿äÇÑ°ÍµéÀº Á¤¸®ÇØÁØ´Ù.
+	// ë§¤ë‹ˆì €ë“¤ ê°ìž ì •ë¦¬ê°€ í•„ìš”í•œê²ƒë“¤ì€ ì •ë¦¬í•´ì¤€ë‹¤.
 	ResourceManager::GetInstance().Cleanup();
 }
 
 void Game::Update()
 {
-	// °¢Á¾ ¾÷µ¥ÀÌÆ® ·ÎÁ÷ Ã³¸®
+	// ê°ì¢… ì—…ë°ì´íŠ¸ ë¡œì§ ì²˜ë¦¬
 	TimeManager::GetInstance().Update();
 
-	// ÀÔ·Â ¾÷µ¥ÀÌÆ® 
+	// ìž…ë ¥ ì—…ë°ì´íŠ¸ 
 	InputManager::GetInstance().Update();
 
-	// Scene ¾÷µ¥ÀÌÆ®
+	// Scene ì—…ë°ì´íŠ¸
 	SceneManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
 
-	// ¸ðµç Update°¡ ³¡³ª°í ÁÂÇ¥ °»½ÅÀÌ ¿Ï·áµÈ ÈÄ, Ãæµ¹Ã¼Å© ¼öÇà
+	// ëª¨ë“  Updateê°€ ëë‚˜ê³  ì¢Œí‘œ ê°±ì‹ ì´ ì™„ë£Œëœ í›„, ì¶©ëŒì²´í¬ ìˆ˜í–‰
 	// UIManager::GetInstance().Update(TimeManager::GetInstance().GetDT());
 	CollisionManager::GetInstance().Update();
+
+	ImGui_ImplD2D_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	
+	// Test ImGui window
+	ImGui::ShowDemoWindow();
+
 }
 
 void Game::Render()
 {
 	if (_renderTarget == nullptr) return;
 
-	// [Direct2D ±×¸®±â ½ÃÀÛ]
+	// [Direct2D ê·¸ë¦¬ê¸° ì‹œìž‘]
 	_renderTarget->BeginDraw();
 
-	// ¸Å ÇÁ·¹ÀÓ¸¶´Ù ÀÌÀü ÀÜ»óÀ» Áö¿ì±â À§ÇØ °ËÀº»ö(È¤Àº ¿øÇÏ´Â »ö)À¸·Î È­¸é µ¤±â
+	// ë§¤ í”„ë ˆìž„ë§ˆë‹¤ ì´ì „ ìž”ìƒì„ ì§€ìš°ê¸° ìœ„í•´ ê²€ì€ìƒ‰(í˜¹ì€ ì›í•˜ëŠ” ìƒ‰)ìœ¼ë¡œ í™”ë©´ ë®ê¸°
 	_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::SkyBlue));
 
 
-	// °¢Á¾ ·»´õ¸µ ·ÎÁ÷ Ã³¸®
+	// ê°ì¢… ë Œë”ë§ ë¡œì§ ì²˜ë¦¬
 	// 
-	// SceneÀÇ ¸ðµç °´Ã¼ ·»´õ¸µ
+	// Sceneì˜ ëª¨ë“  ê°ì²´ ë Œë”ë§
 	SceneManager::GetInstance().Render(_renderTarget);
 
 	CollisionManager::GetInstance().Render(_renderTarget);
 
+	ImGui::Render();
+	ImGui_ImplD2D_RenderDrawData(ImGui::GetDrawData());
+
+
 	// UIManager::GetInstance().Render(_hdcBack);
 	
-	// [Direct2D ±×¸®±â Á¾·á]
+	// [Direct2D ê·¸ë¦¬ê¸° ì¢…ë£Œ]
 	_renderTarget->EndDraw();
 }
 
