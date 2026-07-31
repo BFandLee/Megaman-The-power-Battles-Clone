@@ -69,6 +69,7 @@ void Game::Init(HWND hwnd)
 
 	// CollisionManager 초기화
 	CollisionManager::GetInstance().Init();
+
 	// UIManager::GetInstance().Init();
 }
 
@@ -132,7 +133,7 @@ void Game::Render()
 	// Scene의 모든 객체 렌더링
 	SceneManager::GetInstance().Render(_renderTarget);
 
-	//CollisionManager::GetInstance().Render(_renderTarget);
+	CollisionManager::GetInstance().Render(_renderTarget);
 
 	// UIManager::GetInstance().Render(_hdcBack);
 	

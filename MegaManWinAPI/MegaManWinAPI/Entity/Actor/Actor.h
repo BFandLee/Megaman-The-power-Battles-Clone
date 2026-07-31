@@ -1,7 +1,9 @@
 #pragma once
+struct HitResult;
 // Scene에 그려지는 모든 객체들은 Actor로부터 파생된다.
 class Actor
 {
+	
 public:
 	virtual ~Actor();
 	
@@ -13,8 +15,8 @@ public:
 	//virtual void OnHit(Actor* other) {}
 
 	// 유니티와 비슷한 충돌 3단계 함수 
-	// virtual void OnEnter(Actor* other, const HitResult& hit) {}
-	// virtual void OnStay(Actor* other, const HitResult& hit) {}
+	virtual void OnEnter(Actor* other, const HitResult& hit) {}
+	virtual void OnStay(Actor* other, const HitResult& hit) {}
 	virtual void OnExit(Actor* other) {}
 	
 	Vector GetPos() const;

@@ -2,6 +2,7 @@
 #include "SpriteRenderer.h"
 #include "ResourceManager.h"
 #include "Texture.h"
+#include "Actor.h"
 
 void SpriteAnimRenderer::Init(wstring textureKey)
 {
@@ -70,8 +71,9 @@ void SpriteAnimRenderer::Update(float deltaTime)
 	}
 }
 
-void SpriteAnimRenderer::Render(ID2D1RenderTarget* renderTarget, Vector pos)
+void SpriteAnimRenderer::Render(ID2D1RenderTarget* renderTarget)
 {
+	Vector pos = GetSpirtePos();
 	if (nullptr == _texture)
 		return;
 
@@ -109,6 +111,11 @@ void SpriteAnimRenderer::SetSize(int32 x, int32 y)
 	{
 		return _texture->SetSize(x, y);
 	}
+}
+
+Vector SpriteAnimRenderer::GetSpirtePos()
+{
+	return GetOwner()->GetPos();
 }
 
 void SpriteAnimRenderer::ResetAnim(int32 row, bool loop, float duration)

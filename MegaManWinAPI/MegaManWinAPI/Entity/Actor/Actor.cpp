@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 // #include "Collider.h"
 #include "TransformComponent.h"
+#include "CollisionManager.h"
 
 Actor::~Actor()
 {
@@ -20,6 +21,7 @@ Actor::~Actor()
 void Actor::Init()
 {
 	_transform = AddComponent<TransformComponent>();
+	CollisionManager::GetInstance().AddActor(this);
 }
 
 // Actor 파괴(삭제) 싶으면, 무조건 Scene에 예약을 걸어서 처리한다.
@@ -30,6 +32,8 @@ void Actor::Destroy()
 	
 	// 2번 방식
 	SceneManager::GetInstance().GetScene()->DeleteActor(this);
+
+	CollisionManager::GetInstance().RemoveActor(this);
 }
 
 void Actor::Update(float deltaTime)
@@ -44,7 +48,7 @@ void Actor::Render(ID2D1RenderTarget* renderTarget)
 {
 	for (auto component : _components)
 	{
-		component->Render(renderTarget, GetPos());
+		component->Render(renderTarget);
 	}
 }
 

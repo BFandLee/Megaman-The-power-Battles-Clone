@@ -8,7 +8,7 @@ class SpriteAnimRenderer : public Component
 public:
 	void Init(wstring textureKey);
 	virtual void Update(float deltaTime) override;
-	virtual void Render(ID2D1RenderTarget* renderTarget, Vector pos) override;
+	virtual void Render(ID2D1RenderTarget* renderTarget) override;
 
 	bool IsEnd() const { return _isEnd; }
 	uint32 GetSizeX() const;
@@ -16,6 +16,7 @@ public:
 	void SetSize(int32 x, int32 y);
 	void SetFullFrame(bool full) { _fullFrame = full; }
 	void SetFlipX(bool flip) { _flipX = flip; }
+	Vector GetSpirtePos();
 
 	void ResetAnim(int32 row, bool loop, float duration);
 

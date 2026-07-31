@@ -12,6 +12,7 @@ enum class RenderLayer
 	Player,
 	Boss,
 	Effect,     // 제일 위
+	WALL,
 	
 	// 최대 개수
 	Count
@@ -24,7 +25,7 @@ enum class ActorType
 	Player,
 	Boss,
 	Effect,
-
+	WALL,
 
 
 	Count,
@@ -45,7 +46,7 @@ enum class SceneType
 enum class ColliderType
 {
 	Circle,
-	AABB,
+	Box,
 	Max
 };
 

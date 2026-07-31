@@ -5,40 +5,76 @@
 #include "Actor.h"
 #include "InputManager.h"
 #include "SceneManager.h"
-// #include "ColliderAABB.h"
+#include "CircleCollider.h"
+#include "BoxCollider.h"
 
 
 namespace DispatchTable
 {
-	//bool CircleToCircle(Collider* a, Collider* b, HitResult& result)
-	//{
-	//	return Collider::CheckCircleToCircle(static_cast<ColliderCircle*>(a), static_cast<ColliderCircle*>(b), result);
-	//}
+	bool CircleToCircle(Collider* a, Collider* b, HitResult& result)
+	{
+		CircleCollider* circleA = static_cast<CircleCollider*>(a);
+		CircleCollider* circleB = static_cast<CircleCollider*>(b);
 
-	//bool CircleToAABB(Collider* a, Collider* b, HitResult& result)
-	//{
-	//	return Collider::CheckCircleToAABB(static_cast<ColliderCircle*>(a), static_cast<ColliderAABB*>(b), result);
-	//}
+		// Q7. ì›ê³¼ ì› ì‚¬ì´ì˜ ì¶©ëŒ íŒì • ë¡œì§ì„ êµ¬í˜„í•´ ë³´ì„¸ìš”. (ë‘ ì  ì‚¬ì´ì˜ ê±°ë¦¬ < ë‘ ë°˜ì§€ë¦„ì˜ í•©)
+		Vector c_aPos = circleA->GetColliderPos();
+		Vector c_bPos = circleB->GetColliderPos();
+		float distSq = (c_aPos - c_bPos).LengthSquared();
+		float rSum = circleA->GetRadius() + circleB->GetRadius();
+		return distSq < (rSum * rSum);
+	}
 
-	//bool AABBToCircle(Collider* a, Collider* b, HitResult& result)
-	//{
-	//	return Collider::CheckCircleToAABB(static_cast<ColliderCircle*>(b), static_cast<ColliderAABB*>(a), result);
-	//}
+	bool CircleToBox(Collider* a, Collider* b, HitResult& result)
+	{
+		CircleCollider* circle = static_cast<CircleCollider*>(a);
+		BoxCollider* box = static_cast<BoxCollider*>(b);
 
-	//bool AABBToAABB(Collider*, Collider*, HitResult& result)
-	//{
-	//	return false; // AABB vs AABB ´Â ¾ÆÁ÷ ¹ÌÁö¿ø (ÇÊ¿äÇØÁö¸é ¿©±â¸¸ Ã¤¿ì¸é µÈ´Ù)
-	//}
+		// Q8. [í•µì‹¬] ì›ê³¼ Box(AABB) ì‚¬ì´ì˜ ì¶©ëŒ ë¡œì§ì„ êµ¬í˜„í•´ ë³´ì„¸ìš”. (Clamp í™œìš©)
+		Vector cPos = circle->GetColliderPos();
+		Vector bPos = box->GetColliderPos();
+
+		float left = bPos.x   - box->GetWidth()  / 2.0f;
+		float right = bPos.x  + box->GetWidth()  / 2.0f;
+		float top = bPos.y    - box->GetHeight() / 2.0f;
+		float bottom = bPos.y + box->GetHeight() / 2.0f;
+
+		float closetX = std::clamp(cPos.x, left, right);
+		float closetY = std::clamp(cPos.y, top, bottom);
+
+		Vector closestPoint(closetX, closetY);
+		float distSq = (cPos - closestPoint).LengthSquared();
+		return distSq <= (circle->GetRadius() * circle->GetRadius());
+	}
+
+	bool BoxToCircle(Collider* a, Collider* b, HitResult& result)
+	{
+		// ìˆœì„œë§Œ ë°”ê¿”ì„œ í˜¸ì¶œí•©ë‹ˆë‹¤.
+		return CircleToBox(b, a, result);
+	}
+
+	bool BoxToBox(Collider* a, Collider* b, HitResult& result)
+	{
+		BoxCollider* boxA = static_cast<BoxCollider*>(a);
+		BoxCollider* boxB = static_cast<BoxCollider*>(b);
+		
+		// Q9. Boxì™€ Box ì‚¬ì´ì˜ ì¶©ëŒ íŒì • ë¡œì§ì„ êµ¬í˜„í•´ ë³´ì„¸ìš”. (AABB ì¶©ëŒ)
+		Vector posA = boxA->GetColliderPos();
+		Vector posB = boxB->GetColliderPos();
+
+		bool overlapX = std::abs(posA.x - posB.x) <= (boxA->GetWidth() + boxB->GetWidth()) / 2.0f;
+		bool overlapY = std::abs(posA.y - posB.y) <= (boxA->GetHeight() + boxB->GetHeight()) / 2.0f;
+
+		return overlapX && overlapY;
+	}
 }
 
 void CollisionManager::Init()
 {
-	// collider Type¿¡ ¸ÂÃç¼­ È£ÃâÇØ¾ßÇÏ´Â ÇÔ¼ö¸¦ °áÁ¤
-	/*DISPATCH_TABLE[(int32)ColliderType::Circle][(int32)ColliderType::Circle] = DispatchTable::CircleToCircle;
-	DISPATCH_TABLE[(int32)ColliderType::Circle][(int32)ColliderType::AABB] = DispatchTable::CircleToAABB;
+	DISPATCH_TABLE[(int32)ColliderType::Circle][(int32)ColliderType::Circle] = DispatchTable::CircleToCircle;
+	DISPATCH_TABLE[(int32)ColliderType::Circle][(int32)ColliderType::Box] = DispatchTable::CircleToBox;
 
-	DISPATCH_TABLE[(int32)ColliderType::AABB][(int32)ColliderType::Circle] = DispatchTable::AABBToCircle;
-	DISPATCH_TABLE[(int32)ColliderType::AABB][(int32)ColliderType::AABB] = DispatchTable::AABBToAABB;*/
+	DISPATCH_TABLE[(int32)ColliderType::Box][(int32)ColliderType::Circle] = DispatchTable::BoxToCircle;
+	DISPATCH_TABLE[(int32)ColliderType::Box][(int32)ColliderType::Box] = DispatchTable::BoxToBox;
 }
 
 void CollisionManager::Clear()
@@ -50,90 +86,73 @@ void CollisionManager::Clear()
 
 void CollisionManager::Update()
 {
-	// ÇöÀç »óÅÂ¿¡ ´ëÇÑ Ãæµ¹Ã¼Å©¸¸ ¼öÇàÇØ¼­ °á°ú¸¦ ÀúÀå
+	// í˜„ì¬ ìƒíƒœì— ëŒ€í•œ ì¶©ëŒì²´í¬ë§Œ ìˆ˜í–‰í•´ì„œ ê²°ê³¼ë¥¼ ì €ì¥
 	_curr.clear();
 
-	// Ãæµ¹Ã¼Å©°¡ ÇÊ¿äÇÑ Actor´Â ÀüºÎ´Ù ºñ±³ÇØ¼­ Ãæµ¹Ã¼Å©¸¦ ¼öÇàÇÑ´Ù.
-	// ÀÏ´Ü, ¸ğµç ³à¼®µéÀ» ´Ù ¼øÈ¸ÇÏ¸é¼­ Ã¼Å©ÇÑ´Ù.
-	// [0] : player, [1] enemy, [2] p.bullet [3] e.bullet ..
-	// [0]<->[1], [2], [3] ÀüºÎ ºñ±³
-
-	// _collisionCheckList : ¸®½ºÆ®¿¡ Á¸ÀçÇÑ´Ù´Â°Ç, Ãæµ¹Ã¼Å©¸¦ ½ÇÇàÇØ¾ßÇÒ 'ÁÖÃ¼'
-	// ÇöÀç : ³» ºñÇà±â, Àû ºñÇà±â, ³» ÃÑ¾Ë, Àû ÃÑ¾Ë
-	// Grid ¹æ½Ä : ³» ºñÇà±â, ³» ÃÑ¾Ë, 
-
-	// ÁÖÃ¼°¡ µÇ´Â ³à¼®µé¸¸ ¼øÈ¸
+	// ì£¼ì²´ê°€ ë˜ëŠ” ë…€ì„ë“¤ë§Œ ìˆœíšŒ
 	for (auto actor : _collisionCheckList)
 	{
-		// ¾î¶² ´ë»ó°ú Ãæµ¹Ã¼Å©¸¦ ÇØ¾ßÇÏ³Ä¸é, ³»°¡ ÀÖ´Â ¼¿°ú ÀÎÁ¢ÇÑ ¼¿¸¸ Ãæµ¹Ã¼Å© ¼öÇà
+		// ì–´ë–¤ ëŒ€ìƒê³¼ ì¶©ëŒì²´í¬ë¥¼ í•´ì•¼í•˜ëƒë©´, ë‚´ê°€ ìˆëŠ” ì…€ê³¼ ì¸ì ‘í•œ ì…€ë§Œ ì¶©ëŒì²´í¬ ìˆ˜í–‰
 		checkCollision(actor);
 	}
 
-	// ÇöÀç ÇÁ·¹ÀÓ¿¡ Ãæµ¹Ã¼Å©°¡ ÇÊ¿äÇÑ »óÅÂ Ã¼Å© ¿Ï·á
+	// í˜„ì¬ í”„ë ˆì„ì— ì¶©ëŒì²´í¬ê°€ í•„ìš”í•œ ìƒíƒœ ì²´í¬ ì™„ë£Œ
 	// Exit 
 	for (const auto& iter : _prev)
 	{
-		// ÀÌÀü¿¡´Â ÀÖ¾ú´Âµ¥, ÇöÀç´Â ¾ø´Ù.
+		// ì´ì „ì—ëŠ” ìˆì—ˆëŠ”ë°, í˜„ì¬ëŠ” ì—†ë‹¤.
 		// Exit
 		if (_curr.contains(iter) == false)
 		{
 			// pair<Actor*, Actor*>
-			// ¾ç¹æÇâÀ¸·Î Exit ÇÔ¼ö¸¦ È£ÃâÇØÁØ´Ù.
+			// ì–‘ë°©í–¥ìœ¼ë¡œ Exit í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ì¤€ë‹¤.
 			iter.first->OnExit(iter.second);
 			iter.second->OnExit(iter.first);
 		}
 	}
 
 	// curr -> prev
-	_prev = _curr;	// ÀÌÁ¦ºÎÅÍ curr »óÅÂ°¡ prev »óÅÂ·Î º¯°æ.
+	_prev = _curr;	// ì´ì œë¶€í„° curr ìƒíƒœê°€ prev ìƒíƒœë¡œ ë³€ê²½.
 	//swap(_prev, _curr);
 
-	// µğ¹ö±ë Á¤º¸ Åä±Û
+	// ë””ë²„ê¹… ì •ë³´ í† ê¸€
 	if (InputManager::GetInstance().GetButtonDown(KeyType::F1))
 	{
-		//if (_drawDebug)
-		//{
-		//	_drawDebug = false;
-		//}
-		//else
-		//{
-		//	_drawDebug = true;
-		//}
-
 		_drawDebug = !_drawDebug;
 	}
 }
 
 void CollisionManager::Render(ID2D1HwndRenderTarget* renderTarget)
 {
-	//if (_drawDebug)
-	//{
-	//	// ±×¸®µå ¶óÀÎ º¸±â
-	//	drawGridLine(hdc);
-
-	//	// µğ¹ö±ëÀ» À§ÇÑ Ãæµ¹Ã¼ »óÅÂ º¸±â
-	//	for (auto actor : _collisionCheckList)
-	//	{
-	//		actor->GetCollider()->Render(hdc, actor->GetPos());
-	//	}
-	//}
+	if (_drawDebug)
+	{
+		// ë””ë²„ê¹…ì„ ìœ„í•œ ì¶©ëŒì²´ ìƒíƒœ ë³´ê¸°
+		for (auto actor : _collisionCheckList)
+		{
+			Collider* col = actor->GetCollider();
+			if (col != nullptr)
+			{
+				actor->GetCollider()->Render(renderTarget);
+			}
+		}
+	}
 }
 
 void CollisionManager::AddActor(Actor* actor)
 {
-	
+	_collisionCheckList.push_back(actor);
 }
 
 void CollisionManager::RemoveActor(Actor* actor)
 {
-	// Ãæµ¹Ã¼Å©°¡ ÇÊ¿äÇÑ °´Ã¼¿¡¼­ Á¦°Å
+	// ì¶©ëŒì²´í¬ê°€ í•„ìš”í•œ ê°ì²´ì—ì„œ ì œê±°
 	std::erase_if(_collisionCheckList, [actor](const Actor* iter) 
 		{
 			return iter == actor;
 		});
 
 
-	// Á¦°ÅÇØ¾ßÇÒ ´ë»óÀ» °É·¯ÁÖ´Â ¶÷´Ù½Ä
+	// ì œê±°í•´ì•¼í•  ëŒ€ìƒì„ ê±¸ëŸ¬ì£¼ëŠ” ëŒë‹¤ì‹
 	auto checkActor = [actor](const std::pair<Actor*, Actor*>& pair)
 		{
 			if (pair.first == actor || pair.second == actor)
@@ -141,40 +160,40 @@ void CollisionManager::RemoveActor(Actor* actor)
 			return false;
 		};
 
-	// ÀüÃ¼¼øÈ¸ÇØµµ ºñ¿ëÀÌ Å©Áö ¾Ê´Ù.
-	// °ãÃÄÁ®ÀÖ´Â ´ë»ó¸¸ set ¿¡ Ãß°¡µÉ²¨¿¡¿ä.
+	// ì „ì²´ìˆœíšŒí•´ë„ ë¹„ìš©ì´ í¬ì§€ ì•Šë‹¤.
+	// ê²¹ì³ì ¸ìˆëŠ” ëŒ€ìƒë§Œ set ì— ì¶”ê°€ë êº¼ì—ìš”.
 	std::erase_if(_prev, checkActor);
 	std::erase_if(_curr, checkActor);
 }
 
-//void CollisionManager::addOverlapState(Actor* actor1, Actor* actor2, const HitResult& result)
-//{
-//	auto pair = (actor1 < actor2) ? make_pair(actor1, actor2) : make_pair(actor2, actor1);
-//
-//	// ÇöÀç ÇÁ·¹ÀÓ¿¡ Ãæµ¹»óÅÂ Ã¼Å© µÊ
-//	bool insert = _curr.insert(pair).second;	// second : true, Áßº¹µÈ Å°¸¦ Ãß°¡ÇßÀ¸¸é, second : false
-//	bool prev = _prev.contains(pair); // ÀÌÀü ÇÁ·¹ÀÓ¿¡ key Á¶ÇÕÀÌ ÀÖ¾ú´ÂÁö È®ÀÎ
-//
-//	if (insert == true && prev == false)
-//	{
-//		actor1->OnEnter(actor2, result);
-//		actor2->OnEnter(actor1, result);
-//	}
-//	// Stay ÇØº¸°í ½ÍÀ¸¸é
-//	// ÇöÀç insert == true, ÀÌÀü : true
-//	else if (insert == true && prev == true)
-//	{
-//		// Stay : ÀÌÀü ÇÁ·¹ÀÓ¿¡µµ °ãÃÄ ÀÖ¾ú°í, Áö±İµµ °ãÃÄ ÀÖ´Ù.
-//		// Enter ´Â ÃÖÃÊ ÁøÀÔ 1È¸¸¸ È£ÃâµÇ¹Ç·Î, °ãÄ§ÀÌ À¯ÁöµÇ´Â µ¿¾È
-//		// Ä§Åõ¸¦ ÇØ¼ÒÇÒ ±âÈ¸´Â Stay ¿¡¼­¸¸ ÁÙ ¼ö ÀÖ´Ù. (¿¹: º® ¹æÇâ ÀÔ·ÂÀ» À¯ÁöÇÑ Ã¤ ÆÄ°íµå´Â °æ¿ì)
-//		actor1->OnStay(actor2, result);
-//		actor2->OnStay(actor1, result);
-//	}
-//}
+void CollisionManager::addOverlapState(Actor* actor1, Actor* actor2, const HitResult& result)
+{
+	auto pair = (actor1 < actor2) ? make_pair(actor1, actor2) : make_pair(actor2, actor1);
+
+	// í˜„ì¬ í”„ë ˆì„ì— ì¶©ëŒìƒíƒœ ì²´í¬ ë¨
+	bool insert = _curr.insert(pair).second;	// second : true, ì¤‘ë³µëœ í‚¤ë¥¼ ì¶”ê°€í–ˆìœ¼ë©´, second : false
+	bool prev = _prev.contains(pair); // ì´ì „ í”„ë ˆì„ì— key ì¡°í•©ì´ ìˆì—ˆëŠ”ì§€ í™•ì¸
+
+	if (insert == true && prev == false)
+	{
+		actor1->OnEnter(actor2, result);
+		actor2->OnEnter(actor1, result);
+	}
+	// Stay í•´ë³´ê³  ì‹¶ìœ¼ë©´
+	// í˜„ì¬ insert == true, ì´ì „ : true
+	else if (insert == true && prev == true)
+	{
+		// Stay : ì´ì „ í”„ë ˆì„ì—ë„ ê²¹ì³ ìˆì—ˆê³ , ì§€ê¸ˆë„ ê²¹ì³ ìˆë‹¤.
+		// Enter ëŠ” ìµœì´ˆ ì§„ì… 1íšŒë§Œ í˜¸ì¶œë˜ë¯€ë¡œ, ê²¹ì¹¨ì´ ìœ ì§€ë˜ëŠ” ë™ì•ˆ
+		// ì¹¨íˆ¬ë¥¼ í•´ì†Œí•  ê¸°íšŒëŠ” Stay ì—ì„œë§Œ ì¤„ ìˆ˜ ìˆë‹¤. (ì˜ˆ: ë²½ ë°©í–¥ ì…ë ¥ì„ ìœ ì§€í•œ ì±„ íŒŒê³ ë“œëŠ” ê²½ìš°)
+		actor1->OnStay(actor2, result);
+		actor2->OnStay(actor1, result);
+	}
+}
 
 void CollisionManager::setIgnoreMask(ActorType A, ActorType B)
 {
-	// Ç×»ó ¾ç¹æÇâÀ¸·Î °ü¸®
+	// í•­ìƒ ì–‘ë°©í–¥ìœ¼ë¡œ ê´€ë¦¬
 	IGNORE_MASK[(int32)A][(int32)B] = true;
 	IGNORE_MASK[(int32)A][(int32)A] = true;
 
@@ -184,45 +203,68 @@ void CollisionManager::setIgnoreMask(ActorType A, ActorType B)
 
 void CollisionManager::checkCollision(Actor* actor)
 {
-	
+	Collider* colA = actor->GetCollider();
+	if (colA == nullptr) return;
+	// Q10. ì´ì¤‘ forë¬¸ì„ ëŒë©° actorì™€ ì¶©ëŒ ê°€ëŠ¥í•œ ë‹¤ë¥¸ actorë“¤ì„ ìˆœíšŒí•˜ê³ ,
+	for (Actor* other : _collisionCheckList)
+	{
+		if (actor == other) continue;
+		if (IGNORE_MASK[(int32)actor->GetActorType()][(int32)other->GetActorType()])
+			continue;
+
+		Collider* colB = other->GetCollider();
+		if (colB == nullptr) continue;
+
+		CheckFunc checkFunc = DISPATCH_TABLE[(int32)colA->GetColliderType()][(int32)colB->GetColliderType()];
+		if (checkFunc != nullptr)
+		{
+			HitResult hit;
+			bool isHit = checkFunc(colA, colB, hit);
+
+			if (isHit)
+			{
+				addOverlapState(actor, other, hit);
+			}
+		}
+	}
 }
 
 //void CollisionManager::drawGridLine(ID2D1HwndRenderTarget* renderTarget)
 //{
 //	int32 gridSize = SceneManager::GetInstance().GetScene()->GetGridSize();
 //
-//	// »¡°£»ö ±×¸®µå ¹è°æ ¼±
+//	// ë¹¨ê°„ìƒ‰ ê·¸ë¦¬ë“œ ë°°ê²½ ì„ 
 //	{
-//		// È­¸é Å©±â¿Í ±×¸®µå Å©±â ¼³Á¤
+//		// í™”ë©´ í¬ê¸°ì™€ ê·¸ë¦¬ë“œ í¬ê¸° ì„¤ì •
 //		int32 width = GWinSizeX;
 //		int32 height = GWinSizeY;
 //
-//		// »¡°£»ö Ææ »ı¼º
+//		// ë¹¨ê°„ìƒ‰ íœ ìƒì„±
 //		HPEN redPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 //		HPEN oldPen = (HPEN)SelectObject(hdc, redPen);
 //
-//		// °¡·Î¼± ±×¸®±â
+//		// ê°€ë¡œì„  ê·¸ë¦¬ê¸°
 //		for (int y = 0; y <= height; y += gridSize)
 //		{
-//			MoveToEx(hdc, 0, y, nullptr); // ½ÃÀÛÁ¡ ¼³Á¤
-//			LineTo(hdc, width, y);        // ³¡Á¡±îÁö ¼± ±×¸®±â
+//			MoveToEx(hdc, 0, y, nullptr); // ì‹œì‘ì  ì„¤ì •
+//			LineTo(hdc, width, y);        // ëì ê¹Œì§€ ì„  ê·¸ë¦¬ê¸°
 //		}
 //
-//		// ¼¼·Î¼± ±×¸®±â
+//		// ì„¸ë¡œì„  ê·¸ë¦¬ê¸°
 //		for (int x = 0; x <= width; x += gridSize)
 //		{
-//			MoveToEx(hdc, x, 0, nullptr); // ½ÃÀÛÁ¡ ¼³Á¤
-//			LineTo(hdc, x, height);       // ³¡Á¡±îÁö ¼± ±×¸®±â
+//			MoveToEx(hdc, x, 0, nullptr); // ì‹œì‘ì  ì„¤ì •
+//			LineTo(hdc, x, height);       // ëì ê¹Œì§€ ì„  ê·¸ë¦¬ê¸°
 //		}
 //
-//		// ÀÌÀü Ææ º¹¿ø ¹× »õ Ææ »èÁ¦
+//		// ì´ì „ íœ ë³µì› ë° ìƒˆ íœ ì‚­ì œ
 //		SelectObject(hdc, oldPen);
 //		DeleteObject(redPen);
 //	}
 //
-//	// Ãæµ¹ Ã¼Å©°¡ ÇÊ¿äÇÑ ¼±¸¸ ±×¸®±â : ÁøÇÑ Ã»·Ï»ö
+//	// ì¶©ëŒ ì²´í¬ê°€ í•„ìš”í•œ ì„ ë§Œ ê·¸ë¦¬ê¸° : ì§„í•œ ì²­ë¡ìƒ‰
 //	{
-//		// Ææ »ı¼º
+//		// íœ ìƒì„±
 //		HPEN myPen = CreatePen(PS_SOLID, 3, RGB(0, 255, 255));
 //		HPEN oldPen = (HPEN)SelectObject(hdc, myPen);
 //
@@ -230,14 +272,14 @@ void CollisionManager::checkCollision(Actor* actor)
 //		{
 //			const Cell& cell = Cell::ConvertToCell(actor->GetPos(), gridSize);
 //
-//			// ÀÎÁ¢ÇÑ ¼¿ ¸ğµÎ Ç¥½Ã
+//			// ì¸ì ‘í•œ ì…€ ëª¨ë‘ í‘œì‹œ
 //			for (int32 i = -1; i < 2; ++i)
 //			{
 //				for (int32 j = -1; j < 2; ++j)
 //				{
 //					Cell checkCell{ cell.iX + i, cell.iY + j };
 //
-//					// »ç°¢Çü ±×¸®±â
+//					// ì‚¬ê°í˜• ê·¸ë¦¬ê¸°
 //					int32 x = checkCell.iX * gridSize;
 //					int32 y = checkCell.iY * gridSize;
 //
@@ -261,7 +303,7 @@ void CollisionManager::checkCollision(Actor* actor)
 //			}
 //		}
 //
-//		// ÀÌÀü Ææ º¹¿ø ¹× »õ Ææ »èÁ¦
+//		// ì´ì „ íœ ë³µì› ë° ìƒˆ íœ ì‚­ì œ
 //		SelectObject(hdc, oldPen);
 //		DeleteObject(myPen);
 //	}

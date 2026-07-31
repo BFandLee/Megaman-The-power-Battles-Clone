@@ -1,10 +1,10 @@
 #pragma once
 #include "Singleton.h"
+#include "Collider.h"
 
-class Collider;
 class CollisionManager : public Singleton<CollisionManager>
 {
-	// Singleton °´Ã¼¸¦ 'Ä£±¸'·Î ¼±¾ğÇØ¼­ private Á¢±Ù °¡´ÉÇÏ°Ô ¿­¾îÁØ´Ù.
+	// Singleton ê°ì²´ë¥¼ 'ì¹œêµ¬'ë¡œ ì„ ì–¸í•´ì„œ private ì ‘ê·¼ ê°€ëŠ¥í•˜ê²Œ ì—´ì–´ì¤€ë‹¤.
 	friend Singleton<CollisionManager>;
 public:
 
@@ -13,65 +13,53 @@ public:
 	void Update();
 	void Render(ID2D1HwndRenderTarget* renderTarget);
 
-	// Ãæµ¹Ã¼Å©°¡ ÇÊ¿äÇÑ ³à¼®µé
+	// ì¶©ëŒì²´í¬ê°€ í•„ìš”í•œ ë…€ì„ë“¤
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
+
+	void addOverlapState(Actor* actor1, Actor* actor2, const HitResult& result);
 
 private:
 	//void addOverlapState(class Actor* actor1, class Actor* actor2, const HitResult& result);
 	void setIgnoreMask(ActorType A, ActorType B);
 
-	// actor¿Í ÀÎÁ¢ÇÑ ¼¿À» ÈÈÀ¸¸é¼­ Ãæµ¹Ã¼Å© ¼öÇà
+	// actorì™€ ì¸ì ‘í•œ ì…€ì„ í›‘ìœ¼ë©´ì„œ ì¶©ëŒì²´í¬ ìˆ˜í–‰
 	void checkCollision(Actor* actor);
 	
-	// µğ¹ö±ë¿ë ¶óÀÎ ±×¸®±â
+	// ë””ë²„ê¹…ìš© ë¼ì¸ ê·¸ë¦¬ê¸°
 	// void drawGridLine(ID2D1HwndRenderTarget* renderTarget);
 
-	// ¾Æ¹«³ª »ı¼º¸øÇÏ°Ô »ı¼ºÀÚ/¼Ò¸êÀÚ¸¦ ¼û±âÀÚ
+	// ì•„ë¬´ë‚˜ ìƒì„±ëª»í•˜ê²Œ ìƒì„±ì/ì†Œë©¸ìë¥¼ ìˆ¨ê¸°ì
 	CollisionManager() = default;
 	~CollisionManager() = default;
 
+public:
+	bool GetDrawdebug() { return _drawDebug; }
 private:
 	bool _drawDebug = false;
 
-	// µ¹+³ª¹« = µµ³¢
-	// ³ª¹«+µ¹ = µµ³¢
+	set<std::pair<Actor*, Actor*>> _prev; // ì´ì „ì— (ì¶©ëŒëœ ìŒ) ê´€ë¦¬
+	set<std::pair<Actor*, Actor*>> _curr; // ì´ì „ì— (ì¶©ëŒëœ ìŒ) ê´€ë¦¬
 
-	//  Ç×»ó ¿øÇÏ´Â ¼ø¼­´ë·Î Á¤·ÄÇØ¼­ key ¸¦ ¸¸µéÀÚ.
-	// "µ¹"+"³ª¹«" => "µ¹"+"³ª¹«"
-	// "³ª¹«"+"µ¹" => "µ¹"+"³ª¹«"
-	//struct CollisionPair
-	//{
-	//	Actor* src;
-	//	Actor* other;
-	//};
-	// ½º¸¶Æ® Æ÷ÀÎÅÍ
-	//shared_ptr<> °´Ã¼ÀÇ »ı¸íÁÖ±â¿¡ °ü·ÃÇÏ°í ½ÍÀ»‹š -> Scene ÀÇ ¿ªÇÒ
-	//weak_ptr<> °üÂûÇÏ°í ½ÍÀ»‹š -> CollisionManager¿¡°Ô´Â ÀÌ°Ô ´õ ¾î¿ï¸°´Ù.
-
-	set<std::pair<Actor*, Actor*>> _prev; // ÀÌÀü¿¡ (Ãæµ¹µÈ ½Ö) °ü¸®
-	set<std::pair<Actor*, Actor*>> _curr; // ÀÌÀü¿¡ (Ãæµ¹µÈ ½Ö) °ü¸®
-
-	// Ãæµ¹Ã¼Å© ÇØ¾ßÇÏ´Â ¸ğµç Actor
-	// µğÆúÆ®·Î ¹«Á¶°Ç Ãæµ¹Ã¼Å© ¼öÇà,
-	// ( ActorType vs ActorType ) ¿É¼Ç¿¡ µû¶ó¼­ Ãæµ¹Ã¼Å© ¹«½Ã
+	// ì¶©ëŒì²´í¬ í•´ì•¼í•˜ëŠ” ëª¨ë“  Actor
+	// ë””í´íŠ¸ë¡œ ë¬´ì¡°ê±´ ì¶©ëŒì²´í¬ ìˆ˜í–‰,
+	// ( ActorType vs ActorType ) ì˜µì…˜ì— ë”°ë¼ì„œ ì¶©ëŒì²´í¬ ë¬´ì‹œ
 	vector<Actor*> _collisionCheckList; // (E,P)bullet, player, enemy
 
-	// ignore[0][0] = false; // Ãæµ¹Ã¼Å© off
-	// ignore[0][1] = true;	 // Ãæµ¹Ã¼Å© on
-	bool IGNORE_MASK[(int32)ActorType::Count][(int32)ActorType::Count] = {}; // ÀÏÁ¾ÀÇ Å×ÀÌºí
+	// ignore[0][0] = false; // ì¶©ëŒì²´í¬ off
+	// ignore[0][1] = true;	 // ì¶©ëŒì²´í¬ on
+	bool IGNORE_MASK[(int32)ActorType::Count][(int32)ActorType::Count] = {}; // ì¼ì¢…ì˜ í…Œì´ë¸”
 
 
-	// bit Ã¼Å©·Î ÇØº¸´Â°Í ¿¬½ÀÇØºÁµµ ÁÁ½À´Ï´Ù.
-	// 1byte : 8bit, ±â²¯ÇØºÁ¾ß ActorType¼ö°¡ ¸¹Áö ¾Ê¾Æ¼­ 
+	// bit ì²´í¬ë¡œ í•´ë³´ëŠ”ê²ƒ ì—°ìŠµí•´ë´ë„ ì¢‹ìŠµë‹ˆë‹¤.
+	// 1byte : 8bit, ê¸°ê»í•´ë´ì•¼ ActorTypeìˆ˜ê°€ ë§ì§€ ì•Šì•„ì„œ 
 	//uint8 IGNORE_BIT_MASK[(int32)ActorType::Count];
 	// _ _ _ p.buller e.bullet enmey  player
 	// _ _ _     _         _      _     _
-	// ºñÆ® ÀÚ¸®¼ö°¡ ÀÇ¹ÌÇÏ´Â°Í (ActorType)
+	// ë¹„íŠ¸ ìë¦¬ìˆ˜ê°€ ì˜ë¯¸í•˜ëŠ”ê²ƒ (ActorType)
 
 
-	// Collider Type ¿¡ ¸ÂÃç¼­ ½ÇÇàÇØ¾ßÇÏ´Â ÇÔ¼ö
-	// using CheckFunc = bool(*)(Collider* a, Collider* b, HitResult& result);
-	// CheckFunc DISPATCH_TABLE[(int32)ColliderType::Max][(int32)ColliderType::Max];
+	// Collider Type ì— ë”°ë¼ í˜¸ì¶œí•´ì•¼í•˜ëŠ” í•¨ìˆ˜ í¬ì¸í„°
+	using CheckFunc = bool(*)(Collider* a, Collider* b, HitResult& result);
+	CheckFunc DISPATCH_TABLE[(int32)ColliderType::Max][(int32)ColliderType::Max];
 };
-

@@ -11,8 +11,9 @@ void ImageRenderer::Init(wstring textureKey, int32 ix, int32 iy)
 	_iY = iy;
 }
 
-void ImageRenderer::Render(ID2D1RenderTarget* renderTarget, Vector pos)
+void ImageRenderer::Render(ID2D1RenderTarget* renderTarget)
 {
+	Vector pos = GetImagePos();
 	if (_texture)
 	{
 		// sprite animation 아니라, 단순 이미지인데 sprite로 쪼개져있는 경우
@@ -59,6 +60,11 @@ void ImageRenderer::SetSize(int32 x, int32 y)
 	{
 		return _texture->SetSize(x, y);
 	}
+}
+
+Vector ImageRenderer::GetImagePos()
+{
+	return GetOwner()->GetPos();
 }
 
 void ImageRenderer::SetApplyCenter(bool apply)

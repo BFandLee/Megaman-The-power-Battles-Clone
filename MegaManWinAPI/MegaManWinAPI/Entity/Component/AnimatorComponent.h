@@ -34,7 +34,7 @@ public:
 
 	// 게임 루프 갱신 및 그리기
 	virtual void Update(float deletaTime) override;
-	virtual void Render(ID2D1RenderTarget* renderTarget, Vector pos) override;
+	virtual void Render(ID2D1RenderTarget* renderTarget) override;
 
 	// 클립 추가 및 재생 인터페이스
 	void AddClip(const wstring& stateName, AnimationClip* clip);
