@@ -8,6 +8,11 @@
 #include "TransformComponent.h"
 #include "CollisionManager.h"
 
+Actor::Actor(string name) : _name(name)
+{
+
+}
+
 Actor::~Actor()
 {
 	// new Component 들.. 메모리 해제.
@@ -77,5 +82,56 @@ void Actor::cacheCollider(Component* component)
 	if (collider)
 	{
 		_collider = collider;	// 한번 캐싱해둔다.
+	}
+}
+
+void Actor::RenderUI()
+{
+	ImGui::PushID(this);
+
+	if (ImGui::TreeNode(_name.c_str()))
+	{
+		for (auto& component : _components)
+		{
+			component->RenderUI();
+		}
+
+		ImGui::TreePop();
+	}
+
+	ImGui::PopID();
+}
+
+json Actor::ToJson()
+{
+	json j;
+	j["name"] = _name;
+
+	// 내가 가진 컴포넌트들을 배열로 묶어서 저장
+	json componentsArray = json::array();
+
+	for (auto comp : _components)
+	{
+		componentsArray.push_back(comp->ToJson());
+	}
+
+	j["Components"] = componentsArray;
+	return j;
+}
+
+void Actor::FromJson(const json& j)
+{
+	if (j.contains("name")) _name = j["name"];
+
+	// 저장된 컴포넌트 배열을 읽어와서 덮어씁니다.
+	int index = 0;
+	for (const auto& compJson : j["Components"])
+	{
+		// 엑터가 init() 되면서 생성해둔 컴포넌트 개수를 초과하지 않는지 안전검사
+		if (index < _components.size())
+		{
+			_components[index]->FromJson(compJson);
+		}
+		index++;
 	}
 }

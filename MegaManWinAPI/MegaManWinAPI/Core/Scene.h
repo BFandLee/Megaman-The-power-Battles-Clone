@@ -44,6 +44,10 @@ public:
 	void CreateEffect(Vector pos);
 	Actor* CreateActor(ActorType type);
 
+	void RenderUI();
+	void SaveScene(const string& filename);
+	bool LoadScene(const string& filename);
+
 public:
 	const vector<Actor*>& GetRenderList(RenderLayer layer) const;
 	// const GridInfo& GetGridInfo(const Cell& cell);
@@ -91,6 +95,17 @@ protected:
 
 	// 본인의 타입
 	SceneType _sceneType = SceneType::Max;
+
+private:
+	std::map<string, std::function<class Actor* ()>> _actorFactory;
+
+	// 팩토리에 쉽게 등록하기 위한 탬플릿 함수
+	template<typename T>
+	void RegisterActor(const string& name)
+	{
+		// 람다함수를 이용하여 new T()를 호출하는 함수 자체를 저장
+		_actorFactory[name] = []() {return new T(); };
+	}
 };
 
 

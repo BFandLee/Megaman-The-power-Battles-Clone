@@ -5,14 +5,17 @@ class Actor
 {
 	
 public:
+	Actor(string name);
 	virtual ~Actor();
 	
 	virtual void Init();
 	virtual void Destroy();
-
+	virtual void RenderUI();
 	virtual void Update(float deltaTime);
 	virtual void Render(ID2D1RenderTarget* renderTarget);
 	//virtual void OnHit(Actor* other) {}
+	virtual json ToJson();
+	virtual void FromJson(const json& j);
 
 	// 유니티와 비슷한 충돌 3단계 함수 
 	virtual void OnEnter(Actor* other, const HitResult& hit) {}
@@ -99,5 +102,6 @@ private:
 	IObjectPool* _pool = nullptr;
 
 	class TransformComponent* _transform = nullptr;
+	string _name;
 };
 

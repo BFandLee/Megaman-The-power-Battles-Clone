@@ -42,3 +42,34 @@ void BoxCollider::Render(ID2D1RenderTarget* renderTarget)
 	// DrawRectangle 호출 로직 작성
 	renderTarget->DrawRectangle(rect, _brush, 1.0f);
 }
+
+void BoxCollider::RenderUI()
+{
+	if (ImGui::TreeNode("BoxCollider"))
+	{
+		ImGui::DragFloat("Width", &_width);
+		ImGui::DragFloat("Height", &_height);
+		ImGui::DragFloat2("Offset", &_offset.x, 0.3f);
+
+		ImGui::TreePop();
+	}
+	
+}
+
+json BoxCollider::ToJson()
+{
+	json j = Component::ToJson();
+
+	j["Width"] = _width;
+	j["Height"] = _height;
+
+	return j;
+}
+
+void BoxCollider::FromJson(const json& j)
+{
+	Super::FromJson(j);
+
+	if (j.contains("Width")) _width = j["Width"];
+	if (j.contains("Height")) _height = j["Height"];
+}

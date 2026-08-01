@@ -4,9 +4,15 @@
 class Component
 {
 public:
-	// 인터페이스 제공, 실제 구현내용은 자식들이 알아서 작성
+	Component(string name);
+	
 	virtual void Update(float deltaTime)	 {}
 	virtual void Render(ID2D1RenderTarget* renderTarge) {}
+	virtual void RenderUI() {}
+	
+	// Json
+	virtual json ToJson();
+	virtual void FromJson(const json& j);
 
 public:
 	void SetOwner(class Actor* owner) { _owner = owner; }
@@ -15,5 +21,6 @@ public:
 
 private:
 	class Actor* _owner = nullptr;		// 자신이 속한 Obejct
+	string _name;
 };
 

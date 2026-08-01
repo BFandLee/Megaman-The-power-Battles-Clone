@@ -3,7 +3,7 @@
 #include "Actor.h"
 
 Collider::Collider(ColliderType type)
-	: _colliderType(type)
+	: _colliderType(type), Component("Collider")
 {
 }
 

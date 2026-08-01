@@ -3,9 +3,6 @@
 #include "CollisionManager.h"
 #include "BoxCollider.h"
 
-WallActor::WallActor()
-{
-}
 
 WallActor::~WallActor()
 {
@@ -27,6 +24,7 @@ void WallActor::Render(ID2D1RenderTarget* renderTarget)
 {
 	Super::Render(renderTarget);
 }
+
 
 RenderLayer WallActor::GetRenderLayer()
 {

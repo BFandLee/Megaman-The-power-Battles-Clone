@@ -29,7 +29,7 @@ private:
 	float _accmulatedTime = 0.0f;
 
 public:
-	AnimatorComponent() {};
+	AnimatorComponent() : Component("AnimatorComponent") {}
 	virtual ~AnimatorComponent();
 
 	// 게임 루프 갱신 및 그리기

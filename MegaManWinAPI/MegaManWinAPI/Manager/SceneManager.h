@@ -14,7 +14,7 @@ public:
 
 	void Update(float deltaTime);
 	void Render(ID2D1HwndRenderTarget*  renderTarget);
-
+	void RenderUI();
 	// Reserve a scene change; applied at the start of the next Update
 	void ChangeScene(SceneType type);
 

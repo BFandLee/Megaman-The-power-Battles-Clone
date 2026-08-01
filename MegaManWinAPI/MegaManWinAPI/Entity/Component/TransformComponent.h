@@ -2,8 +2,9 @@
 #include "Component.h"
 class TransformComponent : public Component
 {
+	using Super = Component;
 public:
-	TransformComponent() = default;
+	TransformComponent() : Component("TransformComponent") {}
 	virtual ~TransformComponent() = default;
 
 	// Pos
@@ -17,6 +18,11 @@ public:
 	// Rotation
 	float GetRotation() const { return _rotation; }
 	void SetRotation(float rotation) { _rotation = rotation; }
+
+public:
+	virtual void RenderUI() override;
+	virtual json ToJson() override;
+	virtual void FromJson(const json& j) override;
 
 private:
 	Vector _pos = Vector(0.0f, 0.0f);

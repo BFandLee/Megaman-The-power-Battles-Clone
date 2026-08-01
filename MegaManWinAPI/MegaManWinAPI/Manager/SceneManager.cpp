@@ -86,3 +86,11 @@ void SceneManager::applySceneChange()
 	// 전환이 종료되었으니, None 초기화
 	_nextSceneType = SceneType::Max;
 }
+
+void SceneManager::RenderUI()
+{
+	if (_scene != nullptr)
+	{
+		_scene->RenderUI();
+	}
+}

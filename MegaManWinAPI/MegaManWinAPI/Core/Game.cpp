@@ -143,8 +143,7 @@ void Game::Update()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	
-	// Test ImGui window
-	ImGui::ShowDemoWindow();
+	SceneManager::GetInstance().RenderUI();
 
 }
 

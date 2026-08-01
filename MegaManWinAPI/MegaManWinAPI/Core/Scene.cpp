@@ -6,9 +6,11 @@
 //#include "Effect.h"
 //#include "DataManager.h"
 //#include "ResourceData.h"
-// #include "Player.h"	
 #include "Background.h"
 #include "Actor.h"
+#include "Player.h"
+#include "Ground.h"
+#include "WallActor.h"
 
 // 생성자/소멸자를 cpp 작성하면, Scene의 인스턴스화는 cpp에서 일어남.
 // ObjectPool<T> (vector<T>) 값 자체를 가지고 있는 풀을 생성하는것도,
@@ -23,6 +25,11 @@ Scene::~Scene()
 
 void Scene::Init()
 {
+	RegisterActor<Player>("Player");
+	RegisterActor<Background>("Background");
+	RegisterActor<Ground>("Ground");
+	RegisterActor<WallActor>("WallActor");
+
 	// Grid 미리 생성
 	/*_gridCountX = (int32)GWinSizeX / _gridSize;
 	_gridCountY = (int32)GWinSizeY / _gridSize;
@@ -34,7 +41,11 @@ void Scene::Init()
 	loadResources();
 
 	// Scene에 필요한 객체 생성
-	createObjects();
+	
+	if (LoadScene("SceneData.json") == false)
+	{
+		createObjects();
+	}
 
 
 }
@@ -310,4 +321,77 @@ Actor* Scene::CreateActor(ActorType type)
 	}
 
 	return nullptr;
+}
+
+void Scene::RenderUI()
+{
+	ImGui::Begin("Hierarchy");
+
+	if (ImGui::Button("Save Scene"))
+	{
+		SaveScene("SceneData.json");
+	}
+
+	for (auto& actor : _actors)
+	{
+		actor->RenderUI();
+	}
+	ImGui::End();
+}
+
+void Scene::SaveScene(const string& filename)
+{
+	json j;
+	json actorsArray = json::array();
+
+	for (auto actor : _actors)
+	{
+		actorsArray.push_back(actor->ToJson());
+	}
+	j["Actors"] = actorsArray;
+
+	std::ofstream file(filename);
+	if (file.is_open())
+	{
+		// dump(4) : 4칸 들여쓰기해서 텍스트로 만듦
+		file << j.dump(4);
+		file.close();
+	}
+}
+
+bool Scene::LoadScene(const string& filename)
+{
+	std::ifstream file(filename);
+	if(!file.is_open()) return false;
+
+	json j;
+	file >> j;
+
+	if (j.contains("Actors") && j["Actors"].is_array())
+	{
+		for (auto& actorJson : j["Actors"])
+		{
+			string name = actorJson["name"];
+			Actor* newActor = nullptr;
+
+			// 팩토리 맵에 해당 이름이 등록되어 있는지 확인
+			if (_actorFactory.contains(name))
+			{
+				// 등록된 생성 함수를 호출하여 객체를 찍어냄
+				newActor = _actorFactory[name]();
+			}
+			else
+			{ 
+				continue;
+			}
+
+			if (newActor)
+			{
+				newActor->Init();
+				newActor->FromJson(actorJson);
+				AddActor(newActor);
+			}
+
+		}
+	}
 }

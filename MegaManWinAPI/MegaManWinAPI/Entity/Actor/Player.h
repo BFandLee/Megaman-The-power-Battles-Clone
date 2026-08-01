@@ -15,6 +15,7 @@ class Player : public Actor
 	using Super = Actor;
 
 public:
+	Player() : Actor("Player") {}
 	virtual void Init() override;
 	virtual void Update(float deltaTime) override;
 	

@@ -7,6 +7,7 @@
 class ImageRenderer : public Component
 {
 public:
+	ImageRenderer() : Component("ImageRenderer") {}
 	void Init(wstring textureKey, int32 ix = -1, int32 iy = -1);
 	virtual void Render(ID2D1RenderTarget* renderTarget) override;
 	void SetApplyCenter(bool apply);

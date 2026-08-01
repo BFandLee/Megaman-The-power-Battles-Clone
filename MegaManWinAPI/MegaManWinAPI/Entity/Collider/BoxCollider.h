@@ -3,12 +3,17 @@
 
 class BoxCollider : public Collider
 {
+	using Super = Collider;
 public:
 	BoxCollider();
 	virtual ~BoxCollider();
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render(ID2D1RenderTarget* renderTarget) override;
+
+	virtual void RenderUI() override;
+	virtual json ToJson() override;
+	virtual void FromJson(const json& j) override;
 
 	float GetWidth() const { return _width; }
 	float GetHeight() const { return _height; }

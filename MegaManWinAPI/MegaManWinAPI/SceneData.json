@@ -1,0 +1,101 @@
+{
+    "Actors": [
+        {
+            "Components": [
+                {
+                    "PosX": 0.0,
+                    "PosY": 336.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Height": 0.0,
+                    "Width": 0.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "WallActor"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 1152.0,
+                    "PosY": 336.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Height": 800.0,
+                    "Width": 30.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "WallActor"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 576.0,
+                    "PosY": 336.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.5714285373687744,
+                    "ScaleY": 3.096774101257324,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                },
+                {
+                    "name": "ImageRenderer"
+                }
+            ],
+            "name": "Background"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 576.0,
+                    "PosY": 601.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 3.0,
+                    "ScaleY": 3.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "ImageRenderer"
+                },
+                {
+                    "Height": 67.19999694824219,
+                    "Width": 1152.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "Ground"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 726.686767578125,
+                    "PosY": 530.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "ImageRenderer"
+                },
+                {
+                    "Height": 50.0,
+                    "Width": 50.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "Player"
+        }
+    ]
+}
