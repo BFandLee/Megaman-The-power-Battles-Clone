@@ -4,7 +4,7 @@
 #include "BoxCollider.h"
 #include "InputManager.h" // 입력을 받기 위해 포함
 #include "TimeManager.h"  // DeltaTime을 사용하기 위해 포함
-
+#include "RigidBodyComponent.h"
 // 테스트를 위한 include
 #include "ImageRenderer.h"
 #include "Texture.h"
@@ -25,9 +25,13 @@ void Player::Init()
 	Texture * tex = ResourceManager::GetInstance().GetTexture(L"Player");
 	render->SetTexture(tex);
 
-	// 2. 충돌체(Collider) 컴포넌트 추가
+	// 충돌체(Collider) 컴포넌트 추가
 	BoxCollider* collider = AddComponent<BoxCollider>();
-	collider->SetSize(50.0f, 50.0f); 
+	collider->SetSize(50.0f, 50.0f);
+
+	// 중력(Rigidbody) 컴포넌트 추가
+	RigidBodyComponent* rigidbody = AddComponent<RigidBodyComponent>();
+	_rigidbody = rigidbody;
 }
 
 void Player::Update(float deltaTime)
@@ -44,10 +48,12 @@ void Player::Update(float deltaTime)
 		{
 			break;
 		}
+		case PlayerState::Jump:
+		{
+			break;
+		}
 	}
 	
-	// TODO 5: InputManager를 사용하여 좌/우 방향키 입력 시 m_Pos.x 값을 변경하고,
-	// 이동 중일 때는 m_State를 Run으로, 멈췄을 때는 Idle로 변경해보세요.
 	Vector pos = GetPos();
 	if (InputManager::GetInstance().GetButtonPressed(KeyType::Right))
 	{
@@ -64,6 +70,16 @@ void Player::Update(float deltaTime)
 		_state = PlayerState::Idle;
 	}
 
+	if (InputManager::GetInstance().GetButtonPressed(KeyType::SpaceBar))
+	{
+		if (_rigidbody->IsGrounded())
+		{
+			_state = PlayerState::Jump;
+			_rigidbody->SetVelocity({ 0.0f, -500.0f });
+			_rigidbody->SetGrounded(false);
+		}
+	}
+
 	SetPos(pos);
 
 	
@@ -73,20 +89,26 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 {
 	Vector pos = GetPos();
 	bool isWall = (other->GetActorType() == ActorType::WALL);
+	bool isGround = (other->GetActorType() == ActorType::Ground);
 
-	// X축 겹친 깊이 : (actor의 width/2 + other.width/2) - (actor.pos-other.pos)
+	BoxCollider* myCol = GetComponent<BoxCollider>();
+	BoxCollider* otherCol = other->GetComponent<BoxCollider>();
+	if (!myCol || !otherCol) return;
+
+	Vector myColPos = myCol->GetColliderPos();
+	Vector otherColPos = otherCol->GetColliderPos();
+
 	if (isWall)
 	{
-		float mySize = GetComponent<BoxCollider>()->GetWidth() / 2.0f;
-		float otherSize = other->GetComponent<BoxCollider>()->GetWidth() / 2.0f;
+		float mySize = myCol->GetWidth() / 2.0f;
+		float otherSize = otherCol->GetWidth() / 2.0f;
 
-		float distanceX = abs(pos.x - other->GetPos().x);
-
+		float distanceX = abs(myColPos.x - otherColPos.x);
 		float overlapX = (mySize + otherSize) - distanceX;
 
 		if (overlapX > 0.0f)
 		{
-			if (pos.x < other->GetPos().x)
+			if (myColPos.x < otherColPos.x)
 			{
 				// 왼쪽으로 밀기
 				pos.x -= overlapX;
@@ -98,6 +120,44 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 			}
 		}
 	}
+	if (isGround)
+	{
+		float mySize = myCol->GetHeight() / 2.0f;
+		float otherSize = otherCol->GetHeight() / 2.0f;
+
+		float distanceY = abs(myColPos.y - otherColPos.y);
+		float overlapY = (mySize + otherSize) - distanceY;
+
+		if (overlapY > 0.0f)
+		{
+			// 부동소수점 오차로 인한 충돌 해제를 막기 위해 미세하게 덜 밀어냄
+			float pushOut = overlapY - 0.1f;
+			
+			// pushOut 값이 아주 미세한 오차 범위(0.001f) 이하라면 위치를 이동하지 않음 (픽셀 덜덜거림 방지)
+			if (std::abs(pushOut) > 0.001f)
+			{
+				pos.y -= pushOut;
+			}
+		}
+
+		auto rigid = GetComponent<RigidBodyComponent>();
+		
+		// 플레이어가 아래로 떨어지고 있거나 가만히 있을 때만 바닥 착지 처리
+		// (점프해서 위로 올라가고 있을 때는 속도를 0으로 깎지 않음!)
+		if (rigid->GetVelocity().y >= 0.0f)
+		{
+			rigid->SetGrounded(true);
+			rigid->SetVelocity({ 0.0f, 0.0f });
+		}
+	}
 	SetPos(pos);
 	
+}
+
+void Player::OnExit(Actor* other)
+{
+	if (other->GetActorType() == ActorType::Ground)
+	{
+		_rigidbody->SetGrounded(false);
+	}
 }

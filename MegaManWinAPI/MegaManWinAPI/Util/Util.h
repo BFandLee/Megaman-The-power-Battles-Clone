@@ -26,6 +26,7 @@ enum class ActorType
 	Boss,
 	Effect,
 	WALL,
+	Ground,
 
 
 	Count,

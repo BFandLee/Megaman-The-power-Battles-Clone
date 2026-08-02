@@ -7,6 +7,7 @@ enum class PlayerState
 {
 	Idle,
 	Run,
+	Jump,
 	// ... (필요에 따라 추가)
 };
 
@@ -20,7 +21,8 @@ public:
 	virtual void Update(float deltaTime) override;
 	
 	// 충돌 처리 함수
-	void OnStay(Actor* other, const HitResult& hit);
+	virtual void OnStay(Actor* other, const HitResult& hit) override;
+	virtual void OnExit(Actor* other) override;
 
 	virtual RenderLayer GetRenderLayer() override { return RenderLayer::Player; }
 	virtual ActorType GetActorType() override { return ActorType::Player; }
@@ -28,4 +30,5 @@ public:
 private:
 	PlayerState _state;
 	float _speed = 300.f; // 플레이어의 이동 속도
+	class RigidBodyComponent* _rigidbody;
 };

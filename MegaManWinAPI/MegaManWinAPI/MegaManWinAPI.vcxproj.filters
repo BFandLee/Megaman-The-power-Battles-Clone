@@ -156,6 +156,9 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -255,10 +258,13 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="External\ImGui\imgui_widgets.cpp">
-      <Filter>External\ImGui</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="External\ImGui\imgui_demo.cpp">
-      <Filter>External\ImGui</Filter>
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

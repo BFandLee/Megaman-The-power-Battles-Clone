@@ -155,6 +155,7 @@
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Manager\SceneManager.h" />
     <ClInclude Include="Entity\Component\TransformComponent.h" />
+    <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="Util\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
     <ClInclude Include="Renderer\SpriteRenderer.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Manager\SoundManager.cpp" />
     <ClCompile Include="Renderer\SpriteRenderer.cpp" />
     <ClCompile Include="Core\TestScene.cpp" />
+    <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="Entity\Component\TransformComponent.cpp" />

@@ -6,6 +6,7 @@ class Component
 public:
 	Component(string name);
 	
+	virtual void Init() {}
 	virtual void Update(float deltaTime)	 {}
 	virtual void Render(ID2D1RenderTarget* renderTarge) {}
 	virtual void RenderUI() {}
