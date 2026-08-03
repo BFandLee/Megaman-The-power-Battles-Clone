@@ -16,14 +16,14 @@ void Player::Init()
 	_state = PlayerState::Idle;
 
 	// 1. 애니메이터 컴포넌트 추가
-	//AnimatorComponent* animator = AddComponent<AnimatorComponent>();
-	//// animator->LoadAnimationFromJson(L"Idle", L"Resources/sprites/idle.json");
-	//animator->Play(L"Idle");
+	AnimatorComponent* animator = AddComponent<AnimatorComponent>();
+	animator->LoadAnimationFromJson(L"Idle", L"../Resources/sprites/Player/Animation/idle.json");
+	animator->Play(L"Idle");
 
 	// 테스트용 이미지 렌더러 컴포넌트 추가
-	ImageRenderer* render = AddComponent<ImageRenderer>();
+	/*ImageRenderer* render = AddComponent<ImageRenderer>();
 	Texture * tex = ResourceManager::GetInstance().GetTexture(L"Player");
-	render->SetTexture(tex);
+	render->SetTexture(tex);*/
 
 	// 충돌체(Collider) 컴포넌트 추가
 	BoxCollider* collider = AddComponent<BoxCollider>();

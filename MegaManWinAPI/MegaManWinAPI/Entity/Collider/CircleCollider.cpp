@@ -37,3 +37,30 @@ void CircleCollider::Render(ID2D1RenderTarget* renderTarget)
 	renderTarget->DrawEllipse(ellipse, _brush, 1.0f);
 	
 }
+
+void CircleCollider::RenderUI()
+{
+	if (ImGui::TreeNode("CircleCollider"))
+	{
+		ImGui::DragFloat("Radius", &_radius);
+		ImGui::DragFloat2("Offset", &_offset.x, 0.3f);
+
+		ImGui::TreePop();
+	}
+}
+
+json CircleCollider::ToJson()
+{
+	json j = Component::ToJson();
+
+	j["Radius"] = _radius;
+
+	return j;
+}
+
+void CircleCollider::FromJson(const json& j)
+{
+	Super::FromJson(j);
+
+	if (j.contains("Radius")) _radius = j["Radius"];
+}

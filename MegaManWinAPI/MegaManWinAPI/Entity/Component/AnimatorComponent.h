@@ -41,6 +41,6 @@ public:
 	void Play(const wstring& stateName);
 
 	// Json 파일을 읽어와 지정된 stateName으로 Clip을 등록하는 인터페이스
-	bool LoadAnimationFromJson(const wstring& stateName, wstring& jsonFilePath);
+	bool LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath);
 };
 

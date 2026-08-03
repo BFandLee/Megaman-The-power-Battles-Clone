@@ -2,7 +2,7 @@
 #include "BoxCollider.h"
 #include "Actor.h"
 #include "CollisionManager.h"
-
+#include "TransformComponent.h"
 BoxCollider::BoxCollider()
 	: Collider(ColliderType::Box)
 {
@@ -32,6 +32,8 @@ void BoxCollider::Render(ID2D1RenderTarget* renderTarget)
 		renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Red), &_brush);
 	}
 	Vector pos = GetColliderPos();
+	Vector scale = GetOwner()->GetComponent<TransformComponent>()->GetScale();
+	
 
 	D2D1_RECT_F rect;
 	rect.left = pos.x - _width / 2.0f;
@@ -62,6 +64,8 @@ json BoxCollider::ToJson()
 
 	j["Width"] = _width;
 	j["Height"] = _height;
+	j["OffsetX"] = _offset.x;
+	j["OffsetY"] = _offset.y;
 
 	return j;
 }
@@ -72,4 +76,6 @@ void BoxCollider::FromJson(const json& j)
 
 	if (j.contains("Width")) _width = j["Width"];
 	if (j.contains("Height")) _height = j["Height"];
+	if (j.contains("OffsetX")) _offset.x = j["OffsetX"];
+	if (j.contains("OffsetY")) _offset.y = j["OffsetY"];
 }

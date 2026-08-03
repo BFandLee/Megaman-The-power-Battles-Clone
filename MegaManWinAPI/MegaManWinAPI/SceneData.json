@@ -3,6 +3,35 @@
         {
             "Components": [
                 {
+                    "PosX": 630.6910400390625,
+                    "PosY": 444.13714599609375,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "ImageRenderer"
+                },
+                {
+                    "Height": 80.0,
+                    "OffsetX": 36.29999923706055,
+                    "OffsetY": 63.900001525878906,
+                    "Width": 69.0,
+                    "name": "Collider"
+                },
+                {
+                    "Gravity": 980.0,
+                    "VelocityX": 0.0,
+                    "VelocityY": 447.4245910644531,
+                    "name": "RigidBodyComponent"
+                }
+            ],
+            "name": "Player"
+        },
+        {
+            "Components": [
+                {
                     "PosX": 0.0,
                     "PosY": 336.0,
                     "Rotation": 0.0,
@@ -11,7 +40,9 @@
                     "name": "TransformComponent"
                 },
                 {
-                    "Height": 800.0,
+                    "Height": 672.0,
+                    "OffsetX": 0.0,
+                    "OffsetY": 0.0,
                     "Width": 50.0,
                     "name": "Collider"
                 }
@@ -29,7 +60,9 @@
                     "name": "TransformComponent"
                 },
                 {
-                    "Height": 800.0,
+                    "Height": 672.0,
+                    "OffsetX": 0.0,
+                    "OffsetY": 0.0,
                     "Width": 50.0,
                     "name": "Collider"
                 }
@@ -70,38 +103,13 @@
                 },
                 {
                     "Height": 67.19999694824219,
+                    "OffsetX": 0.0,
+                    "OffsetY": 2.0,
                     "Width": 1152.0,
                     "name": "Collider"
                 }
             ],
             "name": "Ground"
-        },
-        {
-            "Components": [
-                {
-                    "PosX": 469.16766357421875,
-                    "PosY": 525.2745361328125,
-                    "Rotation": 0.0,
-                    "ScaleX": 2.0,
-                    "ScaleY": 2.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "ImageRenderer"
-                },
-                {
-                    "Height": 80.0,
-                    "Width": 60.0,
-                    "name": "Collider"
-                },
-                {
-                    "Gravity": 980.0,
-                    "VelocityX": 0.0,
-                    "VelocityY": -491.57611083984375,
-                    "name": "RigidBodyComponent"
-                }
-            ],
-            "name": "Player"
         }
     ]
 }

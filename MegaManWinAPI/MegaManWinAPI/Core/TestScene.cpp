@@ -18,8 +18,8 @@ void TestScene::loadResources()
 		L"Background\\background\\sprite_0001.png"
 	);
 	ResourceManager::GetInstance().LoadTexture(
-		L"Player",
-		L"Player\\State\\Idle_3.png"
+		L"Player_Idle_Sheet",
+		L"Player\\State\\Player_Idle_Sheet.png"
 	);
 }
 

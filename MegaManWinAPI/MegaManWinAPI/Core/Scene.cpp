@@ -12,10 +12,10 @@
 #include "Ground.h"
 #include "WallActor.h"
 
-// »ı¼ºÀÚ/¼Ò¸êÀÚ¸¦ cpp ÀÛ¼ºÇÏ¸é, SceneÀÇ ÀÎ½ºÅÏ½ºÈ­´Â cpp¿¡¼­ ÀÏ¾î³².
-// ObjectPool<T> (vector<T>) °ª ÀÚÃ¼¸¦ °¡Áö°í ÀÖ´Â Ç®À» »ı¼ºÇÏ´Â°Íµµ,
-// cpp¿¡¼­ ÀÎ½ºÅÏ½ºÈ­ÇÒ¶§ »ı¼ºµÊ.
-// ÀÌ¶§´Â Bullet/Enemy #include ¿Ï·á »óÅÂ
+// ìƒì„±ì/ì†Œë©¸ìë¥¼ cpp ì‘ì„±í•˜ë©´, Sceneì˜ ì¸ìŠ¤í„´ìŠ¤í™”ëŠ” cppì—ì„œ ì¼ì–´ë‚¨.
+// ObjectPool<T> (vector<T>) ê°’ ìì²´ë¥¼ ê°€ì§€ê³  ìˆëŠ” í’€ì„ ìƒì„±í•˜ëŠ”ê²ƒë„,
+// cppì—ì„œ ì¸ìŠ¤í„´ìŠ¤í™”í• ë•Œ ìƒì„±ë¨.
+// ì´ë•ŒëŠ” Bullet/Enemy #include ì™„ë£Œ ìƒíƒœ
 Scene::Scene() 
 {
 }
@@ -30,17 +30,17 @@ void Scene::Init()
 	RegisterActor<Ground>("Ground");
 	RegisterActor<WallActor>("WallActor");
 
-	// Grid ¹Ì¸® »ı¼º
+	// Grid ë¯¸ë¦¬ ìƒì„±
 	/*_gridCountX = (int32)GWinSizeX / _gridSize;
 	_gridCountY = (int32)GWinSizeY / _gridSize;
 
 	int32 totalGridCount = _gridCountX * _gridCountY;
 	_grid.resize(totalGridCount);*/
 
-	// Scene¿¡ ÇÊ¿äÇÑ ¸®¼Ò½º ·Îµå
+	// Sceneì— í•„ìš”í•œ ë¦¬ì†ŒìŠ¤ ë¡œë“œ
 	loadResources();
 
-	// Scene¿¡ ÇÊ¿äÇÑ °´Ã¼ »ı¼º
+	// Sceneì— í•„ìš”í•œ ê°ì²´ ìƒì„±
 	
 	if (LoadScene("SceneData.json") == false)
 	{
@@ -52,10 +52,10 @@ void Scene::Init()
 
 void Scene::Cleanup()
 {
-	// ¾À¿¡ µîÀåÇÏ´Â ¸ğµç °´Ã¼µéÀÇ delete ´ã´ç
+	// ì”¬ì— ë“±ì¥í•˜ëŠ” ëª¨ë“  ê°ì²´ë“¤ì˜ delete ë‹´ë‹¹
 	//for (auto iter : _actors)
 	//{
-	//	// SceneÀÌ new ÇÑ °´Ã¼´Â delete ÇØµµ µÈ´Ù.
+	//	// Sceneì´ new í•œ ê°ì²´ëŠ” delete í•´ë„ ëœë‹¤.
 	//	if (iter->GetPool() == nullptr)
 	//	{
 	//		delete iter;
@@ -74,82 +74,82 @@ void Scene::Update(float deltaTime)
 			//	GameScene::Dead()
 			//		StageLoader::Load()
 			//			Scene::RemoveAllActor()
-			//				_actors.clear();	// ÀÚ·á ±¸Á¶ Å¬¸®¾î
+			//				_actors.clear();	// ìë£Œ êµ¬ì¡° í´ë¦¬ì–´
 	}
 
-	// »èÁ¦°¡ ÇÊ¿äÇÑ ¾ÖµéÀº »èÁ¦
-	// 1¹ø ¹æ½ÄÀ¸·Î '»èÁ¦ ¿©ºÎ' °É·¯µµ µÇ°í,
-	// 2¹ø ¹æ½ÄÀ¸·Î '»èÁ¦ ¿©ºÎ' °É·¯µµ µÇ°í
+	// ì‚­ì œê°€ í•„ìš”í•œ ì• ë“¤ì€ ì‚­ì œ
+	// 1ë²ˆ ë°©ì‹ìœ¼ë¡œ 'ì‚­ì œ ì—¬ë¶€' ê±¸ëŸ¬ë„ ë˜ê³ ,
+	// 2ë²ˆ ë°©ì‹ìœ¼ë¡œ 'ì‚­ì œ ì—¬ë¶€' ê±¸ëŸ¬ë„ ë˜ê³ 
 	std::erase_if(_actors, [this](Actor* actor)
 		{
-			// 1¹ø ¹æ½ÄÀº, _actor¿¡¼­ Á¦°Å´Â µÇ´Âµ¥,
-			// Á¦°ÅµÇ±âÀü¿¡ ¾Æ·¡ delete + removeActor ÇÔ¼ö È£ÃâÇØ¾ßÇØ¼­
-			// 2¹ø ¹æ½ÄÀ¸·Î º°µµ ¸®½ºÆ®¸¦ °ü¸®ÇÏ´Â°Ô ÁÁ°Ù´Ù.
+			// 1ë²ˆ ë°©ì‹ì€, _actorì—ì„œ ì œê±°ëŠ” ë˜ëŠ”ë°,
+			// ì œê±°ë˜ê¸°ì „ì— ì•„ë˜ delete + removeActor í•¨ìˆ˜ í˜¸ì¶œí•´ì•¼í•´ì„œ
+			// 2ë²ˆ ë°©ì‹ìœ¼ë¡œ ë³„ë„ ë¦¬ìŠ¤íŠ¸ë¥¼ ê´€ë¦¬í•˜ëŠ”ê²Œ ì¢‹ê²Ÿë‹¤.
 			//return actor->GetPendingKill(); 
 			return _reservedRemove.contains(actor);
 		});
 
-	// ½ÇÁ¦ ¸Ş¸ğ¸® ÇØÁ¦ ±î¸Ô¾úµû.
+	// ì‹¤ì œ ë©”ëª¨ë¦¬ í•´ì œ ê¹Œë¨¹ì—ˆë”°.
 	//for (auto deleteActor : _reservedRemove)
 	//{
-	//	// »èÁ¦µÇ´Â Actor
+	//	// ì‚­ì œë˜ëŠ” Actor
 	//	removeActor(deleteActor);
 
-	//	// ÇØ´ç Actor°¡ Ç®¿¡¼­ ÅÂ¾î³­ °æ¿ì¿¡´Â ¹İÈ¯
+	//	// í•´ë‹¹ Actorê°€ í’€ì—ì„œ íƒœì–´ë‚œ ê²½ìš°ì—ëŠ” ë°˜í™˜
 	//	if (deleteActor->GetPool())
 	//	{
-	//		// ÇØ´ç Ç®¿¡´Ù°¡ ¹İÈ¯
+	//		// í•´ë‹¹ í’€ì—ë‹¤ê°€ ë°˜í™˜
 	//		deleteActor->GetPool()->Return(deleteActor);
 	//	}
 	//	else
 	//	{
-	//		// new ÅÂ¾î³­ °æ¿ì´Â delete
+	//		// new íƒœì–´ë‚œ ê²½ìš°ëŠ” delete
 	//		delete deleteActor;
 	//	}
 	//}
 
-	// Ãß°¡°¡ ÇÊ¿äÇÑ ¾ÖµéÀº Ãß°¡
-	// 1¹ø ¹æ½Ä : ¸Å¹ø push_back ÇÒ¶§¸¶´Ù ºñ¿ë ÁöºÒ
+	// ì¶”ê°€ê°€ í•„ìš”í•œ ì• ë“¤ì€ ì¶”ê°€
+	// 1ë²ˆ ë°©ì‹ : ë§¤ë²ˆ push_back í• ë•Œë§ˆë‹¤ ë¹„ìš© ì§€ë¶ˆ
 	//for (auto iter : _reservedAdd)
 	//{
 	//	// vector
 	//	// capacity, size
-	//	// »õ·Î ¿ø¼Ò¸¦ Áı¾î³ÖÀ»‹š capacity ºÎÁ·½Ã, ¸Ş¸ğ¸® Ãß°¡ ÇÒ´ç
+	//	// ìƒˆë¡œ ì›ì†Œë¥¼ ì§‘ì–´ë„£ì„ë–„ capacity ë¶€ì¡±ì‹œ, ë©”ëª¨ë¦¬ ì¶”ê°€ í• ë‹¹
 	//	_actors.push_back(iter);
 	//}
 
-	// 2¹ø ¹æ½Ä :
-	// ¿©±ä, reserverdAdd ¿¡ 10°³°¡ ÀÖÀ»°æ¿ì
-	// vector¸¦ ÇÑ¹ø¿¡ 10°³ ´Ã¸®°í º¹»çÇØ¿Í¼­, ÀçÇÒ´çÀÌ 1¹ø ÀÏ¾î³­´Ù.
+	// 2ë²ˆ ë°©ì‹ :
+	// ì—¬ê¸´, reserverdAdd ì— 10ê°œê°€ ìˆì„ê²½ìš°
+	// vectorë¥¼ í•œë²ˆì— 10ê°œ ëŠ˜ë¦¬ê³  ë³µì‚¬í•´ì™€ì„œ, ì¬í• ë‹¹ì´ 1ë²ˆ ì¼ì–´ë‚œë‹¤.
 	//_actors.insert(_actors.end(), _reservedAdd.begin(), _reservedAdd.end());
 
-	//-> ¹Ì¸® ÇÑ¹ø¸¸ ÇÒ´çÇØ³õ°í, º¹»çÇÏ±â
-	_actors.reserve(_actors.size() + _reservedAdd.size()); // °³¼öX, Capacity(¸Ş¸ğ¸®)
+	//-> ë¯¸ë¦¬ í•œë²ˆë§Œ í• ë‹¹í•´ë†“ê³ , ë³µì‚¬í•˜ê¸°
+	_actors.reserve(_actors.size() + _reservedAdd.size()); // ê°œìˆ˜X, Capacity(ë©”ëª¨ë¦¬)
 	for (Actor* actor : _reservedAdd)
 	{
-		// Ãß°¡µÇ´Â Actor
+		// ì¶”ê°€ë˜ëŠ” Actor
 		registerActor(actor);		
-		_actors.push_back(actor);	// reserve() ÇÔ¼ö·Î ¹Ì¸® capacity È®º¸ÇØµ×´Ù.
+		_actors.push_back(actor);	// reserve() í•¨ìˆ˜ë¡œ ë¯¸ë¦¬ capacity í™•ë³´í•´ë’€ë‹¤.
 	}
 
-	// Áö¿¬¸®½ºÆ® ÃÊ±âÈ­
+	// ì§€ì—°ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
 	_reservedAdd.clear();
 	_reservedRemove.clear();
 
-	// ±×¸®µå °»½Å : ÃÊ±âÈ­ -> Àç°»½Å ÀÌ¹æ½ÄÀÌ ¸¶À½¿¡ ¾Èµç´Ù¸é,
-	// ActorÀÇ À§Ä¡°¡ º¯°æµÉ¶§¸¶´Ù Grid ÀÇ À§Ä¡¸¦ °»½ÅÇØÁÖ´Â ¹æ½ÄÀ» ÇÏ¸é µÈ´Ù.
-	// Áï, ¾Æ·¡ ÄÚµå´Â ´Ù »ç¶óÁö°í Actor°¡ Scene¿¡°Ô ¿äÃ»À» ÇØ¼­, Grid °»½ÅÇÑ´Ù.
+	// ê·¸ë¦¬ë“œ ê°±ì‹  : ì´ˆê¸°í™” -> ì¬ê°±ì‹  ì´ë°©ì‹ì´ ë§ˆìŒì— ì•ˆë“ ë‹¤ë©´,
+	// Actorì˜ ìœ„ì¹˜ê°€ ë³€ê²½ë ë•Œë§ˆë‹¤ Grid ì˜ ìœ„ì¹˜ë¥¼ ê°±ì‹ í•´ì£¼ëŠ” ë°©ì‹ì„ í•˜ë©´ ëœë‹¤.
+	// ì¦‰, ì•„ë˜ ì½”ë“œëŠ” ë‹¤ ì‚¬ë¼ì§€ê³  Actorê°€ Sceneì—ê²Œ ìš”ì²­ì„ í•´ì„œ, Grid ê°±ì‹ í•œë‹¤.
 	{
-		// ¸ğµç ActorÀÇ ÃÖ½ÅÈ­µÈ ÁÂÇ¥ ±âÁØÀ¸·Î Grid °»½Å
-		// ÀÌÀüÇÁ·¹ÀÓ¿¡ ÀÖ¾ú´ø Grid Á¤º¸´Â ÃÊ±âÈ­
+		// ëª¨ë“  Actorì˜ ìµœì‹ í™”ëœ ì¢Œí‘œ ê¸°ì¤€ìœ¼ë¡œ Grid ê°±ì‹ 
+		// ì´ì „í”„ë ˆì„ì— ìˆì—ˆë˜ Grid ì •ë³´ëŠ” ì´ˆê¸°í™”
 		//for (GridInfo& grid : _grid)
 		//{
 		//	grid.actors.clear();
 		//}
 
-		// 1945 °ÔÀÓ Æ¯¼º»ó ¸ÅÇÁ·¹ÀÓ À§Ä¡ º¯°æÀÌ ÀÖÀ¸´Ï±ñ, 
-		// ±×³É ÀüÃ¼ ¼øÈ¸ÇÏ¸é¼­ Grid µî·ÏÀ» ÇØÁØ´Ù.
-		// ÀüÃ¼ ¼øÈ¸´Ï±ñ, ¾îÂ÷ÇÇ ¶Ç ¼º´ÉÀûÀÎ Ãø¸éÀÇ ÀÌÁ¡ÀÌ ¾ø´Â°Å ¾Æ´Ñ°¡¿ä.
+		// 1945 ê²Œì„ íŠ¹ì„±ìƒ ë§¤í”„ë ˆì„ ìœ„ì¹˜ ë³€ê²½ì´ ìˆìœ¼ë‹ˆê¹, 
+		// ê·¸ëƒ¥ ì „ì²´ ìˆœíšŒí•˜ë©´ì„œ Grid ë“±ë¡ì„ í•´ì¤€ë‹¤.
+		// ì „ì²´ ìˆœíšŒë‹ˆê¹, ì–´ì°¨í”¼ ë˜ ì„±ëŠ¥ì ì¸ ì¸¡ë©´ì˜ ì´ì ì´ ì—†ëŠ”ê±° ì•„ë‹Œê°€ìš”.
 		// O(N*M) -> O(N)
 		//for (auto actor : _actors)
 		//{
@@ -162,7 +162,7 @@ void Scene::Update(float deltaTime)
 
 void Scene::Render(ID2D1RenderTarget* renderTarget)
 {
-	// ¸íÈ®ÇÑ ·»´õ¸µ ¼ø¼­¸¦ ÁöÅ°±â À§ÇØ º°µµÀÇ ¸®½ºÆ® ¼ø¼­´ë·Î ±×¸°´Ù.
+	// ëª…í™•í•œ ë Œë”ë§ ìˆœì„œë¥¼ ì§€í‚¤ê¸° ìœ„í•´ ë³„ë„ì˜ ë¦¬ìŠ¤íŠ¸ ìˆœì„œëŒ€ë¡œ ê·¸ë¦°ë‹¤.
 	for (auto list : _renderList)
 	{
 		for (auto actor : list)
@@ -175,10 +175,10 @@ void Scene::Render(ID2D1RenderTarget* renderTarget)
 
 void Scene::PostUpdate()
 {
-	// ÈÄÃ³¸® ¾×¼Ç ¼öÇà (std::function)
+	// í›„ì²˜ë¦¬ ì•¡ì…˜ ìˆ˜í–‰ (std::function)
 	for (auto& action : _postUpdateActions)
 	{
-		// ÇÔ¼öÆ÷ÀÎÅÍ È£Ãâ : °áÇÕµµ ´À½¼ÇØÁø´Ù.
+		// í•¨ìˆ˜í¬ì¸í„° í˜¸ì¶œ : ê²°í•©ë„ ëŠìŠ¨í•´ì§„ë‹¤.
 		action();
 	}
 	_postUpdateActions.clear();
@@ -191,18 +191,18 @@ void Scene::AddPostUpdateAction(std::function<void()> action)
 
 void Scene::AddActor(class Actor* actor)
 {
-	// Áï½Ã Ãß°¡¾ÈÇÏ°í, ¾ÈÀüÇÏ°Ô ¸ğµç update´Ù µ¹°í³ª¼­ Ãß°¡ÇÏÀÚ.
+	// ì¦‰ì‹œ ì¶”ê°€ì•ˆí•˜ê³ , ì•ˆì „í•˜ê²Œ ëª¨ë“  updateë‹¤ ëŒê³ ë‚˜ì„œ ì¶”ê°€í•˜ì.
 	_reservedAdd.push_back(actor);
 }
 
 void Scene::DeleteActor(Actor* actor)
 {
-	// ¿©±â¿¡¼­ Áï½Ã »èÁ¦ÇÏÁö ¾Ê´Â´Ù.
-	// vector »©°í, delete ÇØÁÖ°í.
+	// ì—¬ê¸°ì—ì„œ ì¦‰ì‹œ ì‚­ì œí•˜ì§€ ì•ŠëŠ”ë‹¤.
+	// vector ë¹¼ê³ , delete í•´ì£¼ê³ .
 	//	_actors.erase
 
-	// Áö¿¬ »èÁ¦
-	// Ãß°¡ÀûÀÎ ¸®½ºÆ®¿¡ ³Ö°í, ³ªÁß¿¡ ÇÑ¹ø¿¡ »èÁ¦
+	// ì§€ì—° ì‚­ì œ
+	// ì¶”ê°€ì ì¸ ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ , ë‚˜ì¤‘ì— í•œë²ˆì— ì‚­ì œ
 	_reservedRemove.insert(actor);
 }
 
@@ -223,17 +223,17 @@ Actor* Scene::FindActorByType(ActorType type) const
 void Scene::RemoveAllActor()
 {
 
-	// ¿¹¾àµÈ Ãß°¡ ¸®½ºÆ®
+	// ì˜ˆì•½ëœ ì¶”ê°€ ë¦¬ìŠ¤íŠ¸
 	for (auto actor : _reservedAdd)
 	{
 		delete actor;
 	}
 	_reservedAdd.clear();
 
-	// ¿¹¾àµÈ »èÁ¦ ¸®½ºÆ®
+	// ì˜ˆì•½ëœ ì‚­ì œ ë¦¬ìŠ¤íŠ¸
 	_reservedRemove.clear();
 
-	// ÇöÀç Ãß°¡µÈ ¸®½ºÆ®
+	// í˜„ì¬ ì¶”ê°€ëœ ë¦¬ìŠ¤íŠ¸
 	for (auto iter : _actors)
 	{
 		delete iter;
@@ -245,7 +245,7 @@ void Scene::RemoveAllActor()
 		iter.clear();
 	}
 
-	// Ãæµ¹ ¸Å´ÏÀúµµ clear
+	// ì¶©ëŒ ë§¤ë‹ˆì €ë„ clear
 	CollisionManager::GetInstance().Clear();
 }
 
@@ -276,8 +276,8 @@ void Scene::loadResources()
 
 
 	/*
-	// ½ÇÁ¦ ÅØ½ºÃ³ ·Îµå ¿äÃ»
-	// Direct2D ¹æ½ÄÀÇ ÀÌ»óÀûÀÎ ÇüÅÂ (ÄÃ·¯ Å° ÆÄ¶ó¹ÌÅÍ°¡ ÇÊ¿ä ¾øÀ½)
+	// ì‹¤ì œ í…ìŠ¤ì²˜ ë¡œë“œ ìš”ì²­
+	// Direct2D ë°©ì‹ì˜ ì´ìƒì ì¸ í˜•íƒœ (ì»¬ëŸ¬ í‚¤ íŒŒë¼ë¯¸í„°ê°€ í•„ìš” ì—†ìŒ)
 	ResourceManager::GetInstance().LoadTexture(L"Player", L"Player.png");
 	*/
 // }
@@ -287,7 +287,7 @@ void Scene::createObjects()
 
 }
 
-// Scene¿¡ µî·ÏµÇ´Â ActorµéÀÌ ¸ğµÎ ÇØ¾ßÇÒÀÏ
+// Sceneì— ë“±ë¡ë˜ëŠ” Actorë“¤ì´ ëª¨ë‘ í•´ì•¼í• ì¼
 void Scene::registerActor(Actor* actor)
 {
 	if (actor == nullptr) return;
@@ -353,7 +353,7 @@ void Scene::SaveScene(const string& filename)
 	std::ofstream file(filename);
 	if (file.is_open())
 	{
-		// dump(4) : 4Ä­ µé¿©¾²±âÇØ¼­ ÅØ½ºÆ®·Î ¸¸µê
+		// dump(4) : 4ì¹¸ ë“¤ì—¬ì“°ê¸°í•´ì„œ í…ìŠ¤íŠ¸ë¡œ ë§Œë“¦
 		file << j.dump(4);
 		file.close();
 	}
@@ -374,10 +374,10 @@ bool Scene::LoadScene(const string& filename)
 			string name = actorJson["name"];
 			Actor* newActor = nullptr;
 
-			// ÆÑÅä¸® ¸Ê¿¡ ÇØ´ç ÀÌ¸§ÀÌ µî·ÏµÇ¾î ÀÖ´ÂÁö È®ÀÎ
+			// íŒ©í† ë¦¬ ë§µì— í•´ë‹¹ ì´ë¦„ì´ ë“±ë¡ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸
 			if (_actorFactory.contains(name))
 			{
-				// µî·ÏµÈ »ı¼º ÇÔ¼ö¸¦ È£ÃâÇÏ¿© °´Ã¼¸¦ Âï¾î³¿
+				// ë“±ë¡ëœ ìƒì„± í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ê°ì²´ë¥¼ ì°ì–´ëƒ„
 				newActor = _actorFactory[name]();
 			}
 			else
@@ -394,4 +394,6 @@ bool Scene::LoadScene(const string& filename)
 
 		}
 	}
+
+	return true;
 }

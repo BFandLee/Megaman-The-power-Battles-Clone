@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "AnimatorComponent.h"
-
+#include "Actor.h"
+#include "Texture.h"
+#include "ResourceManager.h"
+#include "TransformComponent.h"
 AnimatorComponent::~AnimatorComponent()
 {
 }
@@ -8,11 +11,56 @@ AnimatorComponent::~AnimatorComponent()
 void AnimatorComponent::Update(float deletaTime)
 {
 	Super::Update(deletaTime);
+
+	// 방어 코드
+	if (_currentClip == nullptr)
+		return;
+
+	// 시간 누적
+	_accmulatedTime += deletaTime;
+
+	float currentDuration = _currentClip->frames[_currentFrame].duration;
+
+	if (_accmulatedTime >= currentDuration)
+	{
+		_accmulatedTime -= currentDuration;
+		_currentFrame++;
+
+		if (_currentFrame >= _currentClip->frames.size())
+		{
+			if (_currentClip->bLoop) 
+				_currentFrame = 0;
+			else
+			{
+				_currentFrame = (int32)_currentClip->frames.size() - 1;
+			}
+		}
+	}
 }
 
 void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 {
 	Super::Render(renderTarget);
+
+	// 방어코드
+	if (_currentClip == nullptr || _currentClip->texture == nullptr)
+		return;
+
+	// 현재 재생할 프레임 정보 꺼내기
+	const AnimationFrame& frame = _currentClip->frames[_currentFrame];
+
+	// Actor의 위치 가져오기
+
+	Vector actorPos = GetOwner()->GetPos();
+	Vector scale = GetOwner()->GetComponent<TransformComponent>()->GetScale();
+	bool filpX = false;
+
+	if (scale.x < 0)
+	{
+		filpX = true;
+		scale.x = abs(scale.x);
+	}
+	_currentClip->texture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
 }
 
 void AnimatorComponent::AddClip(const wstring& stateName, AnimationClip* clip)
@@ -21,9 +69,22 @@ void AnimatorComponent::AddClip(const wstring& stateName, AnimationClip* clip)
 
 void AnimatorComponent::Play(const wstring& stateName)
 {
+	// map에서 stateName 키가 존재하는지 찾기
+	auto it = _clips.find(stateName);
+
+	// 찾지 못했다면 함수 종료
+	if (it == _clips.end())
+	{
+		return;
+	}
+
+	// 찾았다면 _currentClip을 교체하고, 프레임과 누적 시간 초기화
+	_currentClip = it->second;
+	_currentFrame = 0;
+	_accmulatedTime = 0.0f;
 }
 
-bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, wstring& jsonFilePath)
+bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath)
 {
 	// 파일 스트림 열기
 	std::ifstream file(jsonFilePath);
@@ -41,6 +102,13 @@ bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, wstring&
 	string texStr = j["texturePath"];
 	wstring texKey;
 	texKey.assign(texStr.begin(), texStr.end());
+
+	if (j.contains("bLoop"))
+	{
+		clip->bLoop = j["bLoop"];
+	}
+
+	clip->texture = ResourceManager::GetInstance().GetTexture(texKey);
 
 	// 프레임 파싱
 	for (auto& frameJson : j["frames"])

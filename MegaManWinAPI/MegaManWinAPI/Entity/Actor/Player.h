@@ -1,8 +1,6 @@
 #pragma once
 #include "Actor.h"
 
-// TODO 1: Player의 상태를 나타내는 열거형을 선언하세요.
-// 예: Idle, Run, Jump, Fall, Attack 등
 enum class PlayerState
 {
 	Idle,

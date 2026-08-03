@@ -74,11 +74,57 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 	float destWidth = (float)_frameSizeX * scale.x;
 	float destHeight = (float)_frameSizeY * scale.y;
 
-	// 가운데 좌표기준으로 그림이 그려지게 보정해주자.
-	Vector renderPos = worldPos;
-	
 	float left = worldPos.x;
 	float top = worldPos.y;
+	if (_applyCenter)
+	{
+		left -= (destWidth * 0.5f);
+		top -= (destHeight * 0.5f);
+	}
+
+	D2D1_RECT_F destRect = D2D1::RectF(left, top, left + destWidth, top + destHeight);
+	D2D1_RECT_F srcRect = D2D1::RectF(
+		srcPos.x,
+		srcPos.y,
+		srcPos.x + _frameSizeX,
+		srcPos.y + _frameSizeY
+	);
+
+	if (flipX)
+	{
+		D2D1_MATRIX_3X2_F scaleMatrix = D2D1::Matrix3x2F::Scale(
+			D2D1::SizeF(-1.0f, 1.0f),
+			D2D1::Point2F(worldPos.x, worldPos.y)
+		);
+		renderTarget->SetTransform(scaleMatrix);
+	}
+
+	renderTarget->DrawBitmap(
+		_bitmap,
+		destRect,
+		1.0f,
+		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+		srcRect
+	);
+
+	if (flipX)
+	{
+		renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+	}
+}
+
+void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale, bool flipX)
+{
+	if (!_bitmap) return;
+
+	float destWidth = size.x * scale.x;
+	float destHeight = size.y * scale.y;
+
+	// 가운데 좌표기준으로 그림이 그려지게 보정해주자.
+	Vector renderPos = worldPos + offset;
+	
+	float left = renderPos.x;
+	float top = renderPos.y;
 	if (_applyCenter)
 	{
 		left -= (destWidth * 0.5f);
@@ -92,8 +138,8 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 	D2D1_RECT_F srcRect = D2D1::RectF(
 		srcPos.x,
 		srcPos.y,
-		srcPos.x + _frameSizeX,
-		srcPos.y + _frameSizeY
+		srcPos.x + size.x,
+		srcPos.y + size.y
 	);
 
 	// 좌우 반전
@@ -128,6 +174,8 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 	
 
 }
+
+
 
 // UI용
 void Texture::RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos)
