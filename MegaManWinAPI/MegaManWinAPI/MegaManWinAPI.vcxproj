@@ -110,7 +110,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\Weapon;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +140,12 @@
     <ClInclude Include="Entity\Collider\BoxCollider.h" />
     <ClInclude Include="Entity\Collider\CircleCollider.h" />
     <ClInclude Include="Entity\Collider\Collider.h" />
+    <ClInclude Include="Entity\Component\FSMComponent.h" />
+    <ClInclude Include="Entity\Component\WeaponComponent.h" />
+    <ClInclude Include="Entity\FSM\IdleState.h" />
+    <ClInclude Include="Entity\FSM\State.h" />
+    <ClInclude Include="Entity\Weapon\Buster.h" />
+    <ClInclude Include="Entity\Weapon\Weapon.h" />
     <ClInclude Include="Manager\CollisionManager.h" />
     <ClInclude Include="Entity\Component\Component.h" />
     <ClInclude Include="framework.h" />
@@ -182,6 +188,10 @@
     <ClCompile Include="Entity\Collider\BoxCollider.cpp" />
     <ClCompile Include="Entity\Collider\CircleCollider.cpp" />
     <ClCompile Include="Entity\Collider\Collider.cpp" />
+    <ClCompile Include="Entity\Component\FSMComponent.cpp" />
+    <ClCompile Include="Entity\Component\WeaponComponent.cpp" />
+    <ClCompile Include="Entity\FSM\IdleState.cpp" />
+    <ClCompile Include="Entity\Weapon\Buster.cpp" />
     <ClCompile Include="Manager\CollisionManager.cpp" />
     <ClCompile Include="Entity\Component\Component.cpp" />
     <ClCompile Include="Core\Game.cpp" />

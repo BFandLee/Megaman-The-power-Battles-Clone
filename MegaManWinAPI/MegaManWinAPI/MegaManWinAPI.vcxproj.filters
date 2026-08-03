@@ -159,6 +159,24 @@
     <ClInclude Include="RigidBodyComponent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Component\FSMComponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component\WeaponComponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\IdleState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Weapon\Buster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Weapon\Weapon.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -264,6 +282,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\FSMComponent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\WeaponComponent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\IdleState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Weapon\Buster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

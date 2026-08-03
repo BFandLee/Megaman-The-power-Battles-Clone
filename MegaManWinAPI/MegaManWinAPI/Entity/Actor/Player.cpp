@@ -5,6 +5,8 @@
 #include "InputManager.h" // 입력을 받기 위해 포함
 #include "TimeManager.h"  // DeltaTime을 사용하기 위해 포함
 #include "RigidBodyComponent.h"
+#include "../Component/FSMComponent.h"
+#include "../Component/WeaponComponent.h"
 // 테스트를 위한 include
 #include "ImageRenderer.h"
 #include "Texture.h"
@@ -32,11 +34,20 @@ void Player::Init()
 	// 중력(Rigidbody) 컴포넌트 추가
 	RigidBodyComponent* rigidbody = AddComponent<RigidBodyComponent>();
 	_rigidbody = rigidbody;
+
+	// [2주차 목표] FSM 및 Weapon 컴포넌트 부착
+	FSMComponent* fsm = AddComponent<FSMComponent>();
+	// TODO: fsm->AddState()를 호출하여 IdleState, MoveState 등을 맵에 등록하고 초기 상태를 지정하세요.
+
+	WeaponComponent* weapon = AddComponent<WeaponComponent>();
 }
 
 void Player::Update(float deltaTime)
 {
-	Super::Update(deltaTime); // 부모 업데이트 호출
+	Super::Update(deltaTime); // 부모 업데이트 호출 (여기서 부착된 컴포넌트들의 Update가 자동 실행됩니다)
+
+	// TODO: (2주차 목표) 아래의 하드코딩된 키보드 이동, 점프 로직들을 모두 과감하게 지우고, 
+	// 새로 생성한 IdleState.cpp, MoveState.cpp, JumpState.cpp 내부로 각각 옮겨서 구현하세요!
 
 	switch (_state)
 	{
