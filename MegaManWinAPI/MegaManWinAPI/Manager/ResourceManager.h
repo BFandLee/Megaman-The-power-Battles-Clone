@@ -43,6 +43,9 @@ public:
 
 	fs::path GetResourcePath() { return _resourcePath; }
 
+	// 자동 파일 Load
+	void LoadAllTexturesInDirectory(const wstring& directoryPath);
+
 private:
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
 	ResourceManager() = default;

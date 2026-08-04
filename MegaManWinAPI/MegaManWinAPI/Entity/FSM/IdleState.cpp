@@ -4,6 +4,7 @@
 #include "AnimatorComponent.h"
 #include "Player.h"
 #include "InputManager.h"
+#include "WeaponComponent.h"
 
 IdleState::IdleState(FSMComponent* pOwner)
     : State(pOwner)
@@ -16,17 +17,27 @@ IdleState::~IdleState()
 
 void IdleState::Enter()
 {
-    AnimatorComponent* pAnimator = m_pOwnerFSM->GetOwner()->GetComponent<AnimatorComponent>();
-	if (pAnimator != nullptr)
+    _pAnimator = m_pOwnerFSM->GetOwner()->GetComponent<AnimatorComponent>();
+	if (_pAnimator != nullptr)
 	{
-		pAnimator->Play(L"Idle");
+		_pAnimator->Play(L"Idle");
 	}
 	
 }
 
 void IdleState::Update(float deltaTime)
 {
-    // TODO: 키보드 입력을 검사하고, 좌/우 방향키가 눌렸다면 m_pOwnerFSM->ChangeState("Move") 호출
+	bool isAttacking = m_pOwnerFSM->GetOwner()->GetComponent<WeaponComponent>()->IsAttacking();
+	if (isAttacking)
+	{
+		_pAnimator->Play(L"IdleAttack");
+	}
+	else
+	{
+		_pAnimator->Play(L"Idle");
+	}
+
+	
 	if (InputManager::GetInstance().GetButtonPressed(KeyType::Right) 
 		|| InputManager::GetInstance().GetButtonPressed(KeyType::Left))
 	{

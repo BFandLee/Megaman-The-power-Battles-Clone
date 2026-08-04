@@ -3,7 +3,7 @@
         {
             "Components": [
                 {
-                    "PosX": 439.76123046875,
+                    "PosX": 702.0709838867188,
                     "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
@@ -32,7 +32,7 @@
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -0.015808459371328354,
+                    "CoolDown": 0.1316838562488556,
                     "Reloading": 1.0,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -121,6 +121,26 @@
                 }
             ],
             "name": "Ground"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 387.2532958984375,
+                    "PosY": 342.5882263183594,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Radius": 15.0,
+                    "name": "Collider"
+                },
+                {
+                    "name": "ImageRenderer"
+                }
+            ],
+            "name": "PlayerBullet"
         }
     ]
 }

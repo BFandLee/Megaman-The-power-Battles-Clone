@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "ObjectPoolManager.h"
 #include "SceneManager.h"
+#include "AnimatorComponent.h"
 
 WeaponComponent::WeaponComponent() : Component("WeaponComponent")
 {
@@ -21,8 +22,14 @@ WeaponComponent::~WeaponComponent()
 
 void WeaponComponent::Init()
 {
-    // TODO: 기본 무기(Buster 등)를 동적 할당하여 _currentWeapon에 장착
     _currentWeapon = new Buster(this);
+
+    AnimatorComponent* animator = GetOwner()->GetComponent<AnimatorComponent>();
+    animator->LoadAnimationFromJson(L"IdleAttack", L"../Resources/sprites/Player/Animation/Attack.json");
+    animator->LoadAnimationFromJson(L"MoveAttack", L"../Resources/sprites/Player/Animation/Walk_Attack.json");
+    animator->LoadAnimationFromJson(L"JumpAttack", L"../Resources/sprites/Player/Animation/JumpAttack.json");
+
+
 }
 
 void WeaponComponent::Update(float deltaTime)
@@ -38,7 +45,13 @@ void WeaponComponent::Update(float deltaTime)
         _isAttacking = false;
     }
 
-    // TODO: 공격 키 입력을 검사하고 _currentWeapon->Fire() 호출
+    if (_isAttacking)
+    {
+        _currentAnimTimer -= deltaTime;
+        if (_currentAnimTimer <= 0) _isAttacking = false;
+    }
+
+
     if (InputManager::GetInstance().GetButtonDown(KeyType::A) && _currentCooldown <= 0.0f)
     {
         _currentWeapon->Fire();

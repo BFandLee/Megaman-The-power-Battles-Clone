@@ -6,7 +6,7 @@ class State
 {
 protected:
     FSMComponent* m_pOwnerFSM = nullptr;
-
+    class AnimatorComponent* _pAnimator = nullptr;
 public:
     State(FSMComponent* pOwner) : m_pOwnerFSM(pOwner) {}
     virtual ~State() {}

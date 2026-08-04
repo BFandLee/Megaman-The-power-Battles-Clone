@@ -97,3 +97,26 @@ void ResourceManager::LoadFont()
 	createFont(FontSize::FONT_20);
 	createFont(FontSize::FONT_30);
 }
+
+void ResourceManager::LoadAllTexturesInDirectory(const wstring& directoryPath)
+{
+	// 지정한 경로(하위 폴더 포함)의 모든 파일과 폴더를 순회합니다.
+	for (const auto& entry : fs::recursive_directory_iterator(directoryPath))
+	{
+		// 1. 일반 파일이 아니면(폴더 등) 건너뛰기
+		if (!entry.is_regular_file()) continue;
+
+		// 2. 확장자가 .png가 아니면 건너뛰기
+		if (entry.path().extension() != L".png") continue;
+
+		// 3. 파일 이름에서 확장자를 제외한 부분 (예: "Player_Attack_Sheet")을 추출하여 Key로 사용
+		wstring key = entry.path().stem().wstring();
+
+		// 4. 파일의 전체 경로 (예: "../Resources/sprites/Player/State/Player_Attack_Sheet.png")
+		wstring fullPath = entry.path().wstring();
+
+		Texture* texture = new Texture();
+		texture->Load(fullPath, 1, 1, 0.0f, false);
+		_textures[key] = texture;
+	}
+}

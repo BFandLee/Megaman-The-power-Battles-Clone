@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "InputManager.h"
 #include "RigidBodyComponent.h"
+#include "WeaponComponent.h"
 
 JumpState::~JumpState()
 {
@@ -17,15 +18,26 @@ void JumpState::Enter()
 	_rigidbody->SetVelocity({ 0.0f, -jumpForce });
 	_rigidbody->SetGrounded(false);
 
-	AnimatorComponent* pAnimator = m_pOwnerFSM->GetOwner()->GetComponent<AnimatorComponent>();
-	if (pAnimator != nullptr)
+	_pAnimator = m_pOwnerFSM->GetOwner()->GetComponent<AnimatorComponent>();
+	if (_pAnimator != nullptr)
 	{
-		pAnimator->Play(L"Jump");
+		_pAnimator->Play(L"Jump");
 	}
 }
 
 void JumpState::Update(float deltaTime)
 {
+	bool isAttacking = m_pOwnerFSM->GetOwner()->GetComponent<WeaponComponent>()->IsAttacking();
+	if (isAttacking)
+	{
+		_pAnimator->Play(L"JumpAttack");
+	}
+	else
+	{
+		_pAnimator->Play(L"Jump");
+	}
+
+
 	Vector pos = m_pOwnerFSM->GetOwner()->GetPos();
 	Player* player = static_cast<Player*>(m_pOwnerFSM->GetOwner());
 	if (InputManager::GetInstance().GetButtonPressed(KeyType::Right))

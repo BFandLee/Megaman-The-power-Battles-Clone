@@ -78,6 +78,10 @@ void AnimatorComponent::Play(const wstring& stateName)
 	}
 
 	// 찾았다면 _currentClip을 교체하고, 프레임과 누적 시간 초기화
+	if (_currentClip == it->second)
+	{
+		return;
+	}
 	_currentClip = it->second;
 	_currentFrame = 0;
 	_accmulatedTime = 0.0f;

@@ -1,5 +1,5 @@
 {
-  "texturePath": "Player_Idle_Sheet",
+  "texturePath": "Player_Victory_Sheet",
   "bLoop": true,
   "frames": [
     {
@@ -50,51 +50,6 @@
     {
       "startPos": {
         "x": 192.0,
-        "y": 0.0
-      },
-      "size": {
-        "x": 64.0,
-        "y": 64.0
-      },
-      "offset": {
-        "x": 32.0,
-        "y": 64.0
-      },
-      "duration": 0.2
-    },
-    {
-      "startPos": {
-        "x": 256.0,
-        "y": 0.0
-      },
-      "size": {
-        "x": 64.0,
-        "y": 64.0
-      },
-      "offset": {
-        "x": 32.0,
-        "y": 64.0
-      },
-      "duration": 0.2
-    },
-    {
-      "startPos": {
-        "x": 320.0,
-        "y": 0.0
-      },
-      "size": {
-        "x": 64.0,
-        "y": 64.0
-      },
-      "offset": {
-        "x": 32.0,
-        "y": 64.0
-      },
-      "duration": 0.2
-    },
-    {
-      "startPos": {
-        "x": 384.0,
         "y": 0.0
       },
       "size": {

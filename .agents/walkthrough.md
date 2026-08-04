@@ -19,6 +19,9 @@
 ### 3. Player 오브젝트에 심장(Component) 부착
 [Player.cpp](file:///d:/GitHub/Megaman-The-power-Battles-Clone/MegaManWinAPI/MegaManWinAPI/Entity/Actor/Player.cpp) 파일의 `Init()` 함수에 방금 만든 두 가지 핵심 컴포넌트를 `AddComponent`를 통해 든든하게 부착해 두었습니다.
 
+### 4. 애니메이션 JSON 자동 생성 자동화 툴 구축
+이제 [`merge_sprites.py`](file:///d:/Megaman-The-power-Battles-Clone/MegaManWinAPI/Resources/sprites/Player/State/merge_sprites.py) 스크립트를 실행하기만 하면, 개별 이미지 파일들을 하나의 스프라이트 시트로 합쳐주는 동시에 `../Animation/` 폴더에 `상태명.json` (예: `Idle.json`, `JumpAttack.json`) 파일을 오프셋 자동 계산까지 포함하여 스마트하게 생성해줍니다!
+
 > [!TIP]
 > **이제부터 유저님께서 직접 코딩하실 차례입니다!**
 > 1. `Player.cpp`의 `Update()` 함수를 열어보시면 제가 남겨둔 `// TODO:` 주석이 있습니다. 기존에 길게 나열되어 있던 지저분한 키보드 입력 로직을 모두 과감하게 지우고, 방금 만들어드린 `IdleState`, `MoveState` 안으로 코드를 옮겨보세요!

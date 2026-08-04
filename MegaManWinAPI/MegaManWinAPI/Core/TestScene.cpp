@@ -10,7 +10,7 @@
 
 void TestScene::loadResources()
 {
-	ResourceManager::GetInstance().LoadTexture(
+	/*ResourceManager::GetInstance().LoadTexture(
 		L"Background",
 		L"Background\\background\\sprite_0000.png"
 	);
@@ -25,7 +25,8 @@ void TestScene::loadResources()
 	ResourceManager::GetInstance().LoadTexture(
 		L"Bullet",
 		L"AttackEffect\\Attack_1.png"
-	);
+	);*/
+	ResourceManager::GetInstance().LoadAllTexturesInDirectory(L"../Resources/sprites");
 }
 
 void TestScene::createObjects()
