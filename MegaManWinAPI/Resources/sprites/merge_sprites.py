@@ -3,15 +3,16 @@ import re
 import json
 from PIL import Image
 
-def merge_sprites():
-    dir_path = r"d:\Megaman-The-power-Battles-Clone\MegaManWinAPI\Resources\sprites\Player\State"
+def merge_sprites(target_dir, character_name):
+    dir_path = target_dir
     anim_dir_path = os.path.join(os.path.dirname(dir_path), "Animation")
     
     if not os.path.exists(anim_dir_path):
         os.makedirs(anim_dir_path)
     
-    # regex to match Prefix_Number.png
-    pattern = re.compile(r"^([a-zA-Z_]+)_(\d+)\.png$")
+    # [수정됨] 띄어쓰기, 숫자 포함, 언더바 유무 상관없이 모두 잡아내는 강력한 규칙
+    # 예: "Max Charge Shot_0.png", "FiringEffect0.png", "Attack 1.png" 모두 인식 가능
+    pattern = re.compile(r"^(.+?)[ _]*(\d+)\.png$")
     
     groups = {}
     
@@ -22,7 +23,8 @@ def merge_sprites():
             
         match = pattern.match(filename)
         if match:
-            prefix = match.group(1)
+            prefix = match.group(1).strip() # 앞뒤 공백 깔끔하게 제거
+            
             # Normalize Jump_Attack to JumpAttack just in case
             if prefix == "Jump_Attack":
                 prefix = "JumpAttack"
@@ -38,7 +40,8 @@ def merge_sprites():
         "Dead": False,
         "Spone": False,
         "Jump": False,
-        "JumpAttack": False
+        "JumpAttack": False,
+        "Max Charge Shot": False # 차지샷도 반복 안함 처리 추가
     }
             
     for prefix, files in groups.items():
@@ -74,7 +77,9 @@ def merge_sprites():
             
             x_offset += w
             
-        out_path = os.path.join(dir_path, f"Player_{prefix}_Sheet.png")
+        # 파일명 저장 시 띄어쓰기를 언더바로 변경해서 저장(안전한 파일명을 위해)
+        safe_prefix = prefix.replace(" ", "_")
+        out_path = os.path.join(dir_path, f"{character_name}_{safe_prefix}_Sheet.png")
         new_im.save(out_path)
         
         # Determine bLoop
@@ -82,19 +87,29 @@ def merge_sprites():
         
         # Create JSON data
         json_data = {
-            "texturePath": f"Player_{prefix}_Sheet",
+            "texturePath": f"{character_name}_{safe_prefix}_Sheet",
             "bLoop": bLoop,
             "frames": frames
         }
         
         # Save JSON file
-        json_path = os.path.join(anim_dir_path, f"{prefix}.json")
+        json_path = os.path.join(anim_dir_path, f"{safe_prefix}.json")
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(json_data, f, indent=2)
             
-        print(f"Successfully saved merged sprite sheet for '{prefix}': {out_path}")
-        print(f"  Frames: {len(images)}, Total Width: {total_width}, Max Height: {max_height}")
-        print(f"  Generated JSON: {json_path}")
-
+        print(f"✅ 병합 완료: '{prefix}' 그룹 -> {len(images)}장 묶음")
+        
 if __name__ == "__main__":
-    merge_sprites()
+    print("=== 스프라이트 시트 자동 병합 툴 ===")
+    
+    raw_dir = input("1. 이미지가 있는 폴더의 경로를 입력하세요: ")
+    input_dir = raw_dir.strip().strip("\"'")
+    
+    input_name = input("2. 캐릭터 이름(예: Player, Boss_Cutman 등)을 입력하세요: ").strip()
+    
+    if os.path.exists(input_dir):
+        merge_sprites(input_dir, input_name)
+        print("\n작업이 모두 완료되었습니다!")
+    else:
+        print(f"\n[오류] 경로를 찾을 수 없습니다: {input_dir}")
+        print("입력하신 경로를 다시 확인해주세요.")

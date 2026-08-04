@@ -255,10 +255,10 @@ void Scene::registerActor(Actor* actor)
 	if (actor == nullptr) return;
 	_renderList[(int32)actor->GetRenderLayer()].push_back(actor);
 
-	/*if (actor->GetCollider())
+	if (actor->GetCollider())
 	{
 		CollisionManager::GetInstance().AddActor(actor);
-	}*/
+	}
 }
 
 void Scene::removeActor(Actor* actor)

@@ -29,7 +29,7 @@ void Buster::Fire()
 
         // 오프셋
         float offsetX = 45.0f;
-        float offsetY = 52.0f;
+        float offsetY = 0.0f;
 
 
         Vector pos = player->GetPos();

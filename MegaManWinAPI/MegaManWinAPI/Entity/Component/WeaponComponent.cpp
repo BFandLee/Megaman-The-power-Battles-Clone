@@ -25,8 +25,8 @@ void WeaponComponent::Init()
     _currentWeapon = new Buster(this);
 
     AnimatorComponent* animator = GetOwner()->GetComponent<AnimatorComponent>();
-    animator->LoadAnimationFromJson(L"IdleAttack", L"../Resources/sprites/Player/Animation/Attack.json");
-    animator->LoadAnimationFromJson(L"MoveAttack", L"../Resources/sprites/Player/Animation/Walk_Attack.json");
+    animator->LoadAnimationFromJson(L"IdleAttack", L"../Resources/sprites/Player/Animation/IdleAttack.json");
+    animator->LoadAnimationFromJson(L"MoveAttack", L"../Resources/sprites/Player/Animation/MoveAttack.json");
     animator->LoadAnimationFromJson(L"JumpAttack", L"../Resources/sprites/Player/Animation/JumpAttack.json");
 
 
@@ -64,7 +64,6 @@ void WeaponComponent::Update(float deltaTime)
 
 void WeaponComponent::RenderUI()
 {
-    // TODO: ImGui로 무기 데미지 등의 데이터를 실시간 수정할 수 있게 구현
     if (ImGui::TreeNode("Weapon"))
     {
         // 발사 간격

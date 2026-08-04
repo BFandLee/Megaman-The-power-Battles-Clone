@@ -26,7 +26,6 @@ Actor::~Actor()
 void Actor::Init()
 {
 	_transform = AddComponent<TransformComponent>();
-	CollisionManager::GetInstance().AddActor(this);
 }
 
 // Actor 파괴(삭제) 싶으면, 무조건 Scene에 예약을 걸어서 처리한다.

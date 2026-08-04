@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "PlayerBullet.h"
 #include "CircleCollider.h"
-#include "ImageRenderer.h"  // юс╫ц
+#include "AnimatorComponent.h"
 #include "Texture.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 void PlayerBullet::Init()
 {
     Super::Init();
-    CircleCollider* collider = AddComponent<CircleCollider>();
-    ImageRenderer* render = AddComponent<ImageRenderer>();
+   CircleCollider* collider = AddComponent<CircleCollider>();
 
-    Texture * tex = ResourceManager::GetInstance().GetTexture(L"Bullet");
-    render->SetTexture(tex);
+    AnimatorComponent* animator = AddComponent<AnimatorComponent>();
+    animator->LoadAnimationFromJson(L"Attack", L"../Resources/sprites/AttackEffect/Animation/Attack.json");
+    animator->Play(L"Attack");
 
     this->SetScale(Vector(2.0f, 2.0f));
     collider->SetRadius(15.0f);
@@ -38,5 +38,4 @@ void PlayerBullet::Reset(Vector startPos, Vector dir)
     _dir = dir;
     _lifeTime = 0;
 
-    CollisionManager::GetInstance().AddActor(this);
 }
