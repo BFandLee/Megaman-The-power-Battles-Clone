@@ -7,6 +7,7 @@ class State;
 
 class FSMComponent : public Component
 {
+    using Super = Component;
 private:
     std::map<std::string, State*> _states;
     State* _currentState = nullptr;
@@ -24,8 +25,12 @@ public:
     void AddState(const std::string& name, State* state);
     void ChangeState(const std::string& name);
 
+    float GetMoveSpeed() { return _movespeed; }
+    float GetJumpForce() { return _jumpforce; }
+
     // TODO: 이동 속도(MoveSpeed), 점프력 등 필요한 수치 데이터를 선언하세요.
 private:
     float _movespeed = 0.0f;
     float _jumpforce = 0.0f;
+    
 };

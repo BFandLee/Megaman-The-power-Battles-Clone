@@ -1,14 +1,6 @@
 #pragma once
 #include "Actor.h"
 
-enum class PlayerState
-{
-	Idle,
-	Run,
-	Jump,
-	// ... (필요에 따라 추가)
-};
-
 class Player : public Actor
 {
 	using Super = Actor;
@@ -26,7 +18,4 @@ public:
 	virtual ActorType GetActorType() override { return ActorType::Player; }
 
 private:
-	PlayerState _state;
-	float _speed = 300.f; // 플레이어의 이동 속도
-	class RigidBodyComponent* _rigidbody;
 };

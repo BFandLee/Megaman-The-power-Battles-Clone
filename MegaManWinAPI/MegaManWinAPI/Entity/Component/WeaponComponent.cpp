@@ -2,7 +2,7 @@
 #include "WeaponComponent.h"
 #include "../Weapon/Weapon.h"
 
-WeaponComponent::WeaponComponent()
+WeaponComponent::WeaponComponent() : Component("WeaponComponent")
 {
 }
 

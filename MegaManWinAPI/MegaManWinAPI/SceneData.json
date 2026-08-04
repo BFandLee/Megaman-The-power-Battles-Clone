@@ -3,8 +3,8 @@
         {
             "Components": [
                 {
-                    "PosX": 630.6910400390625,
-                    "PosY": 444.13714599609375,
+                    "PosX": 622.7654418945313,
+                    "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
                     "ScaleY": 2.0,
@@ -23,8 +23,16 @@
                 {
                     "Gravity": 980.0,
                     "VelocityX": 0.0,
-                    "VelocityY": 447.4245910644531,
+                    "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
+                },
+                {
+                    "JumpForce": 500.0,
+                    "MoveSpeed": 200.0,
+                    "name": "FSMComponent"
+                },
+                {
+                    "name": "WeaponComponent"
                 }
             ],
             "name": "Player"

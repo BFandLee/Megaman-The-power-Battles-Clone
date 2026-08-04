@@ -146,10 +146,12 @@
     <ClInclude Include="Entity\FSM\State.h" />
     <ClInclude Include="Entity\Weapon\Buster.h" />
     <ClInclude Include="Entity\Weapon\Weapon.h" />
+    <ClInclude Include="Entity\FSM\JumpState.h" />
     <ClInclude Include="Manager\CollisionManager.h" />
     <ClInclude Include="Entity\Component\Component.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Core\Game.h" />
+    <ClInclude Include="Entity\FSM\MoveState.h" />
     <ClInclude Include="Renderer\ImageRenderer.h" />
     <ClInclude Include="Manager\InputManager.h" />
     <ClInclude Include="MegaManWinAPI.h" />
@@ -192,9 +194,11 @@
     <ClCompile Include="Entity\Component\WeaponComponent.cpp" />
     <ClCompile Include="Entity\FSM\IdleState.cpp" />
     <ClCompile Include="Entity\Weapon\Buster.cpp" />
+    <ClCompile Include="Entity\FSM\JumpState.cpp" />
     <ClCompile Include="Manager\CollisionManager.cpp" />
     <ClCompile Include="Entity\Component\Component.cpp" />
     <ClCompile Include="Core\Game.cpp" />
+    <ClCompile Include="Entity\FSM\MoveState.cpp" />
     <ClCompile Include="Renderer\ImageRenderer.cpp" />
     <ClCompile Include="Manager\InputManager.cpp" />
     <ClCompile Include="MegaManWinAPI.cpp" />

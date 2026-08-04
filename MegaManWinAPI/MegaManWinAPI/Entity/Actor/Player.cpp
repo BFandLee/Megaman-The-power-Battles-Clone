@@ -5,17 +5,18 @@
 #include "InputManager.h" // 입력을 받기 위해 포함
 #include "TimeManager.h"  // DeltaTime을 사용하기 위해 포함
 #include "RigidBodyComponent.h"
-#include "../Component/FSMComponent.h"
-#include "../Component/WeaponComponent.h"
+#include "FSMComponent.h"
+#include "WeaponComponent.h"
 // 테스트를 위한 include
 #include "ImageRenderer.h"
 #include "Texture.h"
 #include "ResourceManager.h"
-
+#include "IdleState.h"
+#include "MoveState.h"
+#include "JumpState.h"
 void Player::Init()
 {
 	Super::Init();
-	_state = PlayerState::Idle;
 
 	// 1. 애니메이터 컴포넌트 추가
 	AnimatorComponent* animator = AddComponent<AnimatorComponent>();
@@ -33,11 +34,14 @@ void Player::Init()
 
 	// 중력(Rigidbody) 컴포넌트 추가
 	RigidBodyComponent* rigidbody = AddComponent<RigidBodyComponent>();
-	_rigidbody = rigidbody;
 
-	// [2주차 목표] FSM 및 Weapon 컴포넌트 부착
+	// FSM 및 Weapon 컴포넌트 부착
 	FSMComponent* fsm = AddComponent<FSMComponent>();
-	// TODO: fsm->AddState()를 호출하여 IdleState, MoveState 등을 맵에 등록하고 초기 상태를 지정하세요.
+	
+	fsm->AddState("Idle", new IdleState(fsm));
+	fsm->AddState("Move", new MoveState(fsm));
+	fsm->AddState("Jump", new JumpState(fsm));
+	fsm->ChangeState("Idle");
 
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
 }
@@ -45,55 +49,6 @@ void Player::Init()
 void Player::Update(float deltaTime)
 {
 	Super::Update(deltaTime); // 부모 업데이트 호출 (여기서 부착된 컴포넌트들의 Update가 자동 실행됩니다)
-
-	// TODO: (2주차 목표) 아래의 하드코딩된 키보드 이동, 점프 로직들을 모두 과감하게 지우고, 
-	// 새로 생성한 IdleState.cpp, MoveState.cpp, JumpState.cpp 내부로 각각 옮겨서 구현하세요!
-
-	switch (_state)
-	{
-		case PlayerState::Idle:
-		{
-			break;
-		}
-		case PlayerState::Run:
-		{
-			break;
-		}
-		case PlayerState::Jump:
-		{
-			break;
-		}
-	}
-	
-	Vector pos = GetPos();
-	if (InputManager::GetInstance().GetButtonPressed(KeyType::Right))
-	{
-		_state = PlayerState::Run;
-		pos.x += _speed * TimeManager::GetInstance().GetDT();
-	}
-	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Left))
-	{
-		_state = PlayerState::Run;
-		pos.x -= _speed * TimeManager::GetInstance().GetDT();
-	}
-	else
-	{
-		_state = PlayerState::Idle;
-	}
-
-	if (InputManager::GetInstance().GetButtonPressed(KeyType::SpaceBar))
-	{
-		if (_rigidbody->IsGrounded())
-		{
-			_state = PlayerState::Jump;
-			_rigidbody->SetVelocity({ 0.0f, -500.0f });
-			_rigidbody->SetGrounded(false);
-		}
-	}
-
-	SetPos(pos);
-
-	
 }
 
 void Player::OnStay(Actor* other, const HitResult& hit)
@@ -151,7 +106,7 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 			}
 		}
 
-		auto rigid = GetComponent<RigidBodyComponent>();
+		RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
 		
 		// 플레이어가 아래로 떨어지고 있거나 가만히 있을 때만 바닥 착지 처리
 		// (점프해서 위로 올라가고 있을 때는 속도를 0으로 깎지 않음!)
@@ -167,8 +122,9 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 
 void Player::OnExit(Actor* other)
 {
+	RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
 	if (other->GetActorType() == ActorType::Ground)
 	{
-		_rigidbody->SetGrounded(false);
+		rigid->SetGrounded(false);
 	}
 }

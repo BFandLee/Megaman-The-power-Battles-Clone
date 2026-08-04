@@ -177,6 +177,12 @@
     <ClInclude Include="Entity\Weapon\Weapon.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\FSM\MoveState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\JumpState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -294,6 +300,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Weapon\Buster.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\MoveState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\JumpState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

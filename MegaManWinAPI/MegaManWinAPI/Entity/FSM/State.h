@@ -5,7 +5,6 @@ class FSMComponent;
 class State
 {
 protected:
-    // Raw Pointer만 사용 (nullptr 초기화 필수)
     FSMComponent* m_pOwnerFSM = nullptr;
 
 public:

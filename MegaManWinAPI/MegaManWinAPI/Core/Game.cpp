@@ -143,6 +143,10 @@ void Game::Update()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	
+	ImGui::Begin("FPS");
+	ImGui::Text("fps : %d", TimeManager::GetInstance().GetFPS());
+	ImGui::End();
+
 	SceneManager::GetInstance().RenderUI();
 
 }
