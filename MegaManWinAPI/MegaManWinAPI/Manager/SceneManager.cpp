@@ -25,8 +25,6 @@ void SceneManager::Cleanup()
 
 void SceneManager::Update(float deltaTime)
 {
-	// Apply a reserved scene change here, outside of Scene::Update,
-	// so a scene can safely request its own replacement mid-update.
 	applySceneChange();
 
 	if (_scene)

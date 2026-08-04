@@ -1,40 +1,59 @@
 import os
+import re
 from PIL import Image
 
 def merge_sprites():
-    dir_path = r"D:\GitHub\Megaman-The-power-Battles-Clone\MegaManWinAPI\Resources\sprites\Player\State"
+    dir_path = r"d:\Megaman-The-power-Battles-Clone\MegaManWinAPI\Resources\sprites\Player\State"
     
-    # We know there are Idle_1 to Idle_9
-    images = []
-    for i in range(1, 10):
-        img_path = os.path.join(dir_path, f"Idle_{i}.png")
-        if os.path.exists(img_path):
-            images.append(Image.open(img_path))
-        else:
-            print(f"Warning: {img_path} not found.")
+    # regex to match Prefix_Number.png
+    pattern = re.compile(r"^([a-zA-Z_]+)_(\d+)\.png$")
+    
+    groups = {}
+    
+    for filename in os.listdir(dir_path):
+        # Skip if it is already a sheet
+        if "Sheet" in filename:
+            continue
             
-    if not images:
-        print("No images found.")
-        return
+        match = pattern.match(filename)
+        if match:
+            prefix = match.group(1)
+            # Normalize Jump_Attack to JumpAttack just in case
+            if prefix == "Jump_Attack":
+                prefix = "JumpAttack"
+            
+            num = int(match.group(2))
+            
+            if prefix not in groups:
+                groups[prefix] = []
+            groups[prefix].append((num, filename))
+            
+    for prefix, files in groups.items():
+        # Sort files by their number
+        files.sort(key=lambda x: x[0])
+        images = []
+        for num, filename in files:
+            img_path = os.path.join(dir_path, filename)
+            images.append(Image.open(img_path))
+            
+        if not images:
+            continue
+            
+        widths, heights = zip(*(i.size for i in images))
+        total_width = sum(widths)
+        max_height = max(heights)
         
-    widths, heights = zip(*(i.size for i in images))
-    
-    total_width = sum(widths)
-    max_height = max(heights)
-    
-    # Create new image with transparent background
-    new_im = Image.new('RGBA', (total_width, max_height), (0, 0, 0, 0))
-    
-    x_offset = 0
-    for im in images:
-        new_im.paste(im, (x_offset, 0))
-        x_offset += im.size[0]
+        new_im = Image.new('RGBA', (total_width, max_height), (0, 0, 0, 0))
         
-    out_path = os.path.join(dir_path, "Player_Idle_Sheet.png")
-    new_im.save(out_path)
-    print(f"Successfully saved merged sprite sheet to {out_path}")
-    print(f"Total Width: {total_width}, Max Height: {max_height}")
-    print(f"Individual frame size: {widths[0]}x{heights[0]}")
+        x_offset = 0
+        for im in images:
+            new_im.paste(im, (x_offset, 0))
+            x_offset += im.size[0]
+            
+        out_path = os.path.join(dir_path, f"Player_{prefix}_Sheet.png")
+        new_im.save(out_path)
+        print(f"Successfully saved merged sprite sheet for '{prefix}': {out_path}")
+        print(f"  Frames: {len(images)}, Total Width: {total_width}, Max Height: {max_height}")
 
 if __name__ == "__main__":
     merge_sprites()

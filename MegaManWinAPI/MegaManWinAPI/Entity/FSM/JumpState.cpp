@@ -27,13 +27,16 @@ void JumpState::Enter()
 void JumpState::Update(float deltaTime)
 {
 	Vector pos = m_pOwnerFSM->GetOwner()->GetPos();
+	Player* player = static_cast<Player*>(m_pOwnerFSM->GetOwner());
 	if (InputManager::GetInstance().GetButtonPressed(KeyType::Right))
 	{
 		pos.x += m_pOwnerFSM->GetMoveSpeed() * deltaTime;
+		player->SetLookDirX(1.0f);
 	}
 	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Left))
 	{
 		pos.x -= m_pOwnerFSM->GetMoveSpeed() * deltaTime;
+		player->SetLookDirX(-1.0f);
 	}
 
 	m_pOwnerFSM->GetOwner()->SetPos(pos);

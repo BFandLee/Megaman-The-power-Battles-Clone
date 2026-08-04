@@ -8,4 +8,6 @@ public:
     virtual ~Buster();
 
     virtual void Fire() override;
+
+private:
 };

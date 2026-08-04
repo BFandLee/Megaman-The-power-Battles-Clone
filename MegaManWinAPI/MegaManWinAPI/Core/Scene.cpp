@@ -90,37 +90,25 @@ void Scene::Update(float deltaTime)
 		});
 
 	// 실제 메모리 해제 까먹었따.
-	//for (auto deleteActor : _reservedRemove)
-	//{
-	//	// 삭제되는 Actor
-	//	removeActor(deleteActor);
+	for (auto deleteActor : _reservedRemove)
+	{
+		// 삭제되는 Actor
+		removeActor(deleteActor);
 
-	//	// 해당 Actor가 풀에서 태어난 경우에는 반환
-	//	if (deleteActor->GetPool())
-	//	{
-	//		// 해당 풀에다가 반환
-	//		deleteActor->GetPool()->Return(deleteActor);
-	//	}
-	//	else
-	//	{
-	//		// new 태어난 경우는 delete
-	//		delete deleteActor;
-	//	}
-	//}
-
-	// 추가가 필요한 애들은 추가
-	// 1번 방식 : 매번 push_back 할때마다 비용 지불
-	//for (auto iter : _reservedAdd)
-	//{
-	//	// vector
-	//	// capacity, size
-	//	// 새로 원소를 집어넣을떄 capacity 부족시, 메모리 추가 할당
-	//	_actors.push_back(iter);
-	//}
+		// 해당 Actor가 풀에서 태어난 경우에는 반환
+		if (deleteActor->GetPool())
+		{
+			// 해당 풀에다가 반환
+			deleteActor->GetPool()->Return(deleteActor);
+		}
+		else
+		{
+			// new 태어난 경우는 delete
+			delete deleteActor;
+		}
+	}
 
 	// 2번 방식 :
-	// 여긴, reserverdAdd 에 10개가 있을경우
-	// vector를 한번에 10개 늘리고 복사해와서, 재할당이 1번 일어난다.
 	//_actors.insert(_actors.end(), _reservedAdd.begin(), _reservedAdd.end());
 
 	//-> 미리 한번만 할당해놓고, 복사하기
@@ -135,28 +123,6 @@ void Scene::Update(float deltaTime)
 	// 지연리스트 초기화
 	_reservedAdd.clear();
 	_reservedRemove.clear();
-
-	// 그리드 갱신 : 초기화 -> 재갱신 이방식이 마음에 안든다면,
-	// Actor의 위치가 변경될때마다 Grid 의 위치를 갱신해주는 방식을 하면 된다.
-	// 즉, 아래 코드는 다 사라지고 Actor가 Scene에게 요청을 해서, Grid 갱신한다.
-	{
-		// 모든 Actor의 최신화된 좌표 기준으로 Grid 갱신
-		// 이전프레임에 있었던 Grid 정보는 초기화
-		//for (GridInfo& grid : _grid)
-		//{
-		//	grid.actors.clear();
-		//}
-
-		// 1945 게임 특성상 매프레임 위치 변경이 있으니깐, 
-		// 그냥 전체 순회하면서 Grid 등록을 해준다.
-		// 전체 순회니깐, 어차피 또 성능적인 측면의 이점이 없는거 아닌가요.
-		// O(N*M) -> O(N)
-		//for (auto actor : _actors)
-		//{
-		//	updateGrid(actor);
-		//}
-	}
-
 
 }
 
@@ -197,10 +163,6 @@ void Scene::AddActor(class Actor* actor)
 
 void Scene::DeleteActor(Actor* actor)
 {
-	// 여기에서 즉시 삭제하지 않는다.
-	// vector 빼고, delete 해주고.
-	//	_actors.erase
-
 	// 지연 삭제
 	// 추가적인 리스트에 넣고, 나중에 한번에 삭제
 	_reservedRemove.insert(actor);
@@ -297,6 +259,16 @@ void Scene::registerActor(Actor* actor)
 	{
 		CollisionManager::GetInstance().AddActor(actor);
 	}*/
+}
+
+void Scene::removeActor(Actor* actor)
+{
+	if (actor == nullptr) return;
+
+	auto& layerList = _renderList[(int32)actor->GetRenderLayer()];
+
+	erase(layerList, actor);
+
 }
 
 

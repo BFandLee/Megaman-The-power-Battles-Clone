@@ -3,7 +3,7 @@
         {
             "Components": [
                 {
-                    "PosX": 622.7654418945313,
+                    "PosX": 439.76123046875,
                     "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
@@ -27,11 +27,14 @@
                     "name": "RigidBodyComponent"
                 },
                 {
-                    "JumpForce": 500.0,
-                    "MoveSpeed": 200.0,
+                    "JumpForce": 600.0,
+                    "MoveSpeed": 250.0,
                     "name": "FSMComponent"
                 },
                 {
+                    "CoolDown": -0.015808459371328354,
+                    "Reloading": 1.0,
+                    "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
                 }
             ],

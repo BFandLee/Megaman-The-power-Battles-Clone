@@ -44,6 +44,7 @@ void Player::Init()
 	fsm->ChangeState("Idle");
 
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
+	weapon->Init();
 }
 
 void Player::Update(float deltaTime)

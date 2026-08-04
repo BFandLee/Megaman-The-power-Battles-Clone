@@ -6,6 +6,7 @@
 #include "Ground.h"
 #include "WAllActor.h"
 #include "Player.h"
+#include "PlayerBullet.h"
 
 void TestScene::loadResources()
 {
@@ -20,6 +21,10 @@ void TestScene::loadResources()
 	ResourceManager::GetInstance().LoadTexture(
 		L"Player_Idle_Sheet",
 		L"Player\\State\\Player_Idle_Sheet.png"
+	);
+	ResourceManager::GetInstance().LoadTexture(
+		L"Bullet",
+		L"AttackEffect\\Attack_1.png"
 	);
 }
 
@@ -55,4 +60,8 @@ void TestScene::createObjects()
 	AddActor(bg);
 	AddActor(ground);
 	AddActor(player);
+
+	// ÃÑ¾Ë
+	PlayerBullet* bullet = new PlayerBullet();
+	bullet->SetPos(player->GetPos());
 }

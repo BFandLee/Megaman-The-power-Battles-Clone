@@ -152,6 +152,8 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Core\Game.h" />
     <ClInclude Include="Entity\FSM\MoveState.h" />
+    <ClInclude Include="Entity\Actor\PlayerBullet.h" />
+    <ClInclude Include="Manager\ObjectPoolManager.h" />
     <ClInclude Include="Renderer\ImageRenderer.h" />
     <ClInclude Include="Manager\InputManager.h" />
     <ClInclude Include="MegaManWinAPI.h" />
@@ -199,6 +201,8 @@
     <ClCompile Include="Entity\Component\Component.cpp" />
     <ClCompile Include="Core\Game.cpp" />
     <ClCompile Include="Entity\FSM\MoveState.cpp" />
+    <ClCompile Include="Entity\Actor\PlayerBullet.cpp" />
+    <ClCompile Include="Manager\ObjectPoolManager.cpp" />
     <ClCompile Include="Renderer\ImageRenderer.cpp" />
     <ClCompile Include="Manager\InputManager.cpp" />
     <ClCompile Include="MegaManWinAPI.cpp" />
@@ -246,6 +250,9 @@
   <ItemGroup>
     <Image Include="MegaManWinAPI.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

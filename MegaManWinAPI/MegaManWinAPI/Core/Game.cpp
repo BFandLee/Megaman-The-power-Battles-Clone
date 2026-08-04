@@ -10,6 +10,7 @@
 // #include "DataManager.h"
 // #include "UIManager.h"
 #include "SoundManager.h"
+#include "ObjectPoolManager.h"
 #include <dwrite.h>
 #pragma comment(lib, "dwrite.lib")
 #include "imgui.h"
@@ -93,6 +94,8 @@ void Game::Init(HWND hwnd)
 	// CollisionManager 초기화
 	CollisionManager::GetInstance().Init();
 
+	ObjectPoolManager::GetInstance().Init();
+
 	// UIManager::GetInstance().Init();
 }
 
@@ -122,6 +125,8 @@ void Game::Cleanup()
 
 	// 매니저들 각자 정리가 필요한것들은 정리해준다.
 	ResourceManager::GetInstance().Cleanup();
+
+	ObjectPoolManager::GetInstance().Clear();
 }
 
 void Game::Update()

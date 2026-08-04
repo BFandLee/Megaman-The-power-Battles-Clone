@@ -50,7 +50,6 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 	const AnimationFrame& frame = _currentClip->frames[_currentFrame];
 
 	// Actor의 위치 가져오기
-
 	Vector actorPos = GetOwner()->GetPos();
 	Vector scale = GetOwner()->GetComponent<TransformComponent>()->GetScale();
 	bool filpX = false;
