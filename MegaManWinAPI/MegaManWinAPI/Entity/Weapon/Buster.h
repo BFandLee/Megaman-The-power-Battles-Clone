@@ -7,7 +7,6 @@ public:
     Buster(WeaponComponent* owner);
     virtual ~Buster();
 
-    virtual void Fire() override;
-
+    virtual void Fire(ChargeLevel level = ChargeLevel::Normal) override;
 private:
 };

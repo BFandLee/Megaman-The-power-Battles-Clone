@@ -7,6 +7,7 @@
 #include "RigidBodyComponent.h"
 #include "FSMComponent.h"
 #include "WeaponComponent.h"
+#include "TransformComponent.h"
 // 테스트를 위한 include
 #include "ImageRenderer.h"
 #include "Texture.h"
@@ -21,12 +22,9 @@ void Player::Init()
 	// 1. 애니메이터 컴포넌트 추가
 	AnimatorComponent* animator = AddComponent<AnimatorComponent>();
 	animator->LoadAnimationFromJson(L"Idle", L"../Resources/sprites/Player/Animation/idle.json");
+	animator->LoadAnimationFromJson(L"Move", L"../Resources/sprites/Player/Animation/Move.json");
+	animator->LoadAnimationFromJson(L"Jump", L"../Resources/sprites/Player/Animation/Jump.json");
 	animator->Play(L"Idle");
-
-	// 테스트용 이미지 렌더러 컴포넌트 추가
-	/*ImageRenderer* render = AddComponent<ImageRenderer>();
-	Texture * tex = ResourceManager::GetInstance().GetTexture(L"Player");
-	render->SetTexture(tex);*/
 
 	// 충돌체(Collider) 컴포넌트 추가
 	BoxCollider* collider = AddComponent<BoxCollider>();
@@ -109,12 +107,13 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 
 		RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
 		
-		// 플레이어가 아래로 떨어지고 있거나 가만히 있을 때만 바닥 착지 처리
-		// (점프해서 위로 올라가고 있을 때는 속도를 0으로 깎지 않음!)
 		if (rigid->GetVelocity().y >= 0.0f)
 		{
 			rigid->SetGrounded(true);
-			rigid->SetVelocity({ 0.0f, 0.0f });
+			Vector currentVel = rigid->GetVelocity();
+			currentVel.y = 0.0f; // Y축(떨어지는 속도)만 0으로 초기화
+
+			rigid->SetVelocity(currentVel);
 		}
 	}
 	SetPos(pos);
@@ -127,5 +126,20 @@ void Player::OnExit(Actor* other)
 	if (other->GetActorType() == ActorType::Ground)
 	{
 		rigid->SetGrounded(false);
+	}
+}
+
+void Player::SetLookDirX(float dir)
+{
+	_lookdirX = dir;
+
+	// 2. TransformComponent 가져오기
+	TransformComponent* transform = GetComponent<TransformComponent>();
+
+	if (transform)
+	{
+		Vector currentScale = transform->GetScale();
+		currentScale.x = abs(currentScale.x) * dir;
+		transform->SetScale(currentScale);
 	}
 }

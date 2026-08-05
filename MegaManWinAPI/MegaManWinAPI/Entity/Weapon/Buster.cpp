@@ -16,8 +16,10 @@ Buster::~Buster()
 {
 }
 
-void Buster::Fire()
+void Buster::Fire(ChargeLevel level)
 {
+    // TODO(USER): chargeLevel에 따라 다르게 PlayerBullet을 셋팅(Reset)하도록 수정해 보세요.
+    // (예: bullet->Reset(pos, bulletDir, level); )
     // 1. 오브젝트 풀에서 꺼내기
     PlayerBullet* bullet = ObjectPoolManager::GetInstance().GetPlayerBulletPool()->Acquire();
 

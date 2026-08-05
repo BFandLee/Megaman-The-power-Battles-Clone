@@ -11,5 +11,5 @@ public:
     Weapon(WeaponComponent* owner) : m_pOwner(owner) {}
     virtual ~Weapon() {}
 
-    virtual void Fire() = 0; // 자식 무기 클래스들이 반드시 구현해야 할 발사 함수
+    virtual void Fire(ChargeLevel level = ChargeLevel::Normal) = 0; // 자식 무기 클래스들이 반드시 구현해야 할 발사 함수
 };

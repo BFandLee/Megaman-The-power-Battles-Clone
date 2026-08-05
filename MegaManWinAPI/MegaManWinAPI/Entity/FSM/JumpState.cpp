@@ -30,11 +30,11 @@ void JumpState::Update(float deltaTime)
 	bool isAttacking = m_pOwnerFSM->GetOwner()->GetComponent<WeaponComponent>()->IsAttacking();
 	if (isAttacking)
 	{
-		_pAnimator->Play(L"JumpAttack");
+		_pAnimator->Play(L"JumpAttack", true);
 	}
 	else
 	{
-		_pAnimator->Play(L"Jump");
+		_pAnimator->Play(L"Jump", true);
 	}
 
 

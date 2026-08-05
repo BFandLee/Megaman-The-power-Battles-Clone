@@ -18,7 +18,7 @@ public:
 	virtual ActorType GetActorType() override { return ActorType::Player; }
 
 public:
-	void SetLookDirX(float dir) { _lookdirX = dir; }
+	void SetLookDirX(float dir);
 	float GetLookDirX() { return _lookdirX; }
 private:
 	float _lookdirX = 1.0f;

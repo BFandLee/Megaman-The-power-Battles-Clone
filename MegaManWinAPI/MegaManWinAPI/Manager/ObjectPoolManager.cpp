@@ -4,7 +4,7 @@
 void ObjectPoolManager::Init()
 {
 	_playerBulletPool = new ObjectPool<PlayerBullet>();
-	_playerBulletPool->Init(3);
+	_playerBulletPool->Init(10);
 }
 
 void ObjectPoolManager::Clear()

@@ -9,14 +9,24 @@ void RigidBodyComponent::Init()
 
 void RigidBodyComponent::Update(float deltaTime)
 {
-	if (!_isGrounded)
-	{
-		_velocity.y += _gravity * deltaTime;
+    // 1. 중력 적용 (공중에 있을 때만 Y축 속도 증가)
+    if (!_isGrounded)
+    {
+        _velocity.y += _gravity * deltaTime;
+    }
+    else
+    {
+        // 땅에 닿아있다면 Y축 속도를 0으로 초기화.
+        if (_velocity.y > 0) _velocity.y = 0;
 
-		Vector Pos = GetOwner()->GetPos();
-		Vector CurrPos = Pos + _velocity * deltaTime;
-		GetOwner()->SetPos(CurrPos);
-	}
+        // _velocity.x 값을 서서히 0에 가깝게 줄이는 로직(Lerp 등)을 추가하면 미끄러짐 효과가 생깁니다.
+        _velocity.x = std::lerp(_velocity.x, 0, 0.1f);
+
+    }
+    // 2. 속도에 따른 실제 좌표 이동 (땅이든 공중이든 무조건 실행되어야 함!)
+    Vector Pos = GetOwner()->GetPos();
+    Vector CurrPos = Pos + _velocity * deltaTime;
+    GetOwner()->SetPos(CurrPos);
 }
 
 void RigidBodyComponent::RenderUI()

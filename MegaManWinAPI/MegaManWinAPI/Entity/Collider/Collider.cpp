@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Collider.h"
 #include "Actor.h"
+#include "TransformComponent.h"
 
 Collider::Collider(ColliderType type)
 	: _colliderType(type), Component("Collider")
@@ -23,5 +24,15 @@ void Collider::Render(ID2D1RenderTarget* renderTarget)
 
 Vector Collider::GetColliderPos()
 {
-	return GetOwner()->GetPos() + _offset;
+    Vector finalOffset = _offset;
+    TransformComponent* transform = GetOwner()->GetComponent<TransformComponent>();
+
+    if (transform && transform->GetScale().x < 0)
+    {
+        finalOffset.x *= -1.0f;
+    }
+    // TODO: transform이 존재하고, transform의 Scale.x 값이 음수(< 0)라면
+    // finalOffset.x 값에 -1.0f를 곱하여 좌우를 반전시켜주세요.
+
+    return GetOwner()->GetPos() + finalOffset;
 }

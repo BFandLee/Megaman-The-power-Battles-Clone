@@ -27,7 +27,6 @@ private:
 	AnimationClip* _currentClip = nullptr;
 	int32 _currentFrame = 0;
 	float _accmulatedTime = 0.0f;
-
 public:
 	AnimatorComponent() : Component("AnimatorComponent") {}
 	virtual ~AnimatorComponent();
@@ -38,9 +37,10 @@ public:
 
 	// 클립 추가 및 재생 인터페이스
 	void AddClip(const wstring& stateName, AnimationClip* clip);
-	void Play(const wstring& stateName);
+	void Play(const wstring& stateName, bool keepFrame = false);
 
 	// Json 파일을 읽어와 지정된 stateName으로 Clip을 등록하는 인터페이스
 	bool LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath);
+
 };
 

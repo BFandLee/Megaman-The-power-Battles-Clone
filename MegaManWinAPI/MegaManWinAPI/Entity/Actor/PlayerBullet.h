@@ -1,6 +1,13 @@
 #pragma once
 #include "Actor.h"
 
+struct BulletState
+{
+    float damage;
+    float speed;
+    bool isPiercing;
+};
+
 class PlayerBullet : public Actor
 {
     using Super = Actor;
@@ -11,12 +18,14 @@ public:
     virtual RenderLayer GetRenderLayer() override { return RenderLayer::Bullet; } // ¶Ç´Â Bullet
     virtual ActorType GetActorType() override { return ActorType::PlayerBullet; }
     
-    void Reset(Vector startPos, Vector dir);
+    void Reset(Vector startPos, Vector dir, ChargeLevel level);
 
 private:
     Vector _dir;
-    float _speed = 200.0f;
+    float _speed = 500.0f;
+    float _damage = 0.0f;
     float _lifeTime = 0.0f;
     float _maxLifeTime = 1.0f;
+    bool _isPiercing = false;
 };
 

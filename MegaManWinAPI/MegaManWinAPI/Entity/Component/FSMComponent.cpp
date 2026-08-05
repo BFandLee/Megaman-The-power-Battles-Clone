@@ -16,7 +16,7 @@ FSMComponent::~FSMComponent()
 
 void FSMComponent::Init()
 {
-    // TODO: 초기 상태를 설정하는 로직
+    // 초기 상태를 설정하는 로직
     
 }
 
@@ -38,6 +38,9 @@ void FSMComponent::RenderUI()
         // 점프 크기 조절
         ImGui::DragFloat("JumpForce",&_jumpforce);
 
+        // 가속도
+        ImGui::DragFloat("Accel", &_accel);
+
         ImGui::TreePop();
     }
 }
@@ -48,6 +51,7 @@ json FSMComponent::ToJson()
     
     j["MoveSpeed"] = _movespeed;
     j["JumpForce"] = _jumpforce;
+    j["Accel"] = _accel;
 
 
     return j;
@@ -59,6 +63,7 @@ void FSMComponent::FromJson(const json& j)
 
     if (j.contains("MoveSpeed")) _movespeed = j["MoveSpeed"];
     if (j.contains("JumpForce")) _jumpforce = j["JumpForce"];
+    if (j.contains("Accel")) _accel = j["Accel"];
     
 }
     

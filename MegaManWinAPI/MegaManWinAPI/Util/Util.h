@@ -44,6 +44,16 @@ enum class SceneType
 	Max,
 };
 
+enum class ChargeLevel
+{
+	None,
+	Normal,
+	Mid,
+	Max,
+
+	Count
+};
+
 
 enum class ColliderType
 {

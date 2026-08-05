@@ -66,7 +66,7 @@ void AnimatorComponent::AddClip(const wstring& stateName, AnimationClip* clip)
 {
 }
 
-void AnimatorComponent::Play(const wstring& stateName)
+void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 {
 	// map에서 stateName 키가 존재하는지 찾기
 	auto it = _clips.find(stateName);
@@ -83,8 +83,21 @@ void AnimatorComponent::Play(const wstring& stateName)
 		return;
 	}
 	_currentClip = it->second;
-	_currentFrame = 0;
-	_accmulatedTime = 0.0f;
+
+	if (!keepFrame)
+	{
+		_currentFrame = 0;
+		_accmulatedTime = 0.0f;
+	}
+	else
+	{
+		// Exception Index Gude
+		if (_currentClip->frames.size() > 0 && _currentFrame >= _currentClip->frames.size())
+		{
+			_currentFrame = _currentClip->frames.size() - 1;
+		}
+	}
+	
 }
 
 bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath)

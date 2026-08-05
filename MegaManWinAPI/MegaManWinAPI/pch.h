@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <windowsx.h>
 #include <queue>
+#include <cmath>
 
 // C++ 20 std::format
 #include <format>

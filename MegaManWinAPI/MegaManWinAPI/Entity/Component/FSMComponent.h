@@ -27,10 +27,12 @@ public:
 
     float GetMoveSpeed() { return _movespeed; }
     float GetJumpForce() { return _jumpforce; }
+    float GetAccel() { return _currentaccel; }
 
-    // TODO: 이동 속도(MoveSpeed), 점프력 등 필요한 수치 데이터를 선언하세요.
 private:
     float _movespeed = 0.0f;
     float _jumpforce = 0.0f;
+    float _accel = 10.0f;
+    float _currentaccel = _accel * 1000.0f;
     
 };

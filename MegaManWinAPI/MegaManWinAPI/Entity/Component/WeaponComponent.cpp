@@ -6,6 +6,7 @@
 #include "ObjectPoolManager.h"
 #include "SceneManager.h"
 #include "AnimatorComponent.h"
+#include "ChargeEffectActor.h"
 
 WeaponComponent::WeaponComponent() : Component("WeaponComponent")
 {
@@ -52,13 +53,81 @@ void WeaponComponent::Update(float deltaTime)
     }
 
 
+    // 1. 일반 발사 (ButtonDown) - 기존 로직 유지
     if (InputManager::GetInstance().GetButtonDown(KeyType::A) && _currentCooldown <= 0.0f)
     {
-        _currentWeapon->Fire();
+        _currentWeapon->Fire(ChargeLevel::Normal);
         _isAttacking = true;
         _currentAnimTimer = _attackAnimDuration;
         _currentBurstCount--;
         _currentCooldown = (_currentBurstCount != 0) ? _attackInterval : _reloadCooldown;
+        
+        // 차지 타이머 초기화 및 차지 시작
+        _chargeTimer = 0.0f;
+        _isCharging = true;
+    }
+
+    // 2. 차지 진행 (Button)
+    if (InputManager::GetInstance().GetButtonPressed(KeyType::A))
+    {
+        if (_isCharging)
+        {
+            _chargeTimer += deltaTime;
+            if (_chargeTimer >= _maxChargeTime)
+            {
+                _chargeEffect->SetChargeLevel((int32)ChargeLevel::Max);
+            }
+            // TODO(USER): _chargeTimer가 일정 시간 이상이면 _chargeEffect를 활성화하고,
+            // 플레이어의 위치에 맞춰 이펙트 좌표를 업데이트 해보세요!
+            if (_chargeTimer >= _midChargeTime && _chargeEffect == nullptr)
+            {
+                _chargeEffect = new ChargeEffectActor();
+                SceneManager::GetInstance().GetScene()->AddActor(_chargeEffect);
+            }
+
+            if (_chargeEffect != nullptr)
+            {
+                Vector pos = GetOwner()->GetPos();
+                _chargeEffect->SetPos(pos);
+            }
+        }
+    }
+
+    // 3. 차지 샷 발사 (ButtonUp)
+    if (InputManager::GetInstance().GetButtonUp(KeyType::A))
+    {
+        if (_isCharging && _chargeTimer >= _midChargeTime)
+        {
+            ChargeLevel level = ChargeLevel::None;
+
+            // TODO(USER): _chargeTimer 값에 따라 ChargeLevel을 Mid 또는 Max로 판별하세요.
+            if (_chargeTimer == 2)
+            {
+                level = ChargeLevel::Mid; // 임시
+            }
+            else if (_chargeTimer >= _maxChargeTime)
+            {
+                level = ChargeLevel::Max;
+                
+            }
+            else
+            {
+                level = ChargeLevel::Mid;
+            }
+
+            // 발사 및 모션 재생
+            _currentWeapon->Fire(level);
+            _isAttacking = true;
+            _currentAnimTimer = _attackAnimDuration;
+
+            // TODO(USER): 발사 후 _chargeEffect를 비활성화(숨김 혹은 소멸) 처리하세요.
+            _chargeEffect->Destroy();
+            _chargeEffect = nullptr;
+        }
+        
+        // 차지 상태 초기화
+        _isCharging = false;
+        _chargeTimer = 0.0f;
     }
 }
 

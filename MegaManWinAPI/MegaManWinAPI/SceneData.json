@@ -3,10 +3,10 @@
         {
             "Components": [
                 {
-                    "PosX": 534.3257446289063,
-                    "PosY": 465.5999755859375,
+                    "PosX": 377.0980529785156,
+                    "PosY": 465.6000061035156,
                     "Rotation": 0.0,
-                    "ScaleX": 2.0,
+                    "ScaleX": -2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -15,25 +15,26 @@
                 },
                 {
                     "Height": 80.0,
-                    "OffsetX": 36.29999923706055,
+                    "OffsetX": 3.9000000953674316,
                     "OffsetY": 63.900001525878906,
                     "Width": 69.0,
                     "name": "Collider"
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": 0.0,
-                    "VelocityY": -600.0,
+                    "VelocityX": -250.0,
+                    "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
                 {
+                    "Accel": 7000.0,
                     "JumpForce": 600.0,
                     "MoveSpeed": 250.0,
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -0.007599984295666218,
-                    "Reloading": 1.0,
+                    "CoolDown": -1.6693025827407837e-05,
+                    "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
                 }

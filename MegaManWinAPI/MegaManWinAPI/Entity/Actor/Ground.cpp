@@ -10,7 +10,6 @@ void Ground::Init()
 	Super::Init();
 
 	ImageRenderer* renderer = AddComponent<ImageRenderer>();
-	// TODO 2: ResourceManager를 통해 Ground 텍스처를 가져오고 렌더러에 세팅
 	Texture* tex = ResourceManager::GetInstance().GetTexture(L"Ground");
 	renderer->SetTexture(tex);
 	
