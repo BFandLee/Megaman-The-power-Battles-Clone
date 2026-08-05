@@ -70,7 +70,7 @@ def merge_sprites(target_dir, character_name):
             frame_data = {
                 "startPos": { "x": float(x_offset), "y": 0.0 },
                 "size": { "x": float(w), "y": float(h) },
-                "offset": { "x": w / 2.0, "y": float(h) },
+                "offset": { "x": 0.0, "y": float(h) },
                 "duration": 0.2
             }
             frames.append(frame_data)
