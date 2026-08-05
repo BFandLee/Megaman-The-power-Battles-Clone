@@ -14,7 +14,7 @@ public:
 	// Scale
 	Vector GetScale() const { return _Scale; }
 	void SetScale(Vector Scale) { _Scale = Scale; }
-
+	
 	// Rotation
 	float GetRotation() const { return _rotation; }
 	void SetRotation(float rotation) { _rotation = rotation; }

@@ -59,8 +59,6 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
 
     // 3. 해당 레벨의 데이터 블록 가져오기
     json statData = j[levelKey];
-
-    // TODO(USER): statData 에서 값을 꺼내어 내 멤버 변수에 적용하세요!
     
     // state 구조체로 변경 필요
     _speed = statData["speed"];
@@ -68,8 +66,11 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
     _isPiercing = statData["pierce"];
 
     CircleCollider* collider = GetComponent<CircleCollider>();
+    collider->SetRadius(statData["radius"]);
+
     Vector Scale = Vector(statData["scale"][0], statData["scale"][1]);
-    collider->SetRadius(20.0f);
+    Scale.x = Scale.x * dir.x;
+    this->SetScale(Scale);
 
     AnimatorComponent* animator = GetComponent<AnimatorComponent>();
     string path = statData["animationPath"];
@@ -80,23 +81,5 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
 
     animator->LoadAnimationFromJson(wName, wPath);
     animator->Play(wName);
-    // 예시: 
-    // 
-    // _speed = statData["speed"];
-    // 
-
-    // (1) 충돌체 크기(Radius) 설정하기
-    // CircleCollider* collider = GetComponent<CircleCollider>();
-    // collider->SetRadius(...);
-    // (2) 크기(Scale) 설정하기 
-    // Vector scale = Vector(statData["scale"][0], statData["scale"][1]);
-    // this->SetScale(scale); // 방향에 따른 X반전 로직(기존 코드 참고)도 함께 적용해보세요!
-    // (3) 애니메이터 설정하기 (경로와 이름)
-    // AnimatorComponent* animator = GetComponent<AnimatorComponent>();
-    // std::string path = statData["animationPath"];
-    // std::string name = statData["animationName"];
-    // std::wstring wPath(path.begin(), path.end()); // string -> wstring 변환
-    // std::wstring wName(name.begin(), name.end());
-    // animator->LoadAnimationFromJson(wName, wPath);
-    // animator->Play(wName);
+   
 }

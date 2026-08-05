@@ -13,7 +13,7 @@
         "speed": 600.0,
         "radius": 25.0,
         "scale": [3.0, 3.0],
-        "animationPath": "../Resources/sprites/Effect/Mid_Charge_Shot.json",
+        "animationPath": "../Resources/sprites/AttackEffect/Animation/Mid_Charge_Shot.json",
         "animationName": "Mid_Charge_Shot",
         "pierce": false
     },
@@ -22,7 +22,7 @@
         "speed": 700.0,
         "radius": 40.0,
         "scale": [4.0, 4.0],
-        "animationPath": "../Resources/sprites/Effect/Max_Charge_Shot.json",
+        "animationPath": "../Resources/sprites/AttackEffect/Animation/Max_Charge_Shot.json",
         "animationName": "Max_Charge_Shot",
         "pierce": true
     }

@@ -76,13 +76,17 @@ void WeaponComponent::Update(float deltaTime)
             _chargeTimer += deltaTime;
             if (_chargeTimer >= _maxChargeTime)
             {
-                _chargeEffect->SetChargeLevel((int32)ChargeLevel::Max);
+                if (_chargeEffect != nullptr)
+                {
+                    _chargeEffect->SetChargeLevel((int32)ChargeLevel::Max);
+                }
             }
             // TODO(USER): _chargeTimer가 일정 시간 이상이면 _chargeEffect를 활성화하고,
             // 플레이어의 위치에 맞춰 이펙트 좌표를 업데이트 해보세요!
             if (_chargeTimer >= _midChargeTime && _chargeEffect == nullptr)
             {
                 _chargeEffect = new ChargeEffectActor();
+                _chargeEffect->Init();
                 SceneManager::GetInstance().GetScene()->AddActor(_chargeEffect);
             }
 
@@ -100,18 +104,12 @@ void WeaponComponent::Update(float deltaTime)
         if (_isCharging && _chargeTimer >= _midChargeTime)
         {
             ChargeLevel level = ChargeLevel::None;
-
-            // TODO(USER): _chargeTimer 값에 따라 ChargeLevel을 Mid 또는 Max로 판별하세요.
-            if (_chargeTimer == 2)
-            {
-                level = ChargeLevel::Mid; // 임시
-            }
-            else if (_chargeTimer >= _maxChargeTime)
+            if (_chargeTimer >= _maxChargeTime)
             {
                 level = ChargeLevel::Max;
                 
             }
-            else
+            else if (_chargeTimer >= _midChargeTime)
             {
                 level = ChargeLevel::Mid;
             }

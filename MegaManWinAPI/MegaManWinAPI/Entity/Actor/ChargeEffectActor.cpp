@@ -3,6 +3,7 @@
 #include "AnimatorComponent.h"
 #include "TimeManager.h"
 #include "TransformComponent.h"
+#include "MuzzleFlash.h"
 
 ChargeEffectActor::ChargeEffectActor() : Actor("ChargeEffectActor")
 {
@@ -19,6 +20,7 @@ void ChargeEffectActor::Init()
     // 1. 애니메이터 부착
     _animator = AddComponent<AnimatorComponent>();
 
+    // 기 모으기 이펙트 전용 애니메이션 추가하기
     _animator->LoadAnimationFromJson(L"Mid_Charge_Shot", L"../Resources/sprites/Effect/Mid_Charge_Shot.json");
     _animator->LoadAnimationFromJson(L"Max_Charge_Shot", L"../Resources/sprites/Effect/Max_Charge_Shot.json");
     
@@ -30,6 +32,8 @@ void ChargeEffectActor::Update(float deltaTime)
 {
     Super::Update(deltaTime);
 }
+
+
 
 void ChargeEffectActor::SetChargeLevel(int level)
 {
