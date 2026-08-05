@@ -1,0 +1,29 @@
+{
+    "Normal": {
+        "damage": 1,
+        "speed": 500.0,
+        "radius": 15.0,
+        "scale": [2.0, 2.0],
+        "animationPath": "../Resources/sprites/AttackEffect/Animation/Attack.json",
+        "animationName": "Attack",
+        "pierce": false
+    },
+    "Mid": {
+        "damage": 3,
+        "speed": 600.0,
+        "radius": 25.0,
+        "scale": [3.0, 3.0],
+        "animationPath": "../Resources/sprites/Effect/Mid_Charge_Shot.json",
+        "animationName": "Mid_Charge_Shot",
+        "pierce": false
+    },
+    "Max": {
+        "damage": 5,
+        "speed": 700.0,
+        "radius": 40.0,
+        "scale": [4.0, 4.0],
+        "animationPath": "../Resources/sprites/Effect/Max_Charge_Shot.json",
+        "animationName": "Max_Charge_Shot",
+        "pierce": true
+    }
+}

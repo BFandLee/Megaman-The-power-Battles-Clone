@@ -1,6 +1,6 @@
 {
-  "texturePath": "Player_Dead_Sheet",
-  "bLoop": false,
+  "texturePath": "Player_Attack_Sheet",
+  "bLoop": true,
   "frames": [
     {
       "startPos": {
