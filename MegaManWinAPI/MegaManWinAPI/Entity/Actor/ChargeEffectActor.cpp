@@ -44,7 +44,7 @@ void ChargeEffectActor::SetChargeLevel(int level)
         }
         case (int32)ChargeLevel::Max:
         {
-            _animator->Play(L"Max_Charge_shot");
+            _animator->Play(L"Max_Charge_Shot");
             break;
         }
     default:

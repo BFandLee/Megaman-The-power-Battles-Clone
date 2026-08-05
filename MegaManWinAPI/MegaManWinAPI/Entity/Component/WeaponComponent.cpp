@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "ObjectPoolManager.h"
 #include "SceneManager.h"
+#include "Scene.h"
 #include "AnimatorComponent.h"
 #include "ChargeEffectActor.h"
 

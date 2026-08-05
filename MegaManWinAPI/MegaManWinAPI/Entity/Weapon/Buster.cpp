@@ -40,7 +40,7 @@ void Buster::Fire(ChargeLevel level)
 
         Vector bulletDir = Vector(dirX, 0.0f);
 
-        bullet->Reset(pos, bulletDir);
+        bullet->Reset(pos, bulletDir, level);
 
         SceneManager::GetInstance().GetScene()->AddActor(bullet);
     }
