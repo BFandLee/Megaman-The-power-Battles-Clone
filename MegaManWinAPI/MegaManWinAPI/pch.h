@@ -165,3 +165,6 @@ struct Vector
 
 const int GWinSizeX = 1152;
 const int GWinSizeY = 672;
+
+constexpr float KNOCKBACK = 300.0f;
+constexpr float RESTORING = -250.0f;

@@ -4,7 +4,7 @@
             "Components": [
                 {
                     "PosX": 260.350341796875,
-                    "PosY": 465.5999755859375,
+                    "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": -2.0,
                     "ScaleY": 2.0,
@@ -22,7 +22,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": -1.1186326018667615e-38,
+                    "VelocityX": -5.605193857299268e-45,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
@@ -126,17 +126,17 @@
             "Components": [
                 {
                     "PosX": 1027.0,
-                    "PosY": 561.0,
+                    "PosY": 532.0,
                     "Rotation": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
                 {
-                    "Height": 50.0,
+                    "Height": 70.0,
                     "OffsetX": 0.0,
                     "OffsetY": 0.0,
-                    "Width": 50.0,
+                    "Width": 100.0,
                     "name": "Collider"
                 },
                 {

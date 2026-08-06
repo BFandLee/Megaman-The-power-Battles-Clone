@@ -30,8 +30,8 @@ void HitState::Enter()
 	// TODO 2: FSM 컴포넌트의 Owner(Player)를 가져와서 RigidBodyComponent를 얻고 뒤로 밀려나는 넉백(Velocity 설정)을 구현하세요.
 	Player* player = static_cast<Player*>(m_pOwnerFSM->GetOwner());
 	RigidBodyComponent* rigid = player->GetComponent<RigidBodyComponent>();
-	float HitX = player->GetHitDirX();
-	rigid->SetVelocity(Vector(HitX, rigid->GetVelocity().y));
+	float HitX = player->GetHitDirX() * KNOCKBACK;
+	rigid->SetVelocity(Vector(HitX, RESTORING));
 }
 
 void HitState::Update(float deltaTime)
