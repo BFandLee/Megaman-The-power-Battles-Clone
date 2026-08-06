@@ -43,6 +43,7 @@ void Player::Init()
 	// FSM 및 Weapon 컴포넌트 부착
 	FSMComponent* fsm = AddComponent<FSMComponent>();
 	
+	//StateMachine으로 정리하자
 	fsm->AddState("Idle", new IdleState(fsm));
 	fsm->AddState("Move", new MoveState(fsm));
 	fsm->AddState("Jump", new JumpState(fsm));
