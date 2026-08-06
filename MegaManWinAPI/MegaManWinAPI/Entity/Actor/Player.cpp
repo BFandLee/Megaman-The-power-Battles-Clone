@@ -9,13 +9,14 @@
 #include "WeaponComponent.h"
 #include "TransformComponent.h"
 // 테스트를 위한 include
-#include "ImageRenderer.h"
 #include "Texture.h"
 #include "ResourceManager.h"
 #include "IdleState.h"
 #include "MoveState.h"
 #include "JumpState.h"
 #include "SlideState.h"
+#include "HitState.h"
+#include "DeathState.h"
 
 void Player::Init()
 {
@@ -27,6 +28,8 @@ void Player::Init()
 	animator->LoadAnimationFromJson(L"Move", L"../Resources/sprites/Player/Animation/Move.json");
 	animator->LoadAnimationFromJson(L"Jump", L"../Resources/sprites/Player/Animation/Jump.json");
 	animator->LoadAnimationFromJson(L"Sliding", L"../Resources/sprites/Player/Animation/Sliding.json");
+	animator->LoadAnimationFromJson(L"Hit", L"../Resources/sprites/Player/Animation/Hit.json");
+	animator->LoadAnimationFromJson(L"Death", L"../Resources/sprites/Player/Animation/Death.json");
 
 	animator->Play(L"Idle");
 
@@ -44,6 +47,8 @@ void Player::Init()
 	fsm->AddState("Move", new MoveState(fsm));
 	fsm->AddState("Jump", new JumpState(fsm));
 	fsm->AddState("Sliding", new SlideState(fsm));
+	fsm->AddState("Hit", new HitState(fsm));
+	fsm->AddState("Death", new DeathState(fsm));
 	fsm->ChangeState("Idle");
 
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
@@ -53,6 +58,32 @@ void Player::Init()
 void Player::Update(float deltaTime)
 {
 	Super::Update(deltaTime); // 부모 업데이트 호출 (여기서 부착된 컴포넌트들의 Update가 자동 실행됩니다)
+
+	// TODO 1: _isInvincible이 true일 때 _invincibleTimer를 deltaTime만큼 증가시킵니다.
+	// 타이머가 무적 지속 시간(예: 1.5초)을 초과하면 _isInvincible을 false로 만들고, ImageRenderer의 Alpha 값을 1.0f로 원상복구하세요.
+	if (_isInvincible)
+	{
+		_invincibleTimer += deltaTime;
+
+		if (_invincibleTimer > 1.5f)
+		{
+			_isInvincible = false;
+			
+		}
+	}
+	
+}
+
+void Player::Render(ID2D1RenderTarget* renderTarget)
+{
+	// 무적 상태일 때만 특정 조건에서 return 시켜서 렌더링을 건너뜀 (예: 0.1초 단위로 깜빡임)
+	if (_isInvincible)
+	{
+		if ((int32)(_invincibleTimer * 10) % 2)
+			return;
+	}
+
+	Super::Render(renderTarget);
 }
 
 void Player::OnStay(Actor* other, const HitResult& hit)
@@ -60,6 +91,7 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 	Vector pos = GetPos();
 	bool isWall = (other->GetActorType() == ActorType::WALL);
 	bool isGround = (other->GetActorType() == ActorType::Ground);
+	bool isEnemy = (other->GetActorType() == ActorType::Enemy);
 
 	BoxCollider* myCol = GetComponent<BoxCollider>();
 	BoxCollider* otherCol = other->GetComponent<BoxCollider>();
@@ -80,12 +112,10 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 		{
 			if (myColPos.x < otherColPos.x)
 			{
-				// 왼쪽으로 밀기
 				pos.x -= overlapX;
 			}
 			else
 			{
-				// 오른쪽으로 밀기
 				pos.x += overlapX;
 			}
 		}
@@ -121,6 +151,14 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 			rigid->SetVelocity(currentVel);
 		}
 	}
+
+	if (isEnemy && !_isInvincible)
+	{
+		// TODO 3: 플레이어와 적의 x좌표를 비교하여 넉백 방향(hitDirX)을 계산하고 TakeDamage를 호출하세요. (예: 적이 오른쪽에 있으면 -1.0f)
+		float hitDirX = this->GetPos().x - other->GetPos().x;
+		TakeDamage(5, hitDirX);
+	}
+
 	SetPos(pos);
 	
 }
@@ -147,4 +185,22 @@ void Player::SetLookDirX(float dir)
 		currentScale.x = abs(currentScale.x) * dir;
 		transform->SetScale(currentScale);
 	}
+}
+
+void Player::TakeDamage(int damage, float hitDirX)
+{
+	// TODO 4: _hp 감소 및 무적 상태 설정 (_isInvincible = true, 타이머 초기화)
+	if (_hp > 0)
+	{
+		_hp -= damage;
+		_isInvincible = true;
+		_invincibleTimer = 0.0f;
+		this->GetComponent<FSMComponent>()->ChangeState("Hit");
+	}
+	// TODO 5: 체력이 0 이하면 FSM을 "Death" 상태로, 아니면 "Hit" 상태로 변경하세요.
+	if (_hp < 0)
+	{
+		this->GetComponent<FSMComponent>()->ChangeState("Death");
+	}
+	_hitdirX = hitDirX;
 }

@@ -66,7 +66,6 @@ void SlideState::Update(float deltaTime)
     {
         m_pOwnerFSM->ChangeState("Idle");
     }
-    // TODO 8: 슬라이딩 도중 점프키(SpaceBar)가 눌리면 "Jump" 상태로 변경하기
 
     if (InputManager::GetInstance().GetButtonPressed(KeyType::SpaceBar))
     {

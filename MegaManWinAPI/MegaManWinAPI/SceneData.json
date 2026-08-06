@@ -3,8 +3,8 @@
         {
             "Components": [
                 {
-                    "PosX": 457.31201171875,
-                    "PosY": 465.6000061035156,
+                    "PosX": 260.350341796875,
+                    "PosY": 465.5999755859375,
                     "Rotation": 0.0,
                     "ScaleX": -2.0,
                     "ScaleY": 2.0,
@@ -22,7 +22,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": 0.0,
+                    "VelocityX": -1.1186326018667615e-38,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
@@ -35,7 +35,7 @@
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -0.01671590656042099,
+                    "CoolDown": -0.015450900420546532,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -95,9 +95,6 @@
                 },
                 {
                     "name": "AnimatorComponent"
-                },
-                {
-                    "name": "ImageRenderer"
                 }
             ],
             "name": "Background"
@@ -124,6 +121,29 @@
                 }
             ],
             "name": "Ground"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 1027.0,
+                    "PosY": 561.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Height": 50.0,
+                    "OffsetX": 0.0,
+                    "OffsetY": 0.0,
+                    "Width": 50.0,
+                    "name": "Collider"
+                },
+                {
+                    "name": "ImageRenderer"
+                }
+            ],
+            "name": "DummyEnemy"
         }
     ]
 }

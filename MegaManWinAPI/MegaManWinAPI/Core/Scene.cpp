@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Ground.h"
 #include "WallActor.h"
+#include "DummyEnemy.h"
 
 // 생성자/소멸자를 cpp 작성하면, Scene의 인스턴스화는 cpp에서 일어남.
 // ObjectPool<T> (vector<T>) 값 자체를 가지고 있는 풀을 생성하는것도,
@@ -29,6 +30,7 @@ void Scene::Init()
 	RegisterActor<Background>("Background");
 	RegisterActor<Ground>("Ground");
 	RegisterActor<WallActor>("WallActor");
+	RegisterActor<DummyEnemy>("DummyEnemy");
 
 	// Grid 미리 생성
 	/*_gridCountX = (int32)GWinSizeX / _gridSize;

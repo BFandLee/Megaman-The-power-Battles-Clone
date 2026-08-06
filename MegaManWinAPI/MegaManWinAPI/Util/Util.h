@@ -5,24 +5,25 @@ float DegreeToRadian(float degree);
 
 enum class RenderLayer
 {
-	// ¾Æ·¡ ¼ø¼­´ë·Î ·»´õ¸µÀÌ ½ÇÇàµÈ´Ù.
-	Background, // Á¦ÀÏ ¾Æ·¡
+	// ì•„ë˜ ìˆœì„œëŒ€ë¡œ ë Œë”ë§ì´ ì‹¤í–‰ëœë‹¤.
+	Background, // ì œì¼ ì•„ë˜
 	Enemy,
 	Player,
 	Bullet,
 	Boss,
-	Effect,     // Á¦ÀÏ À§
+	Effect,     // ì œì¼ ìœ„
 	WALL,
 	
-	// ÃÖ´ë °³¼ö
+	// ìµœëŒ€ ê°œìˆ˜
 	Count
 };
 
-// Actor¸¦ ÆÇ´ÜÇÒ¼öÀÖ´Â ½Äº°ÀÚ Type
+// Actorë¥¼ íŒë‹¨í• ìˆ˜ìˆëŠ” ì‹ë³„ì Type
 enum class ActorType
 {
 	Background,
 	Player,
+	Enemy,
 	Boss,
 	Effect,
 	WALL,

@@ -31,8 +31,6 @@ Vector Collider::GetColliderPos()
     {
         finalOffset.x *= -1.0f;
     }
-    // TODO: transform이 존재하고, transform의 Scale.x 값이 음수(< 0)라면
-    // finalOffset.x 값에 -1.0f를 곱하여 좌우를 반전시켜주세요.
 
     return GetOwner()->GetPos() + finalOffset;
 }

@@ -21,6 +21,8 @@ public:
 	virtual void OnEnter(Actor* other, const HitResult& hit) {}
 	virtual void OnStay(Actor* other, const HitResult& hit) {}
 	virtual void OnExit(Actor* other) {}
+
+	virtual void TakeDamage(float damage, float hitDirX = 0.0f) {}
 	
 	Vector GetPos() const;
 

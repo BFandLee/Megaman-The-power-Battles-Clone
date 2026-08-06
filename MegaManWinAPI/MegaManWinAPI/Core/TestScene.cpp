@@ -7,6 +7,7 @@
 #include "WAllActor.h"
 #include "Player.h"
 #include "PlayerBullet.h"
+#include "DummyEnemy.h"
 
 void TestScene::loadResources()
 {
@@ -49,4 +50,10 @@ void TestScene::createObjects()
 	// ÃÑ¾Ë
 	PlayerBullet* bullet = new PlayerBullet();
 	bullet->SetPos(player->GetPos());
+
+	// Å×½ºÆ® »÷µå¹é
+	DummyEnemy* dummy = new DummyEnemy();
+	dummy->Init();
+	dummy->SetPos(Vector(400, 300));
+	AddActor(dummy);
 }

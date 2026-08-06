@@ -33,6 +33,16 @@ void PlayerBullet::Update(float deltaTime)
     }
 }
 
+void PlayerBullet::OnEnter(Actor* other, const HitResult& hit)
+{
+    bool isEnemy = (other->GetActorType() == ActorType::Enemy);
+
+    if (isEnemy)
+    {
+        other->TakeDamage(_state.damage, _dir.x);
+    }
+}
+
 void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
 {
     this->SetPos(startPos);

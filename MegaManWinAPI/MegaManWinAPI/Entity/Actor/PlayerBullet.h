@@ -19,6 +19,8 @@ public:
     virtual RenderLayer GetRenderLayer() override { return RenderLayer::Bullet; } // ¶Ç´Â Bullet
     virtual ActorType GetActorType() override { return ActorType::PlayerBullet; }
     
+    virtual void OnEnter(Actor* other, const HitResult& hit) override;
+
     void Reset(Vector startPos, Vector dir, ChargeLevel level);
 
 private:
