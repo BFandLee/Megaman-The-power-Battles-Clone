@@ -5,7 +5,8 @@ struct BulletState
 {
     float damage;
     float speed;
-    bool isPiercing;
+    bool isPiercing;    // 관통 여부
+    float maxLifeTIme = 1.0f;
 };
 
 class PlayerBullet : public Actor
@@ -22,10 +23,7 @@ public:
 
 private:
     Vector _dir;
-    float _speed = 500.0f;
-    float _damage = 0.0f;
+    BulletState _state;
     float _lifeTime = 0.0f;
-    float _maxLifeTime = 1.0f;
-    bool _isPiercing = false;
 };
 

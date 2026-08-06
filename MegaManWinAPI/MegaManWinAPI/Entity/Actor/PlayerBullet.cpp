@@ -22,14 +22,12 @@ void PlayerBullet::Init()
 void PlayerBullet::Update(float deltaTime)
 {
     Super::Update(deltaTime);
-    BulletState state;
-    // 구조체 state로 변경 필요
-    Vector nextpos = GetPos() + (_dir * _speed * deltaTime);
+    Vector nextpos = GetPos() + (_dir * _state.speed* deltaTime);
     this->SetPos(nextpos);
 
     _lifeTime += deltaTime;
 
-    if (_lifeTime > _maxLifeTime)
+    if (_lifeTime > _state.maxLifeTIme)
     {
         Destroy();
     }
@@ -60,10 +58,9 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
     // 3. 해당 레벨의 데이터 블록 가져오기
     json statData = j[levelKey];
     
-    // state 구조체로 변경 필요
-    _speed = statData["speed"];
-    _damage = statData["damage"];
-    _isPiercing = statData["pierce"];
+    _state.speed = statData["speed"];
+    _state.damage = statData["damage"];
+    _state.isPiercing = statData["pierce"];
 
     CircleCollider* collider = GetComponent<CircleCollider>();
     collider->SetRadius(statData["radius"]);
@@ -71,6 +68,11 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
     Vector Scale = Vector(statData["scale"][0], statData["scale"][1]);
     Scale.x = Scale.x * dir.x;
     this->SetScale(Scale);
+
+    // 원 콜라이더 오프셋
+    Vector offset = Vector(statData["offset"][0], statData["offset"][1]);
+    offset.x *= dir.x;
+    this->GetCollider()->SetOffset(offset);
 
     AnimatorComponent* animator = GetComponent<AnimatorComponent>();
     string path = statData["animationPath"];

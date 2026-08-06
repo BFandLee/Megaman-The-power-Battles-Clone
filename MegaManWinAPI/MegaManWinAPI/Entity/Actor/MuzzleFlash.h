@@ -23,5 +23,5 @@ public:
 private:
     AnimatorComponent* _animator = nullptr;
     float _lifeTime = 0.0f;
-    float _maxLifeTime = 2.0f;
+    float _maxLifeTime = 0.3f;
 };

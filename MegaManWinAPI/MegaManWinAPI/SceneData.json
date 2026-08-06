@@ -3,8 +3,8 @@
         {
             "Components": [
                 {
-                    "PosX": 436.70050048828125,
-                    "PosY": 460.4925537109375,
+                    "PosX": 341.6257629394531,
+                    "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": -2.0,
                     "ScaleY": 2.0,
@@ -22,8 +22,8 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": 0.0,
-                    "VelocityY": -591.5385131835938,
+                    "VelocityX": -250.0,
+                    "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
                 {
@@ -33,7 +33,7 @@
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -0.00815229769796133,
+                    "CoolDown": -0.016632787883281708,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -126,24 +126,8 @@
         {
             "Components": [
                 {
-                    "PosX": 344.584228515625,
-                    "PosY": 451.16424560546875,
-                    "Rotation": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "AnimatorComponent"
-                }
-            ],
-            "name": "MuzzleFlash"
-        },
-        {
-            "Components": [
-                {
-                    "PosX": 436.70050048828125,
-                    "PosY": 460.4925537109375,
+                    "PosX": 341.6257629394531,
+                    "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,

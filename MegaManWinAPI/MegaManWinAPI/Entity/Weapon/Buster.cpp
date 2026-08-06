@@ -19,11 +19,9 @@ Buster::~Buster()
 
 void Buster::Fire(ChargeLevel level)
 {
-    // TODO(USER): chargeLevel에 따라 다르게 PlayerBullet을 셋팅(Reset)하도록 수정해 보세요.
-    // (예: bullet->Reset(pos, bulletDir, level); )
     // 1. 오브젝트 풀에서 꺼내기
     PlayerBullet* bullet = ObjectPoolManager::GetInstance().GetPlayerBulletPool()->Acquire();
-    MuzzleFlash* flash = new MuzzleFlash();
+    MuzzleFlash* flash = nullptr;
 
     // 2. 발사에 필요한 정보 가져오기
     Player* player = static_cast<Player*>(m_pOwner->GetOwner());
@@ -45,11 +43,16 @@ void Buster::Fire(ChargeLevel level)
         SceneManager::GetInstance().GetScene()->AddActor(bullet);
     }
 
+    if (level != ChargeLevel::Normal)
+    {
+        flash = new MuzzleFlash();
+    }
+
     if (flash)
     {
         flash->Init();
         // 오프셋
-        float offsetX = 45.0f;
+        float offsetX = 70.0f;
         float offsetY = 0.0f;
 
         Vector pos = player->GetPos();
