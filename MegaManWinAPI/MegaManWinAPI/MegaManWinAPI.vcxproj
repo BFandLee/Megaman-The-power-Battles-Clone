@@ -144,6 +144,7 @@
     <ClInclude Include="Entity\Component\FSMComponent.h" />
     <ClInclude Include="Entity\Component\WeaponComponent.h" />
     <ClInclude Include="Entity\FSM\IdleState.h" />
+    <ClInclude Include="Entity\FSM\SlideState.h" />
     <ClInclude Include="Entity\FSM\State.h" />
     <ClInclude Include="Entity\Weapon\Buster.h" />
     <ClInclude Include="Entity\Weapon\Weapon.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Entity\Component\FSMComponent.cpp" />
     <ClCompile Include="Entity\Component\WeaponComponent.cpp" />
     <ClCompile Include="Entity\FSM\IdleState.cpp" />
+    <ClCompile Include="Entity\FSM\SlideState.cpp" />
     <ClCompile Include="Entity\Weapon\Buster.cpp" />
     <ClCompile Include="Entity\FSM\JumpState.cpp" />
     <ClCompile Include="Manager\CollisionManager.cpp" />

@@ -41,6 +41,16 @@ void FSMComponent::RenderUI()
         // 가속도
         ImGui::DragFloat("Accel", &_accel);
 
+        // 슬라이딩 관련 
+        if (ImGui::TreeNode("Slide"))
+        {
+            ImGui::DragFloat("Velocity", &_slideVelocity);
+
+            ImGui::DragFloat("Friction", &_friction);
+
+            ImGui::TreePop();
+        }
+
         ImGui::TreePop();
     }
 }
@@ -52,6 +62,8 @@ json FSMComponent::ToJson()
     j["MoveSpeed"] = _movespeed;
     j["JumpForce"] = _jumpforce;
     j["Accel"] = _accel;
+    j["Velocity"] = _slideVelocity;
+    j["Friction"] = _friction;
 
 
     return j;
@@ -64,6 +76,8 @@ void FSMComponent::FromJson(const json& j)
     if (j.contains("MoveSpeed")) _movespeed = j["MoveSpeed"];
     if (j.contains("JumpForce")) _jumpforce = j["JumpForce"];
     if (j.contains("Accel")) _accel = j["Accel"];
+    if (j.contains("Velocity")) _slideVelocity = j["Velocity"];
+    if (j.contains("Friction")) _friction = j["Friction"];
     
 }
     

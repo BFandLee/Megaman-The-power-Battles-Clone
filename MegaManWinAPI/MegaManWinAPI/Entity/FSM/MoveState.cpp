@@ -71,6 +71,11 @@ void MoveState::Update(float deltaTime)
 	{
 		m_pOwnerFSM->ChangeState("Jump");
 	}
+
+    if (InputManager::GetInstance().GetButtonPressed(KeyType::LeftShift))
+    {
+        m_pOwnerFSM->ChangeState("Sliding");
+    }
 }
 
 void MoveState::Exit()

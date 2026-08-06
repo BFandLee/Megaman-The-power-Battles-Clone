@@ -3,7 +3,7 @@
         {
             "Components": [
                 {
-                    "PosX": 341.6257629394531,
+                    "PosX": 457.31201171875,
                     "PosY": 465.6000061035156,
                     "Rotation": 0.0,
                     "ScaleX": -2.0,
@@ -22,18 +22,20 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": -250.0,
+                    "VelocityX": 0.0,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
                 {
                     "Accel": 7000.0,
+                    "Friction": 1450.0,
                     "JumpForce": 600.0,
-                    "MoveSpeed": 250.0,
+                    "MoveSpeed": 350.0,
+                    "Velocity": 1000.0,
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -0.016632787883281708,
+                    "CoolDown": -0.01671590656042099,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -122,22 +124,6 @@
                 }
             ],
             "name": "Ground"
-        },
-        {
-            "Components": [
-                {
-                    "PosX": 341.6257629394531,
-                    "PosY": 465.6000061035156,
-                    "Rotation": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "AnimatorComponent"
-                }
-            ],
-            "name": "ChargeEffectActor"
         }
     ]
 }

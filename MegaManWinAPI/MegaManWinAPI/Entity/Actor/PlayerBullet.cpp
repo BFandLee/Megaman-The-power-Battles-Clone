@@ -58,7 +58,7 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
     // 3. 해당 레벨의 데이터 블록 가져오기
     json statData = j[levelKey];
     
-    _state.speed = statData["speed"];
+    _state.speed = statData[    "speed"];
     _state.damage = statData["damage"];
     _state.isPiercing = statData["pierce"];
 
@@ -71,7 +71,7 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
 
     // 원 콜라이더 오프셋
     Vector offset = Vector(statData["offset"][0], statData["offset"][1]);
-    offset.x *= dir.x;
+    // offset.x *= dir.x;
     this->GetCollider()->SetOffset(offset);
 
     AnimatorComponent* animator = GetComponent<AnimatorComponent>();

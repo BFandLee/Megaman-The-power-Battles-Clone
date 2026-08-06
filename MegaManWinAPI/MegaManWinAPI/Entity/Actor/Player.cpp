@@ -15,6 +15,8 @@
 #include "IdleState.h"
 #include "MoveState.h"
 #include "JumpState.h"
+#include "SlideState.h"
+
 void Player::Init()
 {
 	Super::Init();
@@ -24,6 +26,8 @@ void Player::Init()
 	animator->LoadAnimationFromJson(L"Idle", L"../Resources/sprites/Player/Animation/idle.json");
 	animator->LoadAnimationFromJson(L"Move", L"../Resources/sprites/Player/Animation/Move.json");
 	animator->LoadAnimationFromJson(L"Jump", L"../Resources/sprites/Player/Animation/Jump.json");
+	animator->LoadAnimationFromJson(L"Sliding", L"../Resources/sprites/Player/Animation/Sliding.json");
+
 	animator->Play(L"Idle");
 
 	// 충돌체(Collider) 컴포넌트 추가
@@ -39,6 +43,7 @@ void Player::Init()
 	fsm->AddState("Idle", new IdleState(fsm));
 	fsm->AddState("Move", new MoveState(fsm));
 	fsm->AddState("Jump", new JumpState(fsm));
+	fsm->AddState("Sliding", new SlideState(fsm));
 	fsm->ChangeState("Idle");
 
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
@@ -96,7 +101,7 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 		if (overlapY > 0.0f)
 		{
 			// 부동소수점 오차로 인한 충돌 해제를 막기 위해 미세하게 덜 밀어냄
-			float pushOut = overlapY - 0.1f;
+			float pushOut = std::max(overlapY - 0.1f , 0.0f);
 			
 			// pushOut 값이 아주 미세한 오차 범위(0.001f) 이하라면 위치를 이동하지 않음 (픽셀 덜덜거림 방지)
 			if (std::abs(pushOut) > 0.001f)

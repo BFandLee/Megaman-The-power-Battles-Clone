@@ -10,22 +10,6 @@
 
 void TestScene::loadResources()
 {
-	/*ResourceManager::GetInstance().LoadTexture(
-		L"Background",
-		L"Background\\background\\sprite_0000.png"
-	);
-	ResourceManager::GetInstance().LoadTexture(
-		L"Ground",
-		L"Background\\background\\sprite_0001.png"
-	);
-	ResourceManager::GetInstance().LoadTexture(
-		L"Player_Idle_Sheet",
-		L"Player\\State\\Player_Idle_Sheet.png"
-	);
-	ResourceManager::GetInstance().LoadTexture(
-		L"Bullet",
-		L"AttackEffect\\Attack_1.png"
-	);*/
 	ResourceManager::GetInstance().LoadAllTexturesInDirectory(L"../Resources/sprites");
 }
 

@@ -48,6 +48,11 @@ void IdleState::Update(float deltaTime)
 	{
 		m_pOwnerFSM->ChangeState("Jump");
 	}
+
+	if (InputManager::GetInstance().GetButtonPressed(KeyType::X))
+	{
+		m_pOwnerFSM->ChangeState("Sliding");
+	}
 	
 }
 
