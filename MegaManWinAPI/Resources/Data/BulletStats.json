@@ -1,7 +1,7 @@
 {
     "Normal": {
         "damage": 1,
-        "speed": 500.0,
+        "speed": 700.0,
         "radius": 15.0,
         "scale": [2.0, 2.0],
         "offset": [35.0, 60.0],
@@ -11,7 +11,7 @@
     },
     "Mid": {
         "damage": 3,
-        "speed": 400.0,
+        "speed": 700.0,
         "radius": 20.0,
         "scale": [3.0, 3.0],
         "offset": [90.0, 60.0],
@@ -21,7 +21,7 @@
     },
     "Max": {
         "damage": 5,
-        "speed": 400.0,
+        "speed": 700.0,
         "radius": 40.0,
         "scale": [2.5, 2.5],
         "offset": [60.0, 60.0],
