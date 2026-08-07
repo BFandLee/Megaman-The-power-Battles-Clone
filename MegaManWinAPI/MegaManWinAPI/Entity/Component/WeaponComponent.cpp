@@ -26,6 +26,11 @@ void WeaponComponent::Init()
 {
     _currentWeapon = new Buster(this);
 
+    _chargeEffect = new ChargeEffectActor();
+    _chargeEffect->Init();
+    SceneManager::GetInstance().GetScene()->AddActor(_chargeEffect);
+    _chargeEffect->SetActive(false);
+
     AnimatorComponent* animator = GetOwner()->GetComponent<AnimatorComponent>();
     animator->LoadAnimationFromJson(L"IdleAttack", L"../Resources/sprites/Player/Animation/IdleAttack.json");
     animator->LoadAnimationFromJson(L"MoveAttack", L"../Resources/sprites/Player/Animation/MoveAttack.json");
@@ -76,9 +81,7 @@ void WeaponComponent::Update(float deltaTime)
             _chargeTimer += deltaTime;
             if (_chargeEffect == nullptr && _chargeTimer > 0.0f)
             {
-                _chargeEffect = new ChargeEffectActor();
-                _chargeEffect->Init();
-                SceneManager::GetInstance().GetScene()->AddActor(_chargeEffect);
+                _chargeEffect->SetActive(true);
             }
             if (_chargeEffect != nullptr)
             {
@@ -121,8 +124,7 @@ void WeaponComponent::Update(float deltaTime)
             _currentAnimTimer = _attackAnimDuration;
 
             // TODO(USER): 발사 후 _chargeEffect를 비활성화(숨김 혹은 소멸) 처리하세요.
-            _chargeEffect->Destroy();
-            _chargeEffect = nullptr;
+            _chargeEffect->SetActive(false);
         }
         
         // 차지 상태 초기화

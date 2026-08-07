@@ -87,8 +87,8 @@ void Actor::cacheCollider(Component* component)
 void Actor::RenderUI()
 {
 	ImGui::PushID(this);
-
-	if (ImGui::TreeNode(_name.c_str()))
+	string displayName = _isActive ? _name : _name + " (Inactive)";
+	if (ImGui::TreeNode(displayName.c_str()))
 	{
 		for (auto& component : _components)
 		{

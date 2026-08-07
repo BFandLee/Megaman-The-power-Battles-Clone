@@ -20,7 +20,6 @@ public:
 	void addOverlapState(Actor* actor1, Actor* actor2, const HitResult& result);
 
 private:
-	//void addOverlapState(class Actor* actor1, class Actor* actor2, const HitResult& result);
 	void setIgnoreMask(ActorType A, ActorType B);
 
 	// actor와 인접한 셀을 훑으면서 충돌체크 수행
@@ -45,20 +44,9 @@ private:
 	// 디폴트로 무조건 충돌체크 수행,
 	// ( ActorType vs ActorType ) 옵션에 따라서 충돌체크 무시
 	vector<Actor*> _collisionCheckList; // (E,P)bullet, player, enemy
-
-	// ignore[0][0] = false; // 충돌체크 off
-	// ignore[0][1] = true;	 // 충돌체크 on
+	
 	bool IGNORE_MASK[(int32)ActorType::Count][(int32)ActorType::Count] = {}; // 일종의 테이블
-
-
-	// bit 체크로 해보는것 연습해봐도 좋습니다.
-	// 1byte : 8bit, 기껏해봐야 ActorType수가 많지 않아서 
-	//uint8 IGNORE_BIT_MASK[(int32)ActorType::Count];
-	// _ _ _ p.buller e.bullet enmey  player
-	// _ _ _     _         _      _     _
-	// 비트 자리수가 의미하는것 (ActorType)
-
-
+	
 	// Collider Type 에 따라 호출해야하는 함수 포인터
 	using CheckFunc = bool(*)(Collider* a, Collider* b, HitResult& result);
 	CheckFunc DISPATCH_TABLE[(int32)ColliderType::Max][(int32)ColliderType::Max];

@@ -23,10 +23,13 @@ public:
 	virtual void OnExit(Actor* other) {}
 
 	virtual void TakeDamage(float damage, float hitDirX = 0.0f) {}
-	
-	Vector GetPos() const;
 
-	// 모든 Actor는 위치갱신시 반드시 SetPos 함수를 통해서만 위치갱신이 일어난다.
+	// 순수 가상함수. 모든 Actor는 반드시 본인이 그려져야하는 Layer 순서를 알려줘야한다.
+	virtual RenderLayer GetRenderLayer() = 0;
+	virtual ActorType GetActorType() = 0;
+
+public:
+	Vector GetPos() const;
 	void SetPos(Vector pos);
 
 	Vector GetScale() const;
@@ -34,9 +37,7 @@ public:
 
 	bool GetPendingKill() const { return _pendingKill; }
 
-	// 순수 가상함수. 모든 Actor는 반드시 본인이 그려져야하는 Layer 순서를 알려줘야한다.
-	virtual RenderLayer GetRenderLayer() = 0;
-	virtual ActorType GetActorType() = 0;
+	
 
 	// 충돌체크가 필요하다면
 	class Collider* GetCollider() { return _collider; }
@@ -45,9 +46,8 @@ public:
 	class IObjectPool* GetPool() { return _pool; }
 	void SetPool(class IObjectPool* pool) { _pool = pool; }
 
-
-	// 초보자는 이런 구조도 괜찮다. 
-	//bool CheckCollision();
+	virtual void SetActive(bool isActive) { _isActive = isActive; }
+	bool GetActive() { return _isActive; }
 
 	template<typename T>
 	T* AddComponent()
@@ -84,26 +84,15 @@ private:
 	// N개 vector, map
 	vector<class Component*> _components;
 
-	// 매번 자식클래스에서 collider를 반환해주는 함수 만들기 싫어서
 	// 부모 Actor에서 collider를 캐싱해둔다.
 	class Collider* _collider = nullptr;
 
-	//int32 _radius;	// 원vs원 충돌체 크기
-	//int32 _witdh;
-	//int32 _height;
-
 	bool _pendingKill = false;	// 다음 프레임에 삭제될 예정
-
-	// 기록을 해둔다.
-	//Cell _currCell;
-
-	// 내가 태어난 곳이 어디지? 출생지를 기록
-	// new 태어난경우 : nullptr
-	// pool 태어난경우 : 본인 풀의 주소
-	//ObjectPool<Bullet> : 템플릿을 정의하는게 아니라, interface 역할의 자료형으로 선언한다.
 	IObjectPool* _pool = nullptr;
 
 	class TransformComponent* _transform = nullptr;
 	string _name;
+
+	bool _isActive = true;
 };
 

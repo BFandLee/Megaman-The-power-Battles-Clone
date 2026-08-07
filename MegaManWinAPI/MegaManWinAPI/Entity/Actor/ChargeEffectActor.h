@@ -13,7 +13,7 @@ public:
 
     virtual void Init() override;
     virtual void Update(float deltaTime) override;
-
+    virtual void SetActive(bool isActive) override;
     // TODO(USER): RenderLayer와 ActorType을 알맞게 설정해 주세요. (미구현 시 빌드 에러 날 수 있음)
     virtual RenderLayer GetRenderLayer() override { return RenderLayer::Effect; }
     virtual ActorType GetActorType() override { return ActorType::Effect; }

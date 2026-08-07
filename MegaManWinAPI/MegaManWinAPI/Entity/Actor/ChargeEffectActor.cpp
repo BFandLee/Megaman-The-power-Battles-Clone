@@ -35,6 +35,18 @@ void ChargeEffectActor::Update(float deltaTime)
     Super::Update(deltaTime);
 }
 
+void ChargeEffectActor::SetActive(bool isActive)
+{
+    Super::SetActive(isActive);
+
+    if (isActive)
+    {
+        _animator->Play(L"Charge");
+
+        _animator->ResetFrame();
+    }
+}
+
 
 
 void ChargeEffectActor::SetChargeLevel(int level)

@@ -49,15 +49,15 @@ void Scene::Init()
 void Scene::Cleanup()
 {
 	// 씬에 등장하는 모든 객체들의 delete 담당
-	//for (auto iter : _actors)
-	//{
-	//	// Scene이 new 한 객체는 delete 해도 된다.
-	//	if (iter->GetPool() == nullptr)
-	//	{
-	//		delete iter;
-	//	}
-	//}
-	//_actors.clear();
+	for (auto iter : _actors)
+	{
+		// Scene이 new 한 객체는 delete 해도 된다.
+		if (iter->GetPool() == nullptr)
+		{
+			delete iter;
+		}
+	}
+	_actors.clear();
 }
 
 void Scene::Update(float deltaTime)
@@ -65,27 +65,15 @@ void Scene::Update(float deltaTime)
 	for (auto actor : _actors)
 	{
 		actor->Update(deltaTime);
-
-			//Ball::Update()
-			//	GameScene::Dead()
-			//		StageLoader::Load()
-			//			Scene::RemoveAllActor()
-			//				_actors.clear();	// 자료 구조 클리어
+		if (!actor->GetActive())
+			continue;
 	}
 
-	// 삭제가 필요한 애들은 삭제
-	// 1번 방식으로 '삭제 여부' 걸러도 되고,
-	// 2번 방식으로 '삭제 여부' 걸러도 되고
 	std::erase_if(_actors, [this](Actor* actor)
 		{
-			// 1번 방식은, _actor에서 제거는 되는데,
-			// 제거되기전에 아래 delete + removeActor 함수 호출해야해서
-			// 2번 방식으로 별도 리스트를 관리하는게 좋겟다.
-			//return actor->GetPendingKill(); 
 			return _reservedRemove.contains(actor);
 		});
 
-	// 실제 메모리 해제 까먹었따.
 	for (auto deleteActor : _reservedRemove)
 	{
 		// 삭제되는 Actor
@@ -104,8 +92,6 @@ void Scene::Update(float deltaTime)
 		}
 	}
 
-	// 2번 방식 :
-	//_actors.insert(_actors.end(), _reservedAdd.begin(), _reservedAdd.end());
 
 	//-> 미리 한번만 할당해놓고, 복사하기
 	_actors.reserve(_actors.size() + _reservedAdd.size()); // 개수X, Capacity(메모리)
@@ -130,6 +116,8 @@ void Scene::Render(ID2D1RenderTarget* renderTarget)
 		for (auto actor : list)
 		{
 			actor->Render(renderTarget);
+			if (!actor->GetActive())
+				continue;
 		}
 	}
 

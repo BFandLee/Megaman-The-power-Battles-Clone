@@ -20,17 +20,10 @@ void AnimatorComponent::Update(float deletaTime)
 	if (_currentClip == nullptr)
 		return;
 
-	if (InputManager::GetInstance().GetButtonDown(KeyType::F1))
-	{
-		_bIsEditMode = !_bIsEditMode;
-	}
-
 	if (_bIsEditMode)
 	{
 		UpdateFrameIndex();
 		UpdateFrameOffset();
-
-		SaveToJson();
 	}
 
 	else
@@ -81,60 +74,49 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 	_currentClip->texture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
 }
 
-void AnimatorComponent::UpdateFrameIndex()
-{
-	if (InputManager::GetInstance().GetButtonDown(KeyType::LeftBracket))
-	{
-		_currentFrame--;
-		if (_currentFrame < 0)
-		{
-			_currentFrame = _currentClip->frames.size() - 1;
-		}
-	}
-	else if (InputManager::GetInstance().GetButtonDown(KeyType::RightBracket))
-	{
-		_currentFrame++;
-		if (_currentFrame >= _currentClip->frames.size())
-		{
-			_currentFrame = 0;
-		}
-	}
-}
 
-void AnimatorComponent::UpdateFrameOffset()
-{
-	if (InputManager::GetInstance().GetButtonPressed(KeyType::Left))
-	{
-		_currentClip->frames[_currentFrame].offset.x--;
-	}
-	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Right))
-	{
-		_currentClip->frames[_currentFrame].offset.x++;
-	}
-
-	if (InputManager::GetInstance().GetButtonPressed(KeyType::Up))
-	{
-		_currentClip->frames[_currentFrame].offset.y--;
-	}
-	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Down))
-	{
-		_currentClip->frames[_currentFrame].offset.y++;
-	}
-}
 
 void AnimatorComponent::SaveToJson()
 {
-	if (InputManager::GetInstance().GetButtonDown(KeyType::LeftCtrl))
+	if (InputManager::GetInstance().GetButtonPressed(KeyType::LeftCtrl) && InputManager::GetInstance().GetButtonDown(KeyType::S))
 	{
+		std::ifstream file(_currentClip->sourceFilePath);
+		if (!file.is_open())
+			return;
+		json j;
+		file >> j;
+		j["frames"].clear();
+
+		for (auto& Clipframe : _currentClip->frames)
+		{
+			json frameJson;
+			
+			frameJson["startPos"]["x"] = Clipframe.startPos.x;
+			frameJson["startPos"]["y"] = Clipframe.startPos.y;
+			frameJson["size"]["x"] = Clipframe.size.x;
+			frameJson["size"]["y"] = Clipframe.size.y;
+			frameJson["offset"]["x"] = Clipframe.offset.x;
+			frameJson["offset"]["y"] = Clipframe.offset.y;
+			frameJson["duration"] = Clipframe.duration;
+
+			j["frames"].push_back(frameJson);
+		}
+		std::ofstream outFile(_currentClip->sourceFilePath);
+		if (outFile.is_open())
+		{
+			// dump(4) : 4칸 들여쓰기해서 텍스트로 만듦
+			outFile << j.dump(4);
+			outFile.close();
+		}
 
 	}
 }
 
 void AnimatorComponent::RenderUI()
 {
-
 	// 1. ImGui 창 시작
-	ImGui::Begin("Animation Offset Editor");
+	ImGui::PushID(this);
+	ImGui::Text("[ Animtor ]");
 	if (_currentClip != nullptr && _currentClip->frames.size() > 0)
 	{
 		// 2. 현재 프레임 정보 가져오기
@@ -145,30 +127,15 @@ void AnimatorComponent::RenderUI()
 		ImGui::DragFloat("Offset X", &currentFrameData.offset.x, 1.0f);
 		ImGui::DragFloat("Offset Y", &currentFrameData.offset.y, 1.0f);
 
-		// 4. 저장 버튼 만들기
-		if (ImGui::Button("Save to JSON"))
+		ImGui::Checkbox("Edit Mode", &_bIsEditMode);
+
+		if (ImGui::Button("Save Json"))
 		{
-			// TODO: json 객체를 하나 만들고, _currentClip->frames 데이터를 반복문으로 넣기
-			json frameJson;
-			// (힌트: 아까 LoadAnimationFromJson에서 읽어오던 방식을 반대로 쓰면 됩니다!)
-			for (auto& Clipframe : _currentClip->frames)
-			{
-				AnimationFrame frame = Clipframe;
-
-				frameJson["startPos"]["x"] = frame.startPos.x;
-				frameJson["startPos"]["y"]; frame.startPos.y;
-				frameJson["size"]["x"] = frame.size.x;
-				frameJson["size"]["y"] = frame.size.y;
-				frameJson["offset"]["x"] = frame.offset.x;
-				frameJson["offset"]["y"] = frame.offset.y;
-				frameJson["duration"] = frame.duration;
-			}
-			// TODO: std::ofstream을 열어서 특정 파일경로(예: Charge.json)에 j 덮어쓰기
-
-			std::ofstream("D:\\Megaman-The-power-Battles-Clone\\MegaManWinAPI\\Resources\\sprites\\AttackEffect\\Animation\\Charge.json");
+			SaveToJson();
 		}
+
 	}
-	ImGui::End();
+	ImGui::PopID();
 }
 
 void AnimatorComponent::AddClip(const wstring& stateName, AnimationClip* clip)
@@ -193,18 +160,10 @@ void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 	}
 	_currentClip = it->second;
 
-	if (!keepFrame)
+	// Exception Index Gude
+	if (_currentClip->frames.size() > 0 && _currentFrame >= _currentClip->frames.size())
 	{
-		_currentFrame = 0;
-		_accmulatedTime = 0.0f;
-	}
-	else
-	{
-		// Exception Index Gude
-		if (_currentClip->frames.size() > 0 && _currentFrame >= _currentClip->frames.size())
-		{
-			_currentFrame = _currentClip->frames.size() - 1;
-		}
+		_currentFrame = _currentClip->frames.size() - 1;
 	}
 	
 }
@@ -261,4 +220,51 @@ bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, const ws
 	// 4. 완성된 클립을 _clips 맵에 등록
 	_clips[stateName] = clip;
 	return true;
+}
+
+void AnimatorComponent::ResetFrame()
+{
+	_currentFrame = 0;
+	_accmulatedTime = 0.0f;
+}
+
+void AnimatorComponent::UpdateFrameIndex()
+{
+	if (InputManager::GetInstance().GetButtonDown(KeyType::LeftBracket))
+	{
+		_currentFrame--;
+		if (_currentFrame < 0)
+		{
+			_currentFrame = _currentClip->frames.size() - 1;
+		}
+	}
+	else if (InputManager::GetInstance().GetButtonDown(KeyType::RightBracket))
+	{
+		_currentFrame++;
+		if (_currentFrame >= _currentClip->frames.size())
+		{
+			_currentFrame = 0;
+		}
+	}
+}
+
+void AnimatorComponent::UpdateFrameOffset()
+{
+	if (InputManager::GetInstance().GetButtonPressed(KeyType::Left))
+	{
+		_currentClip->frames[_currentFrame].offset.x--;
+	}
+	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Right))
+	{
+		_currentClip->frames[_currentFrame].offset.x++;
+	}
+
+	if (InputManager::GetInstance().GetButtonPressed(KeyType::Up))
+	{
+		_currentClip->frames[_currentFrame].offset.y--;
+	}
+	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Down))
+	{
+		_currentClip->frames[_currentFrame].offset.y++;
+	}
 }

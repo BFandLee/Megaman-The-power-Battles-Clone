@@ -51,5 +51,7 @@ public:
 	bool LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath);
 	bool _bIsEditMode = false;
 
+	void ResetFrame();
+
 };
 

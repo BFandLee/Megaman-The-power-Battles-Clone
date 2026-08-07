@@ -3,10 +3,26 @@
         {
             "Components": [
                 {
-                    "PosX": 380.6221008300781,
-                    "PosY": 465.6000061035156,
+                    "PosX": 375.25390625,
+                    "PosY": 460.71673583984375,
                     "Rotation": 0.0,
-                    "ScaleX": 2.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "ChargeEffectActor"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 375.25390625,
+                    "PosY": 460.71673583984375,
+                    "Rotation": 0.0,
+                    "ScaleX": -2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -23,7 +39,7 @@
                 {
                     "Gravity": 980.0,
                     "VelocityX": 0.0,
-                    "VelocityY": 0.0,
+                    "VelocityY": -591.9151000976563,
                     "name": "RigidBodyComponent"
                 },
                 {
@@ -35,7 +51,7 @@
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -9.588897228240967e-05,
+                    "CoolDown": 0.08393668383359909,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -148,8 +164,8 @@
         {
             "Components": [
                 {
-                    "PosX": 1067.9129638671875,
-                    "PosY": 465.6000061035156,
+                    "PosX": 1056.076171875,
+                    "PosY": 465.5999755859375,
                     "Rotation": 0.0,
                     "ScaleX": 2.5,
                     "ScaleY": 2.5,
@@ -168,10 +184,10 @@
         {
             "Components": [
                 {
-                    "PosX": 986.0706176757813,
-                    "PosY": 465.6000061035156,
+                    "PosX": 170.3583984375,
+                    "PosY": 465.5999755859375,
                     "Rotation": 0.0,
-                    "ScaleX": 2.0,
+                    "ScaleX": -2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -184,22 +200,6 @@
                 }
             ],
             "name": "PlayerBullet"
-        },
-        {
-            "Components": [
-                {
-                    "PosX": 380.6221008300781,
-                    "PosY": 465.6000061035156,
-                    "Rotation": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "AnimatorComponent"
-                }
-            ],
-            "name": "ChargeEffectActor"
         }
     ]
 }

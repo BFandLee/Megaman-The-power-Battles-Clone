@@ -92,6 +92,9 @@ void CollisionManager::Update()
 	// 주체가 되는 녀석들만 순회
 	for (auto actor : _collisionCheckList)
 	{
+		if (!actor->GetActive())
+			continue;
+
 		// 어떤 대상과 충돌체크를 해야하냐면, 내가 있는 셀과 인접한 셀만 충돌체크 수행
 		checkCollision(actor);
 	}
