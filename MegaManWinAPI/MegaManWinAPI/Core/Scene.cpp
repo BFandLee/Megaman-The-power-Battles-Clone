@@ -32,12 +32,6 @@ void Scene::Init()
 	RegisterActor<WallActor>("WallActor");
 	RegisterActor<DummyEnemy>("DummyEnemy");
 
-	// Grid 미리 생성
-	/*_gridCountX = (int32)GWinSizeX / _gridSize;
-	_gridCountY = (int32)GWinSizeY / _gridSize;
-
-	int32 totalGridCount = _gridCountX * _gridCountY;
-	_grid.resize(totalGridCount);*/
 
 	// Scene에 필요한 리소스 로드
 	loadResources();
@@ -237,14 +231,6 @@ void Scene::loadResources()
 {
 	
 }
-
-
-	/*
-	// 실제 텍스처 로드 요청
-	// Direct2D 방식의 이상적인 형태 (컬러 키 파라미터가 필요 없음)
-	ResourceManager::GetInstance().LoadTexture(L"Player", L"Player.png");
-	*/
-// }
 
 void Scene::createObjects()
 {

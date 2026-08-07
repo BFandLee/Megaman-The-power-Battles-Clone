@@ -7,6 +7,7 @@ struct AnimationFrame
 	Vector size;        // 잘라낼 크기
 	Vector offset;      // 중심축 조정용 오프셋
 	float duration;     // 프레임 유지 시간
+	
 };
 
 struct AnimationClip
@@ -14,6 +15,8 @@ struct AnimationClip
 	class Texture* texture = nullptr;
 	vector<AnimationFrame> frames;
 	bool bLoop = false;
+	int32 loopStartIndex = 0;
+	wstring sourceFilePath;
 };
 
 class AnimatorComponent : public Component
@@ -27,6 +30,10 @@ private:
 	AnimationClip* _currentClip = nullptr;
 	int32 _currentFrame = 0;
 	float _accmulatedTime = 0.0f;
+
+	void UpdateFrameIndex();
+	void UpdateFrameOffset();
+	void SaveToJson();
 public:
 	AnimatorComponent() : Component("AnimatorComponent") {}
 	virtual ~AnimatorComponent();
@@ -34,6 +41,7 @@ public:
 	// 게임 루프 갱신 및 그리기
 	virtual void Update(float deletaTime) override;
 	virtual void Render(ID2D1RenderTarget* renderTarget) override;
+	virtual void RenderUI() override;
 
 	// 클립 추가 및 재생 인터페이스
 	void AddClip(const wstring& stateName, AnimationClip* clip);
@@ -41,6 +49,7 @@ public:
 
 	// Json 파일을 읽어와 지정된 stateName으로 Clip을 등록하는 인터페이스
 	bool LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath);
+	bool _bIsEditMode = false;
 
 };
 

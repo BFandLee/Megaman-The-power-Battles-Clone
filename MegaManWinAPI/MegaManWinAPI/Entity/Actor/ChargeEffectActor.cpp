@@ -21,11 +21,13 @@ void ChargeEffectActor::Init()
     _animator = AddComponent<AnimatorComponent>();
 
     // 기 모으기 이펙트 전용 애니메이션 추가하기
-    _animator->LoadAnimationFromJson(L"Mid_Charge_Shot", L"../Resources/sprites/Effect/Mid_Charge_Shot.json");
-    _animator->LoadAnimationFromJson(L"Max_Charge_Shot", L"../Resources/sprites/Effect/Max_Charge_Shot.json");
+    _animator->LoadAnimationFromJson(L"Mid_Charge_Shot", L"../Resources/sprites/AttackEffect/Mid_Charge_Shot.json");
+    _animator->LoadAnimationFromJson(L"Max_Charge_Shot", L"../Resources/sprites/AttackEffect/Max_Charge_Shot.json");
+    _animator->LoadAnimationFromJson(L"Charge", L"../Resources/sprites/AttackEffect/Animation/Charge.json");
     
     // 초기에는 Mid 애니메이션 재생
-    _animator->Play(L"Mid_Charge_Shot");
+    _animator->Play(L"Charge");
+
 }
 
 void ChargeEffectActor::Update(float deltaTime)

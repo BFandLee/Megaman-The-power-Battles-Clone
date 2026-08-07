@@ -1,0 +1,30 @@
+4단계 코칭: 데이터 덮어쓰기 (JSON 직렬화)
+현재 AnimatorComponent::RenderUI() 쪽에 작성해 두셨던 Save to JSON 버튼의 로직을 보면 하드코딩된 특정 경로(Charge.json)로만 저장이 되도록 작성되어 있습니다. 이 로직을 Update 쪽으로 가져와 단축키(예: S 키)로 동작하게 만들고 더 유연하게 다듬어봅시다.
+
+저장 단축키 입력 처리
+
+Update 함수의 _bIsEditMode 블록 안에 KeyType::S가 눌렸을 때 실행될 저장 블록(if)을 만들어주세요.
+원본 파일 경로 사용
+
+std::ofstream에 하드코딩된 경로 대신, 2단계에서 우리가 구조체 안에 정성스럽게 저장해 두었던 _currentClip->sourceFilePath 변수를 사용하세요.
+원본 데이터를 보존하며 덮어쓰기 (가장 중요 ❗)
+
+오프셋만 달랑 저장하면, 원본 파일에 있던 texturePath, bLoop, loopStartIndex 등의 소중한 데이터가 다 날아갈 수 있습니다.
+이를 방지하려면 다음 순서로 코드를 작성하세요.
+먼저 std::ifstream으로 sourceFilePath를 열어 json j; 에 원본 데이터를 그대로 읽어옵니다. (LoadAnimationFromJson에서 했던 방식 그대로!)
+j["frames"].clear(); 함수를 호출해 기존에 들어있던 프레임 배열만 싹 비워줍니다.
+_currentClip->frames를 순회(for)하면서 새로운 프레임 정보를 다시 j["frames"] 쪽에 차곡차곡 채워 넣습니다.
+마지막으로 std::ofstream으로 sourceFilePath를 열어 완성된 json j 객체를 덮어써 주면(file << j) 완벽합니다!
+
+
+
+4단계 코칭: 원본 데이터 보존하며 저장하기
+현재 RenderUI 안에 하드코딩 되어있는 Save to JSON 로직을 지우거나 무시하시고, AnimatorComponent에 SaveCurrentClipToJson() 같은 멤버 함수를 하나 만들어 보세요. (또는 기존 로직을 수정해도 좋습니다.) 그리고 Update 내에서 S 키 등을 눌렀을 때 이 함수가 호출되게 만드시면 됩니다.
+
+저장 함수의 흐름 (개념 힌트):
+
+원본 파일 열기: std::ifstream을 사용해 우리가 저장해 둔 _currentClip->sourceFilePath를 엽니다.
+JSON 파싱: json j; 객체를 만들고 원본 파일의 내용(file >> j;)을 고스란히 읽어옵니다. (이렇게 해야 기존에 있던 bLoop나 texturePath 정보가 날아가지 않습니다!)
+기존 프레임 비우기: j["frames"].clear(); 를 호출하여 예전 오프셋이 들어있던 프레임 배열만 싹 비워줍니다.
+새 데이터 채우기: for문으로 _currentClip->frames를 순회하면서, 새로운 프레임 데이터를 j["frames"] 쪽에 새로 집어넣어 줍니다.
+덮어쓰기: 마지막으로 std::ofstream을 똑같은 경로(_currentClip->sourceFilePath)로 열어서, 방금 완성한 json j 객체를 파일에 덮어써 줍니다. (예: outFile << std::setw(4) << j; 처럼 쓰시면 들여쓰기가 예쁘게 되어 저장됩니다.)

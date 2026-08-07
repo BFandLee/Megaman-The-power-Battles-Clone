@@ -11,7 +11,7 @@ enum class RenderLayer
 	Player,
 	Bullet,
 	Boss,
-	Effect,     // 제일 위
+	Effect, // 제일 위
 	WALL,
 	
 	// 최대 개수

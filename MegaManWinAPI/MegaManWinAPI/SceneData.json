@@ -3,10 +3,10 @@
         {
             "Components": [
                 {
-                    "PosX": 260.350341796875,
+                    "PosX": 380.6221008300781,
                     "PosY": 465.6000061035156,
                     "Rotation": 0.0,
-                    "ScaleX": -2.0,
+                    "ScaleX": 2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -22,7 +22,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": -5.605193857299268e-45,
+                    "VelocityX": 0.0,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
@@ -35,7 +35,7 @@
                     "name": "FSMComponent"
                 },
                 {
-                    "CoolDown": -0.015450900420546532,
+                    "CoolDown": -9.588897228240967e-05,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -144,6 +144,62 @@
                 }
             ],
             "name": "DummyEnemy"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 1067.9129638671875,
+                    "PosY": 465.6000061035156,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.5,
+                    "ScaleY": 2.5,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Radius": 40.0,
+                    "name": "Collider"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "PlayerBullet"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 986.0706176757813,
+                    "PosY": 465.6000061035156,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Radius": 15.0,
+                    "name": "Collider"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "PlayerBullet"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 380.6221008300781,
+                    "PosY": 465.6000061035156,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "ChargeEffectActor"
         }
     ]
 }
