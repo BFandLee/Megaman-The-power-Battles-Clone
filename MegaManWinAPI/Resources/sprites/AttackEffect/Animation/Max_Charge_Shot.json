@@ -1,6 +1,6 @@
 {
   "texturePath": "AttackEffect_Max_Charge_Shot_Sheet",
-  "bLoop": false,
+  "bLoop": true,
   "frames": [
     {
       "startPos": {
