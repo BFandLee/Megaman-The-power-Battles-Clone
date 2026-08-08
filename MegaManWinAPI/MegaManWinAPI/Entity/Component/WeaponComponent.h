@@ -42,7 +42,7 @@ private:
     // 차지 관련 변수들
     bool _isCharging = false;
     float _chargeTimer = 0.0f;
-    float _midChargeTime = 1.0f;
-    float _maxChargeTime = 2.0f;
+    float _midChargeTime = 0.5f;
+    float _maxChargeTime = 1.3f;
 
 };

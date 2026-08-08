@@ -52,6 +52,9 @@ void AnimatorComponent::Update(float deletaTime)
 			}
 		}
 
+		if (_bIsEditMode)
+			return;
+
 		// 프레임 넘기기
 		_accmulatedTime -= currentDuration;
 		_currentFrame++;
@@ -91,41 +94,7 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 
 
 
-void AnimatorComponent::SaveToJson()
-{
-	if (InputManager::GetInstance().GetButtonPressed(KeyType::LeftCtrl) && InputManager::GetInstance().GetButtonDown(KeyType::S))
-	{
-		std::ifstream file(_currentClip->sourceFilePath);
-		if (!file.is_open())
-			return;
-		json j;
-		file >> j;
-		j["frames"].clear();
 
-		for (auto& Clipframe : _currentClip->frames)
-		{
-			json frameJson;
-			
-			frameJson["startPos"]["x"] = Clipframe.startPos.x;
-			frameJson["startPos"]["y"] = Clipframe.startPos.y;
-			frameJson["size"]["x"] = Clipframe.size.x;
-			frameJson["size"]["y"] = Clipframe.size.y;
-			frameJson["offset"]["x"] = Clipframe.offset.x;
-			frameJson["offset"]["y"] = Clipframe.offset.y;
-			frameJson["duration"] = Clipframe.duration;
-
-			j["frames"].push_back(frameJson);
-		}
-		std::ofstream outFile(_currentClip->sourceFilePath);
-		if (outFile.is_open())
-		{
-			// dump(4) : 4칸 들여쓰기해서 텍스트로 만듦
-			outFile << j.dump(4);
-			outFile.close();
-		}
-
-	}
-}
 
 void AnimatorComponent::RenderUI()
 {
@@ -176,6 +145,12 @@ void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 	_currentClip = it->second;
 	_currentClipName = stateName;
 	_bisFinished = false;
+
+	if (!keepFrame)
+	{
+		_currentFrame = 0;
+		_accmulatedTime = 0.0f;
+	}
 
 	// Exception Index Gude
 	if (_currentClip->frames.size() > 0 && _currentFrame >= _currentClip->frames.size())
@@ -285,5 +260,37 @@ void AnimatorComponent::UpdateFrameOffset()
 	else if (InputManager::GetInstance().GetButtonPressed(KeyType::Down))
 	{
 		_currentClip->frames[_currentFrame].offset.y++;
+	}
+}
+
+void AnimatorComponent::SaveToJson()
+{
+	std::ifstream file(_currentClip->sourceFilePath);
+	if (!file.is_open())
+		return;
+	json j;
+	file >> j;
+	j["frames"].clear();
+
+	for (auto& Clipframe : _currentClip->frames)
+	{
+		json frameJson;
+
+		frameJson["startPos"]["x"] = Clipframe.startPos.x;
+		frameJson["startPos"]["y"] = Clipframe.startPos.y;
+		frameJson["size"]["x"] = Clipframe.size.x;
+		frameJson["size"]["y"] = Clipframe.size.y;
+		frameJson["offset"]["x"] = Clipframe.offset.x;
+		frameJson["offset"]["y"] = Clipframe.offset.y;
+		frameJson["duration"] = Clipframe.duration;
+
+		j["frames"].push_back(frameJson);
+	}
+	std::ofstream outFile(_currentClip->sourceFilePath);
+	if (outFile.is_open())
+	{
+		// dump(4) : 4칸 들여쓰기해서 텍스트로 만듦
+		outFile << j.dump(4);
+		outFile.close();
 	}
 }

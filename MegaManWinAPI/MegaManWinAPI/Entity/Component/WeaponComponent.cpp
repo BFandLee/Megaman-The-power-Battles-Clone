@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "AnimatorComponent.h"
 #include "ChargeEffectActor.h"
+#include <Player.h>
 
 WeaponComponent::WeaponComponent() : Component("WeaponComponent")
 {
@@ -79,15 +80,20 @@ void WeaponComponent::Update(float deltaTime)
         if (_isCharging)
         {
             _chargeTimer += deltaTime;
-            if (_chargeEffect == nullptr && _chargeTimer > 0.0f)
+            if (!_chargeEffect->GetActive() && _chargeTimer > _midChargeTime)
             {
                 _chargeEffect->SetActive(true);
             }
             if (_chargeEffect != nullptr)
             {
-                // 이펙트가 플레이어의 위치를 따라가도록 업데이트
+                // 이펙트 위치 업데이트
                 Vector pos = GetOwner()->GetPos();
                 _chargeEffect->SetPos(pos);
+
+                // FlipX 구현
+                Player* player = static_cast<Player*>(GetOwner());
+                float dirX = player->GetLookDirX();
+                _chargeEffect->SetScale(Vector(dirX, 1.0f));
 
                 // 2. 차지 시간에 따른 레벨(애니메이션) 업데이트
                 if (_chargeTimer >= _maxChargeTime)
@@ -123,9 +129,12 @@ void WeaponComponent::Update(float deltaTime)
             _isAttacking = true;
             _currentAnimTimer = _attackAnimDuration;
 
-            // TODO(USER): 발사 후 _chargeEffect를 비활성화(숨김 혹은 소멸) 처리하세요.
-            _chargeEffect->SetActive(false);
+            
         }
+        _chargeEffect->SetActive(false);
+
+
+
         
         // 차지 상태 초기화
         _isCharging = false;

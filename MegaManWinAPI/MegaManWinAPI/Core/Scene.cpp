@@ -64,9 +64,10 @@ void Scene::Update(float deltaTime)
 {
 	for (auto actor : _actors)
 	{
-		actor->Update(deltaTime);
 		if (!actor->GetActive())
 			continue;
+		
+		actor->Update(deltaTime);
 	}
 
 	std::erase_if(_actors, [this](Actor* actor)
@@ -115,9 +116,10 @@ void Scene::Render(ID2D1RenderTarget* renderTarget)
 	{
 		for (auto actor : list)
 		{
-			actor->Render(renderTarget);
 			if (!actor->GetActive())
 				continue;
+			
+			actor->Render(renderTarget);
 		}
 	}
 
