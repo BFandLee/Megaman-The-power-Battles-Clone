@@ -20,34 +20,49 @@ void AnimatorComponent::Update(float deletaTime)
 	if (_currentClip == nullptr)
 		return;
 
+
 	if (_bIsEditMode)
 	{
 		UpdateFrameIndex();
 		UpdateFrameOffset();
 	}
 
-	else
+	// 플래그로 애니메이션이 끝났는지 체크
+	if (_bisFinished) return;
+
+	// 시간 누적
+	_accmulatedTime += deletaTime;
+	float currentDuration = _currentClip->frames[_currentFrame].duration;
+
+	if (_accmulatedTime >= currentDuration)
 	{
-		// 시간 누적
-		_accmulatedTime += deletaTime;
-		float currentDuration = _currentClip->frames[_currentFrame].duration;
-
-		if (_accmulatedTime >= currentDuration)
+		if (_currentFrame == (int32)_currentClip->frames.size() - 1)
 		{
-			_accmulatedTime -= currentDuration;
-			_currentFrame++;
+			auto it = _endEvents.find(_currentClipName);
 
-			if (_currentFrame >= _currentClip->frames.size())
+			AnimationClip* prevClip = _currentClip;
+			if (it != _endEvents.end())
 			{
-				if (_currentClip->bLoop)
-					_currentFrame = _currentClip->loopStartIndex;
-				else
-				{
-					_currentFrame = (int32)_currentClip->frames.size() - 1;
-				}
+				it->second();
+			}
+
+			if (prevClip != _currentClip || !prevClip->bLoop)
+			{
+				return;
 			}
 		}
+
+		// 프레임 넘기기
+		_accmulatedTime -= currentDuration;
+		_currentFrame++;
+
+		if (_currentFrame >= _currentClip->frames.size())
+		{
+			if (_currentClip->bLoop)
+				_currentFrame = _currentClip->loopStartIndex;
+		}
 	}
+	
 }
 
 void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
@@ -159,6 +174,8 @@ void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 		return;
 	}
 	_currentClip = it->second;
+	_currentClipName = stateName;
+	_bisFinished = false;
 
 	// Exception Index Gude
 	if (_currentClip->frames.size() > 0 && _currentFrame >= _currentClip->frames.size())
@@ -227,6 +244,8 @@ void AnimatorComponent::ResetFrame()
 	_currentFrame = 0;
 	_accmulatedTime = 0.0f;
 }
+
+
 
 void AnimatorComponent::UpdateFrameIndex()
 {

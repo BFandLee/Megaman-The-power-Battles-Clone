@@ -34,6 +34,14 @@ private:
 	void UpdateFrameIndex();
 	void UpdateFrameOffset();
 	void SaveToJson();
+
+	// 애니메이션을 키로 하여 종료 시 호출할 콜백을 저장하는 맵
+	unordered_map<wstring, std::function<void()>> _endEvents;
+
+	// 이벤트 호출 시 현재 재생중인 애니메이션의 이름
+	wstring _currentClipName = L"";
+
+	bool _bisFinished = false;
 public:
 	AnimatorComponent() : Component("AnimatorComponent") {}
 	virtual ~AnimatorComponent();
@@ -52,6 +60,11 @@ public:
 	bool _bIsEditMode = false;
 
 	void ResetFrame();
+
+	void SetEndEvent(const wstring& stateName, std::function<void()> callback)
+	{
+		_endEvents[stateName] = callback;
+	}
 
 };
 
