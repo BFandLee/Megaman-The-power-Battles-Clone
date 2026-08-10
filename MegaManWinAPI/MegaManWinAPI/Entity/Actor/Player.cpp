@@ -17,6 +17,7 @@
 #include "SlideState.h"
 #include "HitState.h"
 #include "DeathState.h"
+#include "SpawnState.h"
 
 void Player::Init()
 {
@@ -30,8 +31,9 @@ void Player::Init()
 	animator->LoadAnimationFromJson(L"Sliding", L"../Resources/sprites/Player/Animation/Sliding.json");
 	animator->LoadAnimationFromJson(L"Hit", L"../Resources/sprites/Player/Animation/Hit.json");
 	animator->LoadAnimationFromJson(L"Death", L"../Resources/sprites/Player/Animation/Death.json");
-
-	animator->Play(L"Idle");
+	animator->LoadAnimationFromJson(L"Spone", L"../Resources/sprites/Player/Animation/Spone.json");
+	animator->LoadAnimationFromJson(L"SponeDrop", L"../Resources/sprites/Player/Animation/SponeDrop.json");
+	// animator->Play(L"Idle");
 
 	// 충돌체(Collider) 컴포넌트 추가
 	BoxCollider* collider = AddComponent<BoxCollider>();
@@ -50,18 +52,69 @@ void Player::Init()
 	fsm->AddState("Sliding", new SlideState(fsm));
 	fsm->AddState("Hit", new HitState(fsm));
 	fsm->AddState("Death", new DeathState(fsm));
-	fsm->ChangeState("Idle");
+	fsm->AddState("Spawn", new SpawnState(fsm));
+	fsm->ChangeState("Spawn");
 
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
 	weapon->Init();
+
+	// 스왑용 이미지 생성
+	std::unordered_map<uint32, uint32> yellowPalette = {
+	{ 0xFF5084F4, 0xFFF0C030 }, // 메인 파란색 -> 메인 노란색
+	{ 0xFF2040D4, 0xFFF08000 }, // 어두운 파란색 -> 어두운 노란색
+	{ 0xFF30C4D4, 0xFFF0F0C0 }  // 밝은 파란색 -> 밝은 노란색
+};
+	// Idle
+	Texture* idleYellow = new Texture();
+	idleYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Idle_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
+	animator->SetSwapTextureForState(L"Idle", idleYellow);
+
+	// Move
+	Texture* moveYellow = new Texture();
+	moveYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Walk_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
+	animator->SetSwapTextureForState(L"Move", moveYellow);
+
+	// Jump
+	Texture* jumpYellow = new Texture();
+	jumpYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Jump_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
+	animator->SetSwapTextureForState(L"Jump", jumpYellow);
+
+	// Sliding
+	Texture* slideYellow = new Texture();
+	slideYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Sliding_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
+	animator->SetSwapTextureForState(L"Sliding", slideYellow);
 }
 
 void Player::Update(float deltaTime)
 {
-	Super::Update(deltaTime); // 부모 업데이트 호출 (여기서 부착된 컴포넌트들의 Update가 자동 실행됩니다)
+	Super::Update(deltaTime); 
 
-	// TODO 1: _isInvincible이 true일 때 _invincibleTimer를 deltaTime만큼 증가시킵니다.
-	// 타이머가 무적 지속 시간(예: 1.5초)을 초과하면 _isInvincible을 false로 만들고, ImageRenderer의 Alpha 값을 1.0f로 원상복구하세요.
+	AnimatorComponent* animator = GetComponent<AnimatorComponent>();
+	if (InputManager::GetInstance().GetButtonPressed(KeyType::A))
+	{
+		_chargeTime += deltaTime;
+
+		if (_chargeTime > MAX_CHARGE_TIME)
+		{
+			_blinkTime += deltaTime;
+
+			if (_blinkTime > 0.5f)
+			{
+				_blinkTime = 0.0f;
+				_isYellowColor = !_isYellowColor;
+				animator->SetTextureColor(_isYellowColor);
+			}
+		}
+
+	}
+	else if (InputManager::GetInstance().GetButtonUp(KeyType::A))
+	{
+		_chargeTime = 0.0f;
+		_blinkTime = 0.0f;
+		animator->SetTextureColor(false);
+	}
+	
+
 	if (_isInvincible)
 	{
 		_invincibleTimer += deltaTime;
@@ -69,7 +122,6 @@ void Player::Update(float deltaTime)
 		if (_invincibleTimer > 1.5f)
 		{
 			_isInvincible = false;
-			
 		}
 	}
 	
@@ -202,7 +254,6 @@ void Player::SetLookDirX(float dir)
 
 void Player::TakeDamage(int damage, float hitDirX)
 {
-	// TODO 4: _hp 감소 및 무적 상태 설정 (_isInvincible = true, 타이머 초기화)
 	if (_hp > 0)
 	{
 		_hp -= damage;
@@ -210,7 +261,7 @@ void Player::TakeDamage(int damage, float hitDirX)
 		_invincibleTimer = 0.0f;
 		this->GetComponent<FSMComponent>()->ChangeState("Hit");
 	}
-	// TODO 5: 체력이 0 이하면 FSM을 "Death" 상태로, 아니면 "Hit" 상태로 변경하세요.
+
 	if (_hp < 0)
 	{
 		this->GetComponent<FSMComponent>()->ChangeState("Death");

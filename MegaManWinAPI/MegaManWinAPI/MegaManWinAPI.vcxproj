@@ -173,6 +173,7 @@
     <ClInclude Include="Manager\SceneManager.h" />
     <ClInclude Include="Entity\Component\TransformComponent.h" />
     <ClInclude Include="Entity\Component\RigidBodyComponent.h" />
+    <ClInclude Include="Entity\FSM\SpawnState.h" />
     <ClInclude Include="Util\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
     <ClInclude Include="Renderer\SpriteRenderer.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Renderer\SpriteRenderer.cpp" />
     <ClCompile Include="Core\TestScene.cpp" />
     <ClCompile Include="Entity\Component\RigidBodyComponent.cpp" />
+    <ClCompile Include="Entity\FSM\SpawnState.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="Entity\Component\TransformComponent.cpp" />

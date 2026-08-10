@@ -96,11 +96,11 @@ void WeaponComponent::Update(float deltaTime)
                 _chargeEffect->SetScale(Vector(dirX, 1.0f));
 
                 // 2. 차지 시간에 따른 레벨(애니메이션) 업데이트
-                if (_chargeTimer >= _maxChargeTime)
+                if (_chargeTimer >= MAX_CHARGE_TIME)
                 {
                     _chargeEffect->SetChargeLevel((int32)ChargeLevel::Max);
                 }
-                else if (_chargeTimer >= _midChargeTime/* TODO: 미드 차지 시간 이상일 경우 */)
+                else if (_chargeTimer >= _midChargeTime)
                 {
                     _chargeEffect->SetChargeLevel((int32)ChargeLevel::Mid);
                 }
@@ -114,7 +114,7 @@ void WeaponComponent::Update(float deltaTime)
         if (_isCharging && _chargeTimer >= _midChargeTime)
         {
             ChargeLevel level = ChargeLevel::None;
-            if (_chargeTimer >= _maxChargeTime)
+            if (_chargeTimer >= MAX_CHARGE_TIME)
             {
                 level = ChargeLevel::Max;
                 

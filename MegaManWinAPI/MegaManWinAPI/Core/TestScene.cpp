@@ -36,7 +36,7 @@ void TestScene::createObjects()
 	// 플레이어
 	Player* player = new Player();
 	player->Init();
-	player->SetPos(Vector(GWinSizeX / 2, GWinSizeY / 2));
+	player->SetPos(Vector(GWinSizeX / 2, 0));
 
 	// 생성했으면 무조건 초기화
 	bg->Init();

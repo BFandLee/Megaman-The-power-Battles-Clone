@@ -28,6 +28,8 @@ public:
 	void SetHp(int hp) { _hp = hp; }
 	float GetHitDirX() { return _hitdirX; }
 
+	void SetInvincible(bool isInvincible) { _isInvincible = isInvincible; }
+
 private:
 	float _lookdirX = 1.0f;
 
@@ -37,4 +39,10 @@ private:
 	float _hitdirX;
 	bool _isInvincible = false;
 	float _invincibleTimer = 0.0f;
+
+	// TODO: 풀 차지 상태 추적 및 깜빡임 연출을 위한 멤버 변수 추가 (예: _chargeTime, _blinkTimer, _isYellowColor)
+	float _chargeTime;
+	float _blinkTime;
+	bool _isYellowColor;
+
 };

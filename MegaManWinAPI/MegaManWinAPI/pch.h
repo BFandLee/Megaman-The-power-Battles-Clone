@@ -168,3 +168,4 @@ const int GWinSizeY = 672;
 
 constexpr float KNOCKBACK = 300.0f;
 constexpr float RESTORING = -250.0f;
+constexpr float MAX_CHARGE_TIME = 1.3f;

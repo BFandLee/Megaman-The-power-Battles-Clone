@@ -207,6 +207,9 @@
     <ClInclude Include="Entity\FSM\HitState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\FSM\SpawnState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -354,6 +357,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\FSM\HitState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\SpawnState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

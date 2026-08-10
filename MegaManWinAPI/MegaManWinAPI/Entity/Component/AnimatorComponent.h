@@ -13,6 +13,7 @@ struct AnimationFrame
 struct AnimationClip
 {
 	class Texture* texture = nullptr;
+	class Texture* swapTexture = nullptr;
 	vector<AnimationFrame> frames;
 	bool bLoop = false;
 	int32 loopStartIndex = 0;
@@ -42,7 +43,13 @@ private:
 	wstring _currentClipName = L"";
 
 	bool _bisFinished = false;
+
+	// TODO: 텍스처 색상 스왑 플래그 및 교체 텍스처 포인터 추가
+	bool _isYellowColor = false;
 public:
+	// TODO: Player로부터 노란색 상태와 교체할 텍스처를 전달받는 Setter 함수 선언
+	void SetTextureColor(bool textureColor) { _isYellowColor = textureColor; }
+	void SetSwapTextureForState(const wstring& stateName, class Texture* swapTex);
 	AnimatorComponent() : Component("AnimatorComponent") {}
 	virtual ~AnimatorComponent();
 

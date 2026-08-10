@@ -8,6 +8,14 @@
 
 
 
+void AnimatorComponent::SetSwapTextureForState(const wstring& stateName, Texture* swapTex)
+{
+	if (_clips.find(stateName) != _clips.end())
+	{
+		_clips[stateName]->swapTexture = swapTex;
+	}
+}
+
 AnimatorComponent::~AnimatorComponent()
 {
 }
@@ -16,7 +24,7 @@ void AnimatorComponent::Update(float deletaTime)
 {
 	Super::Update(deletaTime);
 
-	// ¹æ¾î ÄÚµå
+	// ë°©ì–´ ì½”ë“œ
 	if (_currentClip == nullptr)
 		return;
 
@@ -27,10 +35,10 @@ void AnimatorComponent::Update(float deletaTime)
 		UpdateFrameOffset();
 	}
 
-	// ÇÃ·¡±×·Î ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³µ´ÂÁö Ã¼Å©
+	// í”Œë˜ê·¸ë¡œ ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚¬ëŠ”ì§€ ì²´í¬
 	if (_bisFinished) return;
 
-	// ½Ã°£ ´©Àû
+	// ì‹œê°„ ëˆ„ì 
 	_accmulatedTime += deletaTime;
 	float currentDuration = _currentClip->frames[_currentFrame].duration;
 
@@ -55,7 +63,7 @@ void AnimatorComponent::Update(float deletaTime)
 		if (_bIsEditMode)
 			return;
 
-		// ÇÁ·¹ÀÓ ³Ñ±â±â
+		// í”„ë ˆì„ ë„˜ê¸°ê¸°
 		_accmulatedTime -= currentDuration;
 		_currentFrame++;
 
@@ -72,14 +80,14 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 {
 	Super::Render(renderTarget);
 
-	// ¹æ¾îÄÚµå
+	// ë°©ì–´ì½”ë“œ
 	if (_currentClip == nullptr || _currentClip->texture == nullptr)
 		return;
 
-	// ÇöÀç Àç»ıÇÒ ÇÁ·¹ÀÓ Á¤º¸ ²¨³»±â
+	// í˜„ì¬ ì¬ìƒí•  í”„ë ˆì„ ì •ë³´ êº¼ë‚´ê¸°
 	const AnimationFrame& frame = _currentClip->frames[_currentFrame];
 
-	// ActorÀÇ À§Ä¡ °¡Á®¿À±â
+	// Actorì˜ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
 	Vector actorPos = GetOwner()->GetPos();
 	Vector scale = GetOwner()->GetComponent<TransformComponent>()->GetScale();
 	bool filpX = false;
@@ -89,7 +97,16 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 		filpX = true;
 		scale.x = abs(scale.x);
 	}
-	_currentClip->texture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
+
+	// TODO: ë…¸ë€ìƒ‰ ìŠ¤ì™‘ ìƒíƒœ(í”Œë˜ê·¸)ê°€ ì¼œì ¸ ìˆë‹¤ë©´, _currentClip->texture ëŒ€ì‹  êµì²´ìš© í…ìŠ¤ì²˜ë¥¼ ë Œë”ë§í•˜ë„ë¡ ì¡°ê±´ë¶€ ì²˜ë¦¬ë¥¼ ì‘ì„±í•˜ì„¸ìš”.
+	if (_isYellowColor && _currentClip->swapTexture != nullptr)
+	{
+		_currentClip->swapTexture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
+	}
+	else
+	{
+		_currentClip->texture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
+	}
 }
 
 
@@ -98,15 +115,15 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 
 void AnimatorComponent::RenderUI()
 {
-	// 1. ImGui Ã¢ ½ÃÀÛ
+	// 1. ImGui ì°½ ì‹œì‘
 	ImGui::PushID(this);
 	ImGui::Text("[ Animtor ]");
 	if (_currentClip != nullptr && _currentClip->frames.size() > 0)
 	{
-		// 2. ÇöÀç ÇÁ·¹ÀÓ Á¤º¸ °¡Á®¿À±â
+		// 2. í˜„ì¬ í”„ë ˆì„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 		AnimationFrame& currentFrameData = _currentClip->frames[_currentFrame];
 
-		// 3. ½½¶óÀÌ´õ ¸¸µé±â (µå·¡±×·Î x, y ½Ç½Ã°£ Á¶Àı)
+		// 3. ìŠ¬ë¼ì´ë” ë§Œë“¤ê¸° (ë“œë˜ê·¸ë¡œ x, y ì‹¤ì‹œê°„ ì¡°ì ˆ)
 		ImGui::Text("Current Frame: %d", _currentFrame);
 		ImGui::DragFloat("Offset X", &currentFrameData.offset.x, 1.0f);
 		ImGui::DragFloat("Offset Y", &currentFrameData.offset.y, 1.0f);
@@ -128,16 +145,16 @@ void AnimatorComponent::AddClip(const wstring& stateName, AnimationClip* clip)
 
 void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 {
-	// map¿¡¼­ stateName Å°°¡ Á¸ÀçÇÏ´ÂÁö Ã£±â
+	// mapì—ì„œ stateName í‚¤ê°€ ì¡´ì¬í•˜ëŠ”ì§€ ì°¾ê¸°
 	auto it = _clips.find(stateName);
 
-	// Ã£Áö ¸øÇß´Ù¸é ÇÔ¼ö Á¾·á
+	// ì°¾ì§€ ëª»í–ˆë‹¤ë©´ í•¨ìˆ˜ ì¢…ë£Œ
 	if (it == _clips.end())
 	{
 		return;
 	}
 
-	// Ã£¾Ò´Ù¸é _currentClipÀ» ±³Ã¼ÇÏ°í, ÇÁ·¹ÀÓ°ú ´©Àû ½Ã°£ ÃÊ±âÈ­
+	// ì°¾ì•˜ë‹¤ë©´ _currentClipì„ êµì²´í•˜ê³ , í”„ë ˆì„ê³¼ ëˆ„ì  ì‹œê°„ ì´ˆê¸°í™”
 	if (_currentClip == it->second)
 	{
 		return;
@@ -162,20 +179,20 @@ void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 
 bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, const wstring& jsonFilePath)
 {
-	// ÆÄÀÏ ½ºÆ®¸² ¿­±â
+	// íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ì—´ê¸°
 	std::ifstream file(jsonFilePath);
 	if (!file.is_open())
 		return false;
 
-	// 2. nlohmann/json °´Ã¼·Î ÆÄ½Ì
+	// 2. nlohmann/json ê°ì²´ë¡œ íŒŒì‹±
 	json j;
 	file >> j;
 
-	// 3. µ¥ÀÌÅÍ¸¦ ´ãÀ» ºó Å¬¸³ »ı¼º
+	// 3. ë°ì´í„°ë¥¼ ë‹´ì„ ë¹ˆ í´ë¦½ ìƒì„±
 	AnimationClip* clip = new AnimationClip();
 	clip->sourceFilePath = jsonFilePath;
 
-	// ÅØ½ºÃ³ ·Îµå
+	// í…ìŠ¤ì²˜ ë¡œë“œ
 	string texStr = j["texturePath"];
 	wstring texKey;
 	texKey.assign(texStr.begin(), texStr.end());
@@ -192,7 +209,7 @@ bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, const ws
 
 	clip->texture = ResourceManager::GetInstance().GetTexture(texKey);
 
-	// ÇÁ·¹ÀÓ ÆÄ½Ì
+	// í”„ë ˆì„ íŒŒì‹±
 	for (auto& frameJson : j["frames"])
 	{
 		AnimationFrame frame;
@@ -209,7 +226,7 @@ bool AnimatorComponent::LoadAnimationFromJson(const wstring& stateName, const ws
 
 	}
 
-	// 4. ¿Ï¼ºµÈ Å¬¸³À» _clips ¸Ê¿¡ µî·Ï
+	// 4. ì™„ì„±ëœ í´ë¦½ì„ _clips ë§µì— ë“±ë¡
 	_clips[stateName] = clip;
 	return true;
 }
@@ -289,7 +306,7 @@ void AnimatorComponent::SaveToJson()
 	std::ofstream outFile(_currentClip->sourceFilePath);
 	if (outFile.is_open())
 	{
-		// dump(4) : 4Ä­ µé¿©¾²±âÇØ¼­ ÅØ½ºÆ®·Î ¸¸µê
+		// dump(4) : 4ì¹¸ ë“¤ì—¬ì“°ê¸°í•´ì„œ í…ìŠ¤íŠ¸ë¡œ ë§Œë“¦
 		outFile << j.dump(4);
 		outFile.close();
 	}
