@@ -6,6 +6,7 @@
 #include "Ground.h"
 #include "WAllActor.h"
 #include "Player.h"
+#include "PlayerFactory.h"
 #include "PlayerBullet.h"
 #include "DummyEnemy.h"
 
@@ -34,9 +35,9 @@ void TestScene::createObjects()
 	AddActor(rightwall);
 
 	// 플레이어
-	Player* player = new Player();
-	player->Init();
-	player->SetPos(Vector(GWinSizeX / 2, 0));
+	ActorFactory* factory = new PlayerFactory();
+	Actor* player = factory->CreateActor(Vector(GWinSizeX / 2, 0));
+	delete factory;
 
 	// 생성했으면 무조건 초기화
 	bg->Init();

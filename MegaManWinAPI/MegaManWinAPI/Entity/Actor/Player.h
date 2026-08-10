@@ -45,4 +45,6 @@ private:
 	float _blinkTime;
 	bool _isYellowColor;
 
+	bool _isInit = false;
+
 };

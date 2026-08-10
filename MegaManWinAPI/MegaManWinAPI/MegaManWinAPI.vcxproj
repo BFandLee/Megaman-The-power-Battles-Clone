@@ -110,7 +110,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\Weapon;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\Factory;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -133,8 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\Factory\ActorFactory.h" />
     <ClInclude Include="Entity\Actor\Actor.h" />
     <ClInclude Include="Entity\Actor\ChargeEffectActor.h" />
+    <ClInclude Include="Entity\Factory\PlayerFactory.h" />
     <ClInclude Include="Entity\FSM\HitState.h" />
     <ClInclude Include="Entity\FSM\DeathState.h" />
     <ClInclude Include="Entity\Actor\DummyEnemy.h" />
@@ -192,8 +194,10 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Factory\ActorFactory.cpp" />
     <ClCompile Include="Entity\Actor\Actor.cpp" />
     <ClCompile Include="Entity\Actor\ChargeEffectActor.cpp" />
+    <ClCompile Include="Entity\Factory\PlayerFactory.cpp" />
     <ClCompile Include="Entity\FSM\HitState.cpp" />
     <ClCompile Include="Entity\FSM\DeathState.cpp" />
     <ClCompile Include="Entity\Actor\DummyEnemy.cpp" />

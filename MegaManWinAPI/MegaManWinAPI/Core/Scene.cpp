@@ -12,6 +12,8 @@
 #include "Ground.h"
 #include "WallActor.h"
 #include "DummyEnemy.h"
+#include "ActorFactory.h"
+#include "PlayerFactory.h"
 
 // 생성자/소멸자를 cpp 작성하면, Scene의 인스턴스화는 cpp에서 일어남.
 // ObjectPool<T> (vector<T>) 값 자체를 가지고 있는 풀을 생성하는것도,
@@ -26,7 +28,14 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	RegisterActor<Player>("Player");
+	// 💡 대신, JSON에서 Player를 부를 때 팩토리를 거치도록 람다를 직접 덮어씌웁니다.
+	_actorFactory["Player"] = []() -> class Actor* {
+		ActorFactory* factory = new PlayerFactory();
+		Actor* player = factory->CreateActor(Vector(0, 0)); // 팩토리가 완벽히 세팅해줌
+		delete factory;
+		return player;
+		};
+
 	RegisterActor<Background>("Background");
 	RegisterActor<Ground>("Ground");
 	RegisterActor<WallActor>("WallActor");

@@ -66,7 +66,6 @@ protected:
 	// bool isValidCell(Cell cell) const;
 
 protected:
-	// 씬에 등장하는 모든 객체는 Actor로부터 파생된 클래스다.
 	// 모든 클래스를 관리하는 공통 자료구조를 선언
 	vector<Actor*> _actors;	 // 여기가 진짜 Update,Render하는 객체들
 
@@ -74,21 +73,10 @@ protected:
 	vector<Actor*> _renderList[(int32)RenderLayer::Count];
 	
 	// 지연 시스템
-	// 이번 프레임에 추가되어야 하는 Actor들
-	// add에 두번요청 들어올일이 없을것 같아서, vector 처리
 	vector<Actor*>		_reservedAdd;	
 
 	// 제거 요청을 중복처리하지 않기 위해, set 자료구조
 	unordered_set<Actor*>	 _reservedRemove;		// vector vs map
-
-
-	// 공간 분할 (Grid)
-	// int32 _gridSize = BLOCK_SIZE;	// 유동적으로 수정하면 된다.
-	// int32 _gridCountX = 0;
-	// int32 _gridCountY = 0;
-
-	// 하나의 그리드에 있는 Actor 관리
-	// vector<GridInfo> _grid;
 
 	// 한프레임 뒤로 미뤄서 특정 함수를 호출해주는 기능
 	std::vector<std::function<void()>> _postUpdateActions;

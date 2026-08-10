@@ -2,39 +2,24 @@
 #include "Player.h"
 #include "AnimatorComponent.h"
 #include "BoxCollider.h"
-#include "InputManager.h" // 입력을 받기 위해 포함
-#include "TimeManager.h"  // DeltaTime을 사용하기 위해 포함
+#include "InputManager.h" 
+#include "TimeManager.h"  
 #include "RigidBodyComponent.h"
 #include "FSMComponent.h"
 #include "WeaponComponent.h"
 #include "TransformComponent.h"
-// 테스트를 위한 include
 #include "Texture.h"
 #include "ResourceManager.h"
-#include "IdleState.h"
-#include "MoveState.h"
-#include "JumpState.h"
-#include "SlideState.h"
-#include "HitState.h"
-#include "DeathState.h"
-#include "SpawnState.h"
+
 
 void Player::Init()
 {
+	// Idempotent 패턴
+	if (_isInit) return;
+	_isInit = true;
 	Super::Init();
-
-	// 1. 애니메이터 컴포넌트 추가
-	AnimatorComponent* animator = AddComponent<AnimatorComponent>();
-	animator->LoadAnimationFromJson(L"Idle", L"../Resources/sprites/Player/Animation/idle.json");
-	animator->LoadAnimationFromJson(L"Move", L"../Resources/sprites/Player/Animation/Move.json");
-	animator->LoadAnimationFromJson(L"Jump", L"../Resources/sprites/Player/Animation/Jump.json");
-	animator->LoadAnimationFromJson(L"Sliding", L"../Resources/sprites/Player/Animation/Sliding.json");
-	animator->LoadAnimationFromJson(L"Hit", L"../Resources/sprites/Player/Animation/Hit.json");
-	animator->LoadAnimationFromJson(L"Death", L"../Resources/sprites/Player/Animation/Death.json");
-	animator->LoadAnimationFromJson(L"Spone", L"../Resources/sprites/Player/Animation/Spone.json");
-	animator->LoadAnimationFromJson(L"SponeDrop", L"../Resources/sprites/Player/Animation/SponeDrop.json");
-	// animator->Play(L"Idle");
-
+	
+	AddComponent<AnimatorComponent>();
 	// 충돌체(Collider) 컴포넌트 추가
 	BoxCollider* collider = AddComponent<BoxCollider>();
 	collider->SetSize(50.0f, 50.0f);
@@ -45,44 +30,8 @@ void Player::Init()
 	// FSM 및 Weapon 컴포넌트 부착
 	FSMComponent* fsm = AddComponent<FSMComponent>();
 	
-	//StateMachine으로 정리하자
-	fsm->AddState("Idle", new IdleState(fsm));
-	fsm->AddState("Move", new MoveState(fsm));
-	fsm->AddState("Jump", new JumpState(fsm));
-	fsm->AddState("Sliding", new SlideState(fsm));
-	fsm->AddState("Hit", new HitState(fsm));
-	fsm->AddState("Death", new DeathState(fsm));
-	fsm->AddState("Spawn", new SpawnState(fsm));
-	fsm->ChangeState("Spawn");
-
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
 	weapon->Init();
-
-	// 스왑용 이미지 생성
-	std::unordered_map<uint32, uint32> yellowPalette = {
-	{ 0xFF5084F4, 0xFFF0C030 }, // 메인 파란색 -> 메인 노란색
-	{ 0xFF2040D4, 0xFFF08000 }, // 어두운 파란색 -> 어두운 노란색
-	{ 0xFF30C4D4, 0xFFF0F0C0 }  // 밝은 파란색 -> 밝은 노란색
-};
-	// Idle
-	Texture* idleYellow = new Texture();
-	idleYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Idle_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
-	animator->SetSwapTextureForState(L"Idle", idleYellow);
-
-	// Move
-	Texture* moveYellow = new Texture();
-	moveYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Walk_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
-	animator->SetSwapTextureForState(L"Move", moveYellow);
-
-	// Jump
-	Texture* jumpYellow = new Texture();
-	jumpYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Jump_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
-	animator->SetSwapTextureForState(L"Jump", jumpYellow);
-
-	// Sliding
-	Texture* slideYellow = new Texture();
-	slideYellow->LoadWithPaletteSwap(L"../Resources/sprites/Player/State/Player_Sliding_Sheet.png", yellowPalette, 1, 1, 1.0f, false);
-	animator->SetSwapTextureForState(L"Sliding", slideYellow);
 }
 
 void Player::Update(float deltaTime)
@@ -241,7 +190,6 @@ void Player::SetLookDirX(float dir)
 {
 	_lookdirX = dir;
 
-	// 2. TransformComponent 가져오기
 	TransformComponent* transform = GetComponent<TransformComponent>();
 
 	if (transform)
@@ -262,7 +210,7 @@ void Player::TakeDamage(int damage, float hitDirX)
 		this->GetComponent<FSMComponent>()->ChangeState("Hit");
 	}
 
-	if (_hp < 0)
+	if (_hp <= 0)
 	{
 		this->GetComponent<FSMComponent>()->ChangeState("Death");
 	}

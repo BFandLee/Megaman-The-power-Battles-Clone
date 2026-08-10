@@ -210,6 +210,12 @@
     <ClInclude Include="Entity\FSM\SpawnState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Factory\PlayerFactory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Factory\ActorFactory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MegaManWinAPI.cpp">
@@ -360,6 +366,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\FSM\SpawnState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Factory\PlayerFactory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Factory\ActorFactory.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

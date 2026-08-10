@@ -4,65 +4,6 @@
             "Components": [
                 {
                     "PosX": 0.0,
-                    "PosY": 0.0,
-                    "Rotation": 0.0,
-                    "ScaleX": 1.0,
-                    "ScaleY": 1.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "AnimatorComponent"
-                }
-            ],
-            "name": "ChargeEffectActor"
-        },
-        {
-            "Components": [
-                {
-                    "PosX": 147.94686889648438,
-                    "PosY": 465.5999755859375,
-                    "Rotation": 0.0,
-                    "ScaleX": 2.0,
-                    "ScaleY": 2.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "ImageRenderer"
-                },
-                {
-                    "Height": 80.0,
-                    "OffsetX": 3.9000000953674316,
-                    "OffsetY": 63.900001525878906,
-                    "Width": 69.0,
-                    "name": "Collider"
-                },
-                {
-                    "Gravity": 980.0,
-                    "VelocityX": 0.0,
-                    "VelocityY": 0.0,
-                    "name": "RigidBodyComponent"
-                },
-                {
-                    "Accel": 7000.0,
-                    "Friction": 1450.0,
-                    "JumpForce": 600.0,
-                    "MoveSpeed": 350.0,
-                    "Velocity": 1000.0,
-                    "name": "FSMComponent"
-                },
-                {
-                    "CoolDown": -0.00835028849542141,
-                    "Reloading": 0.5,
-                    "attackInterval": 0.15000000596046448,
-                    "name": "WeaponComponent"
-                }
-            ],
-            "name": "Player"
-        },
-        {
-            "Components": [
-                {
-                    "PosX": 0.0,
                     "PosY": 336.0,
                     "Rotation": 0.0,
                     "ScaleX": 1.0,
@@ -102,6 +43,22 @@
         {
             "Components": [
                 {
+                    "PosX": 382.61614990234375,
+                    "PosY": 472.0000305175781,
+                    "Rotation": 0.0,
+                    "ScaleX": -1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "ChargeEffectActor"
+        },
+        {
+            "Components": [
+                {
                     "PosX": 576.0,
                     "PosY": 336.0,
                     "Rotation": 0.0,
@@ -110,7 +67,7 @@
                     "name": "TransformComponent"
                 },
                 {
-                    "name": "AnimatorComponent"
+                    "name": "ImageRenderer"
                 }
             ],
             "name": "Background"
@@ -141,8 +98,51 @@
         {
             "Components": [
                 {
-                    "PosX": 1027.0,
-                    "PosY": 532.0,
+                    "PosX": 382.61614990234375,
+                    "PosY": 472.0000305175781,
+                    "Rotation": 0.0,
+                    "ScaleX": -2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                },
+                {
+                    "Height": 69.0,
+                    "OffsetX": 3.0,
+                    "OffsetY": 63.0,
+                    "Width": 80.0,
+                    "name": "Collider"
+                },
+                {
+                    "Gravity": 980.0,
+                    "VelocityX": 0.0,
+                    "VelocityY": 0.0,
+                    "name": "RigidBodyComponent"
+                },
+                {
+                    "Accel": 7000.0,
+                    "Friction": 1450.0,
+                    "JumpForce": 600.0,
+                    "MoveSpeed": 350.0,
+                    "Velocity": 1000.0,
+                    "name": "FSMComponent"
+                },
+                {
+                    "CoolDown": -0.008442497812211514,
+                    "Reloading": 0.5,
+                    "attackInterval": 0.15000000596046448,
+                    "name": "WeaponComponent"
+                }
+            ],
+            "name": "Player"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 1073.0,
+                    "PosY": 534.0,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
                     "ScaleY": 2.0,
