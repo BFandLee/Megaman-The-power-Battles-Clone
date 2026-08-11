@@ -26,7 +26,9 @@ namespace fs = std::filesystem;
 #include "Json/nlohmann/json.hpp" // nlohmann/json 헤더 파일
 
 // ImGui
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui.h"
+#include "imnodes.h"
 
 // Direct2D 및 WIC 헤더
 #include <d2d1.h>
@@ -161,6 +163,13 @@ struct Vector
 	{
 		return *this - normal * (2.f * Dot(normal));
 	}
+};
+
+struct NodeLink
+{
+	int32 linkId;
+	int32 startAttrId;
+	int32 endAttrId;
 };
 
 const int GWinSizeX = 1152;

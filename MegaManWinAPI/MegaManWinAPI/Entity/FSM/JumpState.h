@@ -12,5 +12,6 @@ public:
 
 private:
     class RigidBodyComponent* _rigidbody;
+    class MovementComponent* _movement;
 };
 

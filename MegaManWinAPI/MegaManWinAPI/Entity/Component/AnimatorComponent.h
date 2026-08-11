@@ -44,16 +44,14 @@ private:
 
 	bool _bisFinished = false;
 
-	// TODO: 텍스처 색상 스왑 플래그 및 교체 텍스처 포인터 추가
+	// 텍스처 색상 스왑 플래그 및 교체 텍스처 포인터
 	bool _isYellowColor = false;
 public:
-	// TODO: Player로부터 노란색 상태와 교체할 텍스처를 전달받는 Setter 함수 선언
 	void SetTextureColor(bool textureColor) { _isYellowColor = textureColor; }
 	void SetSwapTextureForState(const wstring& stateName, class Texture* swapTex);
 	AnimatorComponent() : Component("AnimatorComponent") {}
 	virtual ~AnimatorComponent();
 
-	// 게임 루프 갱신 및 그리기
 	virtual void Update(float deletaTime) override;
 	virtual void Render(ID2D1RenderTarget* renderTarget) override;
 	virtual void RenderUI() override;

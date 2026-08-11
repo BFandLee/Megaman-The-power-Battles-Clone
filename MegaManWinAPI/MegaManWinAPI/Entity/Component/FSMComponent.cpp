@@ -30,54 +30,18 @@ void FSMComponent::Update(float deltaTime)
 
 void FSMComponent::RenderUI()
 {
-    if (ImGui::TreeNode("FSM"))
-    {
-        // 속도 조절
-        ImGui::DragFloat("MoveSpeed", &_movespeed);
-
-        // 점프 크기 조절
-        ImGui::DragFloat("JumpForce",&_jumpforce);
-
-        // 가속도
-        ImGui::DragFloat("Accel", &_accel);
-
-        // 슬라이딩 관련 
-        if (ImGui::TreeNode("Slide"))
-        {
-            ImGui::DragFloat("Velocity", &_slideVelocity);
-
-            ImGui::DragFloat("Friction", &_friction);
-
-            ImGui::TreePop();
-        }
-
-        ImGui::TreePop();
-    }
+  
 }
 
 json FSMComponent::ToJson()
 {
-    json j = Super::ToJson();
-    
-    j["MoveSpeed"] = _movespeed;
-    j["JumpForce"] = _jumpforce;
-    j["Accel"] = _accel;
-    j["Velocity"] = _slideVelocity;
-    j["Friction"] = _friction;
-
-
+    json j;
     return j;
 }
 
 void FSMComponent::FromJson(const json& j)
 {
-    Super::FromJson(j);
 
-    if (j.contains("MoveSpeed")) _movespeed = j["MoveSpeed"];
-    if (j.contains("JumpForce")) _jumpforce = j["JumpForce"];
-    if (j.contains("Accel")) _accel = j["Accel"];
-    if (j.contains("Velocity")) _slideVelocity = j["Velocity"];
-    if (j.contains("Friction")) _friction = j["Friction"];
     
 }
     

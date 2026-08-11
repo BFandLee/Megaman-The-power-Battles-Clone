@@ -25,20 +25,6 @@ public:
     void AddState(const std::string& name, State* state);
     void ChangeState(const std::string& name);
 
-    float GetMoveSpeed() { return _movespeed; }
-    float GetJumpForce() { return _jumpforce; }
-    float GetAccel() { return _currentaccel; }
-    float GetSlideVelcoity() { return _slideVelocity; }
-    float GetFriction() { return _friction; }
-
-private:
-    float _movespeed = 0.0f;
-    float _jumpforce = 0.0f;
-    float _accel = 10.0f;
-    float _currentaccel = _accel * 1000.0f;
-
-    // 슬라이딩
-    float _slideVelocity;
-    float _friction;
+    
     
 };

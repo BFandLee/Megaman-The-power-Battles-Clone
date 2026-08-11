@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "RigidBodyComponent.h"
 #include "BoxCollider.h"
+#include "MovementComponent.h"
 
 SlideState::SlideState(FSMComponent* pOwner) : State(pOwner)
 {
@@ -25,8 +26,9 @@ void SlideState::Enter()
     
     _pAnimator->Play(L"Sliding");
     Player* player = static_cast<Player*>(m_pOwnerFSM->GetOwner());
-
     BoxCollider* collider = player->GetComponent<BoxCollider>();
+    MovementComponent* movement = m_pOwnerFSM->GetOwner()->GetComponent<MovementComponent>();
+
     if (collider != nullptr)
     {
         _originalHeight = collider->GetHeight();
@@ -38,18 +40,17 @@ void SlideState::Enter()
         collider->SetOffset(Vector(collider->GetOffset().x, currentOffsetY));
 
     }
-    
-
     float dir = player->GetLookDirX();
-    _slideVelocity = dir * m_pOwnerFSM->GetSlideVelcoity();
-    _friction = m_pOwnerFSM->GetFriction();
+    if (movement != nullptr)
+    {
+        _slideVelocity = dir * movement->GetSlideVelcoity();
+        _friction = movement->GetFriction();
+    }
+   
 }
 
 void SlideState::Update(float deltaTime)
 {
-    // TODO 5: 매 프레임 _slideVelocity를 _friction * deltaTime 만큼 감소시키기
-    // 힌트: 절대값이 0에 가까워지도록 처리해야 합니다. (오른쪽 이동이면 빼주고, 왼쪽 이동이면 더해주거나 std::max 활용)
-
     if (_slideVelocity > 0.0f)
     {
         _slideVelocity = std::max(_slideVelocity - (_friction * deltaTime), 0.0f); // 오른쪽 이동 → 감속
@@ -75,7 +76,7 @@ void SlideState::Update(float deltaTime)
 
 void SlideState::Exit()
 {
-    // TODO 9: Enter에서 백업해 둔 _originalHeight, _originalOffsetY를 사용해 BoxCollider의 크기와 오프셋을 원래대로 원복하기
+    // Enter에서 백업해 둔 _originalHeight, _originalOffsetY를 사용해 BoxCollider의 크기와 오프셋을 원래대로 원복하기
     BoxCollider* collider = m_pOwnerFSM->GetOwner()->GetComponent<BoxCollider>();
     collider->SetSize(collider->GetWidth(), _originalHeight);
     collider->SetOffset(Vector(collider->GetOffset().x, _originalOffsetY));

@@ -28,7 +28,6 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	// 💡 대신, JSON에서 Player를 부를 때 팩토리를 거치도록 람다를 직접 덮어씌웁니다.
 	_actorFactory["Player"] = []() -> class Actor* {
 		ActorFactory* factory = new PlayerFactory();
 		Actor* player = factory->CreateActor(Vector(0, 0)); // 팩토리가 완벽히 세팅해줌

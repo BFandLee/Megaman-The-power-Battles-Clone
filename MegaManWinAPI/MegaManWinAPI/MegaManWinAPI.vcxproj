@@ -110,8 +110,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\Factory;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\BT;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\AI;$(ProjectDir)Entity\Factory;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4828</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -133,9 +134,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\BT\ActionNode.h" />
+    <ClInclude Include="Entity\BT\DecoratorNode.h" />
+    <ClInclude Include="Entity\BT\CompositeNode.h" />
+    <ClInclude Include="Entity\BT\BTNode.h" />
+    <ClInclude Include="Entity\AI\BTState.h" />
+    <ClInclude Include="Entity\AI\Blackboard.h" />
     <ClInclude Include="Entity\Factory\ActorFactory.h" />
     <ClInclude Include="Entity\Actor\Actor.h" />
     <ClInclude Include="Entity\Actor\ChargeEffectActor.h" />
+    <ClInclude Include="Entity\Factory\BTNodeFactory.h" />
     <ClInclude Include="Entity\Factory\PlayerFactory.h" />
     <ClInclude Include="Entity\FSM\HitState.h" />
     <ClInclude Include="Entity\FSM\DeathState.h" />
@@ -155,6 +163,10 @@
     <ClInclude Include="Entity\Weapon\Buster.h" />
     <ClInclude Include="Entity\Weapon\Weapon.h" />
     <ClInclude Include="Entity\FSM\JumpState.h" />
+    <ClInclude Include="External\ImGui\imnodes.h" />
+    <ClInclude Include="External\ImGui\imnodes_internal.h" />
+    <ClInclude Include="Manager\BTEditor.h" />
+    <ClInclude Include="Manager\BTSerializer.h" />
     <ClInclude Include="Manager\CollisionManager.h" />
     <ClInclude Include="Entity\Component\Component.h" />
     <ClInclude Include="framework.h" />
@@ -163,6 +175,7 @@
     <ClInclude Include="Entity\Actor\PlayerBullet.h" />
     <ClInclude Include="Manager\ObjectPoolManager.h" />
     <ClInclude Include="Entity\Actor\MuzzleFlash.h" />
+    <ClInclude Include="Entity\Component\MovementComponent.h" />
     <ClInclude Include="Renderer\ImageRenderer.h" />
     <ClInclude Include="Manager\InputManager.h" />
     <ClInclude Include="MegaManWinAPI.h" />
@@ -176,6 +189,8 @@
     <ClInclude Include="Entity\Component\TransformComponent.h" />
     <ClInclude Include="Entity\Component\RigidBodyComponent.h" />
     <ClInclude Include="Entity\FSM\SpawnState.h" />
+    <ClInclude Include="Entity\BT\Sequence.h" />
+    <ClInclude Include="Entity\BT\Selector.h" />
     <ClInclude Include="Util\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
     <ClInclude Include="Renderer\SpriteRenderer.h" />
@@ -194,9 +209,15 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\BT\ActionNode.cpp" />
+    <ClCompile Include="Entity\BT\DecoratorNode.cpp" />
+    <ClCompile Include="Entity\BT\CompositeNode.cpp" />
+    <ClCompile Include="Entity\BT\BTNode.cpp" />
+    <ClCompile Include="Entity\AI\BTState.cpp" />
     <ClCompile Include="Entity\Factory\ActorFactory.cpp" />
     <ClCompile Include="Entity\Actor\Actor.cpp" />
     <ClCompile Include="Entity\Actor\ChargeEffectActor.cpp" />
+    <ClCompile Include="Entity\Factory\BTNodeFactory.cpp" />
     <ClCompile Include="Entity\Factory\PlayerFactory.cpp" />
     <ClCompile Include="Entity\FSM\HitState.cpp" />
     <ClCompile Include="Entity\FSM\DeathState.cpp" />
@@ -214,6 +235,9 @@
     <ClCompile Include="Entity\FSM\SlideState.cpp" />
     <ClCompile Include="Entity\Weapon\Buster.cpp" />
     <ClCompile Include="Entity\FSM\JumpState.cpp" />
+    <ClCompile Include="External\ImGui\imnodes.cpp" />
+    <ClCompile Include="Manager\BTEditor.cpp" />
+    <ClCompile Include="Manager\BTSerializer.cpp" />
     <ClCompile Include="Manager\CollisionManager.cpp" />
     <ClCompile Include="Entity\Component\Component.cpp" />
     <ClCompile Include="Core\Game.cpp" />
@@ -221,6 +245,7 @@
     <ClCompile Include="Entity\Actor\PlayerBullet.cpp" />
     <ClCompile Include="Manager\ObjectPoolManager.cpp" />
     <ClCompile Include="Entity\Actor\MuzzleFlash.cpp" />
+    <ClCompile Include="Entity\Component\MovementComponent.cpp" />
     <ClCompile Include="Renderer\ImageRenderer.cpp" />
     <ClCompile Include="Manager\InputManager.cpp" />
     <ClCompile Include="MegaManWinAPI.cpp" />
@@ -237,6 +262,8 @@
     <ClCompile Include="Core\TestScene.cpp" />
     <ClCompile Include="Entity\Component\RigidBodyComponent.cpp" />
     <ClCompile Include="Entity\FSM\SpawnState.cpp" />
+    <ClCompile Include="Entity\BT\Sequence.cpp" />
+    <ClCompile Include="Entity\BT\Selector.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="Entity\Component\TransformComponent.cpp" />

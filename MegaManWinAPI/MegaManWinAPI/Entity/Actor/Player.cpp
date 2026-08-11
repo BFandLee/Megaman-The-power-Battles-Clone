@@ -10,6 +10,7 @@
 #include "TransformComponent.h"
 #include "Texture.h"
 #include "ResourceManager.h"
+#include "MovementComponent.h"
 
 
 void Player::Init()
@@ -27,11 +28,12 @@ void Player::Init()
 	// 중력(Rigidbody) 컴포넌트 추가
 	RigidBodyComponent* rigidbody = AddComponent<RigidBodyComponent>();
 
-	// FSM 및 Weapon 컴포넌트 부착
 	FSMComponent* fsm = AddComponent<FSMComponent>();
 	
 	WeaponComponent* weapon = AddComponent<WeaponComponent>();
 	weapon->Init();
+
+	MovementComponent* movement = AddComponent<MovementComponent>();
 }
 
 void Player::Update(float deltaTime)

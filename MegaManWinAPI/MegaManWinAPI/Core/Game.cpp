@@ -16,6 +16,7 @@
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_d2d.h"
+#include "BTEditor.h"
 
 
 void Game::Init(HWND hwnd)
@@ -57,6 +58,7 @@ void Game::Init(HWND hwnd)
 	// ImGui Initialization
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImNodes::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
@@ -97,6 +99,8 @@ void Game::Init(HWND hwnd)
 	ObjectPoolManager::GetInstance().Init();
 
 	// UIManager::GetInstance().Init();
+
+	BTEditor::GetInstance().Init();
 }
 
 void Game::Cleanup()
@@ -127,6 +131,8 @@ void Game::Cleanup()
 	ResourceManager::GetInstance().Cleanup();
 
 	ObjectPoolManager::GetInstance().Clear();
+
+	ImNodes::DestroyContext();
 }
 
 void Game::Update()
@@ -153,6 +159,8 @@ void Game::Update()
 	ImGui::End();
 
 	SceneManager::GetInstance().RenderUI();
+
+	BTEditor::GetInstance().Update();
 
 }
 

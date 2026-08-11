@@ -77,3 +77,15 @@ enum DirType
 	DIR_LEFT,
 	DIR_RIGHT,
 };
+
+enum class NodeState
+{
+	Success,
+	Failure,
+	Running
+};
+
+
+
+
+

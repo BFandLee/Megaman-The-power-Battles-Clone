@@ -43,22 +43,6 @@
         {
             "Components": [
                 {
-                    "PosX": 382.61614990234375,
-                    "PosY": 472.0000305175781,
-                    "Rotation": 0.0,
-                    "ScaleX": -1.0,
-                    "ScaleY": 1.0,
-                    "name": "TransformComponent"
-                },
-                {
-                    "name": "AnimatorComponent"
-                }
-            ],
-            "name": "ChargeEffectActor"
-        },
-        {
-            "Components": [
-                {
                     "PosX": 576.0,
                     "PosY": 336.0,
                     "Rotation": 0.0,
@@ -98,10 +82,26 @@
         {
             "Components": [
                 {
-                    "PosX": 382.61614990234375,
-                    "PosY": 472.0000305175781,
+                    "PosX": 68.0,
+                    "PosY": 472.0,
                     "Rotation": 0.0,
-                    "ScaleX": -2.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "ChargeEffectActor"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 68.0,
+                    "PosY": 472.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -121,19 +121,20 @@
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
+                null,
                 {
-                    "Accel": 7000.0,
-                    "Friction": 1450.0,
-                    "JumpForce": 600.0,
-                    "MoveSpeed": 350.0,
-                    "Velocity": 1000.0,
-                    "name": "FSMComponent"
-                },
-                {
-                    "CoolDown": -0.008442497812211514,
+                    "CoolDown": -0.016842085868120193,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
+                },
+                {
+                    "Accel": 10.0,
+                    "Friction": 0.0,
+                    "JumpForce": 0.0,
+                    "MoveSpeed": 0.0,
+                    "Velocity": 0.0,
+                    "name": "MovementComponent"
                 }
             ],
             "name": "Player"
