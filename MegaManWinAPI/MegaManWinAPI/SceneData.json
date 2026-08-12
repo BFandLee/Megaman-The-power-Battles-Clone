@@ -82,7 +82,7 @@
         {
             "Components": [
                 {
-                    "PosX": 68.0,
+                    "PosX": 655.8619995117188,
                     "PosY": 472.0,
                     "Rotation": 0.0,
                     "ScaleX": 1.0,
@@ -98,7 +98,7 @@
         {
             "Components": [
                 {
-                    "PosX": 68.0,
+                    "PosX": 586.8296508789063,
                     "PosY": 472.0,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
@@ -123,17 +123,17 @@
                 },
                 null,
                 {
-                    "CoolDown": -0.016842085868120193,
+                    "CoolDown": -0.0011360924690961838,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
                 },
                 {
                     "Accel": 10.0,
-                    "Friction": 0.0,
-                    "JumpForce": 0.0,
-                    "MoveSpeed": 0.0,
-                    "Velocity": 0.0,
+                    "Friction": 1450.0,
+                    "JumpForce": 600.0,
+                    "MoveSpeed": 350.0,
+                    "Velocity": 1000.0,
                     "name": "MovementComponent"
                 }
             ],

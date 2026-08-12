@@ -3,6 +3,7 @@
 
 class Sequence : public CompositeNode
 {
-	virtual NodeState Tick(Blackboard* bb) override;
+public:
+	virtual NodeState Tick(class Blackboard* bb) override;
 };
 

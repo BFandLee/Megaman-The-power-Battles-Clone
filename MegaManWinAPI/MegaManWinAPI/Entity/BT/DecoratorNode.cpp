@@ -1,16 +1,12 @@
 #include "pch.h"
 #include "DecoratorNode.h"
+#include "Blackboard.h"
 
 NodeState DecoratorNode::Tick(Blackboard* bb)
 {
     if (_child != nullptr)
     {
-        if (checkCondition())
-        {
-            return _child->Tick(bb);
-        }
-        return NodeState::Failure;
+        return _child->Tick(bb);
     }
     return NodeState::Failure;
-    
 }

@@ -23,4 +23,5 @@ public:
 
 protected:
     BTNode* _rootNode = nullptr;
+    class Blackboard* _bb = nullptr;
 };

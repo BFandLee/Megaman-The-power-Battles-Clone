@@ -17,4 +17,5 @@ public:
 
 protected:
     std::vector<BTNode*> _children;
+    int _currentNodeIndex = 0;
 };

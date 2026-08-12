@@ -3,22 +3,26 @@
 
 NodeState Sequence::Tick(Blackboard* bb)
 {
-    for (auto& children : _children)
+    for (int i= _currentNodeIndex; i< _children.size(); ++i)
     {
-        switch (children->Tick(bb))
+        switch (_children[i]->Tick(bb))
         {
         case NodeState::Success:
+            _currentNodeIndex++;
             continue;
         
         case NodeState::Failure:
+            _currentNodeIndex = 0;
             return NodeState::Failure;
         
         case NodeState::Running:
+            _currentNodeIndex = i;
             return NodeState::Running;
         
         default:
             break;
         }
     }
+    _currentNodeIndex = 0;
     return NodeState::Success;
 }

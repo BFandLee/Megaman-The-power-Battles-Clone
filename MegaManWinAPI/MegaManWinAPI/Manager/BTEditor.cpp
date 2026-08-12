@@ -30,6 +30,16 @@ void BTEditor::Init()
         node->SetName("Action");
         return node;
         };
+
+
+    ImNodesStyle& style = ImNodes::GetStyle();
+
+    // 선택된 링크를 쨍한 주황색으로!
+    style.Colors[ImNodesCol_LinkSelected] = IM_COL32(255, 165, 0, 255);
+
+    // 선택된 노드의 타이틀 바(머리 부분)도 주황색으로!
+    style.Colors[ImNodesCol_TitleBarSelected] = IM_COL32(255, 165, 0, 255);
+
 }
 
 void BTEditor::Update()
@@ -57,6 +67,7 @@ void BTEditor::Update()
 
     if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
     {
+        _spawnPos = ImGui::GetMousePos();
         ImGui::OpenPopup("NodeCreatePopup");
     }
 
@@ -73,6 +84,7 @@ void BTEditor::Update()
                 newNode->SetNodeID(_nextNodeId);
                 ++_nextNodeId;
                 _testNodes.push_back(newNode);
+                ImNodes::SetNodeScreenSpacePos(newNode->GetNodeID(), _spawnPos);
             }
         }
         ImGui::EndPopup();
@@ -86,16 +98,76 @@ void BTEditor::Update()
     }
 
     // Draw Link
-    ImNodes::PushColorStyle(ImNodesCol_Link, IM_COL32(255, 0, 0, 255));
     for (const auto& link : _links)
     {
         ImNodes::Link(link.linkId, link.startAttrId, link.endAttrId);
     }
-    ImNodes::PopColorStyle();
 
     ImNodes::EndNodeEditor();
 
+    // 삭제 기믹 수행
+    int destoryedLinkId;
+    if (ImNodes::IsLinkDestroyed(&destoryedLinkId))
+    {
+        std::erase_if(_links, [destoryedLinkId](NodeLink node) {
+            return node.linkId == destoryedLinkId;
+            });
+    }
 
+    // 노드 & 링크 삭제
+    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) &&
+        ImGui::IsKeyPressed(ImGuiKey_Delete))
+    {
+        // 선택된 노드 삭제
+        int selectedNodeCount = ImNodes::NumSelectedNodes();
+        if (selectedNodeCount > 0)
+        {
+            vector<int> selectedNodes;
+            selectedNodes.resize(selectedNodeCount);
+            ImNodes::GetSelectedNodes(selectedNodes.data());
+
+            erase_if(_testNodes, [&](BTNode* node) {
+                    
+                auto it = find(selectedNodes.begin(), selectedNodes.end(), node->GetNodeID());
+
+                if (it != selectedNodes.end())
+                {
+                    delete node;
+                    return true;
+                }
+                return false;
+                });
+
+            erase_if(_links, [&](const NodeLink& link) {
+                
+                int startNodeId = link.startAttrId / 100;
+                int endNodeId = link.endAttrId / 100;
+
+                auto itStart = find(selectedNodes.begin(), selectedNodes.end(), startNodeId);
+                auto itEnd = find(selectedNodes.begin(), selectedNodes.end(), endNodeId);
+
+                return (itStart != selectedNodes.end() || itEnd != selectedNodes.end());
+                });
+
+        }
+
+        // 선택된 링크 삭제
+        int selectedLinkCount = ImNodes::NumSelectedLinks();
+        if (selectedLinkCount > 0)
+        {
+            vector<int> selectedLinks;
+            selectedLinks.resize(selectedLinkCount);
+            ImNodes::GetSelectedLinks(selectedLinks.data());
+
+            erase_if(_links, [&](const NodeLink& link) {
+
+                auto it = find(selectedLinks.begin(), selectedLinks.end(), link.linkId);
+                return it != selectedLinks.end();
+                });
+        }
+
+        
+    }
     int startAttr, endAttr;
     if (ImNodes::IsLinkCreated(&startAttr, &endAttr))
     {
@@ -126,7 +198,20 @@ void BTEditor::DrawNode(BTNode* node)
     ImNodes::BeginNode(node->GetNodeID());
 
     ImNodes::BeginNodeTitleBar();
-    ImGui::Text(node->GetName().c_str());
+    ImGui::PushID(node->GetNodeID());
+
+    char buffer[256];
+    strcpy_s(buffer, sizeof(buffer), node->GetName().c_str());
+
+    ImGui::PushItemWidth(120.0f);
+
+    if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
+    {
+        node->SetName(buffer);
+    }
+
+    ImGui::PopItemWidth();
+    ImGui::PopID();
     ImNodes::EndNodeTitleBar();
 
     ImNodes::BeginInputAttribute(node->GetNodeID() * 100);

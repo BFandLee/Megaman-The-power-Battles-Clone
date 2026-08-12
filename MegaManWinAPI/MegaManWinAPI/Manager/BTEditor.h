@@ -35,4 +35,6 @@ private:
     // 선의 고유 ID
     vector<NodeLink> _links;
     int32 _nextLinkId = 100000;
+
+    ImVec2 _spawnPos;
 };

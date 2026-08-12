@@ -3,14 +3,16 @@
 
 NodeState Selector::Tick(Blackboard* bb)
 {
-    for (auto& children : _children)
+    for (int i = _currentNodeIndex; i < _children.size(); ++i)
     {
-        switch (children->Tick(bb))
+        switch (_children[i]->Tick(bb))
         {
         case NodeState::Success:
+            _currentNodeIndex = 0;
             return NodeState::Success;
 
         case NodeState::Failure:
+            _currentNodeIndex++;
             continue;
         
         case NodeState::Running:
@@ -20,6 +22,7 @@ NodeState Selector::Tick(Blackboard* bb)
             break;
         }
     }
+    _currentNodeIndex = 0;
     return NodeState::Failure;
 }
 

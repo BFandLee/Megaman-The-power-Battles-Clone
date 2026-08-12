@@ -38,7 +38,64 @@
       <UniqueIdentifier>{6bbf8bd5-b8f0-4e62-b74d-3c5f38993f23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup>    <ClInclude Include="Entity\AI\BossBlackboard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\Boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\BossPhase1Nodes.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\ConditionDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CooldownDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\ProbabilityDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossDead.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossPhase1State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossPhase2State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossSpawn.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\Phase1State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\Phase2State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\DeathState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\HitState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\IdleState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\JumpState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\MoveState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\SlideState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\SpawnState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -165,9 +222,6 @@
     <ClInclude Include="Entity\Component\WeaponComponent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\FSM\IdleState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\FSM\State.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -175,12 +229,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Weapon\Weapon.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\FSM\MoveState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\FSM\JumpState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Actor\PlayerBullet.h">
@@ -195,19 +243,7 @@
     <ClInclude Include="Entity\Actor\MuzzleFlash.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\FSM\SlideState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\FSM\DeathState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Actor\DummyEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\FSM\HitState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\FSM\SpawnState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Factory\PlayerFactory.h">
@@ -259,7 +295,64 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup>    <ClCompile Include="Entity\AI\BossBlackboard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\Boss.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\BossPhase1Nodes.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\ConditionDecorator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CooldownDecorator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\ProbabilityDecorator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossDead.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossPhase1State.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossPhase2State.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossSpawn.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\Phase1State.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\Phase2State.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\DeathState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\HitState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\IdleState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\JumpState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\MoveState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\SlideState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\SpawnState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+
     <ClCompile Include="MegaManWinAPI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -371,16 +464,7 @@
     <ClCompile Include="Entity\Component\WeaponComponent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\FSM\IdleState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Weapon\Buster.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\FSM\MoveState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\FSM\JumpState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Actor\PlayerBullet.cpp">
@@ -395,19 +479,7 @@
     <ClCompile Include="Entity\Actor\MuzzleFlash.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\FSM\SlideState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\FSM\DeathState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Actor\DummyEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\FSM\HitState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\FSM\SpawnState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Factory\PlayerFactory.cpp">

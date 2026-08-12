@@ -1,18 +1,35 @@
 #include "pch.h"
 #include "BTState.h"
 #include "BTNode.h"
+#include "Blackboard.h"
+#include "BossBlackboard.h"
+#include "BTSerializer.h"
 
 void BTState::Update(float deltaTime)
 {
-	// _rootNode->Tick();
+	if (_rootNode != nullptr)
+	{
+		if (_bb != nullptr)
+		{
+			_rootNode->Tick(_bb);
+		}
+	}
+	
 }
 
 void BTState::Enter()
 {
+	_bb = new BossBlackboard();
+	_rootNode = BTSerializer::LoadFromJSON("BT_Test.json");
 }
 
 void BTState::Exit()
 {
+	delete _bb;
+	if (_bb != nullptr)
+	{
+		_bb = nullptr;
+	}
 }
 
 void BTState::RenderUI()

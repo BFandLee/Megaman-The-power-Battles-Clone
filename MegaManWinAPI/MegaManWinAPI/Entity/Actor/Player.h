@@ -40,7 +40,6 @@ private:
 	bool _isInvincible = false;
 	float _invincibleTimer = 0.0f;
 
-	// TODO: 풀 차지 상태 추적 및 깜빡임 연출을 위한 멤버 변수 추가 (예: _chargeTime, _blinkTimer, _isYellowColor)
 	float _chargeTime;
 	float _blinkTime;
 	bool _isYellowColor;
