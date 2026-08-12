@@ -1,45 +1,51 @@
-# Week 3: 데이터 주도형 보스 패턴 (Visual BT Editor 연동)
+# 보스 AI(Magnet Man) FSM 및 Phase 1 구현 계획 (최종)
 
-아하, 코치님의 의도를 정확히 파악했습니다! 단순히 코드로 하드코딩해서 트리를 엮는 것이 아니라, **BTEditor에서 시각적으로 노드를 생성/연결하고, 이를 JSON으로 저장한 뒤 인게임에서 불러와서 실행하는 "데이터 주도형(Data-Driven) 행동 트리"**를 원하셨군요. 상용 게임 엔진(언리얼, 유니티)과 동일한 아주 훌륭한 접근 방식입니다!
+`/grill-me` 인터뷰를 통해 보스 AI의 아키텍처 방향성이 모두 확정되었습니다.
 
-## 📌 목표 아키텍처 (Visual Editor Workflow)
+## 📌 최종 확정된 아키텍처 설계
+* **매크로 상태 관리 (FSM)**
+  * `SpawnState` -> `Phase1State` -> (HP <= 50%) -> `Phase2State` -> (HP == 0) -> `DeadState`
+  * 최상위 흐름만 통제합니다.
+* **마이크로 패턴 제어 (Behavior Tree)**
+  * `Phase1State`, `Phase2State` 내부에 탑재되어 세부 공격/이동 패턴을 결정합니다.
+* **로직 캡슐화 (Option A 채택)**
+  * 보스의 실제 행위(무적, 플레이어 끌어당기기, 점프 물리력 가하기 등)는 `Boss` 액터 클래스 내부의 멤버 함수(예: `SetInvincible()`, `PullPlayer()`)로 구현됩니다.
+  * C++ BT Action 노드는 오직 이 함수들을 호출(위임)만 수행합니다.
+* **블랙보드(Blackboard) 패턴 도입**
+  * 여러 노드(공용 노드 포함) 간의 데이터 공유와 결합도 감축을 위해 `Blackboard` 클래스를 도입합니다.
+  * C++의 캐스팅 에러를 방지하기 위해, `map<string, float>`, `map<string, Vector>`, `map<string, Object*>` 등 데이터 타입별로 맵(Map)을 나누어 관리합니다.
+* **BT 노드의 3단계 모듈화 (Categorization)**
+  * 범용성에 따라 노드들을 3가지로 분류하며, 클래스명 접두사 및 폴더로 명확히 구분합니다.
+    1. **공용 (Common):** 모든 몬스터가 사용할 수 있는 노드 (예: `BTAction_Common_MoveToTarget`)
+    2. **보스 전용 (Boss):** 특정 보스의 여러 페이즈에서 재사용되는 노드 (예: `BTAction_Boss_Shield`)
+    3. **페이즈 전용 (Phase):** 특정 페이즈에서만 쓰이는 단발성 패턴 (예: `BTAction_Phase1_MagnetPull`)
+* **BT 실행 방식**
+  * Action 노드는 애니메이션이나 이동이 끝날 때까지 `Running`을 리턴하다가 끝나면 `Success`를 리턴합니다.
+  * BT 트리 자체는 ImGui 에디터에서 조립하고 JSON으로 저장하여 사용합니다.
 
-1. **에디터 조립 (Visual Edit)**: `BTEditor` 화면에서 마우스 우클릭으로 노드(Selector, Action 등)를 생성하고 핀(Pin)을 드래그해 연결합니다.
-2. **저장 (Serialization)**: [Save] 버튼을 누르면 완성된 트리의 연결 구조가 `BTSerializer`를 통해 `BT_BossPhase1.json` 등의 파일로 저장됩니다.
-3. **인게임 로드 (Deserialization)**: 옐로우 데빌이 `Phase1State(BTState)`에 진입할 때, 코드로 노드를 생성하는 것이 아니라 `BTSerializer::LoadFromJSON("BT_BossPhase1.json")`을 호출하여 파일로부터 트리를 복원(Rebuild)해 냅니다.
-4. **실행 (Execution)**: 매 프레임 `_rootNode->Tick(bb)`이 호출되며 복원된 트리가 동작합니다.
+## Proposed Changes (실행할 스켈레톤 작업들)
 
----
+### 1. Boss Actor (Magnet Man) 생성
+* `Actor`를 상속받는 `Boss` 클래스 생성
+* `FSMComponent`, `BTComponent` 부착
+* 체력(HP) 변수 추가 및 `TakeDamage` 재정의
+* **(추가됨) 패턴용 인터페이스 함수 선언:** `SetInvincible(bool)`, `PullPlayer()`, `ShootMagnetMissile()`, `JumpTo(Vector dest)` 등
 
-## 🛠️ 제안하는 구현 단계 (Proposed Changes)
+### 2. FSM Component & Macro States
+* `BossSpawnState`, `BossPhase1State`, `BossPhase2State`, `BossDeadState` 생성
+* FSM 업데이트 시 HP에 따른 Phase 전환 로직 작성
 
-이 계획에 따라 다음 순서대로 코칭을 진행하겠습니다. 프로젝트 제약(Raw Pointer 사용)과 1개월 차 C++ 학습 목표를 고려하여 단계를 세분화했습니다.
+### 3. Phase 1 커스텀 BT Node 클래스 생성 (새로운 분류 체계 적용)
+* 하드코딩된 트리 구조 대신, ImGui에서 꺼내 쓸 수 있도록 개별 **노드 클래스(Node Class)**를 스켈레톤으로 생성합니다.
+* **생성할 노드 클래스 (예시):**
+  * **(공용)** `BTCheck_Common_Cooldown` (Condition 노드)
+  * **(공용)** `BTAction_Common_JumpTo` (Action 노드 - 타겟이나 특정 좌표로 점프)
+  * **(보스 전용)** `BTAction_Boss_MagnetShield` (Action 노드 - 보스의 공통 방어 로직)
+  * **(페이즈 전용)** `BTAction_Phase1_MagnetPull` (Action 노드 - Phase1 특수 끌어당기기)
+  * **(페이즈 전용)** `BTAction_Phase1_MagnetMissile` (Action 노드)
 
-### 1. BTEditor: 시각적 노드 생성과 연결
-- 하드코딩된 노드를 제거하고 ImGui 우클릭 메뉴(`ImGui::OpenPopup`)를 통해 동적 노드(Selector, Action 등) 생성 리스트를 구현합니다.
-- 노드 간 선(Link)을 긋고 상태를 저장하는 로직(`ImNodes::IsLinkCreated`)을 추가합니다.
-
-### 2. JSON 직렬화 및 팩토리 패턴 (Serializer & Factory)
-- **저장(Serialization):** 에디터의 노드와 링크 정보를 JSON으로 저장합니다. (외부 라이브러리 활용 여부 확인 필요)
-- **동적 로드(Factory Pattern):** 리플렉션이 없는 C++에서 JSON의 문자열 타입(`"Selector"`, `"BossAction_Shoot"`)을 읽어 실제 클래스를 `new`로 할당하는 팩토리 로직을 직접 설계해 봅니다.
-- **메모리 해제(Memory Management):** 스마트 포인터 금지 규칙에 따라, 할당된 트리의 Root 노드 삭제 시 전체 트리가 메모리 누수 없이 안전하게 해제되도록 소멸자 구조를 설계합니다.
-
-### 3. Blackboard(칠판) 설계
-- 복잡한 범용 컨테이너(예: std::any) 대신, 보스의 상태를 직관적으로 담을 수 있는 전용 강타입 구조체(`BossBlackboard`)를 설계하여 트리에 전달합니다.
-
-### 4. Boss 몬스터 적용 (FSM 연동)
-- `Phase1State` 진입 시 `BTSerializer`를 통해 JSON 파일로부터 트리를 동적 로드합니다.
-- 매 프레임 `Update()`에서 복원된 트리의 `Tick()`을 호출하여 동작을 확인합니다.
-
----
-
-## 🙋‍♂️ User Review Required
-
-> [!IMPORTANT]
-> **첫 번째 미니 과제: JSON 라이브러리 준비**
-> 
-> 에디터에서 노드를 시각적으로 엮고 파일로 저장해 활용하는 파이프라인으로 방향을 확정했습니다.
-> 이제부터 정답 코드를 바로 드리지 않고, 스스로 핵심 구조를 설계하실 수 있도록 질문과 힌트로 가이드하겠습니다.
-> 
-> **[과제 1]**
-> JSON 직렬화를 위해서는 파서 라이브러리가 필요합니다. 현재 프로젝트에 세팅된 JSON 라이브러리(예: `RapidJSON`, `nlohmann/json` 등)가 있나요? 없다면 C++에서 널리 쓰이는 `nlohmann/json`을 헤더 파일 하나로 추가하는 것을 추천합니다. 준비 상황을 알려주세요!
+## Verification Plan
+1. 사용자께서 위 작업(클래스 스켈레톤 및 구체 로직 작성)을 진행합니다.
+2. 씬(Scene)에 `Boss`를 배치합니다.
+3. ImGui BT 에디터를 열고 생성해둔 커스텀 노드들을 사용해 Phase 1 트리를 시각적으로 조립합니다.
+4. 보스가 `Phase1State`에 진입했을 때, 에디터에서 만든 트리가 `Running` 상태를 잘 유지하며 패턴을 수행하는지 확인합니다.
