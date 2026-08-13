@@ -1,14 +1,6 @@
 #pragma once
 #include "Actor.h"
 
-struct BulletState
-{
-    float damage;
-    float speed;
-    bool isPiercing;    // 관통 여부
-    float maxLifeTIme = 1.0f;
-};
-
 class PlayerBullet : public Actor
 {
     using Super = Actor;

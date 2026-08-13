@@ -1,6 +1,4 @@
 #pragma once
-#include <map>
-#include <string>
 
 class Blackboard
 {
@@ -11,6 +9,14 @@ public:
     // 기본적으로 자주 접근하는 포인터들 (스마트 포인터 금지 -> Raw Pointer 사용)
     class Actor* OwnerBoss = nullptr;
     class Actor* TargetPlayer = nullptr;
+
+    class RigidBodyComponent* PlayerRigidBody = nullptr;
+    class TransformComponent* PlayerTransform = nullptr;
+
+    class RigidBodyComponent* BossRigidBody = nullptr;
+    class TransformComponent* BossTransform = nullptr;
+
+    float DirXToPlayer = 1.0f;
 
     // ---------------------------------------------------
     // 타입별로 맵(Map)을 나누어 관리하여 캐스팅 에러 방지

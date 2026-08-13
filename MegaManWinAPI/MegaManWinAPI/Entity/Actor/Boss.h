@@ -19,6 +19,9 @@ public:
 	virtual RenderLayer GetRenderLayer() override { return RenderLayer::Enemy; }
 	virtual ActorType GetActorType() override { return ActorType::Enemy; }
 
+	virtual void OnStay(Actor* other, const HitResult& hit) override;
+	virtual void OnExit(Actor* other) override;
+
     // Phase 관리를 위한 Getter/Setter
     float GetHP() const { return _hp; }
     float GetMaxHP() const { return _maxHp; }
@@ -27,10 +30,6 @@ public:
 
 	// Phase 1 패턴 액션용 인터페이스 (BT 노드에서 호출됨)
 	void SetInvincible(bool isInvincible);
-	void PullPlayer();
-	void ActivateShield();
-	void JumpTo(struct Vector dest); // Vector 구조체는 미리 선언되어 있다고 가정
-	void ShootMagnetMissile();
 
 private:
 	FSMComponent* _fsm = nullptr;
@@ -39,5 +38,4 @@ private:
     float _hp = 100.0f;
     float _maxHp = 100.0f;
 	bool _isInvincible = false;
-    
 };

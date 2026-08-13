@@ -4,12 +4,13 @@
 #include "Boss.h"
 #include "Selector.h"
 #include "Sequence.h"
-#include "BossPhase1Nodes.h"
+#include "GeminiPhase1Nodes.h"
 #include "ActionNode.h"
 #include "DecoratorNode.h"
 #include "CooldownDecorator.h"
 #include "BossBlackboard.h"
 #include "BTSerializer.h"
+#include "TransformComponent.h"
 
 BossPhase1State::BossPhase1State(FSMComponent* fsm) : State(fsm)
 {
@@ -29,6 +30,9 @@ void BossPhase1State::Update(float deltaTime)
 {
     BossBlackboard* bb = _boss->GetBlackboard();
 
+    float PlayerX = bb->PlayerTransform->GetPos().x;
+    float BossX = bb->BossTransform->GetPos().x;
+    bb->DirXToPlayer = (PlayerX > BossX) ? 1.0f : -1.0f;
     if (_rootNode && bb)
     {
         _rootNode->Tick(bb);

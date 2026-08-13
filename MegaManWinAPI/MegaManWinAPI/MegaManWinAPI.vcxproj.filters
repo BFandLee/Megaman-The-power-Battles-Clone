@@ -45,9 +45,6 @@
     <ClInclude Include="Entity\Actor\Boss.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\BT\BossPhase1Nodes.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\BT\ConditionDecorator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -291,15 +288,24 @@
     <ClInclude Include="Util\FileDialog.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\BT\GeminiCommonNodes.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\GeminiPhase1Nodes.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\GeminiPhase2Nodes.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\BossMissile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\AI\BossBlackboard.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Actor\Boss.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\BT\BossPhase1Nodes.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\BT\ConditionDecorator.cpp">
@@ -519,6 +525,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Util\FileDialog.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\GeminiCommonNodes.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\GeminiPhase1Nodes.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\GeminiPhase2Nodes.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\BossMissile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

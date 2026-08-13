@@ -173,6 +173,14 @@ struct NodeLink
 	int32 endAttrId;
 };
 
+struct BulletState
+{
+	float damage;
+	float speed;
+	bool isPiercing;    // 관통 여부
+	float maxLifeTIme = 1.0f;
+};
+
 const int GWinSizeX = 1152;
 const int GWinSizeY = 672;
 

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Blackboard.h"
+#include "Actor.h"
 
 void Blackboard::SetFloat(const std::string& key, float value)
 {

@@ -134,11 +134,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\Actor\BossMissile.h" />
     <ClInclude Include="Entity\AI\BossBlackboard.h" />
     <ClInclude Include="Entity\Actor\Boss.h" />
-    <ClInclude Include="Entity\BT\BossPhase1Nodes.h" />
     <ClInclude Include="Entity\BT\ConditionDecorator.h" />
     <ClInclude Include="Entity\BT\CooldownDecorator.h" />
+    <ClInclude Include="Entity\BT\GeminiCommonNodes.h" />
+    <ClInclude Include="Entity\BT\GeminiPhase1Nodes.h" />
+    <ClInclude Include="Entity\BT\GeminiPhase2Nodes.h" />
     <ClInclude Include="Entity\BT\ProbabilityDecorator.h" />
     <ClInclude Include="Entity\FSM\Boss\BossDead.h" />
     <ClInclude Include="Entity\FSM\Boss\BossPhase1State.h" />
@@ -220,12 +223,15 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Actor\BossMissile.cpp" />
     <ClCompile Include="Entity\AI\Blackboard.cpp" />
     <ClCompile Include="Entity\AI\BossBlackboard.cpp" />
     <ClCompile Include="Entity\Actor\Boss.cpp" />
-    <ClCompile Include="Entity\BT\BossPhase1Nodes.cpp" />
     <ClCompile Include="Entity\BT\ConditionDecorator.cpp" />
     <ClCompile Include="Entity\BT\CooldownDecorator.cpp" />
+    <ClCompile Include="Entity\BT\GeminiCommonNodes.cpp" />
+    <ClCompile Include="Entity\BT\GeminiPhase1Nodes.cpp" />
+    <ClCompile Include="Entity\BT\GeminiPhase2Nodes.cpp" />
     <ClCompile Include="Entity\BT\ProbabilityDecorator.cpp" />
     <ClCompile Include="Entity\FSM\Boss\BossDead.cpp" />
     <ClCompile Include="Entity\FSM\Boss\BossPhase1State.cpp" />

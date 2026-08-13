@@ -8,6 +8,7 @@
 #include "BossPhase2State.h"
 #include "BossDead.h"
 #include "BossBlackboard.h"
+#include "RigidBodyComponent.h"
 
 Boss::Boss() : Super("Boss")
 {
@@ -31,6 +32,7 @@ void Boss::Init()
 	_bb = new BossBlackboard();
     BoxCollider* box = AddComponent<BoxCollider>();
     AnimatorComponent* animator = AddComponent<AnimatorComponent>();
+	RigidBodyComponent* rigid = AddComponent<RigidBodyComponent>();
 	
 	box->SetSize(60, 60);
 	
@@ -85,28 +87,64 @@ void Boss::TakeDamage(float damage, float hitDirX)
     // HP가 0 이하가 될 때의 처리는 FSM 업데이트에서 처리하거나 여기서 FSM 상태를 즉시 변경할 수 있습니다.
 }
 
+void Boss::OnStay(Actor* other, const HitResult& hit)
+{
+	Vector pos = GetPos();
+	bool isGround = (other->GetActorType() == ActorType::Ground);
+
+	BoxCollider* myCol = GetComponent<BoxCollider>();
+	BoxCollider* otherCol = other->GetComponent<BoxCollider>();
+	if (!myCol || !otherCol) return;
+
+	Vector myColPos = myCol->GetColliderPos();
+	Vector otherColPos = otherCol->GetColliderPos();
+
+	if (isGround)
+	{
+		float mySize = myCol->GetHeight() / 2.0f;
+		float otherSize = otherCol->GetHeight() / 2.0f;
+
+		float distanceY = abs(myColPos.y - otherColPos.y);
+		float overlapY = (mySize + otherSize) - distanceY;
+
+		if (overlapY > 0.0f)
+		{
+			// 부동소수점 오차로 인한 충돌 해제를 막기 위해 미세하게 덜 밀어냄
+			float pushOut = std::max(overlapY - 0.1f, 0.0f);
+
+			// pushOut 값이 아주 미세한 오차 범위(0.001f) 이하라면 위치를 이동하지 않음 (픽셀 덜덜거림 방지)
+			if (std::abs(pushOut) > 0.001f)
+			{
+				pos.y -= pushOut;
+			}
+		}
+
+		RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
+
+		if (rigid->GetVelocity().y >= 0.0f)
+		{
+			rigid->SetGrounded(true);
+			Vector currentVel = rigid->GetVelocity();
+			currentVel.y = 0.0f; // Y축(떨어지는 속도)만 0으로 초기화
+
+			rigid->SetVelocity(currentVel);
+		}
+	}
+
+	SetPos(pos);
+}
+
+void Boss::OnExit(Actor* other)
+{
+	RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
+	if (other->GetActorType() == ActorType::Ground)
+	{
+		rigid->SetGrounded(false);
+	}
+}
+
 void Boss::SetInvincible(bool isInvincible)
 {
     // TODO: 보스의 무적 상태를 변경합니다.
     _isInvincible = isInvincible;
-}
-
-void Boss::PullPlayer()
-{
-    // TODO: 플레이어의 위치를 찾아 보스 쪽으로 당기는 힘(속도)을 가하세요.
-}
-
-void Boss::ActivateShield()
-{
-    // TODO: 마그넷 실드 활성화 로직 (투사체 반사 등)
-}
-
-void Boss::JumpTo(Vector dest)
-{
-    // TODO: 목표 위치(dest)를 향해 포물선 점프 이동을 시작하세요.
-}
-
-void Boss::ShootMagnetMissile()
-{
-    // TODO: 마그넷 미사일 객체를 생성(스폰)하여 발사하세요.
 }

@@ -29,6 +29,7 @@ enum class ActorType
 	WALL,
 	Ground,
 	PlayerBullet,
+	BossBullet,
 
 
 	Count,

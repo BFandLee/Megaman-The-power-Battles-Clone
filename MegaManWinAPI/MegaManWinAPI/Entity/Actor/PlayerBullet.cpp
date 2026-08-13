@@ -8,7 +8,7 @@
 void PlayerBullet::Init()
 {
     Super::Init();
-   CircleCollider* collider = AddComponent<CircleCollider>();
+    CircleCollider* collider = AddComponent<CircleCollider>();
 
     AnimatorComponent* animator = AddComponent<AnimatorComponent>();
     animator->LoadAnimationFromJson(L"Attack", L"../Resources/sprites/AttackEffect/Animation/Attack.json");
@@ -35,7 +35,7 @@ void PlayerBullet::Update(float deltaTime)
 
 void PlayerBullet::OnEnter(Actor* other, const HitResult& hit)
 {
-    bool isEnemy = (other->GetActorType() == ActorType::Enemy);
+    bool isEnemy = (other->GetActorType() == ActorType::Boss);
 
     if (isEnemy)
     {
