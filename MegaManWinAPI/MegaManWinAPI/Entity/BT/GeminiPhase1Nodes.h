@@ -1,9 +1,6 @@
 #pragma once
 #include "ActionNode.h"
 
-// ===================================================
-// [Gemini Man] Phase 1 Action Nodes
-// ===================================================
 
 // 분신 활성화 (분신 Actor Spawn)
 class BTAction_Gemini_CloneActivate : public ActionNode

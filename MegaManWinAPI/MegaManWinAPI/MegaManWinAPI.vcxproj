@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CheckCloneDecorator.h" />
+    <ClInclude Include="Entity\Actor\BossClone.h" />
     <ClInclude Include="Entity\Actor\BossMissile.h" />
     <ClInclude Include="Entity\AI\BossBlackboard.h" />
     <ClInclude Include="Entity\Actor\Boss.h" />
@@ -223,6 +225,8 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CheckCloneDecorator.cpp" />
+    <ClCompile Include="Entity\Actor\BossClone.cpp" />
     <ClCompile Include="Entity\Actor\BossMissile.cpp" />
     <ClCompile Include="Entity\AI\Blackboard.cpp" />
     <ClCompile Include="Entity\AI\BossBlackboard.cpp" />

@@ -300,6 +300,12 @@
     <ClInclude Include="Entity\Actor\BossMissile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Actor\BossClone.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckCloneDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\AI\BossBlackboard.cpp">
@@ -537,6 +543,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Actor\BossMissile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\BossClone.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckCloneDecorator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

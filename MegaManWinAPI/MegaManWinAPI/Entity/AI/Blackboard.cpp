@@ -33,3 +33,19 @@ bool Blackboard::GetBool(const string& key, bool& outValue)
 	}
 	return false;
 }
+
+void Blackboard::SetActor(const string& key, Actor* value)
+{
+	ActorData[key] = value;
+}
+
+bool Blackboard::GetActor(const string& key, Actor*& outValue)
+{
+	auto it = ActorData.find(key);
+	if (it != ActorData.end())
+	{
+		outValue = ActorData[key];
+		return true;
+	}
+	return false;
+}

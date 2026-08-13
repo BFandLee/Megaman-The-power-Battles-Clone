@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "GeminiPhase1Nodes.h"
 #include "Blackboard.h"
-// #include "SceneManager.h" // 씬 매니저 참조 (분신 Spawn용)
-// #include "GeminiClone.h" // 분신 클래스 (구현 예정)
+#include "BossClone.h" 
+#include "SceneManager.h"
+#include "Scene.h"
 
 NodeState BTAction_Gemini_CloneActivate::Tick(Blackboard* bb)
 {
@@ -12,6 +13,11 @@ NodeState BTAction_Gemini_CloneActivate::Tick(Blackboard* bb)
     //    다른 노드(예: Phase 1 기본 이동 시 분신 체크 조건)에서 쉽게 상태를 파악할 수 있습니다.
     
     // (구현) ...
+    BossClone* clone = new BossClone();
+    clone->Init();
+    bb->SetActor("GeminiClone", clone);
+    SceneManager::GetInstance().GetScene()->AddActor(clone);
+
 
     return NodeState::Success; // 완료되면 SUCCESS 반환
 }

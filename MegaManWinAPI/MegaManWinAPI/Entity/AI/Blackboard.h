@@ -18,13 +18,11 @@ public:
 
     float DirXToPlayer = 1.0f;
 
-    // ---------------------------------------------------
     // 타입별로 맵(Map)을 나누어 관리하여 캐스팅 에러 방지
-    // ---------------------------------------------------
     std::map<std::string, float> FloatData;
     std::map<std::string, bool> BoolData;
     // std::map<std::string, Vector> VectorData; // 필요시 주석 해제 후 사용
-    std::map<std::string, class Object*> ObjectData;
+    std::map<std::string, class Actor*> ActorData;
 
     // TODO: Blackboard에서 데이터를 쉽게 Get/Set 할 수 있는 헬퍼 함수를 선언하고 구현해 보세요.
     void SetFloat(const std::string& key, float value);
@@ -32,4 +30,7 @@ public:
 
     void SetBool(const string& key, bool value);
     bool GetBool(const string& key, bool& outValue);
+
+    void SetActor(const string& key, Actor* value);
+    bool GetActor(const string& key, Actor*& outValue);
 };

@@ -4,15 +4,18 @@
 #include "BTSerializer.h"
 #include "BTNode.h"
 #include "Selector.h"
-#include "ActionNode.h"
 #include "Sequence.h"
+
+// 보스 ActionNode
+#include "ActionNode.h"
+#include "GeminiCommonNodes.h"
+#include "GeminiPhase1Nodes.h"
+#include "GeminiPhase2Nodes.h"
+
+// 보스 Decorator
 #include "CooldownDecorator.h"
 #include "ProbabilityDecorator.h"
-
-class TestAction : public ActionNode
-{
-    virtual NodeState Tick(Blackboard* bb) override { return NodeState::Success; }
-};
+#include "CheckCloneDecorator.h"
 
 void BTEditor::Init()
 {
@@ -27,11 +30,6 @@ void BTEditor::Init()
         node->SetName("Sequence");
         return node;
         };
-    _nodeRegistry["TestAction"] = []() -> BTNode* {
-        BTNode* node = new TestAction();
-        node->SetName("Action");
-        return node;
-        };
     _nodeRegistry["Cooldown"] = []() -> BTNode* {
         BTNode* node = new CooldownDecorator();
         node->SetName("Cooldown");
@@ -40,6 +38,26 @@ void BTEditor::Init()
     _nodeRegistry["Probability"] = []() -> BTNode* {
         BTNode* node = new ProbabilityDecorator();
         node->SetName("Probability");
+        return node;
+        };
+    _nodeRegistry["JumpMove"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_JumpMove();
+        node->SetName("JumpMove");
+        return node;
+        };
+    _nodeRegistry["BaseMissile"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_BaseMissile();
+        node->SetName("BaseMissile");
+        return node;
+        };
+    _nodeRegistry["Clone"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_CloneActivate();
+        node->SetName("Clone");
+        return node;
+        };
+    _nodeRegistry["CheckClone"] = []() -> BTNode* {
+        BTNode* node = new CheckCloneDecorator();
+        node->SetName("CheckClone");
         return node;
         };
 

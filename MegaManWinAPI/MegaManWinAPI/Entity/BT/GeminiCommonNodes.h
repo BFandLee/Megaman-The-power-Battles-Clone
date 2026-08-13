@@ -23,11 +23,3 @@ public:
 
     virtual NodeState Tick(class Blackboard* bb) override;
 };
-
-namespace
-{
-    float DirX = 0.0f;
-    Actor* Player;
-    Actor* Boss;
-}
-
