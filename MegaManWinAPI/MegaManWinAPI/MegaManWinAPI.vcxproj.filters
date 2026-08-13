@@ -38,7 +38,8 @@
       <UniqueIdentifier>{6bbf8bd5-b8f0-4e62-b74d-3c5f38993f23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>    <ClInclude Include="Entity\AI\BossBlackboard.h">
+  <ItemGroup>
+    <ClInclude Include="Entity\AI\BossBlackboard.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Actor\Boss.h">
@@ -68,12 +69,6 @@
     <ClInclude Include="Entity\FSM\Boss\BossSpawn.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\FSM\Boss\Phase1State.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\FSM\Boss\Phase2State.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\FSM\Player\DeathState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -95,7 +90,6 @@
     <ClInclude Include="Entity\FSM\Player\SpawnState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -294,8 +288,12 @@
     <ClInclude Include="Entity\BT\ActionNode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Util\FileDialog.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
-  <ItemGroup>    <ClCompile Include="Entity\AI\BossBlackboard.cpp">
+  <ItemGroup>
+    <ClCompile Include="Entity\AI\BossBlackboard.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Actor\Boss.cpp">
@@ -325,12 +323,6 @@
     <ClCompile Include="Entity\FSM\Boss\BossSpawn.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\FSM\Boss\Phase1State.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\FSM\Boss\Phase2State.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\FSM\Player\DeathState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -352,7 +344,6 @@
     <ClCompile Include="Entity\FSM\Player\SpawnState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-
     <ClCompile Include="MegaManWinAPI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -522,6 +513,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\BT\ActionNode.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\AI\Blackboard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\FileDialog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

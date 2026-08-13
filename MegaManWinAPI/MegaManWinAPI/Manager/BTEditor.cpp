@@ -6,6 +6,8 @@
 #include "Selector.h"
 #include "ActionNode.h"
 #include "Sequence.h"
+#include "CooldownDecorator.h"
+#include "ProbabilityDecorator.h"
 
 class TestAction : public ActionNode
 {
@@ -28,6 +30,16 @@ void BTEditor::Init()
     _nodeRegistry["TestAction"] = []() -> BTNode* {
         BTNode* node = new TestAction();
         node->SetName("Action");
+        return node;
+        };
+    _nodeRegistry["Cooldown"] = []() -> BTNode* {
+        BTNode* node = new CooldownDecorator();
+        node->SetName("Cooldown");
+        return node;
+        };
+    _nodeRegistry["Probability"] = []() -> BTNode* {
+        BTNode* node = new ProbabilityDecorator();
+        node->SetName("Probability");
         return node;
         };
 
@@ -57,12 +69,23 @@ void BTEditor::Update()
     ImGui::Begin("BT Editor", &_isOpen);
     if (ImGui::Button("Save"))
     {
-        BTSerializer::SaveToJSON("BT_Test.json",_testNodes, _links);
+        wstring path = FileDialog::Save(L"JSON Files (*.json)\0*.json\0All Files (*.*)\0*.*\0");
+        if (!path.empty())
+        {
+            // wstring을 string으로 변환
+            std::string strPath(path.begin(), path.end());
+            BTSerializer::SaveToJSON(strPath, _testNodes, _links);
+        }
     }
     ImGui::SameLine();
     if (ImGui::Button("Load"))
     {
-        BTSerializer::LoadFromJSON("BT_Test.json");
+        std::wstring path = FileDialog::Open(L"JSON Files (*.json)\0*.json\0All Files (*.*)\0*.*\0");
+        if (!path.empty())
+        {
+            std::string strPath(path.begin(), path.end());
+            BTSerializer::LoadFromJSON(strPath);
+        }
     }
 
     if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
@@ -209,9 +232,9 @@ void BTEditor::DrawNode(BTNode* node)
     {
         node->SetName(buffer);
     }
-
     ImGui::PopItemWidth();
     ImGui::PopID();
+    node->DrawProperty();
     ImNodes::EndNodeTitleBar();
 
     ImNodes::BeginInputAttribute(node->GetNodeID() * 100);

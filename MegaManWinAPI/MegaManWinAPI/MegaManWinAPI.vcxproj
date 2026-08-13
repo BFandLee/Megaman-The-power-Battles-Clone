@@ -201,6 +201,7 @@
     <ClInclude Include="Entity\Component\RigidBodyComponent.h" />
     <ClInclude Include="Entity\BT\Sequence.h" />
     <ClInclude Include="Entity\BT\Selector.h" />
+    <ClInclude Include="Util\FileDialog.h" />
     <ClInclude Include="Util\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
     <ClInclude Include="Renderer\SpriteRenderer.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\AI\Blackboard.cpp" />
     <ClCompile Include="Entity\AI\BossBlackboard.cpp" />
     <ClCompile Include="Entity\Actor\Boss.cpp" />
     <ClCompile Include="Entity\BT\BossPhase1Nodes.cpp" />
@@ -287,6 +289,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="Entity\Component\TransformComponent.cpp" />
+    <ClCompile Include="Util\FileDialog.cpp" />
     <ClCompile Include="Util\Util.cpp" />
     <ClCompile Include="External\ImGui\imgui.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

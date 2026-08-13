@@ -30,6 +30,7 @@ void TimeManager::Update()
 	// 프레임율(FPS 계산을 위해)
 	_frameCount++;
 	_frameTime += _deltaTime;	// 시간을 누적
+	_globalTime += _deltaTime;
 
 	// 초당 프레임률 계산
 	if (_frameTime >= 1.0f)

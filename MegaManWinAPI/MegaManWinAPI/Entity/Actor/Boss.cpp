@@ -7,7 +7,7 @@
 #include "BossPhase1State.h"
 #include "BossPhase2State.h"
 #include "BossDead.h"
-// TODO: BoxCollider, ImageRenderer 등 필요한 컴포넌트 헤더를 추가하세요.
+#include "BossBlackboard.h"
 
 Boss::Boss() : Super("Boss")
 {
@@ -15,6 +15,11 @@ Boss::Boss() : Super("Boss")
 
 Boss::~Boss()
 {
+	delete _bb;
+	if (_bb != nullptr)
+	{
+		_bb = nullptr;
+	}
 }
 
 void Boss::Init()
@@ -23,6 +28,7 @@ void Boss::Init()
 
 	// Component 추가
 	_fsm = AddComponent<FSMComponent>();
+	_bb = new BossBlackboard();
     BoxCollider* box = AddComponent<BoxCollider>();
     AnimatorComponent* animator = AddComponent<AnimatorComponent>();
 	

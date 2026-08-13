@@ -1,6 +1,4 @@
 #pragma once
-#include <string>
-#include "pch.h"
 
 // BT 노드의 데이터를 저장하거나 불러오기 위한 헬퍼 클래스
 class BTSerializer

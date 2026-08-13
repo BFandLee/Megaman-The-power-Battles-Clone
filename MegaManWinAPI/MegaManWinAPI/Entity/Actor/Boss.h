@@ -6,6 +6,7 @@ class FSMComponent;
 class Boss : public Actor
 {
 	using Super = Actor;
+
 public:
 	Boss();
 	virtual ~Boss();
@@ -22,6 +23,8 @@ public:
     float GetHP() const { return _hp; }
     float GetMaxHP() const { return _maxHp; }
 
+	class BossBlackboard* GetBlackboard() const { return _bb; }
+
 	// Phase 1 패턴 액션용 인터페이스 (BT 노드에서 호출됨)
 	void SetInvincible(bool isInvincible);
 	void PullPlayer();
@@ -31,7 +34,7 @@ public:
 
 private:
 	FSMComponent* _fsm = nullptr;
-    
+	class BossBlackboard* _bb = nullptr;
 	// TODO: 보스의 체력(HP), 무적 상태, 피격 상태, 기타 필요한 멤버 변수를 선언하세요.
     float _hp = 100.0f;
     float _maxHp = 100.0f;

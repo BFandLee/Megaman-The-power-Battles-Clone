@@ -38,6 +38,8 @@ public:
 	int32 AddTimer(TimerFunc func, float interval, bool loop = false);
 	void Remove(int32 id);
 
+	float GetGlobalTime() { return _globalTime; }
+
 
 private:
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
@@ -63,5 +65,7 @@ private:
 	// 지연 리스트로 타이머 관리
 	vector<Timer>	_addTimers;
 	set<int32>		_removeTimers;
+
+	float _globalTime = 0.f;
 };
 

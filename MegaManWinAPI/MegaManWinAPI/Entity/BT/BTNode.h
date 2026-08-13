@@ -10,6 +10,7 @@ public:
     virtual NodeState Tick(class Blackboard* bb) = 0;
     virtual bool IsLeafNode() const { return false; }
     virtual void AddChild(BTNode* child) {}
+    virtual void DrawProperty() {}
 
 public:
     // 노드 식별을 위한 이름 반환

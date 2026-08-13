@@ -1,4 +1,3 @@
-// BossBlackboard.h
 #pragma once
 #include "Blackboard.h"
 

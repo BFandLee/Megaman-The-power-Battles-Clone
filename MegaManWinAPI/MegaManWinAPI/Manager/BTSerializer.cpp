@@ -41,6 +41,8 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath)
     json j;
     file >> j;
 
+    unordered_set<int> childNodeIDs;
+
     if (j.contains("Nodes") && j["Nodes"].is_array())
     {
         for (const auto& nodeData : j["Nodes"])
@@ -81,6 +83,7 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath)
             {
                 BTNode* parentNode = parentIt->second;
                 BTNode* childNode = childIt->second;
+                childNodeIDs.insert(childNode->GetNodeID());
             
                 parentNode->AddChild(childNode);
             }
@@ -88,6 +91,16 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath)
             
         }
     }
-    if (nodeMap.empty()) return nullptr;
-    return nodeMap.begin()->second;
+
+    for (auto& iter : nodeMap)
+    {
+        auto it = childNodeIDs.find(iter.first);
+
+        if (it == childNodeIDs.end())
+        {
+            return iter.second;
+        }
+    }
+
+    return nullptr;
 }

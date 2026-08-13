@@ -29,6 +29,7 @@ namespace fs = std::filesystem;
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui.h"
 #include "imnodes.h"
+#include "FileDialog.h"
 
 // Direct2D 및 WIC 헤더
 #include <d2d1.h>

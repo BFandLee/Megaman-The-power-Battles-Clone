@@ -21,6 +21,9 @@ public:
     std::map<std::string, class Object*> ObjectData;
 
     // TODO: Blackboard에서 데이터를 쉽게 Get/Set 할 수 있는 헬퍼 함수를 선언하고 구현해 보세요.
-    // 예: void SetFloat(const std::string& key, float value);
-    // 예: bool GetFloat(const std::string& key, float& outValue);
+    void SetFloat(const std::string& key, float value);
+    bool GetFloat(const std::string& key, float& outValue);
+
+    void SetBool(const string& key, bool value);
+    bool GetBool(const string& key, bool& outValue);
 };
