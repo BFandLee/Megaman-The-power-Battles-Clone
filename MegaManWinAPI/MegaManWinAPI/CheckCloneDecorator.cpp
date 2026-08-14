@@ -8,8 +8,9 @@ bool CheckCloneDecorator::checkCondition(Blackboard* bb)
     if (bb->GetActor("BossClone", _clonePtr))
     {
         if (_clonePtr != nullptr)
+        {
             isExist = true;
-            return true;
+        }
     }
     return isExist == _checkExist;
 }

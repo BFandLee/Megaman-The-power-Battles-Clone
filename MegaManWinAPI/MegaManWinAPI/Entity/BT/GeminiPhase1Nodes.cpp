@@ -21,9 +21,20 @@ NodeState BTAction_Gemini_CloneActivate::Tick(Blackboard* bb)
     clone->Init();
     clone->SetPos(Vector(cloneX, bb->BossTransform->GetPos().y));
     clone->SetOwner(static_cast<Boss*>(bb->OwnerBoss));
-    bb->SetActor("GeminiClone", clone);
+    bb->SetActor("BossClone", clone);
+    int cloneCount = 0;
+    for (Actor* actor : SceneManager::GetInstance().GetScene()->GetActors())
+    {
+        if (actor->GetActorType() == ActorType::BossClone)
+        {
+            cloneCount++;
+
+            if (cloneCount >= 2)
+            {
+                return NodeState::Success;
+            }
+        }
+    }
     SceneManager::GetInstance().GetScene()->AddActor(clone);
-
-
     return NodeState::Success; // 완료되면 SUCCESS 반환
 }

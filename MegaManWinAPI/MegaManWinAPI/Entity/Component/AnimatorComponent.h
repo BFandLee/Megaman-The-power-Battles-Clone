@@ -71,5 +71,7 @@ public:
 		_endEvents[stateName] = callback;
 	}
 
+	const wstring& GetCurrentClipName() const { return _currentClipName; }
+
 };
 

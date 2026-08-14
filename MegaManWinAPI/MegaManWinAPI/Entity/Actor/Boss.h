@@ -17,7 +17,7 @@ public:
 	virtual void TakeDamage(float damage, float hitDirX = 0.0f) override;
 
 	virtual RenderLayer GetRenderLayer() override { return RenderLayer::Enemy; }
-	virtual ActorType GetActorType() override { return ActorType::Enemy; }
+	virtual ActorType GetActorType() override { return ActorType::Boss; }
 
 	virtual void OnStay(Actor* other, const HitResult& hit) override;
 	virtual void OnExit(Actor* other) override;

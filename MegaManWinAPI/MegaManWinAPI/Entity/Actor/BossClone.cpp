@@ -3,6 +3,7 @@
 #include "AnimatorComponent.h"
 #include "BoxCollider.h"
 #include "RigidBodyComponent.h"
+#include "TransformComponent.h"
 #include "Boss.h"
 
 
@@ -21,6 +22,7 @@ void BossClone::Init()
 	AnimatorComponent* animator = AddComponent<AnimatorComponent>();
 	BoxCollider* collider = AddComponent<BoxCollider>();
 	RigidBodyComponent* rigid = AddComponent<RigidBodyComponent>();
+	AddComponent<TransformComponent>();
 
 	collider->SetSize(60, 60);
 
@@ -41,6 +43,23 @@ void BossClone::Init()
 void BossClone::Update(float deltaTime)
 {
 	Super::Update(deltaTime);
+
+	RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
+	AnimatorComponent* animator = GetComponent<AnimatorComponent>();
+	TransformComponent* transform = GetComponent<TransformComponent>();
+
+	Vector scale = _ownerBoss->GetComponent<TransformComponent>()->GetScale();
+	Vector pos = _ownerBoss->GetComponent<TransformComponent>()->GetPos();
+	float modifier = 400.0f;
+	transform->SetScale(scale);
+	transform->SetPos(Vector(pos.x - modifier, pos.y));
+
+	Vector bossVelocity = _ownerBoss->GetComponent<RigidBodyComponent>()->GetVelocity();
+	rigid->SetVelocity(bossVelocity);
+
+	wstring state = _ownerBoss->GetComponent<AnimatorComponent>()->GetCurrentClipName();
+	animator->Play(state);
+
 }
 
 void BossClone::Render(ID2D1RenderTarget* renderTarget)

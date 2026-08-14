@@ -25,6 +25,7 @@ enum class ActorType
 	Player,
 	Enemy,
 	Boss,
+	BossClone,
 	Effect,
 	WALL,
 	Ground,

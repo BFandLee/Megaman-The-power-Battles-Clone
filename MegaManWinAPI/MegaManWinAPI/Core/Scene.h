@@ -48,6 +48,8 @@ public:
 	void SaveScene(const string& filename);
 	bool LoadScene(const string& filename);
 
+	const vector<Actor*>& GetActors() { return _actors; }
+
 public:
 	const vector<Actor*>& GetRenderList(RenderLayer layer) const;
 	// const GridInfo& GetGridInfo(const Cell& cell);

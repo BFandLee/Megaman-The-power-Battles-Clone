@@ -9,5 +9,9 @@ public:
     virtual void Enter() override;
     virtual void Update(float deltaTime) override;
     virtual void Exit() override;
+
+private:
+    bool _isLanded = false;
+    bool _isFirstFrame = true;
 };
 

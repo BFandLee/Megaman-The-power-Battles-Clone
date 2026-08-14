@@ -28,11 +28,13 @@ NodeState BTAction_Gemini_Jump::Tick(Blackboard* bb)
           ->SetVelocity(Vector(bb->DirXToPlayer* 100.0f, -600.0f));
 
         _isJumpStarted = true;
+        
         return NodeState::Running;
     }
     
-    if (bb->BossRigidBody->IsGrounded() == true)
+    if (bb->BossRigidBody->IsGrounded())
     {
+        bb->OwnerBoss->GetComponent<AnimatorComponent>()->Play(L"Idle");
         _isJumpStarted = false;
         return NodeState::Success;
     }

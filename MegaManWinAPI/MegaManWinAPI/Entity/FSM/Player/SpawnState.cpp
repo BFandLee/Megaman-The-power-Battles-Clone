@@ -16,10 +16,6 @@ void SpawnState::Enter()
 
     player->SetInvincible(true);
     _isLanded = false;
-
-    
-   
-
     rigid->SetGravity(0.0f);
 }
 
