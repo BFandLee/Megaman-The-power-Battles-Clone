@@ -3,12 +3,16 @@
 #include "FSMComponent.h"
 #include "BoxCollider.h"
 #include "AnimatorComponent.h"
+#include "RigidBodyComponent.h"
+#include "TransformComponent.h"
 #include "BossSpawn.h"
 #include "BossPhase1State.h"
 #include "BossPhase2State.h"
 #include "BossDead.h"
 #include "BossBlackboard.h"
-#include "RigidBodyComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "Player.h"
 
 Boss::Boss() : Super("Boss")
 {
@@ -59,6 +63,16 @@ void Boss::Init()
 
 void Boss::Update(float deltaTime)
 {
+	if (_bb != nullptr && _bb->TargetPlayer == nullptr)
+	{
+		Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
+		if (player != nullptr)
+		{
+			_bb->TargetPlayer = player;
+			_bb->PlayerTransform = player->GetComponent<TransformComponent>();
+			_bb->BossTransform = this->GetComponent<TransformComponent>();
+		}
+	}
 	Super::Update(deltaTime);
 }
 

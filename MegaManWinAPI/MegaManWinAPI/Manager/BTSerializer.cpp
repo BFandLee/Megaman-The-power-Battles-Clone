@@ -3,7 +3,8 @@
 #include "BTNode.h"
 #include "BTNodeFactory.h"
 
-void BTSerializer::SaveToJSON(const std::string& filepath, const std::vector<BTNode*>& nodes, const std::vector<struct NodeLink>& links)
+void BTSerializer::SaveToJSON(const std::string& filepath, const std::vector<class BTNode*>& nodes,
+    const std::vector<NodeLink>& links)
 {
     json j;
     j["Nodes"] = json::array(); // Nodes라는 이름의 배열 생성
@@ -12,7 +13,10 @@ void BTSerializer::SaveToJSON(const std::string& filepath, const std::vector<BTN
     {
         json n;
         n["ID"] = node->GetNodeID();
-        n["Type"] = node->GetName(); // 팩토리를 위해 타입 이름 저장
+        n["Type"] = node->GetType();
+        n["Name"] = node->GetName();
+        n["PosX"] = ImNodes::GetNodeEditorSpacePos(node->GetNodeID()).x;
+        n["PosY"] = ImNodes::GetNodeEditorSpacePos(node->GetNodeID()).y;
         j["Nodes"].push_back(n);     // 배열에 추가
     }
 
@@ -32,14 +36,21 @@ void BTSerializer::SaveToJSON(const std::string& filepath, const std::vector<BTN
     file << j.dump(4); // 들여쓰기 4칸
 }
 
-BTNode* BTSerializer::LoadFromJSON(const std::string& filepath)
+BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>* outNodes, vector<NodeLink>* outLinks)
 {
     map<int32, BTNode*> nodeMap;
     std::ifstream file(filepath);
     if (!file.is_open()) return nullptr;
 
     json j;
-    file >> j;
+    try
+    {
+        file >> j;
+    }
+    catch (const json::parse_error& e)
+    {
+        return nullptr;
+    }
 
     unordered_set<int> childNodeIDs;
 
@@ -51,13 +62,34 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath)
             std::string type = nodeData["Type"];
 
             BTNode* createdNode = BTNodeFactory::GetInstance().CreateNode(type);
-
+            
             if (createdNode != nullptr)
             {
-                int id = nodeData["ID"];
-                createdNode->SetNodeID(id);
+                if (nodeData.contains("Name"))
+                {
+                    createdNode->SetName(nodeData["Name"]);
+                }
+
+                if (outNodes != nullptr)
+                {
+                    int id = nodeData["ID"];
+                    createdNode->SetNodeID(id);
+
+                    nodeMap[id] = createdNode;
+
+                    float posX = 0.0f;
+                    float posY = 0.0f;
+                    if (nodeData.contains("PosX") && nodeData.contains("PosY"))
+                    {
+                        posX = nodeData["PosX"];
+                        posY = nodeData["PosY"];
+                    }
+                    
+                    Vector pos = Vector(posX, posY);
+                    ImNodes::SetNodeEditorSpacePos(id, ImVec2(pos.x, pos.y));
+                    outNodes->push_back(createdNode);
+                }
                 
-                nodeMap[id] = createdNode;
             }
 
         }
@@ -84,11 +116,21 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath)
                 BTNode* parentNode = parentIt->second;
                 BTNode* childNode = childIt->second;
                 childNodeIDs.insert(childNode->GetNodeID());
-            
+
                 parentNode->AddChild(childNode);
             }
-            
-            
+
+            if (outLinks != nullptr)
+            {
+                NodeLink newLink;
+                newLink.linkId = linkData["LinkID"];
+                newLink.startAttrId = startAttr;
+                newLink.endAttrId = endAttr;
+
+                outLinks->push_back(newLink);
+            }
+
+
         }
     }
 

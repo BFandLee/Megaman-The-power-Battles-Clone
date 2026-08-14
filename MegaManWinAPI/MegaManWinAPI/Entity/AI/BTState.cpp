@@ -20,7 +20,7 @@ void BTState::Update(float deltaTime)
 void BTState::Enter()
 {
 	_bb = new BossBlackboard();
-	_rootNode = BTSerializer::LoadFromJSON("BT_Test.json");
+	_rootNode = BTSerializer::LoadFromJSON("Phase1Nodes.json");
 }
 
 void BTState::Exit()

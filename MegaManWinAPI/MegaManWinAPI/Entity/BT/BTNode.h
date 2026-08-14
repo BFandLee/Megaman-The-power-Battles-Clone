@@ -6,27 +6,32 @@ public:
     BTNode() {}
     virtual ~BTNode() {}
 
-    // Æ®¸®¸¦ ¼øÈ¸ÇÏ¸ç ³ëµåÀÇ ·ÎÁ÷À» ½ÇÇàÇÏ´Â ÇÙ½É ÇÔ¼ö
+    // íŠ¸ë¦¬ë¥¼ ìˆœíšŒí•˜ë©° ë…¸ë“œì˜ ë¡œì§ì„ ì‹¤í–‰í•˜ëŠ” í•µì‹¬ í•¨ìˆ˜
     virtual NodeState Tick(class Blackboard* bb) = 0;
     virtual bool IsLeafNode() const { return false; }
     virtual void AddChild(BTNode* child) {}
     virtual void DrawProperty() {}
+    virtual void ClearChildren() {}
 
 public:
-    // ³ëµå ½Äº°À» À§ÇÑ ÀÌ¸§ ¹İÈ¯
+    // ë…¸ë“œ ì‹ë³„ì„ ìœ„í•œ ì´ë¦„ ë°˜í™˜
     const std::string& GetName() const { return _name; }
     void SetName(const string& name) { _name = name; }
 
-    // ³ëµåÀÇ ¸¶Áö¸· ½ÇÇà °á°ú¸¦ ¹İÈ¯ (½Ã°¢È­ ½Ã »ö»ó Ç¥Çö µî¿¡ »ç¿ë)
+    // ë…¸ë“œì˜ ë§ˆì§€ë§‰ ì‹¤í–‰ ê²°ê³¼ë¥¼ ë°˜í™˜ (ì‹œê°í™” ì‹œ ìƒ‰ìƒ í‘œí˜„ ë“±ì— ì‚¬ìš©)
     NodeState GetLastState() const { return _nodeState; }
     void SetLastState(NodeState state) { _nodeState = state; }
 
     int32 GetNodeID() { return _nodeId; }
     void SetNodeID(int32 nodeId) { _nodeId = nodeId; }
 
+    const string& GetType() const { return _type; }
+    void SetType(const string& type) { _type = type; }
+
 protected:
     NodeState _nodeState = NodeState::Running;
     string _name = "BTNode";
+    string _type = "BTNode";
 private:
     int32 _nodeId = 1;
 

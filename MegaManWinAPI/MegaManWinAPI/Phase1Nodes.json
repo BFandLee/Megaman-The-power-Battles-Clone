@@ -1,0 +1,169 @@
+{
+    "Links": [
+        {
+            "EndAttrID": 300,
+            "LinkID": 100003,
+            "StartAttrID": 201
+        },
+        {
+            "EndAttrID": 400,
+            "LinkID": 100004,
+            "StartAttrID": 301
+        },
+        {
+            "EndAttrID": 500,
+            "LinkID": 100005,
+            "StartAttrID": 401
+        },
+        {
+            "EndAttrID": 700,
+            "LinkID": 100006,
+            "StartAttrID": 501
+        },
+        {
+            "EndAttrID": 800,
+            "LinkID": 100007,
+            "StartAttrID": 301
+        },
+        {
+            "EndAttrID": 900,
+            "LinkID": 100008,
+            "StartAttrID": 201
+        },
+        {
+            "EndAttrID": 1000,
+            "LinkID": 100009,
+            "StartAttrID": 901
+        },
+        {
+            "EndAttrID": 1100,
+            "LinkID": 100010,
+            "StartAttrID": 1001
+        },
+        {
+            "EndAttrID": 1200,
+            "LinkID": 100011,
+            "StartAttrID": 201
+        },
+        {
+            "EndAttrID": 1300,
+            "LinkID": 100012,
+            "StartAttrID": 1201
+        },
+        {
+            "EndAttrID": 1500,
+            "LinkID": 100013,
+            "StartAttrID": 1201
+        },
+        {
+            "EndAttrID": 1600,
+            "LinkID": 100014,
+            "StartAttrID": 1301
+        },
+        {
+            "EndAttrID": 1700,
+            "LinkID": 100015,
+            "StartAttrID": 1501
+        }
+    ],
+    "Nodes": [
+        {
+            "ID": 2,
+            "Name": "Root",
+            "PosX": 777.0,
+            "PosY": -292.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 3,
+            "Name": "BaseJump",
+            "PosX": 517.0,
+            "PosY": -43.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 4,
+            "Name": "MirringCooldown",
+            "PosX": 179.0,
+            "PosY": 155.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 5,
+            "Name": "Probability",
+            "PosX": 106.0,
+            "PosY": 332.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 7,
+            "Name": "Clone",
+            "PosX": 760.0,
+            "PosY": 508.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 8,
+            "Name": "Jump",
+            "PosX": 709.0,
+            "PosY": 71.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 9,
+            "Name": "BaseMilsile",
+            "PosX": 975.0,
+            "PosY": 62.0,
+            "Type": "BTNode"
+        },
+        {
+            "ID": 10,
+            "Name": "Cooldown",
+            "PosX": 1013.0,
+            "PosY": 188.0,
+            "Type": "Cooldown"
+        },
+        {
+            "ID": 11,
+            "Name": "BaseMissile",
+            "PosX": 1306.0,
+            "PosY": 343.0,
+            "Type": "BaseMissile"
+        },
+        {
+            "ID": 12,
+            "Name": "Sequence",
+            "PosX": 1221.0,
+            "PosY": 7.0,
+            "Type": "Sequence"
+        },
+        {
+            "ID": 13,
+            "Name": "CheckClone",
+            "PosX": 1382.0,
+            "PosY": -133.0,
+            "Type": "CheckClone"
+        },
+        {
+            "ID": 15,
+            "Name": "Probability",
+            "PosX": 1410.0,
+            "PosY": 23.0,
+            "Type": "Probability"
+        },
+        {
+            "ID": 16,
+            "Name": "Jump",
+            "PosX": 1554.0,
+            "PosY": -107.0,
+            "Type": "Jump"
+        },
+        {
+            "ID": 17,
+            "Name": "BaseMissile",
+            "PosX": 2235.0,
+            "PosY": 49.0,
+            "Type": "BaseMissile"
+        }
+    ]
+}

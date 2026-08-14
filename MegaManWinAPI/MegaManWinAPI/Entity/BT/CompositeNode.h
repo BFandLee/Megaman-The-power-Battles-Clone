@@ -15,6 +15,11 @@ public:
         _children.push_back(child);
     }
 
+    virtual void ClearChildren() override
+    {
+        _children.clear();
+    }
+
 protected:
     std::vector<BTNode*> _children;
     int _currentNodeIndex = 0;

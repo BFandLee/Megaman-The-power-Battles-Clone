@@ -19,47 +19,62 @@
 
 void BTEditor::Init()
 {
-    // 메뉴에 띄울 이름과, 그 이름이 불렸을 때 객체를 생성해 줄 람다 함수를 맵에 등록합니다.
-    _nodeRegistry["Selector"] = []() -> BTNode* {
+    // Composite 노드
+    _nodeRegistry["Composite"]["Selector"] = []() -> BTNode* {
         BTNode* node = new Selector();
         node->SetName("Selector");
         return node;
         };
-    _nodeRegistry["Sequence"] = []() -> BTNode* {
+    _nodeRegistry["Composite"]["Sequence"] = []() -> BTNode* {
         BTNode* node = new Sequence();
         node->SetName("Sequence");
         return node;
         };
-    _nodeRegistry["Cooldown"] = []() -> BTNode* {
+    
+    // Decorator Node
+    _nodeRegistry["Decorator"]["Cooldown"] = []() -> BTNode* {
         BTNode* node = new CooldownDecorator();
         node->SetName("Cooldown");
         return node;
         };
-    _nodeRegistry["Probability"] = []() -> BTNode* {
+    _nodeRegistry["Decorator"]["Probability"] = []() -> BTNode* {
         BTNode* node = new ProbabilityDecorator();
         node->SetName("Probability");
         return node;
         };
-    _nodeRegistry["JumpMove"] = []() -> BTNode* {
-        BTNode* node = new BTAction_Gemini_JumpMove();
-        node->SetName("JumpMove");
-        return node;
-        };
-    _nodeRegistry["BaseMissile"] = []() -> BTNode* {
-        BTNode* node = new BTAction_Gemini_BaseMissile();
-        node->SetName("BaseMissile");
-        return node;
-        };
-    _nodeRegistry["Clone"] = []() -> BTNode* {
-        BTNode* node = new BTAction_Gemini_CloneActivate();
-        node->SetName("Clone");
-        return node;
-        };
-    _nodeRegistry["CheckClone"] = []() -> BTNode* {
+    _nodeRegistry["Decorator"]["CheckClone"] = []() -> BTNode* {
         BTNode* node = new CheckCloneDecorator();
         node->SetName("CheckClone");
         return node;
         };
+
+    // ActionNode
+    _nodeRegistry["Action"]["Jump"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_Jump();
+        node->SetName("Jump");
+        return node;
+        };
+    _nodeRegistry["Action"]["Move"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_Move();
+        node->SetName("Move");
+        return node;
+        };
+    _nodeRegistry["Action"]["Idle"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_Idle();
+        node->SetName("Idle");
+        return node;
+        };
+    _nodeRegistry["Action"]["BaseMissile"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_BaseMissile();
+        node->SetName("BaseMissile");
+        return node;
+        };
+    _nodeRegistry["Action"]["Clone"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_CloneActivate();
+        node->SetName("Clone");
+        return node;
+        };
+    
 
 
     ImNodesStyle& style = ImNodes::GetStyle();
@@ -102,7 +117,35 @@ void BTEditor::Update()
         if (!path.empty())
         {
             std::string strPath(path.begin(), path.end());
-            BTSerializer::LoadFromJSON(strPath);
+            for (auto& it : _testNodes)
+            {
+                it->ClearChildren();
+            }
+
+            for (auto& it : _testNodes)
+            {
+                delete it;
+            }
+            _testNodes.clear();
+            _links.clear();
+
+            BTSerializer::LoadFromJSON(strPath,&_testNodes, &_links);
+
+            for (auto& node : _testNodes)
+            {
+                if (node->GetNodeID() >= _nextNodeId)
+                {
+                    _nextNodeId = node->GetNodeID() + 1;
+                }
+            }
+
+            for (auto& link : _links)
+            {
+                if (link.linkId >= _nextLinkId)
+                {
+                    _nextLinkId = link.linkId + 1;
+                }
+            }
         }
     }
 
@@ -115,17 +158,26 @@ void BTEditor::Update()
     if (ImGui::BeginPopup("NodeCreatePopup"))
     {
         // 맵에 등록된 목록을 순회 (pair.first는 이름 문자열, pair.second는 생성 함수)
-        for (auto& pair : _nodeRegistry)
+        for (auto& pairCategory : _nodeRegistry)
         {
-            if (ImGui::Selectable(pair.first.c_str()))
-            {
-                // 선택된 이름의 생성 함수(pair.second)를 호출()하여 객체를 동적 할당 받습니다!
-                BTNode* newNode = pair.second();
 
-                newNode->SetNodeID(_nextNodeId);
-                ++_nextNodeId;
-                _testNodes.push_back(newNode);
-                ImNodes::SetNodeScreenSpacePos(newNode->GetNodeID(), _spawnPos);
+            if(ImGui::BeginMenu(pairCategory.first.c_str()))
+            {
+                for (auto& pairNode : pairCategory.second)
+                {
+                    if (ImGui::MenuItem(pairNode.first.c_str()))
+                    {
+                        BTNode* newNode = pairNode.second();
+                        newNode->SetType(pairNode.first);
+                        newNode->SetName(pairNode.first);
+
+                        newNode->SetNodeID(_nextNodeId);
+                        ++_nextNodeId;
+                        _testNodes.push_back(newNode);
+                        ImNodes::SetNodeScreenSpacePos(newNode->GetNodeID(), _spawnPos);
+                    }
+                }
+                ImGui::EndMenu();
             }
         }
         ImGui::EndPopup();
@@ -173,6 +225,7 @@ void BTEditor::Update()
 
                 if (it != selectedNodes.end())
                 {
+                    node->ClearChildren();
                     delete node;
                     return true;
                 }

@@ -82,7 +82,7 @@
         {
             "Components": [
                 {
-                    "PosX": 655.8619995117188,
+                    "PosX": 749.026123046875,
                     "PosY": 472.0,
                     "Rotation": 0.0,
                     "ScaleX": 1.0,
@@ -98,8 +98,8 @@
         {
             "Components": [
                 {
-                    "PosX": 586.8296508789063,
-                    "PosY": 472.0,
+                    "PosX": 788.3820190429688,
+                    "PosY": 471.9999694824219,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
                     "ScaleY": 2.0,
@@ -123,7 +123,7 @@
                 },
                 null,
                 {
-                    "CoolDown": -0.0011360924690961838,
+                    "CoolDown": -0.015613098628818989,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -142,25 +142,32 @@
         {
             "Components": [
                 {
-                    "PosX": 1073.0,
-                    "PosY": 534.0,
+                    "PosX": 1058.0,
+                    "PosY": 517.0999755859375,
                     "Rotation": 0.0,
-                    "ScaleX": 2.0,
-                    "ScaleY": 2.0,
+                    "ScaleX": 2.200000047683716,
+                    "ScaleY": 2.200000047683716,
                     "name": "TransformComponent"
                 },
+                null,
                 {
-                    "Height": 70.0,
-                    "OffsetX": 0.0,
-                    "OffsetY": 0.0,
-                    "Width": 100.0,
+                    "Height": 103.0,
+                    "OffsetX": 2.700000047683716,
+                    "OffsetY": 0.8999999761581421,
+                    "Width": 111.0,
                     "name": "Collider"
                 },
                 {
-                    "name": "ImageRenderer"
+                    "name": "AnimatorComponent"
+                },
+                {
+                    "Gravity": 980.0,
+                    "VelocityX": 0.0,
+                    "VelocityY": 0.0,
+                    "name": "RigidBodyComponent"
                 }
             ],
-            "name": "DummyEnemy"
+            "name": "Boss"
         }
     ]
 }

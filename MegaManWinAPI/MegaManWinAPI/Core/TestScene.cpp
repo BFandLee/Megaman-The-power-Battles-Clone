@@ -9,6 +9,7 @@
 #include "PlayerFactory.h"
 #include "PlayerBullet.h"
 #include "DummyEnemy.h"
+#include "Boss.h"
 
 void TestScene::loadResources()
 {
@@ -53,8 +54,8 @@ void TestScene::createObjects()
 	bullet->SetPos(player->GetPos());
 
 	// 테스트 샌드백
-	DummyEnemy* dummy = new DummyEnemy();
-	dummy->Init();
-	dummy->SetPos(Vector(400, 300));
-	AddActor(dummy);
+	Boss* boss = new Boss();
+	boss->Init();
+	boss->SetPos(Vector(600, 300));
+	AddActor(boss);
 }

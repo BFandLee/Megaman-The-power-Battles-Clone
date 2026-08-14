@@ -29,7 +29,7 @@ public:
 private:
     bool _isOpen = false;
     vector<class BTNode*> _testNodes;
-    map<string, CreateNodeFunc> _nodeRegistry;
+    map<string, map<string, CreateNodeFunc>> _nodeRegistry;
     int32 _nextNodeId = 1;
 
     // 선의 고유 ID

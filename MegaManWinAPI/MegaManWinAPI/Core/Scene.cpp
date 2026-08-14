@@ -14,11 +14,8 @@
 #include "DummyEnemy.h"
 #include "ActorFactory.h"
 #include "PlayerFactory.h"
+#include "Boss.h"
 
-// 생성자/소멸자를 cpp 작성하면, Scene의 인스턴스화는 cpp에서 일어남.
-// ObjectPool<T> (vector<T>) 값 자체를 가지고 있는 풀을 생성하는것도,
-// cpp에서 인스턴스화할때 생성됨.
-// 이때는 Bullet/Enemy #include 완료 상태
 Scene::Scene() 
 {
 }
@@ -38,7 +35,7 @@ void Scene::Init()
 	RegisterActor<Background>("Background");
 	RegisterActor<Ground>("Ground");
 	RegisterActor<WallActor>("WallActor");
-	RegisterActor<DummyEnemy>("DummyEnemy");
+	RegisterActor<Boss>("Boss");
 
 
 	// Scene에 필요한 리소스 로드
@@ -167,10 +164,10 @@ Actor* Scene::FindActorByType(ActorType type) const
 {
 	for (Actor* actor : _actors)
 	{
-		/*if (actor->GetActorType() == type)
+		if (actor->GetActorType() == type)
 		{
 			return actor;
-		}*/
+		}
 	}
 
 	return nullptr;
@@ -204,15 +201,6 @@ void Scene::RemoveAllActor()
 	// 충돌 매니저도 clear
 	CollisionManager::GetInstance().Clear();
 }
-
-//void Scene::CreateEffect(Vector pos)
-//{
-//	Effect* effect = new Effect();
-//	effect->Init(L"Effect");
-//	effect->SetPos(pos);
-//
-//	_reservedAdd.push_back(effect);
-//}
 
 
 const vector<Actor*>& Scene::GetRenderList(RenderLayer layer) const
@@ -289,6 +277,45 @@ void Scene::RenderUI()
 	{
 		SaveScene("SceneData.json");
 	}
+
+	ImGui::Separator();
+	ImGui::Text("Spawn Actor");
+
+	static string selectedActorName = "";
+	if (selectedActorName.empty() && !_actorFactory.empty())
+	{
+		selectedActorName = _actorFactory.begin()->first;
+	}
+
+	if (ImGui::BeginCombo("Actor Type", selectedActorName.c_str()))
+	{
+		for (auto& iter : _actorFactory)
+		{
+			if (ImGui::Selectable(iter.first.c_str()))
+			{
+				selectedActorName = iter.first;
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	if (ImGui::Button("Add Actor"))
+	{
+		if (!selectedActorName.empty() && _actorFactory.contains(selectedActorName))
+		{
+			Actor* newActor = _actorFactory[selectedActorName]();
+
+			if (newActor != nullptr)
+			{
+				newActor->Init();
+
+				AddActor(newActor);
+			}
+		}
+	}
+
+	ImGui::Separator();
 
 	for (auto& actor : _actors)
 	{

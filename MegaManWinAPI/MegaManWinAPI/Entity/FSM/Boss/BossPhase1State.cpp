@@ -22,7 +22,7 @@ BossPhase1State::~BossPhase1State()
 
 void BossPhase1State::Enter()
 {
-    _rootNode = BTSerializer::LoadFromJSON("BT_BossPhase1.json");
+    _rootNode = BTSerializer::LoadFromJSON("Phase1Nodes.json");
     _boss = static_cast<Boss*>(m_pOwnerFSM->GetOwner());
 }
 
