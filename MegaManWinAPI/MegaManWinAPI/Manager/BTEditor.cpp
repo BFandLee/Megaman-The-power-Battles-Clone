@@ -19,6 +19,13 @@
 
 void BTEditor::Init()
 {
+    // Root 카테고리
+    _nodeRegistry["Root"]["Root"] = []() -> BTNode* {
+        BTNode* node = new Sequence();
+        node->SetName("Root");
+        return node;
+        };
+
     // Composite 노드
     _nodeRegistry["Composite"]["Selector"] = []() -> BTNode* {
         BTNode* node = new Selector();
@@ -42,9 +49,16 @@ void BTEditor::Init()
         node->SetName("Probability");
         return node;
         };
-    _nodeRegistry["Decorator"]["CheckClone"] = []() -> BTNode* {
+
+    // 분신(Clone) 카테고리
+    _nodeRegistry["Clone"]["CheckClone"] = []() -> BTNode* {
         BTNode* node = new CheckCloneDecorator();
         node->SetName("CheckClone");
+        return node;
+        };
+    _nodeRegistry["Clone"]["Clone"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_CloneActivate();
+        node->SetName("Clone");
         return node;
         };
 
@@ -67,11 +81,6 @@ void BTEditor::Init()
     _nodeRegistry["Action"]["BaseMissile"] = []() -> BTNode* {
         BTNode* node = new BTAction_Gemini_BaseMissile();
         node->SetName("BaseMissile");
-        return node;
-        };
-    _nodeRegistry["Action"]["Clone"] = []() -> BTNode* {
-        BTNode* node = new BTAction_Gemini_CloneActivate();
-        node->SetName("Clone");
         return node;
         };
     
@@ -185,15 +194,34 @@ void BTEditor::Update()
 
     // imnodes 캔버스를 시작하고 종료
     ImNodes::BeginNodeEditor();
+    
+    std::vector<int> validPins;
     for (auto node : _testNodes)
     {
         DrawNode(node);
+        validPins.push_back(node->GetNodeID() * 100); // In pin
+        if (!node->IsLeafNode())
+        {
+            validPins.push_back(node->GetNodeID() * 100 + 1); // Out pin
+        }
     }
 
     // Draw Link
-    for (const auto& link : _links)
+    for (auto it = _links.begin(); it != _links.end(); )
     {
-        ImNodes::Link(link.linkId, link.startAttrId, link.endAttrId);
+        bool startValid = std::find(validPins.begin(), validPins.end(), it->startAttrId) != validPins.end();
+        bool endValid = std::find(validPins.begin(), validPins.end(), it->endAttrId) != validPins.end();
+        
+        if (startValid && endValid)
+        {
+            ImNodes::Link(it->linkId, it->startAttrId, it->endAttrId);
+            ++it;
+        }
+        else
+        {
+            // 유효하지 않은 핀을 가리키는 링크는 안전하게 제거
+            it = _links.erase(it);
+        }
     }
 
     ImNodes::EndNodeEditor();

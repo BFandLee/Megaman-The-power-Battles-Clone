@@ -17,6 +17,7 @@ void BTSerializer::SaveToJSON(const std::string& filepath, const std::vector<cla
         n["Name"] = node->GetName();
         n["PosX"] = ImNodes::GetNodeEditorSpacePos(node->GetNodeID()).x;
         n["PosY"] = ImNodes::GetNodeEditorSpacePos(node->GetNodeID()).y;
+        node->SaveProperty(n);
         j["Nodes"].push_back(n);     // 배열에 추가
     }
 
@@ -62,21 +63,22 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>*
             std::string type = nodeData["Type"];
 
             BTNode* createdNode = BTNodeFactory::GetInstance().CreateNode(type);
-            
             if (createdNode != nullptr)
             {
-                if (nodeData.contains("Name"))
+                createdNode->LoadProperty(nodeData);
+
+                if (nodeData.contains("Name") && nodeData.contains("Type"))
                 {
                     createdNode->SetName(nodeData["Name"]);
+                    createdNode->SetType(nodeData["Type"]);
                 }
 
+                int id = nodeData["ID"];
+                createdNode->SetNodeID(id);
+                nodeMap[id] = createdNode;
+                
                 if (outNodes != nullptr)
                 {
-                    int id = nodeData["ID"];
-                    createdNode->SetNodeID(id);
-
-                    nodeMap[id] = createdNode;
-
                     float posX = 0.0f;
                     float posY = 0.0f;
                     if (nodeData.contains("PosX") && nodeData.contains("PosY"))

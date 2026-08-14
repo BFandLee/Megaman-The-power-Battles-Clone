@@ -13,6 +13,9 @@ public:
     virtual void DrawProperty() {}
     virtual void ClearChildren() {}
 
+    virtual void SaveProperty(json& j) {}
+    virtual void LoadProperty(const json& j) {}
+
 public:
     // 노드 식별을 위한 이름 반환
     const std::string& GetName() const { return _name; }
@@ -27,6 +30,8 @@ public:
 
     const string& GetType() const { return _type; }
     void SetType(const string& type) { _type = type; }
+
+
 
 protected:
     NodeState _nodeState = NodeState::Running;

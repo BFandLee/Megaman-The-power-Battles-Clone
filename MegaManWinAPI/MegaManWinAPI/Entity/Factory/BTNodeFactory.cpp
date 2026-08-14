@@ -19,6 +19,9 @@ BTNodeFactory::BTNodeFactory()
     // Compsite Node
     _registry["Sequence"] = []() -> BTNode* { return new Sequence(); };
     _registry["Selector"] = []() -> BTNode* { return new Selector(); };
+    
+    // Root Node
+    _registry["Root"] = []() -> BTNode* { return new Selector(); };
 
     // Decorator Node
     _registry["Cooldown"] = []() -> BTNode* { return new CooldownDecorator(); };

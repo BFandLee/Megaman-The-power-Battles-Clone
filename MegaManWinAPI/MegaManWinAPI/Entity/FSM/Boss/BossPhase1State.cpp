@@ -30,6 +30,9 @@ void BossPhase1State::Update(float deltaTime)
 {
     BossBlackboard* bb = _boss->GetBlackboard();
 
+    if (bb->PlayerTransform == nullptr || bb->BossTransform == nullptr)
+        return;
+
     float PlayerX = bb->PlayerTransform->GetPos().x;
     float BossX = bb->BossTransform->GetPos().x;
     bb->DirXToPlayer = (PlayerX > BossX) ? 1.0f : -1.0f;

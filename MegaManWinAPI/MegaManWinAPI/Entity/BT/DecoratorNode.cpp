@@ -10,3 +10,8 @@ NodeState DecoratorNode::Tick(Blackboard* bb)
     }
     return NodeState::Failure;
 }
+
+void DecoratorNode::AddChild(BTNode* child)
+{
+    _child = child;
+}

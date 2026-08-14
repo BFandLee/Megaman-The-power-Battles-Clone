@@ -15,6 +15,21 @@ bool CooldownDecorator::checkCondition(Blackboard* bb)
 
 void CooldownDecorator::DrawProperty()
 {
+    ImGui::PushItemWidth(150.0f);
     ImGui::InputFloat("Cooldown (sec)", &_cooldownTime);
+    ImGui::PopItemWidth();
+}
+
+void CooldownDecorator::SaveProperty(json& j)
+{
+    j["CooldownTime"] = _cooldownTime;
+}
+
+void CooldownDecorator::LoadProperty(const json& j)
+{
+    if (j.contains("CooldownTime"))
+    {
+        _cooldownTime = j["CooldownTime"];
+    }
 }
 

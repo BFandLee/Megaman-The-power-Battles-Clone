@@ -38,6 +38,8 @@ void Boss::Init()
     AnimatorComponent* animator = AddComponent<AnimatorComponent>();
 	RigidBodyComponent* rigid = AddComponent<RigidBodyComponent>();
 	
+	_bb->OwnerBoss = this;
+	_bb->BossRigidBody = rigid;
 	box->SetSize(60, 60);
 	
 	// Animation 폴더 안의 모든 파일을 순회

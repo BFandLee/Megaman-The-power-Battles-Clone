@@ -5,7 +5,7 @@ class DecoratorNode : public BTNode
 public:
 	virtual ~DecoratorNode() { if (_child) delete _child; }
 	virtual NodeState Tick(class Blackboard* bb) override;
-	void SetChild(BTNode* child) { _child = child; }
+	virtual void AddChild(BTNode* child) override;
 	
 	virtual void ClearChildren() override
 	{
