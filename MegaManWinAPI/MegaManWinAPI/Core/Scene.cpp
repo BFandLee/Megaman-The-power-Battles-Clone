@@ -67,6 +67,8 @@ void Scene::Cleanup()
 
 void Scene::Update(float deltaTime)
 {
+	if (_isPaused)
+		return;
 	for (auto actor : _actors)
 	{
 		if (!actor->GetActive())
@@ -314,6 +316,8 @@ void Scene::RenderUI()
 			}
 		}
 	}
+
+	ImGui::Checkbox("Pause Game", &_isPaused);
 
 	ImGui::Separator();
 

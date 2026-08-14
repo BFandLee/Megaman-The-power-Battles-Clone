@@ -94,6 +94,8 @@ private:
 		// 람다함수를 이용하여 new T()를 호출하는 함수 자체를 저장
 		_actorFactory[name] = []() {return new T(); };
 	}
+
+	bool _isPaused = false;
 };
 
 

@@ -1,0 +1,25 @@
+{
+    "Links": [
+        {
+            "EndAttrID": 200,
+            "LinkID": 100000,
+            "StartAttrID": 101
+        }
+    ],
+    "Nodes": [
+        {
+            "ID": 1,
+            "Name": "Root",
+            "PosX": 102.0,
+            "PosY": 141.0,
+            "Type": "Root"
+        },
+        {
+            "ID": 2,
+            "Name": "Jump",
+            "PosX": 300.0,
+            "PosY": 156.0,
+            "Type": "Jump"
+        }
+    ]
+}

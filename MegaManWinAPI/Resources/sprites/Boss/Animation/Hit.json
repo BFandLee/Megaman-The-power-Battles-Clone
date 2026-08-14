@@ -1,21 +1,21 @@
 {
-  "texturePath": "Boss_Hit_Sheet",
-  "bLoop": true,
-  "frames": [
-    {
-      "startPos": {
-        "x": 0.0,
-        "y": 0.0
-      },
-      "size": {
-        "x": 64.0,
-        "y": 64.0
-      },
-      "offset": {
-        "x": 0.0,
-        "y": 64.0
-      },
-      "duration": 0.2
-    }
-  ]
+    "bLoop": true,
+    "frames": [
+        {
+            "duration": 0.20000000298023224,
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "size": {
+                "x": 64.0,
+                "y": 64.0
+            },
+            "startPos": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    ],
+    "texturePath": "Boss_Hit_Sheet"
 }

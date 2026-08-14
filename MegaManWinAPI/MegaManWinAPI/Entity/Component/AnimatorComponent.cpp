@@ -27,14 +27,7 @@ void AnimatorComponent::Update(float deletaTime)
 	// 방어 코드
 	if (_currentClip == nullptr)
 		return;
-
-
-	if (_bIsEditMode)
-	{
-		UpdateFrameIndex();
-		UpdateFrameOffset();
-	}
-
+	
 	// 플래그로 애니메이션이 끝났는지 체크
 	if (_bisFinished) return;
 
@@ -130,11 +123,40 @@ void AnimatorComponent::RenderUI()
 
 		ImGui::Checkbox("Edit Mode", &_bIsEditMode);
 
+		if (_bIsEditMode)
+		{
+			UpdateFrameIndex();
+			UpdateFrameOffset();
+
+			string currentName(_currentClipName.begin(), _currentClipName.end());
+
+			if (ImGui::BeginCombo("select Clip", currentName.c_str()))
+			{
+				for (auto& pair : _clips)
+				{
+					string clipName(pair.first.begin(), pair.first.end());
+					bool isSelected = (_currentClipName == pair.first);
+
+					if (ImGui::Selectable(clipName.c_str(), isSelected))
+					{
+						_currentClip = pair.second;
+						_currentClipName = pair.first;
+						_currentFrame = 0;
+					}
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+
+			
+		}
+
 		if (ImGui::Button("Save Json"))
 		{
 			SaveToJson();
 		}
-
 	}
 	ImGui::PopID();
 }
@@ -145,6 +167,8 @@ void AnimatorComponent::AddClip(const wstring& stateName, AnimationClip* clip)
 
 void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 {
+	if (_bIsEditMode == true)
+		return;
 	// map에서 stateName 키가 존재하는지 찾기
 	auto it = _clips.find(stateName);
 
