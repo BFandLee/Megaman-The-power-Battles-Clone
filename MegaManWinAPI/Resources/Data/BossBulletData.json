@@ -1,0 +1,25 @@
+{
+  "Base": {
+    "damage": 5.0,
+    "speed": 350.0,
+    "maxLifeTime": 2.0,
+    "Width": 30.0,
+    "Height": 10.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.0,
+    "scaleX": 2.0,
+    "scaleY": 2.0
+  },
+
+  "Razer": {
+    "damage": 10.0,
+    "speed": 500.0,
+    "maxLifeTime": 3.0,
+    "Width": 40.0,
+    "Height": 15.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.0,
+    "scaleX": 1.0,
+    "scaleY": 1.0
+  }
+}
