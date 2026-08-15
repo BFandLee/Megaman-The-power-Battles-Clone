@@ -4,14 +4,28 @@
 
 NodeState ConditionDecorator::Tick(Blackboard* bb)
 {
-    // 조건이 참일 때만 자식 노드를 실행
-    if (checkCondition(bb))
+    if (!_isChildRunning)
     {
-        if (_child != nullptr)
+        if (!checkCondition(bb))
         {
-            return _child->Tick(bb);
+            return NodeState::Failure;
         }
     }
-    
+
+    if (_child != nullptr)
+    {
+        NodeState state = _child->Tick(bb);
+
+        if (state == NodeState::Running)
+        {
+            _isChildRunning = true;
+        }
+        else
+        {
+            _isChildRunning = false;
+        }
+
+        return state;
+    }
     return NodeState::Failure;
 }

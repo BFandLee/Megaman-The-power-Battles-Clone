@@ -8,8 +8,10 @@ public:
 	// 팔레트 스왑을 위한 새 로드 함수 선언
 	void LoadWithPaletteSwap(wstring texturePath, const unordered_map<uint32, uint32>& colorMap, int32 row, int32 col, float dur, bool enableFlip);
 
-	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale = Vector(1.0f, 1.0f), bool flipX = false);
-	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale = Vector(1.0f, 1.0f), bool flipX = false);
+	// Animation 전용
+	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale = Vector(1.0f, 1.0f), bool flipX = false, float rotation = 0.0f);
+	// ImageRender 전용
+	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale = Vector(1.0f, 1.0f), bool flipX = false, float rotation = 0.0f);
 	void RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos = Vector(0,0));
 
 	uint32 GetSizeX() const { return _sizeX; }

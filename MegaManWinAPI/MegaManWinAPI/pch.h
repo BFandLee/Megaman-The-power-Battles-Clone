@@ -178,7 +178,7 @@ struct BulletState
 	float damage;
 	float speed;
 	bool isPiercing;    // 관통 여부
-	float maxLifeTIme = 1.0f;
+	float maxLifeTime = 1.0f;
 };
 
 const int GWinSizeX = 1152;

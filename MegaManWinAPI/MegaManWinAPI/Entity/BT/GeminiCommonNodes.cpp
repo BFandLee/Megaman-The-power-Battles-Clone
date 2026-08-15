@@ -45,16 +45,32 @@ NodeState BTAction_Gemini_Jump::Tick(Blackboard* bb)
 
 NodeState BTAction_Gemini_BaseMissile::Tick(Blackboard* bb)
 {
-    bb->OwnerBoss->GetComponent<AnimatorComponent>()->Play(L"Attack");
-    BossMissile* Missile = new BossMissile();
-    Missile->Fire(
-        bb->BossTransform->GetPos(), 
-        Vector(bb->DirXToPlayer, 0.0f),
-        50.0f,
-        5.0f
+    if (!_isAttackStatred)
+    {
+        _elapsedTime = 0.0f;
+        bb->OwnerBoss->GetComponent<AnimatorComponent>()->Play(L"Attack");
+        BossMissile* Missile = new BossMissile();
+        Missile->Init();
+        Missile->Fire(
+            bb->BossTransform->GetPos(),
+            Vector(bb->DirXToPlayer, 0.0f)
         );
-    SceneManager::GetInstance().GetScene()->AddActor(Missile);
-    return NodeState::Success; // 발사 즉시 완료라고 가정
+
+        SceneManager::GetInstance().GetScene()->AddActor(Missile);
+        _isAttackStatred = true;
+        return NodeState::Running;
+    }
+    else
+    {
+        _elapsedTime += TimeManager::GetInstance().GetDT();
+        if (_elapsedTime > 2.0f)
+        {
+            _isAttackStatred = false;
+            return NodeState::Success;
+        }
+    }
+    
+    return NodeState::Running;
 }
 
 NodeState BTAction_Gemini_Idle::Tick(Blackboard* bb)

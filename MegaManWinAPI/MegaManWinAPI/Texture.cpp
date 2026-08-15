@@ -67,7 +67,7 @@ void Texture::Load(wstring texturePath, int32 row, int32 col, float dur, bool en
 	decoder->Release();
 }
 
-void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale, bool flipX)
+void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale, bool flipX, float rotation)
 {
 	if (!_bitmap) return;
 
@@ -113,7 +113,7 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 	}
 }
 
-void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale, bool flipX)
+void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale, bool flipX, float rotation)
 {
 	if (!_bitmap) return;
 
@@ -142,15 +142,33 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 		srcPos.y + size.y
 	);
 
-	// 좌우 반전
-	if (flipX)
+	
+	bool needTransform = flipX || (rotation != 0.0f);
+	if (needTransform)
 	{
+
 		// worldPos을 기준으로 x축 배율을 -1로 곱해 거울 반전을 만듦
-		D2D1_MATRIX_3X2_F scaleMatrix = D2D1::Matrix3x2F::Scale(
-			D2D1::SizeF(-1.0f, 1.0f),
-			D2D1::Point2F(worldPos.x, worldPos.y)
-		);
-		renderTarget->SetTransform(scaleMatrix);
+		D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Identity();
+		
+		// 좌우 반전
+		if (flipX)
+		{
+			matrix = matrix * D2D1::Matrix3x2F::Scale(
+				D2D1::SizeF(-1.0f, 1.0f),
+				D2D1::Point2F(worldPos.x, worldPos.y)
+			);
+		}
+
+		// 회전 적용
+		if (rotation != 0.0f)
+		{
+			matrix = matrix * D2D1::Matrix3x2F::Rotation(
+				rotation,
+				D2D1::Point2F(worldPos.x, worldPos.y)
+			);
+		}
+		
+		renderTarget->SetTransform(matrix);
 	}
 
 	// 최종 그리기
@@ -163,7 +181,7 @@ void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector sr
 	);
 
 	// 좌우반전 했다면 원상복구
-	if (flipX)
+	if (needTransform)
 	{
 		renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	}

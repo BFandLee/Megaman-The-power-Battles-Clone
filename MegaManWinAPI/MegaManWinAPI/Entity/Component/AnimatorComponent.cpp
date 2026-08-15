@@ -91,20 +91,18 @@ void AnimatorComponent::Render(ID2D1RenderTarget* renderTarget)
 		scale.x = abs(scale.x);
 	}
 
+	float rotation = GetOwner()->GetComponent<TransformComponent>()->GetRotation();
+
 	// TODO: 노란색 스왑 상태(플래그)가 켜져 있다면, _currentClip->texture 대신 교체용 텍스처를 렌더링하도록 조건부 처리를 작성하세요.
 	if (_isYellowColor && _currentClip->swapTexture != nullptr)
 	{
-		_currentClip->swapTexture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
+		_currentClip->swapTexture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX, rotation);
 	}
 	else
 	{
-		_currentClip->texture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX);
+		_currentClip->texture->Render(renderTarget, actorPos, frame.startPos, frame.size, frame.offset, scale, filpX, rotation);
 	}
 }
-
-
-
-
 
 void AnimatorComponent::RenderUI()
 {

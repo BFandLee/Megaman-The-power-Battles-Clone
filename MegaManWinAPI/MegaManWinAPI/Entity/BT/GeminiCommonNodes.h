@@ -22,6 +22,9 @@ public:
     virtual ~BTAction_Gemini_BaseMissile() = default;
 
     virtual NodeState Tick(class Blackboard* bb) override;
+private:
+    bool _isAttackStatred = false;
+    float _elapsedTime = 0.0f;
 };
 
 // 대기 상태

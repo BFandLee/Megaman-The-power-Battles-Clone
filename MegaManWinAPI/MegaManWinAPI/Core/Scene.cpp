@@ -245,6 +245,7 @@ void Scene::removeActor(Actor* actor)
 
 	erase(layerList, actor);
 
+	CollisionManager::GetInstance().RemoveActor(actor);
 }
 
 

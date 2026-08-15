@@ -27,7 +27,7 @@ void PlayerBullet::Update(float deltaTime)
 
     _lifeTime += deltaTime;
 
-    if (_lifeTime > _state.maxLifeTIme)
+    if (_lifeTime > _state.maxLifeTime)
     {
         Destroy();
     }

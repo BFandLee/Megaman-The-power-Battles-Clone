@@ -65,6 +65,11 @@ void Boss::Init()
 
 void Boss::Update(float deltaTime)
 {
+	if (_bb == nullptr)
+	{
+		return;
+	}
+
 	if (_bb != nullptr && _bb->TargetPlayer == nullptr)
 	{
 		Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);

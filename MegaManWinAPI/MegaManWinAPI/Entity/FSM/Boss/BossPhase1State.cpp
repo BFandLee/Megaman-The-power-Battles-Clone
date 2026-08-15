@@ -30,6 +30,11 @@ void BossPhase1State::Update(float deltaTime)
 {
     BossBlackboard* bb = _boss->GetBlackboard();
 
+    if (bb == nullptr)
+    {
+        return;
+    }
+
     if (bb->PlayerTransform == nullptr || bb->BossTransform == nullptr)
         return;
 

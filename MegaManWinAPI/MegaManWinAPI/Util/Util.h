@@ -29,6 +29,7 @@ enum class ActorType
 	Effect,
 	WALL,
 	Ground,
+	Ceiling,
 	PlayerBullet,
 	BossBullet,
 
@@ -85,6 +86,12 @@ enum class NodeState
 	Success,
 	Failure,
 	Running
+};
+
+enum class MissileType
+{
+	Base,
+	Razer
 };
 
 

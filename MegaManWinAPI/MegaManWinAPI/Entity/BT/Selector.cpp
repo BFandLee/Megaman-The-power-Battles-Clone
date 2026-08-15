@@ -16,6 +16,7 @@ NodeState Selector::Tick(Blackboard* bb)
             continue;
         
         case NodeState::Running:
+            _currentNodeIndex = i;
             return NodeState::Running;
         
         default:
