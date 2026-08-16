@@ -14,7 +14,7 @@ public:
 	virtual void Init() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(ID2D1RenderTarget* renderTarget) override;
-	virtual void TakeDamage(float damage, float hitDirX = 0.0f) override;
+	virtual void TakeDamage(int damage, float hitDirX = 0.0f) override;
 
 	virtual RenderLayer GetRenderLayer() override { return RenderLayer::Enemy; }
 	virtual ActorType GetActorType() override { return ActorType::Boss; }
@@ -31,11 +31,13 @@ public:
 	// Phase 1 패턴 액션용 인터페이스 (BT 노드에서 호출됨)
 	void SetInvincible(bool isInvincible);
 
+	virtual void SetLookDirX(float dir) override;
+
 private:
 	FSMComponent* _fsm = nullptr;
 	class BossBlackboard* _bb = nullptr;
-	// TODO: 보스의 체력(HP), 무적 상태, 피격 상태, 기타 필요한 멤버 변수를 선언하세요.
     float _hp = 100.0f;
     float _maxHp = 100.0f;
 	bool _isInvincible = false;
+	float _invincibleTimer = 0.0f;
 };

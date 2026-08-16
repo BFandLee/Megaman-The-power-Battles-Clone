@@ -234,9 +234,6 @@
     <ClInclude Include="Entity\Actor\MuzzleFlash.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Actor\DummyEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Factory\PlayerFactory.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -291,10 +288,7 @@
     <ClInclude Include="Entity\BT\GeminiCommonNodes.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\BT\GeminiPhase1Nodes.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\BT\GeminiPhase2Nodes.h">
+    <ClInclude Include="Entity\BT\GeminiPatten.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Actor\BossMissile.h">
@@ -303,7 +297,10 @@
     <ClInclude Include="Entity\Actor\BossClone.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CheckCloneDecorator.h">
+    <ClInclude Include="Entity\BT\CheckCloneDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CheckPlayerAttackingDecorator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -482,9 +479,6 @@
     <ClCompile Include="Entity\Actor\MuzzleFlash.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Actor\DummyEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Factory\PlayerFactory.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -536,10 +530,7 @@
     <ClCompile Include="Entity\BT\GeminiCommonNodes.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\BT\GeminiPhase1Nodes.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\BT\GeminiPhase2Nodes.cpp">
+    <ClCompile Include="Entity\BT\GeminiPatten.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Actor\BossMissile.cpp">
@@ -548,7 +539,10 @@
     <ClCompile Include="Entity\Actor\BossClone.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CheckCloneDecorator.cpp">
+    <ClCompile Include="Entity\BT\CheckCloneDecorator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CheckPlayerAttackingDecorator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

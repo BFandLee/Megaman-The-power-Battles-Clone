@@ -1,6 +1,54 @@
 #include "pch.h"
 #include "Blackboard.h"
 #include "Actor.h"
+#include "TransformComponent.h"
+#include "RigidBodyComponent.h"
+#include "AnimatorComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
+
+void Blackboard::Init(Actor* owner)
+{
+	OwnerBoss = owner;
+	if (OwnerBoss != nullptr)
+	{
+		BossTransform = owner->GetComponent<TransformComponent>();
+		BossRigidBody = owner->GetComponent<RigidBodyComponent>();
+		BossAnimation = owner->GetComponent<AnimatorComponent>();
+	}
+}
+void Blackboard::Update(float deltaTime)
+{
+	// 1. 플레이어가 아직 없으면 씬에서 탐색하여 캐싱
+	if (TargetPlayer == nullptr)
+	{
+		Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
+		if (player != nullptr)
+		{
+			TargetPlayer = player;
+			// TODO: player로부터 PlayerTransform과 PlayerRigidBody를 GetComponent하여 캐싱하세요.
+			PlayerTransform = player->GetComponent<TransformComponent>();
+			PlayerRigidBody = player->GetComponent<RigidBodyComponent>();
+		}
+	}
+	// 2. 플레이어와 보스가 모두 존재할 경우 상대 방향(DirXToPlayer) 자동 계산
+	if (PlayerTransform != nullptr && BossTransform != nullptr)
+	{
+		float playerX = PlayerTransform->GetPos().x;
+		float bossX = BossTransform->GetPos().x;
+		DirXToPlayer = (playerX > bossX) ? 1.0f : -1.0f;
+	}
+
+	// 보스 클론 씬에서 탐색하여 캐싱
+	if (BossClone == nullptr)
+	{
+		Actor* clone = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::BossClone);
+		if (clone != nullptr)
+		{
+			BossClone = clone;
+		}
+	}
+}
 
 void Blackboard::SetFloat(const std::string& key, float value)
 {

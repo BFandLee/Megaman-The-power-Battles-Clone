@@ -18,6 +18,8 @@ public:
 	ID2D1HwndRenderTarget* GetRenderTarget() const { return _renderTarget; }
 	IWICImagingFactory* GetWICFactory() const { return _wicFactory; }
 	struct IDWriteFactory* GetDWriteFactory() const { return _dwriteFactory; }
+
+	void ResizeWindow(int32 width, int32 height);
 private:
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
 	Game() = default;

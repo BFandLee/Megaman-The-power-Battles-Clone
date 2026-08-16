@@ -5,17 +5,19 @@
 #include "BTNode.h"
 #include "Selector.h"
 #include "Sequence.h"
+#include "Game.h"
+#include "TimeManager.h"
 
 // 보스 ActionNode
 #include "ActionNode.h"
 #include "GeminiCommonNodes.h"
-#include "GeminiPhase1Nodes.h"
-#include "GeminiPhase2Nodes.h"
+#include "GeminiPatten.h"
 
 // 보스 Decorator
 #include "CooldownDecorator.h"
 #include "ProbabilityDecorator.h"
 #include "CheckCloneDecorator.h"
+#include "CheckPlayerAttackingDecorator.h"
 
 void BTEditor::Init()
 {
@@ -49,6 +51,11 @@ void BTEditor::Init()
         node->SetName("Probability");
         return node;
         };
+    _nodeRegistry["Decorator"]["CheckPlayerAttacking"] = []() -> BTNode* {
+        BTNode* node = new CheckPlayerAttackingDecorator();
+        node->SetName("Probability");
+        return node;
+        };
 
     // 분신(Clone) 카테고리
     _nodeRegistry["Clone"]["CheckClone"] = []() -> BTNode* {
@@ -59,6 +66,11 @@ void BTEditor::Init()
     _nodeRegistry["Clone"]["Clone"] = []() -> BTNode* {
         BTNode* node = new BTAction_Gemini_CloneActivate();
         node->SetName("Clone");
+        return node;
+        };
+    _nodeRegistry["Clone"]["CloneDeactivate"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_CloneDeactivate();
+        node->SetName("CloneDeactivate");
         return node;
         };
 
@@ -84,6 +96,7 @@ void BTEditor::Init()
         return node;
         };
     
+    
 
 
     ImNodesStyle& style = ImNodes::GetStyle();
@@ -101,14 +114,45 @@ void BTEditor::Update()
     ImGui::GetStyle().AntiAliasedLines = false;
     ImGui::GetStyle().AntiAliasedFill = false;
 
+    const int32 EDITOR_WIDTH = 600; // 에디터 패널의 가로 폭
+
     if (InputManager::GetInstance().GetButtonDown(KeyType::Tilde))
     {
         ToggleEditor();
+
+        if (_isOpen)
+        {
+            // 에디터가 열리면 가로폭 확장 (1152 + 800 = 1952)
+            Game::GetInstance().ResizeWindow(GWinSizeX + EDITOR_WIDTH, GWinSizeY);
+        }
+        else
+        {
+            // 에디터가 닫히면 기본 게임 화면 크기(1152)로 복구
+            Game::GetInstance().ResizeWindow(GWinSizeX, GWinSizeY);
+        }
     }
 
     if (!_isOpen) return;
+    // 1. 에디터 윈도우 위치와 크기 강제 지정
+    ImGui::SetNextWindowPos(ImVec2((float)GWinSizeX, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2((float)EDITOR_WIDTH, (float)GWinSizeY), ImGuiCond_Always);
 
-    ImGui::Begin("BT Editor", &_isOpen);
+    // 2. 창 이동/크기조절/접기를 막아 완벽한 패널 형태로 고정
+    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoMove
+        | ImGuiWindowFlags_NoResize
+        | ImGuiWindowFlags_NoCollapse;
+
+    ImGui::Begin("BT Live Visualizer", &_isOpen, windowFlags);
+
+    float dt = TimeManager::GetInstance().GetDT();
+    for (auto& pair : _debugStateMap)
+    {
+        if (pair.second.holdTimer > 0.0f)
+        {
+            pair.second.holdTimer -= dt;
+        }
+    }
+
     if (ImGui::Button("Save"))
     {
         wstring path = FileDialog::Save(L"JSON Files (*.json)\0*.json\0All Files (*.*)\0*.*\0");
@@ -317,16 +361,42 @@ void BTEditor::Render()
 
 void BTEditor::DrawNode(BTNode* node)
 {
-    ImNodes::BeginNode(node->GetNodeID());
+    int32 nodeId = node->GetNodeID();
+    bool hasCustomColor = false;
 
+    // 실시간 디버그 상태 확인
+    auto it = _debugStateMap.find(nodeId);
+    if (it != _debugStateMap.end() && it->second.holdTimer > 0.0f)
+    {
+        ImU32 titleColor = 0;
+
+        switch (it->second.lastState)
+        {
+        case NodeState::Running:
+            titleColor = IM_COL32(230, 160, 30, 255);  // 노랑 / 주황
+            break;
+        case NodeState::Success:
+            titleColor = IM_COL32(40, 180, 70, 255);   // 초록
+            break;
+        case NodeState::Failure:
+            titleColor = IM_COL32(200, 50, 50, 255);   // 빨강
+            break;
+        }
+        if (titleColor != 0)
+        {
+            ImNodes::PushColorStyle(ImNodesCol_TitleBar, titleColor);
+            ImNodes::PushColorStyle(ImNodesCol_TitleBarHovered, titleColor);
+            ImNodes::PushColorStyle(ImNodesCol_TitleBarSelected, titleColor);
+            hasCustomColor = true;
+        }
+    }
+    ImNodes::BeginNode(node->GetNodeID());
     ImNodes::BeginNodeTitleBar();
     ImGui::PushID(node->GetNodeID());
 
     char buffer[256];
     strcpy_s(buffer, sizeof(buffer), node->GetName().c_str());
-
     ImGui::PushItemWidth(120.0f);
-
     if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
     {
         node->SetName(buffer);
@@ -347,4 +417,21 @@ void BTEditor::DrawNode(BTNode* node)
         ImNodes::EndOutputAttribute();
     }
     ImNodes::EndNode();
+
+    // 적용했던 커스텀 색상 Pop
+    if (hasCustomColor)
+    {
+        ImNodes::PopColorStyle();
+        ImNodes::PopColorStyle();
+        ImNodes::PopColorStyle();
+    }
+}
+
+void BTEditor::ReportNodeState(int32 nodeId, NodeState state)
+{
+    // 에디터가 닫혀있으면 기록하지 않음 (성능 최적화)
+    if (!_isOpen) return;
+
+    _debugStateMap[nodeId].lastState = state;
+    _debugStateMap[nodeId].holdTimer = 0.3f; // 0.3초 동안 색상 유지
 }

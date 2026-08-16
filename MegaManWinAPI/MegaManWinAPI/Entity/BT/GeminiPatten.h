@@ -1,9 +1,23 @@
 #pragma once
 #include "ActionNode.h"
 
-// ===================================================
-// [Gemini Man] Phase 2 Action Nodes
-// ===================================================
+
+// 분신 활성화 (분신 Actor Spawn)
+class BTAction_Gemini_CloneActivate : public ActionNode
+{
+public:
+    BTAction_Gemini_CloneActivate() { SetName("BTAction_Gemini_CloneActivate"); }
+    virtual ~BTAction_Gemini_CloneActivate() = default;
+
+    virtual NodeState Tick(class Blackboard* bb) override;
+
+private:
+    bool _isSpawning = false;
+    float _spawnTimer = 0.0f;
+    Vector _startPos;
+    Vector _targetPos;
+    class BossClone* _spawnedClone = nullptr;
+};
 
 // 분신 해제 (분신 Actor Destroy)
 class BTAction_Gemini_CloneDeactivate : public ActionNode
@@ -11,16 +25,6 @@ class BTAction_Gemini_CloneDeactivate : public ActionNode
 public:
     BTAction_Gemini_CloneDeactivate() { SetName("BTAction_Gemini_CloneDeactivate"); }
     virtual ~BTAction_Gemini_CloneDeactivate() = default;
-
-    virtual NodeState Tick(class Blackboard* bb) override;
-};
-
-// 분신 소환 (분신 Actor 재Spawn)
-class BTAction_Gemini_CloneSummon : public ActionNode
-{
-public:
-    BTAction_Gemini_CloneSummon() { SetName("BTAction_Gemini_CloneSummon"); }
-    virtual ~BTAction_Gemini_CloneSummon() = default;
 
     virtual NodeState Tick(class Blackboard* bb) override;
 };

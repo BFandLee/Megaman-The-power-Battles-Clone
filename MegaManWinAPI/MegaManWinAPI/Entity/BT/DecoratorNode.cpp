@@ -6,7 +6,7 @@ NodeState DecoratorNode::Tick(Blackboard* bb)
 {
     if (_child != nullptr)
     {
-        return _child->Tick(bb);
+        return _child->Execute(bb);
     }
     return NodeState::Failure;
 }

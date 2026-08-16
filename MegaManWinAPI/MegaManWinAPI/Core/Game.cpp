@@ -192,4 +192,24 @@ void Game::Render()
 	_renderTarget->EndDraw();
 }
 
+void Game::ResizeWindow(int32 width, int32 height)
+{
+	if (_hwnd == nullptr || _renderTarget == nullptr)
+		return;
+
+	// 1. 원하는 클라이언트 해상도에 맞춰 윈도우 전체(외곽선 포함) 크기 계산
+	RECT rect = { 0, 0, width, height };
+	::AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+
+	int windowWidth = rect.right - rect.left;
+	int windowHeight = rect.bottom - rect.top;
+
+	// 2. 윈도우 창 크기 변경 (위치는 그대로 두고 크기만 변경)
+	::SetWindowPos(_hwnd, nullptr, 0, 0, windowWidth, windowHeight,
+		SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+
+	// 3. Direct2D 렌더 타겟 크기 리사이징
+	_renderTarget->Resize(D2D1::SizeU(width, height));
+}
+
 

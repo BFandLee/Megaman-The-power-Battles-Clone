@@ -11,7 +11,6 @@
 #include "Player.h"
 #include "Ground.h"
 #include "WallActor.h"
-#include "DummyEnemy.h"
 #include "ActorFactory.h"
 #include "PlayerFactory.h"
 #include "Boss.h"

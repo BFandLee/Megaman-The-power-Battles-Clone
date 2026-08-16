@@ -4,7 +4,10 @@
 #include "BoxCollider.h"
 #include "RigidBodyComponent.h"
 #include "TransformComponent.h"
+#include "FSMComponent.h"
 #include "Boss.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 
 BossClone::BossClone() : Super("BossClone")
@@ -23,6 +26,7 @@ void BossClone::Init()
 	BoxCollider* collider = AddComponent<BoxCollider>();
 	RigidBodyComponent* rigid = AddComponent<RigidBodyComponent>();
 	AddComponent<TransformComponent>();
+	AddComponent<FSMComponent>();
 
 	collider->SetSize(60, 60);
 
@@ -46,29 +50,64 @@ void BossClone::Update(float deltaTime)
 
 	RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
 	AnimatorComponent* animator = GetComponent<AnimatorComponent>();
-	TransformComponent* transform = GetComponent<TransformComponent>();
-
-	Vector scale = _ownerBoss->GetComponent<TransformComponent>()->GetScale();
-	Vector pos = _ownerBoss->GetComponent<TransformComponent>()->GetPos();
-	float modifier = 400.0f;
-	transform->SetScale(scale);
-	transform->SetPos(Vector(pos.x - modifier, pos.y));
+	BoxCollider* collider = GetComponent<BoxCollider>();
 
 	Vector bossVelocity = _ownerBoss->GetComponent<RigidBodyComponent>()->GetVelocity();
-	rigid->SetVelocity(bossVelocity);
+	rigid->SetVelocity(Vector(-bossVelocity.x, bossVelocity.y));
+
+	collider->SetSize(_ownerBoss->GetComponent<BoxCollider>()->GetWidth(), _ownerBoss->GetComponent<BoxCollider>()->GetHeight());
 
 	wstring state = _ownerBoss->GetComponent<AnimatorComponent>()->GetCurrentClipName();
 	animator->Play(state);
+
+	Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
+	if (player != nullptr)
+	{
+		float dirX = (player->GetPos().x >= GetPos().x) ? 1.0f : -1.0f;
+		SetLookDirX(dirX);
+	}
+
+	if (_isInvincible)
+	{
+		_invincibleTimer += deltaTime;
+
+		if (_invincibleTimer > 2.0f)
+		{
+			_isInvincible = false;
+		}
+	}
 
 }
 
 void BossClone::Render(ID2D1RenderTarget* renderTarget)
 {
+	if (_isInvincible)
+	{
+		if ((int32)(_invincibleTimer * 10) % 2)
+			return;
+	}
+
 	Super::Render(renderTarget);
 }
 
-void BossClone::TakeDamage(float damage, float hitDirX)
+void BossClone::TakeDamage(int damage, float hitDirX)
 {
+	if (_isInvincible) return;
+	if (_ownerBoss == nullptr) return;
+
+	float hp = _ownerBoss->GetHP();
+	if (hp > 0)
+	{
+		hp -= damage;
+		_isInvincible = true;
+		_invincibleTimer = 0.0f;
+		this->GetComponent<AnimatorComponent>()->Play(L"Hit");
+	}
+
+	if (hp <= 0)
+	{
+		this->GetComponent<FSMComponent>()->ChangeState("Dead");
+	}
 	if (_ownerBoss != nullptr)
 	{
 		_ownerBoss->TakeDamage(damage, hitDirX);
@@ -78,7 +117,10 @@ void BossClone::TakeDamage(float damage, float hitDirX)
 void BossClone::OnStay(Actor* other, const HitResult& hit)
 {
 	Vector pos = GetPos();
+	bool isWall = (other->GetActorType() == ActorType::WALL);
 	bool isGround = (other->GetActorType() == ActorType::Ground);
+	bool isPlayer = (other->GetActorType() == ActorType::Player);
+	bool isPlayerBullet = (other->GetActorType() == ActorType::PlayerBullet);
 
 	BoxCollider* myCol = GetComponent<BoxCollider>();
 	BoxCollider* otherCol = other->GetComponent<BoxCollider>();
@@ -87,6 +129,27 @@ void BossClone::OnStay(Actor* other, const HitResult& hit)
 	Vector myColPos = myCol->GetColliderPos();
 	Vector otherColPos = otherCol->GetColliderPos();
 
+	if (isWall)
+	{
+		float mySize = myCol->GetWidth() / 2.0f;
+		float otherSize = otherCol->GetWidth() / 2.0f;
+
+		float distanceX = abs(myColPos.x - otherColPos.x);
+		float overlapX = (mySize + otherSize) - distanceX;
+
+		if (overlapX > 0.0f)
+		{
+			if (myColPos.x < otherColPos.x)
+			{
+				pos.x -= overlapX;
+			}
+			else
+			{
+				pos.x += overlapX;
+			}
+		}
+	}
+
 	if (isGround)
 	{
 		float mySize = myCol->GetHeight() / 2.0f;
@@ -94,6 +157,7 @@ void BossClone::OnStay(Actor* other, const HitResult& hit)
 
 		float distanceY = abs(myColPos.y - otherColPos.y);
 		float overlapY = (mySize + otherSize) - distanceY;
+
 
 		if (overlapY > 0.0f)
 		{
@@ -119,6 +183,24 @@ void BossClone::OnStay(Actor* other, const HitResult& hit)
 		}
 	}
 
+	if ((isPlayer || isPlayerBullet))
+	{
+		float diffX = this->GetPos().x - other->GetPos().x;
+
+		// 방향벡터만 남기기 위해서 정규화
+		float hitDirX = 0.0f;
+		if (diffX > 0)
+		{
+			hitDirX = 1.0f;
+		}
+		else if (diffX < 0)
+		{
+			hitDirX = -1.0f;
+		}
+
+		TakeDamage(5, hitDirX);
+	}
+
 	SetPos(pos);
 }
 
@@ -128,5 +210,17 @@ void BossClone::OnExit(Actor* other)
 	if (other->GetActorType() == ActorType::Ground)
 	{
 		rigid->SetGrounded(false);
+	}
+}
+
+void BossClone::SetLookDirX(float dir)
+{
+	TransformComponent* transform = GetComponent<TransformComponent>();
+
+	if (transform)
+	{
+		Vector currentScale = transform->GetScale();
+		currentScale.x = abs(currentScale.x) * (-dir);
+		transform->SetScale(currentScale);
 	}
 }

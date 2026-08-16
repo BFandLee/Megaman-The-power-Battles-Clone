@@ -6,15 +6,21 @@ public:
     Blackboard() {}
     virtual ~Blackboard() {}
 
+    virtual void Init(class Actor* owner);
+    virtual void Update(float deltaTime);
+
     // 기본적으로 자주 접근하는 포인터들 (스마트 포인터 금지 -> Raw Pointer 사용)
     class Actor* OwnerBoss = nullptr;
     class Actor* TargetPlayer = nullptr;
+    class Actor* BossClone = nullptr;
 
     class RigidBodyComponent* PlayerRigidBody = nullptr;
     class TransformComponent* PlayerTransform = nullptr;
 
     class RigidBodyComponent* BossRigidBody = nullptr;
     class TransformComponent* BossTransform = nullptr;
+
+    class AnimatorComponent* BossAnimation = nullptr;
 
     float DirXToPlayer = 1.0f;
 

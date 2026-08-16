@@ -82,8 +82,8 @@
         {
             "Components": [
                 {
-                    "PosX": 0.0,
-                    "PosY": 0.0,
+                    "PosX": 255.36566162109375,
+                    "PosY": 438.958740234375,
                     "Rotation": 0.0,
                     "ScaleX": 1.0,
                     "ScaleY": 1.0,
@@ -98,10 +98,10 @@
         {
             "Components": [
                 {
-                    "PosX": 366.59716796875,
-                    "PosY": 472.0000305175781,
+                    "PosX": 300.3387756347656,
+                    "PosY": 419.24578857421875,
                     "Rotation": 0.0,
-                    "ScaleX": -2.0,
+                    "ScaleX": 2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -117,13 +117,13 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": 0.0,
-                    "VelocityY": 0.0,
+                    "VelocityX": 300.0,
+                    "VelocityY": -62.1365852355957,
                     "name": "RigidBodyComponent"
                 },
                 null,
                 {
-                    "CoolDown": -0.01623658835887909,
+                    "CoolDown": -0.007904887199401855,
                     "Reloading": 0.5,
                     "attackInterval": 0.15000000596046448,
                     "name": "WeaponComponent"
@@ -142,8 +142,8 @@
         {
             "Components": [
                 {
-                    "PosX": 601.9740600585938,
-                    "PosY": 517.0999755859375,
+                    "PosX": 279.8168029785156,
+                    "PosY": 518.2000122070313,
                     "Rotation": 0.0,
                     "ScaleX": 2.200000047683716,
                     "ScaleY": 2.200000047683716,
@@ -151,10 +151,10 @@
                 },
                 null,
                 {
-                    "Height": 103.0,
+                    "Height": 81.0,
                     "OffsetX": 2.700000047683716,
-                    "OffsetY": 0.8999999761581421,
-                    "Width": 111.0,
+                    "OffsetY": 10.800000190734863,
+                    "Width": 73.0,
                     "name": "Collider"
                 },
                 {
@@ -162,7 +162,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": -5.3034559641673695e-06,
+                    "VelocityX": -180.0,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 }
@@ -172,8 +172,8 @@
         {
             "Components": [
                 {
-                    "PosX": 201.97406005859375,
-                    "PosY": 517.0999755859375,
+                    "PosX": 931.4258422851563,
+                    "PosY": 539.5,
                     "Rotation": 0.0,
                     "ScaleX": 2.200000047683716,
                     "ScaleY": 2.200000047683716,
@@ -191,7 +191,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": -5.3034559641673695e-06,
+                    "VelocityX": 180.0,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
@@ -209,25 +209,38 @@
         {
             "Components": [
                 {
-                    "PosX": 572.8303833007813,
-                    "PosY": 517.0999755859375,
+                    "PosX": 401.99676513671875,
+                    "PosY": 437.2978820800781,
                     "Rotation": 0.0,
-                    "ScaleX": 2.0,
-                    "ScaleY": 2.0,
+                    "ScaleX": 2.5,
+                    "ScaleY": 2.5,
                     "name": "TransformComponent"
                 },
                 {
-                    "Height": 16.0,
-                    "OffsetX": -56.70000076293945,
-                    "OffsetY": 0.0,
-                    "Width": 28.0,
+                    "Radius": 40.0,
                     "name": "Collider"
                 },
                 {
                     "name": "AnimatorComponent"
                 }
             ],
-            "name": "BossMissile"
+            "name": "PlayerBullet"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 327.8451843261719,
+                    "PosY": 437.2978820800781,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "MuzzleFlash"
         }
     ]
 }

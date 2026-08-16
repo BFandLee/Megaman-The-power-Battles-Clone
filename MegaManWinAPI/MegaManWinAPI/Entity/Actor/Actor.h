@@ -1,6 +1,5 @@
 #pragma once
 struct HitResult;
-// Scene에 그려지는 모든 객체들은 Actor로부터 파생된다.
 class Actor
 {
 	
@@ -22,7 +21,8 @@ public:
 	virtual void OnStay(Actor* other, const HitResult& hit) {}
 	virtual void OnExit(Actor* other) {}
 
-	virtual void TakeDamage(float damage, float hitDirX = 0.0f) {}
+	virtual void TakeDamage(int damage, float hitDirX = 0.0f) {}
+	virtual void SetLookDirX(float dir) {}
 
 	// 순수 가상함수. 모든 Actor는 반드시 본인이 그려져야하는 Layer 순서를 알려줘야한다.
 	virtual RenderLayer GetRenderLayer() = 0;
@@ -37,8 +37,6 @@ public:
 
 	bool GetPendingKill() const { return _pendingKill; }
 
-	
-
 	// 충돌체크가 필요하다면
 	class Collider* GetCollider() { return _collider; }
 
@@ -48,6 +46,9 @@ public:
 
 	virtual void SetActive(bool isActive) { _isActive = isActive; }
 	bool GetActive() { return _isActive; }
+
+	const string& GetName() const { return _name; }
+	const vector<class Component*>& GetComponents() const { return _components; }
 
 	template<typename T>
 	T* AddComponent()

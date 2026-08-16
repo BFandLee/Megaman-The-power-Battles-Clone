@@ -5,7 +5,7 @@ NodeState Sequence::Tick(Blackboard* bb)
 {
     for (int i= _currentNodeIndex; i< _children.size(); ++i)
     {
-        switch (_children[i]->Tick(bb))
+        switch (_children[i]->Execute(bb))
         {
         case NodeState::Success:
             _currentNodeIndex++;

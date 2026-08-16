@@ -12,12 +12,6 @@ void BossMissile::Init()
     _collider = AddComponent<BoxCollider>();
     _transform = GetComponent<TransformComponent>();
     _animator = AddComponent<AnimatorComponent>();
-    _animator->LoadAnimationFromJson(L"Base", L"../Resources/sprites/BossBullet/Animation/Base.json");
-    _animator->LoadAnimationFromJson(L"Razer", L"../Resources/sprites/BossBullet/Animation/Razer.json");
-
-    this->SetScale(Vector(2.0f, 2.0f));
-    _collider->SetSize(30.0f, 5.0f);
-    _collider->SetOffset(Vector(0.0f, 0.0f));
 }
 
 void BossMissile::Update(float deltaTime)
@@ -39,20 +33,29 @@ void BossMissile::RenderUI()
     ImGui::PushID(this);
     ImGui::Text("[ Boss Bullet Spec ]");
     // 타입 표시
-    const char* typeName = (_type == MissileType::Base) ? "Base" : "Razer";
-    ImGui::Text("Type: %s", typeName);
+    const string typeStr = (_type == MissileType::Base) ? "Base" : "Razer";
+    string displayName = GetName() + "[" + typeStr + "]";
 
-    ImGui::DragFloat("Speed", &_state.speed);
-    ImGui::DragFloat("Damage", &_state.damage);
-    ImGui::DragFloat("MaxLifeTime", &_state.maxLifeTime);
-
-
-    // TODO 5: ImGui::DragFloat 등을 사용해 _state.speed, _state.damage, _state.maxLifeTIme을 조절할 수 있게 만들기
-    // 예: ImGui::DragFloat("Speed", &_state.speed, 5.0f, 0.0f, 2000.0f);
-    // TODO 6: [ Save Bullet Data ] 버튼을 누르면 SaveDataToJson(_type) 호출하기
-    if (ImGui::Button("Save Bullet Data"))
+    if (ImGui::TreeNode(displayName.c_str()))
     {
-        SaveDataToJson(_type);
+        for (auto& component : GetComponents())
+        {
+            component->RenderUI();
+        }
+
+        ImGui::Separator();     // 구분선
+        ImGui::Text("[ Boss Bullet Spec ]");
+
+        ImGui::DragFloat("Speed", &_state.speed);
+        ImGui::DragFloat("Damage", &_state.damage);
+        ImGui::DragFloat("MaxLifeTime", &_state.maxLifeTime);
+
+        if (ImGui::Button("Save Bullet Data"))
+        {
+            SaveDataToJson(_type);
+        }
+
+        ImGui::TreePop();
     }
     ImGui::PopID();
 
@@ -160,7 +163,7 @@ void BossMissile::SaveDataToJson(MissileType type)
 
     j[key]["speed"] = _state.speed;
     j[key]["damage"] = _state.damage;
-    j[key]["maxLifeTIme"] = _state.maxLifeTime;
+    j[key]["maxLifeTime"] = _state.maxLifeTime;
 
     j[key]["scaleX"] = _transform->GetScale().x;
     j[key]["scaleY"] = _transform->GetScale().y;
@@ -170,6 +173,9 @@ void BossMissile::SaveDataToJson(MissileType type)
 
     j[key]["OffsetX"] = _collider->GetOffset().x;
     j[key]["OffsetY"] = _collider->GetOffset().y;
+
+    ofstream outFile(_dataPath);
+    outFile << j.dump(4);
     
 }
 
@@ -188,7 +194,7 @@ void BossMissile::LoadDataFromJson(MissileType type)
 
     if (!j.contains(key))
         return;
-
+    
     auto& data = j[key];
 
     _state.speed = data["speed"];
@@ -198,6 +204,15 @@ void BossMissile::LoadDataFromJson(MissileType type)
     _transform->SetScale(Vector(data["scaleX"], data["scaleY"]));
     _collider->SetSize(data["Width"], data["Height"]);
     _collider->SetOffset(Vector(data["OffsetX"], data["OffsetY"]));
+
+    string path = data["animationPath"];
+    string name = data["animationName"];
+
+    wstring wPath(path.begin(), path.end());
+    wstring wName(name.begin(), name.end());
+
+    _animator->LoadAnimationFromJson(wName, wPath);
+    _animator->Play(wName);
 }
 
 

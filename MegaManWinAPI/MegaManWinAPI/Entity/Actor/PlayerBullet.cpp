@@ -35,11 +35,17 @@ void PlayerBullet::Update(float deltaTime)
 
 void PlayerBullet::OnEnter(Actor* other, const HitResult& hit)
 {
-    bool isEnemy = (other->GetActorType() == ActorType::Boss);
+    ActorType targetType = other->GetActorType();
+    bool isEnemy = (targetType == ActorType::Boss || targetType == ActorType::BossClone);
 
     if (isEnemy)
     {
         other->TakeDamage(_state.damage, _dir.x);
+
+        if (!_state.isPiercing)
+        {
+            Destroy();
+        }
     }
 }
 
@@ -68,7 +74,7 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
     // 3. 해당 레벨의 데이터 블록 가져오기
     json statData = j[levelKey];
     
-    _state.speed = statData[    "speed"];
+    _state.speed = statData["speed"];
     _state.damage = statData["damage"];
     _state.isPiercing = statData["pierce"];
 

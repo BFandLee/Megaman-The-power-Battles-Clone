@@ -70,7 +70,7 @@ void Player::Update(float deltaTime)
 	{
 		_invincibleTimer += deltaTime;
 
-		if (_invincibleTimer > 1.5f)
+		if (_invincibleTimer > 2.0f)
 		{
 			_isInvincible = false;
 		}
@@ -159,7 +159,6 @@ void Player::OnStay(Actor* other, const HitResult& hit)
 
 	if ((isBoss || isBossClone) && !_isInvincible)
 	{
-		// TODO 3: 플레이어와 적의 x좌표를 비교하여 넉백 방향(hitDirX)을 계산하고 TakeDamage를 호출하세요. (예: 적이 오른쪽에 있으면 -1.0f)
 		float diffX = this->GetPos().x - other->GetPos().x;
 
 		// 방향벡터만 남기기 위해서 정규화
@@ -194,7 +193,7 @@ void Player::SetLookDirX(float dir)
 	_lookdirX = dir;
 
 	TransformComponent* transform = GetComponent<TransformComponent>();
-
+	
 	if (transform)
 	{
 		Vector currentScale = transform->GetScale();
@@ -205,6 +204,10 @@ void Player::SetLookDirX(float dir)
 
 void Player::TakeDamage(int damage, float hitDirX)
 {
+	if (_isInvincible)
+	{
+		return;
+	}
 	if (_hp > 0)
 	{
 		_hp -= damage;

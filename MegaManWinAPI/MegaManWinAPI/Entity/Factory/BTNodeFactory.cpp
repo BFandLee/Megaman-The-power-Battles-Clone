@@ -6,13 +6,13 @@
 // 보스 ActionNode
 #include "ActionNode.h"
 #include "GeminiCommonNodes.h"
-#include "GeminiPhase1Nodes.h"
-#include "GeminiPhase2Nodes.h"
+#include "GeminiPatten.h"
 
 // 보스 Decorator
 #include "CooldownDecorator.h"
 #include "ProbabilityDecorator.h"
 #include "CheckCloneDecorator.h"
+#include "CheckPlayerAttackingDecorator.h"
 
 BTNodeFactory::BTNodeFactory()
 {
@@ -27,6 +27,7 @@ BTNodeFactory::BTNodeFactory()
     _registry["Cooldown"] = []() -> BTNode* { return new CooldownDecorator(); };
     _registry["Probability"] = []() -> BTNode* { return new ProbabilityDecorator(); };
     _registry["CheckClone"] = []() -> BTNode* { return new CheckCloneDecorator(); };
+    _registry["CheckPlayerAttacking"] = []() -> BTNode* { return new CheckPlayerAttackingDecorator(); };
 
     // Action Node
     _registry["Jump"] = []() -> BTNode* { return new BTAction_Gemini_Jump(); };
@@ -34,6 +35,8 @@ BTNodeFactory::BTNodeFactory()
     _registry["Idle"] = []() -> BTNode* { return new BTAction_Gemini_Idle(); };
     _registry["BaseMissile"] = []() -> BTNode* { return new BTAction_Gemini_BaseMissile(); };
     _registry["Clone"] = []() -> BTNode* { return new BTAction_Gemini_CloneActivate(); };
+    _registry["CloneDeactivate"] = []() -> BTNode* { return new BTAction_Gemini_CloneDeactivate(); };
+    
 }
 
 BTNode* BTNodeFactory::CreateNode(const std::string& typeName)

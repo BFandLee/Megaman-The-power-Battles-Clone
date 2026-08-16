@@ -11,7 +11,7 @@ void BTState::Update(float deltaTime)
 	{
 		if (_bb != nullptr)
 		{
-			_rootNode->Tick(_bb);
+			_rootNode->Execute(_bb);
 		}
 	}
 	

@@ -19,11 +19,11 @@ public:
 	virtual ActorType GetActorType() override { return ActorType::Player; }
 
 public:
-	void SetLookDirX(float dir);
+	virtual void SetLookDirX(float dir) override;
 	float GetLookDirX() { return _lookdirX; }
 
 	// [피격/죽음 관련 인터페이스]
-	void TakeDamage(int damage, float hitDirX);
+	virtual void TakeDamage(int damage, float hitDirX = 0.0f) override;
 	int GetHp() const { return _hp; }
 	void SetHp(int hp) { _hp = hp; }
 	float GetHitDirX() { return _hitdirX; }

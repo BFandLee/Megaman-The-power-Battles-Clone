@@ -4,7 +4,7 @@
 #include "Boss.h"
 #include "Selector.h"
 #include "Sequence.h"
-#include "GeminiPhase1Nodes.h"
+#include "GeminiPatten.h"
 #include "ActionNode.h"
 #include "DecoratorNode.h"
 #include "CooldownDecorator.h"
@@ -37,13 +37,10 @@ void BossPhase1State::Update(float deltaTime)
 
     if (bb->PlayerTransform == nullptr || bb->BossTransform == nullptr)
         return;
-
-    float PlayerX = bb->PlayerTransform->GetPos().x;
-    float BossX = bb->BossTransform->GetPos().x;
-    bb->DirXToPlayer = (PlayerX > BossX) ? 1.0f : -1.0f;
+  
     if (_rootNode && bb)
     {
-        _rootNode->Tick(bb);
+        _rootNode->Execute(bb);
     }
 }
 

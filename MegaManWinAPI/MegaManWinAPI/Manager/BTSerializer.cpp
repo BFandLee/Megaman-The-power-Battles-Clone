@@ -40,6 +40,7 @@ void BTSerializer::SaveToJSON(const std::string& filepath, const std::vector<cla
 BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>* outNodes, vector<NodeLink>* outLinks)
 {
     map<int32, BTNode*> nodeMap;
+    map<int32, float> nodePosYMap;
     std::ifstream file(filepath);
     if (!file.is_open()) return nullptr;
 
@@ -76,6 +77,7 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>*
                 int id = nodeData["ID"];
                 createdNode->SetNodeID(id);
                 nodeMap[id] = createdNode;
+                nodePosYMap[id] = nodeData.value("PosY", 0.0f);
                 
                 if (outNodes != nullptr)
                 {
@@ -112,6 +114,9 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>*
             auto parentIt = nodeMap.find(parentId);
             auto childIt = nodeMap.find(childId);
 
+            // 임시 맵
+            map<BTNode*, vector<BTNode*>> parentToChildren;
+
             // 두 노드 모두 성공적으로 찾았으면 연결
             if (parentIt != nodeMap.end() && childIt != nodeMap.end())
             {
@@ -119,7 +124,26 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>*
                 BTNode* childNode = childIt->second;
                 childNodeIDs.insert(childNode->GetNodeID());
 
-                parentNode->AddChild(childNode);
+                parentToChildren[parentNode].push_back(childNode);
+
+                for (auto& pair : parentToChildren)
+                {
+                    BTNode* parent = pair.first;
+                    vector<BTNode*> children = pair.second;
+
+                    sort(children.begin(), children.end(), [&](BTNode* nodeA, BTNode* nodeB)
+                        {
+                            float PosY_A = nodePosYMap[nodeA->GetNodeID()];
+                            float PosY_B = nodePosYMap[nodeB->GetNodeID()];
+
+                            return PosY_A < PosY_B;
+                        });
+
+                    for (BTNode* child : children)
+                    {
+                        parent->AddChild(child);
+                    }
+                }
             }
 
             if (outLinks != nullptr)

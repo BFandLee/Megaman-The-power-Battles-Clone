@@ -14,7 +14,7 @@ NodeState ConditionDecorator::Tick(Blackboard* bb)
 
     if (_child != nullptr)
     {
-        NodeState state = _child->Tick(bb);
+        NodeState state = _child->Execute(bb);
 
         if (state == NodeState::Running)
         {

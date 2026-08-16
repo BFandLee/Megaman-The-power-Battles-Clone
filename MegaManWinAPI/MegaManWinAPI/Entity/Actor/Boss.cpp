@@ -38,8 +38,7 @@ void Boss::Init()
     AnimatorComponent* animator = AddComponent<AnimatorComponent>();
 	RigidBodyComponent* rigid = AddComponent<RigidBodyComponent>();
 	
-	_bb->OwnerBoss = this;
-	_bb->BossRigidBody = rigid;
+	_bb->Init(this);
 	box->SetSize(60, 60);
 	
 	// Animation 폴더 안의 모든 파일을 순회
@@ -70,33 +69,46 @@ void Boss::Update(float deltaTime)
 		return;
 	}
 
-	if (_bb != nullptr && _bb->TargetPlayer == nullptr)
+	if (_bb != nullptr)
 	{
-		Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
-		if (player != nullptr)
+		_bb->Update(deltaTime);
+	}
+
+	if (_isInvincible)
+	{
+		_invincibleTimer += deltaTime;
+
+		if (_invincibleTimer > 2.0f)
 		{
-			_bb->TargetPlayer = player;
-			_bb->PlayerTransform = player->GetComponent<TransformComponent>();
-			_bb->BossTransform = this->GetComponent<TransformComponent>();
+			_isInvincible = false;
 		}
 	}
+
 	Super::Update(deltaTime);
 }
 
 void Boss::Render(ID2D1RenderTarget* renderTarget)
 {
+	// 무적 상태일 때만 특정 조건에서 return 시켜서 렌더링을 건너뜀 (예: 0.1초 단위로 깜빡임)
+	if (_isInvincible)
+	{
+		if ((int32)(_invincibleTimer * 10) % 2)
+			return;
+	}
+
 	Super::Render(renderTarget);
 }
 
-void Boss::TakeDamage(float damage, float hitDirX)
+void Boss::TakeDamage(int damage, float hitDirX)
 {
 	if (_isInvincible) return;
 
-    // TODO: 보스가 데미지를 입었을 때 체력을 감소시키는 로직을 작성하세요.
 	if (_hp > 0)
 	{
 		_hp -= damage;
 		_isInvincible = true;
+		_invincibleTimer = 0.0f;
+		this->GetComponent<AnimatorComponent>()->Play(L"Hit");
 	}
 	
 	if (_hp <= 0)
@@ -111,7 +123,10 @@ void Boss::TakeDamage(float damage, float hitDirX)
 void Boss::OnStay(Actor* other, const HitResult& hit)
 {
 	Vector pos = GetPos();
+	bool isWall = (other->GetActorType() == ActorType::WALL);
 	bool isGround = (other->GetActorType() == ActorType::Ground);
+	bool isPlayer = (other->GetActorType() == ActorType::Player);
+	bool isPlayerBullet = (other->GetActorType() == ActorType::PlayerBullet);
 
 	BoxCollider* myCol = GetComponent<BoxCollider>();
 	BoxCollider* otherCol = other->GetComponent<BoxCollider>();
@@ -119,6 +134,27 @@ void Boss::OnStay(Actor* other, const HitResult& hit)
 
 	Vector myColPos = myCol->GetColliderPos();
 	Vector otherColPos = otherCol->GetColliderPos();
+
+	if (isWall)
+	{
+		float mySize = myCol->GetWidth() / 2.0f;
+		float otherSize = otherCol->GetWidth() / 2.0f;
+
+		float distanceX = abs(myColPos.x - otherColPos.x);
+		float overlapX = (mySize + otherSize) - distanceX;
+
+		if (overlapX > 0.0f)
+		{
+			if (myColPos.x < otherColPos.x)
+			{
+				pos.x -= overlapX;
+			}
+			else
+			{
+				pos.x += overlapX;
+			}
+		}
+	}
 
 	if (isGround)
 	{
@@ -128,6 +164,7 @@ void Boss::OnStay(Actor* other, const HitResult& hit)
 		float distanceY = abs(myColPos.y - otherColPos.y);
 		float overlapY = (mySize + otherSize) - distanceY;
 
+		
 		if (overlapY > 0.0f)
 		{
 			// 부동소수점 오차로 인한 충돌 해제를 막기 위해 미세하게 덜 밀어냄
@@ -168,4 +205,16 @@ void Boss::SetInvincible(bool isInvincible)
 {
     // TODO: 보스의 무적 상태를 변경합니다.
     _isInvincible = isInvincible;
+}
+
+void Boss::SetLookDirX(float dir)
+{
+	TransformComponent* transform = GetComponent<TransformComponent>();
+
+	if (transform)
+	{
+		Vector currentScale = transform->GetScale();
+		currentScale.x = abs(currentScale.x) * (-dir);
+		transform->SetScale(currentScale);
+	}
 }

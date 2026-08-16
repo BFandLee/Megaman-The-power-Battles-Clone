@@ -24,7 +24,7 @@ public:
     virtual NodeState Tick(class Blackboard* bb) override;
 private:
     bool _isAttackStatred = false;
-    float _elapsedTime = 0.0f;
+    bool _isAttackFinished = false;
 };
 
 // 대기 상태
@@ -52,4 +52,5 @@ public:
 private:
     bool _isMoveStarted = false;
     float _elpsedTime = 0.0f;
+    float _moveDirX = 1.0f;
 };

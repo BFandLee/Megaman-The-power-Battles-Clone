@@ -6,6 +6,9 @@ public:
     BTNode() {}
     virtual ~BTNode() {}
 
+    // 외부에서 트리를 순회할 때 호출하는 공통 실행 인터페이스 (NVI)
+    NodeState Execute(class Blackboard* bb);
+
     // 트리를 순회하며 노드의 로직을 실행하는 핵심 함수
     virtual NodeState Tick(class Blackboard* bb) = 0;
     virtual bool IsLeafNode() const { return false; }

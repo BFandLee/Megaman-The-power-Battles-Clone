@@ -8,7 +8,6 @@
 #include "Player.h"
 #include "PlayerFactory.h"
 #include "PlayerBullet.h"
-#include "DummyEnemy.h"
 #include "Boss.h"
 
 void TestScene::loadResources()
