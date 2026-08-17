@@ -2,6 +2,11 @@
 #include "CheckCloneDecorator.h"
 #include "Blackboard.h"
 
+CheckCloneDecorator::CheckCloneDecorator()
+{
+    SetName("CheckClone");
+}
+
 bool CheckCloneDecorator::checkCondition(Blackboard* bb)
 {
     bool isExist = false;
@@ -18,4 +23,17 @@ bool CheckCloneDecorator::checkCondition(Blackboard* bb)
 void CheckCloneDecorator::DrawProperty()
 {
     ImGui::Checkbox("Check Exist", &_checkExist);
+}
+
+void CheckCloneDecorator::SaveProperty(json& j)
+{
+    j["CheckExist"] = _checkExist;
+}
+
+void CheckCloneDecorator::LoadProperty(const json& j)
+{
+    if (j.contains("CheckExist"))
+    {
+        _checkExist = j["CheckExist"];
+    }
 }

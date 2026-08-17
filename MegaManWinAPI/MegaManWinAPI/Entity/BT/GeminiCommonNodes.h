@@ -23,7 +23,7 @@ public:
 
     virtual NodeState Tick(class Blackboard* bb) override;
 private:
-    bool _isAttackStatred = false;
+    bool _isAttackStarted = false;
     bool _isAttackFinished = false;
 };
 

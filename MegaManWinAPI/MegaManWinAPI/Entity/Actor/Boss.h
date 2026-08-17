@@ -24,6 +24,7 @@ public:
 
     // Phase 관리를 위한 Getter/Setter
     float GetHP() const { return _hp; }
+	void SetHP(float hp) { _hp = hp; }
     float GetMaxHP() const { return _maxHp; }
 
 	class BossBlackboard* GetBlackboard() const { return _bb; }
@@ -33,6 +34,7 @@ public:
 
 	virtual void SetLookDirX(float dir) override;
 
+	const bool IsHit() { return _isHit; }
 private:
 	FSMComponent* _fsm = nullptr;
 	class BossBlackboard* _bb = nullptr;
@@ -40,4 +42,5 @@ private:
     float _maxHp = 100.0f;
 	bool _isInvincible = false;
 	float _invincibleTimer = 0.0f;
+	bool _isHit = false;
 };

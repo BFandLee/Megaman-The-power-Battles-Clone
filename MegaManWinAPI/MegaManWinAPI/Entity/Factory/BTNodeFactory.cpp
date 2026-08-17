@@ -13,6 +13,8 @@
 #include "ProbabilityDecorator.h"
 #include "CheckCloneDecorator.h"
 #include "CheckPlayerAttackingDecorator.h"
+#include "SucceederDecorator.h"
+#include "CheckCloneDurationDecorator.h"
 
 BTNodeFactory::BTNodeFactory()
 {
@@ -28,12 +30,15 @@ BTNodeFactory::BTNodeFactory()
     _registry["Probability"] = []() -> BTNode* { return new ProbabilityDecorator(); };
     _registry["CheckClone"] = []() -> BTNode* { return new CheckCloneDecorator(); };
     _registry["CheckPlayerAttacking"] = []() -> BTNode* { return new CheckPlayerAttackingDecorator(); };
+    _registry["Succeeder"] = []() -> BTNode* { return new SucceederDecorator(); };
+    _registry["CheckCloneDuration"] = []() -> BTNode* { return new CheckCloneDurationDecorator(); };
 
     // Action Node
     _registry["Jump"] = []() -> BTNode* { return new BTAction_Gemini_Jump(); };
     _registry["Move"] = []() -> BTNode* { return new BTAction_Gemini_Move(); };
     _registry["Idle"] = []() -> BTNode* { return new BTAction_Gemini_Idle(); };
     _registry["BaseMissile"] = []() -> BTNode* { return new BTAction_Gemini_BaseMissile(); };
+    _registry["LaserMissile"] = []() -> BTNode* { return new BTAction_Gemini_LaserMissile(); };
     _registry["Clone"] = []() -> BTNode* { return new BTAction_Gemini_CloneActivate(); };
     _registry["CloneDeactivate"] = []() -> BTNode* { return new BTAction_Gemini_CloneDeactivate(); };
     

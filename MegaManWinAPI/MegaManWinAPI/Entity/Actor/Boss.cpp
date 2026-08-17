@@ -54,6 +54,11 @@ void Boss::Init()
 		}
 	}
 	
+	animator->SetEndEvent(L"Hit", [this]()
+		{
+			_isHit = false;
+		});
+
 	_fsm->AddState("Spawn", new BossSpawn(_fsm));
 	_fsm->AddState("Phase1", new BossPhase1State(_fsm));
 	_fsm->AddState("Phase2", new BossPhase2State(_fsm));

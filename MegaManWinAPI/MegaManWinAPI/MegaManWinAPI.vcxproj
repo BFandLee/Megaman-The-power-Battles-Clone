@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\BT\CheckCloneDurationDecorator.h" />
     <ClInclude Include="Entity\BT\CheckCloneDecorator.h" />
     <ClInclude Include="Entity\BT\CheckPlayerAttackingDecorator.h" />
     <ClInclude Include="Entity\Actor\BossClone.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Entity\Component\RigidBodyComponent.h" />
     <ClInclude Include="Entity\BT\Sequence.h" />
     <ClInclude Include="Entity\BT\Selector.h" />
+    <ClInclude Include="Entity\BT\SucceederDecorator.h" />
     <ClInclude Include="Util\FileDialog.h" />
     <ClInclude Include="Util\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
@@ -224,6 +226,7 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\BT\CheckCloneDurationDecorator.cpp" />
     <ClCompile Include="Entity\BT\CheckCloneDecorator.cpp" />
     <ClCompile Include="Entity\BT\CheckPlayerAttackingDecorator.cpp" />
     <ClCompile Include="Entity\Actor\BossClone.cpp" />
@@ -294,6 +297,7 @@
     <ClCompile Include="Entity\Component\RigidBodyComponent.cpp" />
     <ClCompile Include="Entity\BT\Sequence.cpp" />
     <ClCompile Include="Entity\BT\Selector.cpp" />
+    <ClCompile Include="Entity\BT\SucceederDecorator.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="Entity\Component\TransformComponent.cpp" />

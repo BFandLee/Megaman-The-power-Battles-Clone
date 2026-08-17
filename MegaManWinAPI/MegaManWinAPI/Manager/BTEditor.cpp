@@ -6,7 +6,12 @@
 #include "Selector.h"
 #include "Sequence.h"
 #include "Game.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "Actor.h"
+#include "Boss.h"
 #include "TimeManager.h"
+#include "FSMComponent.h"
 
 // 보스 ActionNode
 #include "ActionNode.h"
@@ -18,6 +23,8 @@
 #include "ProbabilityDecorator.h"
 #include "CheckCloneDecorator.h"
 #include "CheckPlayerAttackingDecorator.h"
+#include "SucceederDecorator.h"
+#include "CheckCloneDurationDecorator.h"
 
 void BTEditor::Init()
 {
@@ -56,11 +63,21 @@ void BTEditor::Init()
         node->SetName("Probability");
         return node;
         };
+    _nodeRegistry["Decorator"]["Succeeder"] = []() -> BTNode* {
+        BTNode* node = new SucceederDecorator();
+        node->SetName("Succeeder");
+        return node;
+        };
 
     // 분신(Clone) 카테고리
     _nodeRegistry["Clone"]["CheckClone"] = []() -> BTNode* {
         BTNode* node = new CheckCloneDecorator();
         node->SetName("CheckClone");
+        return node;
+        };
+    _nodeRegistry["Clone"]["CheckCloneDuration"] = []() -> BTNode* {
+        BTNode* node = new CheckCloneDurationDecorator();
+        node->SetName("CheckCloneDuration");
         return node;
         };
     _nodeRegistry["Clone"]["Clone"] = []() -> BTNode* {
@@ -93,6 +110,11 @@ void BTEditor::Init()
     _nodeRegistry["Action"]["BaseMissile"] = []() -> BTNode* {
         BTNode* node = new BTAction_Gemini_BaseMissile();
         node->SetName("BaseMissile");
+        return node;
+        };
+    _nodeRegistry["Action"]["LaserMissile"] = []() -> BTNode* {
+        BTNode* node = new BTAction_Gemini_LaserMissile();
+        node->SetName("LaserMissile");
         return node;
         };
     
@@ -170,33 +192,48 @@ void BTEditor::Update()
         if (!path.empty())
         {
             std::string strPath(path.begin(), path.end());
-            for (auto& it : _testNodes)
-            {
-                it->ClearChildren();
-            }
+            LoadBTFromFile(strPath);
+        }
+    }
 
-            for (auto& it : _testNodes)
+    ImGui::SameLine();
+    if (ImGui::Button("Phase 1"))
+    {
+        // 1) 에디터 트리 동기화
+        LoadBTFromFile("Phase1Nodes.json");
+        // 2) 현재 씬의 보스 탐색 및 상태/HP 변경
+        Scene* scene = SceneManager::GetInstance().GetScene();
+        if (scene)
+        {
+            for (Actor* actor : scene->GetActors())
             {
-                delete it;
-            }
-            _testNodes.clear();
-            _links.clear();
-
-            BTSerializer::LoadFromJSON(strPath,&_testNodes, &_links);
-
-            for (auto& node : _testNodes)
-            {
-                if (node->GetNodeID() >= _nextNodeId)
+                if (actor && actor->GetActorType() == ActorType::Boss)
                 {
-                    _nextNodeId = node->GetNodeID() + 1;
+                    Boss* boss = static_cast<Boss*>(actor);
+                    boss->SetHP(boss->GetMaxHP());
+                    boss->GetComponent<FSMComponent>()->ChangeState("Phase1");
+                    break;
                 }
             }
-
-            for (auto& link : _links)
+        }
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Phase 2"))
+    {
+        // 1) 에디터 트리 동기화
+        LoadBTFromFile("Phase2Nodes.json");
+        // 2) 현재 씬의 보스 탐색 및 상태/HP 변경
+        Scene* scene = SceneManager::GetInstance().GetScene();
+        if (scene)
+        {
+            for (Actor* actor : scene->GetActors())
             {
-                if (link.linkId >= _nextLinkId)
+                if (actor && actor->GetActorType() == ActorType::Boss)
                 {
-                    _nextLinkId = link.linkId + 1;
+                    Boss* boss = static_cast<Boss*>(actor);
+                    boss->SetHP(boss->GetMaxHP() * 0.5f);
+                    boss->GetComponent<FSMComponent>()->ChangeState("Phase2");
+                    break;
                 }
             }
         }
@@ -425,6 +462,24 @@ void BTEditor::DrawNode(BTNode* node)
         ImNodes::PopColorStyle();
         ImNodes::PopColorStyle();
     }
+}
+
+void BTEditor::LoadBTFromFile(const string& filePath)
+{
+    // 1. 기존 에디터 노드 및 링크 메모리 정리
+    for (auto& it : _testNodes)
+        it->ClearChildren();
+    for (auto& it : _testNodes)
+        delete it;
+    _testNodes.clear();
+    _links.clear();
+    // 2. 새로운 JSON 파일 로드
+    BTSerializer::LoadFromJSON(filePath, &_testNodes, &_links);
+    // 3. ID 카운터 동기화
+    for (auto& node : _testNodes)
+        if (node->GetNodeID() >= _nextNodeId) _nextNodeId = node->GetNodeID() + 1;
+    for (auto& link : _links)
+        if (link.linkId >= _nextLinkId) _nextLinkId = link.linkId + 1;
 }
 
 void BTEditor::ReportNodeState(int32 nodeId, NodeState state)

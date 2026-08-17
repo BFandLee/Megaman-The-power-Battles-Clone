@@ -61,12 +61,9 @@ NodeState BTAction_Gemini_BaseMissile::Tick(Blackboard* bb)
         return NodeState::Failure;
     }
 
-    if (!_isAttackStatred)
+    if (!_isAttackStarted)
     {
-        if (bb->OwnerBoss != nullptr)
-        {
-            bb->OwnerBoss->SetLookDirX(bb->DirXToPlayer);
-        }
+        bb->OwnerBoss->SetLookDirX(bb->DirXToPlayer);
         _isAttackFinished = false;
 
         bb->BossAnimation->SetEndEvent(L"Attack", [this]() {
@@ -103,14 +100,23 @@ NodeState BTAction_Gemini_BaseMissile::Tick(Blackboard* bb)
             );
             SceneManager::GetInstance().GetScene()->AddActor(CloneMissile);
         }
-        _isAttackStatred = true;
+        _isAttackStarted = true;
         return NodeState::Running;
     }
     else
     {
+        if (bb->BossAnimation->GetCurrentClipName() != L"Attack")
+        {
+            _isAttackStarted = false;
+            _isAttackFinished = false;
+            return NodeState::Failure;
+
+        }
+
         if (_isAttackFinished)
         {
-            _isAttackStatred = false;
+            _isAttackStarted = false;
+            _isAttackFinished = false;
             return NodeState::Success;
         }
     }

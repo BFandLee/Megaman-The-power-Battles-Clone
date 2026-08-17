@@ -25,7 +25,6 @@ void BossClone::Init()
 	AnimatorComponent* animator = AddComponent<AnimatorComponent>();
 	BoxCollider* collider = AddComponent<BoxCollider>();
 	RigidBodyComponent* rigid = AddComponent<RigidBodyComponent>();
-	AddComponent<TransformComponent>();
 	AddComponent<FSMComponent>();
 
 	collider->SetSize(60, 60);

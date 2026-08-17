@@ -27,7 +27,7 @@ public:
     bool IsOpen() const { return _isOpen; }
 
     void DrawNode(class BTNode* node);
-
+    void LoadBTFromFile(const string& filePath);
     // 런타임 보스 노드가 자신의 상태를 에디터에 보고하는 함수
     void ReportNodeState(int32 nodeId, NodeState state);
 

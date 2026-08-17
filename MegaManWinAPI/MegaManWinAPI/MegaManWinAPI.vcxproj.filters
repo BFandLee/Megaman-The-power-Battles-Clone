@@ -303,6 +303,12 @@
     <ClInclude Include="Entity\BT\CheckPlayerAttackingDecorator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\BT\SucceederDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CheckCloneDurationDecorator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\AI\BossBlackboard.cpp">
@@ -543,6 +549,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity\BT\CheckPlayerAttackingDecorator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\SucceederDecorator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CheckCloneDurationDecorator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

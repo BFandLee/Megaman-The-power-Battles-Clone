@@ -14,6 +14,7 @@ public:
 private:
     bool _isSpawning = false;
     float _spawnTimer = 0.0f;
+    float _spawnDuration = 1.2f;
     Vector _startPos;
     Vector _targetPos;
     class BossClone* _spawnedClone = nullptr;
@@ -37,6 +38,10 @@ public:
     virtual ~BTAction_Gemini_LaserMissile() = default;
 
     virtual NodeState Tick(class Blackboard* bb) override;
+
+private:
+    bool _isAttackStarted = false;
+    bool _isAttackFinished = false;
 };
 
 // 연속 점프 이동 (기본 이동 패턴)

@@ -28,6 +28,16 @@ void BossPhase1State::Enter()
 
 void BossPhase1State::Update(float deltaTime)
 {
+    if (_boss == nullptr)
+    {
+        return;
+    }
+
+    if (m_pOwnerFSM == nullptr)
+    {
+        return;
+    }
+
     BossBlackboard* bb = _boss->GetBlackboard();
 
     if (bb == nullptr)
@@ -37,7 +47,18 @@ void BossPhase1State::Update(float deltaTime)
 
     if (bb->PlayerTransform == nullptr || bb->BossTransform == nullptr)
         return;
-  
+    
+    if (_boss->IsHit())
+    {
+        return;
+    }
+
+    if (_boss->GetHP() <= _boss->GetMaxHP() * 0.5f)
+    {
+        m_pOwnerFSM->ChangeState("Phase2");
+        return;
+    }
+
     if (_rootNode && bb)
     {
         _rootNode->Execute(bb);

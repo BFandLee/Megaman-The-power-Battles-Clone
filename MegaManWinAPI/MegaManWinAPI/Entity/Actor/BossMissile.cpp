@@ -85,10 +85,15 @@ void BossMissile::OnEnter(Actor* other, const HitResult& hit)
 
             if (_type == MissileType::Razer)
             {
-                if (_hasBounced) return;
-                _hasBounced = true;
+                if (_bounceCount >= _maxBounceCount)
+                {
+                    Destroy();
+                    return;
+                }
+
+                // 기존 레이저 파괴
                 Destroy();
-    
+
                 Vector newDir = _dir;
                 switch (otherType)
                 {
@@ -111,7 +116,7 @@ void BossMissile::OnEnter(Actor* other, const HitResult& hit)
                 if (nextLaser != nullptr)
                 {
                     nextLaser->Init();
-                    nextLaser->Fire(GetPos(), newDir, MissileType::Razer);
+                    nextLaser->Fire(GetPos(), newDir, MissileType::Razer, _bounceCount + 1);
                     SceneManager::GetInstance().GetScene()->AddActor(nextLaser);
                 }
             }
@@ -125,16 +130,18 @@ void BossMissile::OnEnter(Actor* other, const HitResult& hit)
     
 }
 
-void BossMissile::Fire(Vector startPos, Vector dir, MissileType type)
+void BossMissile::Fire(Vector startPos, Vector dir, MissileType type, int bounceCount)
 {
     this->SetPos(startPos);
     _dir = dir;
     _type = type;
+    _bounceCount = bounceCount;
 
     LoadDataFromJson(_type);
 
     if (_type == MissileType::Razer)
     {
+        
         _animator->Play(L"Razer");
         float Degree = atan2f(_dir.y, _dir.x);
         float angleDeg = (Degree * (180.0f / 3.14159265f));

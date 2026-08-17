@@ -10,4 +10,8 @@ public:
     virtual void Enter() override;
     virtual void Update(float deltaTime) override;
     virtual void Exit() override;
+
+private:
+    class BTNode* _rootNode = nullptr;
+    class Boss* _boss = nullptr;
 };

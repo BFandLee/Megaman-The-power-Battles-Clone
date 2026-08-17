@@ -13,7 +13,7 @@ public:
 
     virtual void OnEnter(Actor* other, const HitResult& hit) override;
 
-    void Fire(Vector startPos, Vector dir, MissileType type = MissileType::Base);
+    void Fire(Vector startPos, Vector dir, MissileType type = MissileType::Base, int BounceCount = 0);
     
     void LoadDataFromJson(MissileType type);
     void SaveDataToJson(MissileType type);
@@ -26,6 +26,8 @@ private:
     float _lifeTime = 0.0f;
     MissileType _type;
     bool _hasBounced = false;
+    int _bounceCount = 0;
+    int _maxBounceCount = 4;
 
     const std::wstring _dataPath = L"../Resources/Data/BossBulletData.json";
 };
