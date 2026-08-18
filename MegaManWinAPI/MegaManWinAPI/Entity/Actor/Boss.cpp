@@ -130,7 +130,6 @@ void Boss::OnStay(Actor* other, const HitResult& hit)
 	Vector pos = GetPos();
 	bool isWall = (other->GetActorType() == ActorType::WALL);
 	bool isGround = (other->GetActorType() == ActorType::Ground);
-	bool isPlayer = (other->GetActorType() == ActorType::Player);
 	bool isPlayerBullet = (other->GetActorType() == ActorType::PlayerBullet);
 
 	BoxCollider* myCol = GetComponent<BoxCollider>();

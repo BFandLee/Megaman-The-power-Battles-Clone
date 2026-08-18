@@ -28,7 +28,7 @@ void TestScene::Update(float deltaTime)
 
 	Player* player = static_cast<Player*>(FindActorByType(ActorType::Player));
 
-	// ÇÃ·¹ÀÌ¾î°¡ ÆÄ±«µÇ¾î »ç¶óÁ³°í, ÄÁÆ¼´º UI°¡ ¾ÆÁ÷ ½ÇÇà ÀüÀÌ¶ó¸é
+	// í”Œë ˆì´ì–´ê°€ íŒŒê´´ë˜ì–´ ì‚¬ë¼ì¡Œê³ , ì»¨í‹°ë‰´ UIê°€ ì•„ì§ ì‹¤í–‰ ì „ì´ë¼ë©´
 	if (player == nullptr && _continueUI && !_continueUI->IsVisible())
 	{
 		_playerHpBar->SetVisible(false);
@@ -39,11 +39,11 @@ void TestScene::Update(float deltaTime)
 
 void TestScene::createObjects()
 {
-	// ¹è°æ ¾×ÅÍ »ı¼º
+	// ë°°ê²½ ì•¡í„° ìƒì„±
 	Actor* bg = new Background();
 	Actor* ground = new Ground();
 
-	// ¾ç »çÀÌµå¸¦ ¸·´Â º® »ı¼º
+	// ì–‘ ì‚¬ì´ë“œë¥¼ ë§‰ëŠ” ë²½ ìƒì„±
 	WallActor* leftwall = new WallActor();
 	leftwall->Init();
 	leftwall->SetPos(Vector(0, GWinSizeY/2));
@@ -56,12 +56,12 @@ void TestScene::createObjects()
 	rightwall->SetSize(50, GWinSizeY);
 	AddActor(rightwall);
 
-	// ÇÃ·¹ÀÌ¾î
+	// í”Œë ˆì´ì–´
 	ActorFactory* factory = new PlayerFactory();
 	Actor* player = factory->CreateActor(Vector(GWinSizeX / 2, 0));
 	delete factory;
 
-	// »ı¼ºÇßÀ¸¸é ¹«Á¶°Ç ÃÊ±âÈ­
+	// ìƒì„±í–ˆìœ¼ë©´ ë¬´ì¡°ê±´ ì´ˆê¸°í™”
 	bg->Init();
 	ground->Init();
 	
@@ -70,11 +70,11 @@ void TestScene::createObjects()
 	AddActor(ground);
 	AddActor(player);
 
-	// ÃÑ¾Ë
+	// ì´ì•Œ
 	PlayerBullet* bullet = new PlayerBullet();
 	bullet->SetPos(player->GetPos());
 
-	// º¸½º
+	// ë³´ìŠ¤
 	Boss* boss = new Boss();
 	boss->Init();
 	boss->SetPos(Vector(600, 300));
@@ -83,27 +83,27 @@ void TestScene::createObjects()
 
 void TestScene::createUI()
 {
-	// 1. ¾À¿¡ µî·ÏµÈ ¾×ÅÍ Áß Boss Å½»ö
+	// 1. ì”¬ì— ë“±ë¡ëœ ì•¡í„° ì¤‘ Boss íƒìƒ‰
 	Boss* boss = static_cast<Boss*>(FindActorByType(ActorType::Boss));
 	
-	// 2. º¸½º Ã¼·Â ¹Ù »ı¼º ¹× µî·Ï
+	// 2. ë³´ìŠ¤ ì²´ë ¥ ë°” ìƒì„± ë° ë“±ë¡
 	if (boss != nullptr)
 	{
 		_bossHpBar = new BossHpBarUI();
 		_bossHpBar->Init();
-		_bossHpBar->SetPos(Vector(450.0f, 605.0f)); // È­¸é »ó´Ü À§Ä¡
-		_bossHpBar->SetScale(Vector(0.7f, 0.7f));  // µµÆ® 2¹è È®´ë
+		_bossHpBar->SetPos(Vector(450.0f, 605.0f)); // í™”ë©´ ìƒë‹¨ ìœ„ì¹˜
+		_bossHpBar->SetScale(Vector(0.7f, 0.7f));  // ë„íŠ¸ 2ë°° í™•ëŒ€
 		_bossHpBar->SetTarget(boss);
 		UIManager::GetInstance().AddUI(_bossHpBar);
 	}
 
 	Player* player = static_cast<Player*>(FindActorByType(ActorType::Player));
 
-	// 2. º¸½º Ã¼·Â ¹Ù »ı¼º ¹× µî·Ï
+	// 2. ë³´ìŠ¤ ì²´ë ¥ ë°” ìƒì„± ë° ë“±ë¡
 	if (player != nullptr)
 	{
 		_playerHpBar = new PlayerHpBarUI();
-		_playerHpBar->SetPos(Vector(40.0f, 40.0f)); // È­¸é »ó´Ü À§Ä¡
+		_playerHpBar->SetPos(Vector(40.0f, 40.0f)); // í™”ë©´ ìƒë‹¨ ìœ„ì¹˜
 		_playerHpBar->SetTarget(player);
 		_playerHpBar->Init();
 		UIManager::GetInstance().AddUI(_playerHpBar);
@@ -124,7 +124,7 @@ void TestScene::createUI()
 
 		if (player != nullptr)
 		{
-			FSMComponent* playerFSM = boss->GetComponent<FSMComponent>();
+			FSMComponent* playerFSM = player->GetComponent<FSMComponent>();
 			if (playerFSM != nullptr)
 			{
 				playerFSM->ChangeState("Idle");
@@ -135,28 +135,37 @@ void TestScene::createUI()
 	UIManager::GetInstance().AddUI(readyGoUI);
 
 	_continueUI = new ContinueUI();
+	_continueUI->Init();
 	UIManager::GetInstance().AddUI(_continueUI);
 	_continueUI->SetVisible(false);
 
 	_continueUI->SetOnContinueCallback([this]()
 		{
-			ActorFactory* factory = new PlayerFactory();
-			Actor* newPlayer = factory->CreateActor(Vector(GWinSizeX / 2.0f, 0.0f));
-			delete factory;
-			
-			AddActor(newPlayer);
+			// 1. SceneData.jsonì˜ ì´ˆê¸° ë°ì´í„° ê¸°ë°˜ìœ¼ë¡œ í”Œë ˆì´ì–´ ë³µì› ìŠ¤í°
+			Actor* newPlayer = SpawnActorFromInitialData("Player");
+			if (newPlayer != nullptr)
+			{
+				AddActor(newPlayer);
 
-			// 3. HP¹Ù¿¡ »õ·Î »ı¼ºµÈ ÇÃ·¹ÀÌ¾î Å¸°Ù Àç¿¬°á ¹× UI ´Ù½Ã º¸ÀÌ±â
-			_playerHpBar->SetTarget(static_cast<Player*>(newPlayer));
-			_playerHpBar->SetVisible(true);
-			_bossHpBar->SetVisible(true);
+				// 2. FSMì„ Idle ìƒíƒœë¡œ ì „í™˜í•˜ì—¬ ì¦‰ì‹œ ì¡°ì‘ ê°€ëŠ¥í•˜ë„ë¡ ì„¤ì •
+				FSMComponent* playerFSM = newPlayer->GetComponent<FSMComponent>();
+				if (playerFSM != nullptr)
+				{
+					playerFSM->ChangeState("Spone");
+				}
 
-			// 4. ÄÁÆ¼´º UI ¼û±â±â
+				// 3. HPë°”ì— ìƒˆ í”Œë ˆì´ì–´ íƒ€ê²Ÿ ì¬ì—°ê²° ë° UI ë‹¤ì‹œ ë³´ì´ê¸°
+				_playerHpBar->SetTarget(static_cast<Player*>(newPlayer));
+				_playerHpBar->SetVisible(true);
+				_bossHpBar->SetVisible(true);
+			}
+
+			// 4. ì»¨í‹°ë‰´ UI ìˆ¨ê¸°ê¸°
 			_continueUI->SetVisible(false);
 		});
 
 	_continueUI->SetOnGameOverCallback([this]()
 		{
-			// °ÔÀÓ ¿À¹ö ¾À ÀüÈ¯
+			// ê²Œì„ ì˜¤ë²„ ì”¬ ì „í™˜
 		});
 }

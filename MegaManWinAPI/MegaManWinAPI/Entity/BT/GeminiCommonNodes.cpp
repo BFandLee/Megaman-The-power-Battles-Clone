@@ -161,6 +161,7 @@ NodeState BTAction_Gemini_Move::Tick(Blackboard* bb)
 {
     if (bb->TargetPlayer == nullptr)
     {
+        _isMoveStarted = false;
         return NodeState::Failure;
     }
 

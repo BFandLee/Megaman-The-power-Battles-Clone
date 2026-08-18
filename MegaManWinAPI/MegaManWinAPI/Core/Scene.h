@@ -8,12 +8,12 @@
 class Enemy;
 class Bullet;
 
-// °ÔÀÓÈ­¸é¿¡ µîÀåÇÏ´Â ¸ğµç ¿ÀºêÁ§Æ®¸¦ °ü¸®
+// ê²Œì„í™”ë©´ì— ë“±ì¥í•˜ëŠ” ëª¨ë“  ì˜¤ë¸Œì íŠ¸ë¥¼ ê´€ë¦¬
 class Scene
 {
 public:
-	// vector<T> Ç®¿¡¼­ »ç¿ëÇÏ´Â Enemy,Bullet °ªÀÚÃ¼¸¦ Àü¹æ¼±¾ğÀ¸·Î ÇØ°áÇÏ±â À§ÇØ
-	// SceneÀÇ »ı¼ºÀÚ¿Í ¼Ò¸êÀÚ´Â cpp ÂÊ¿¡ ±¸ÇöÀ» ÇØ¾ßÇÑ´Ù.
+	// vector<T> í’€ì—ì„œ ì‚¬ìš©í•˜ëŠ” Enemy,Bullet ê°’ìì²´ë¥¼ ì „ë°©ì„ ì–¸ìœ¼ë¡œ í•´ê²°í•˜ê¸° ìœ„í•´
+	// Sceneì˜ ìƒì„±ìì™€ ì†Œë©¸ìëŠ” cpp ìª½ì— êµ¬í˜„ì„ í•´ì•¼í•œë‹¤.
 	Scene();
 	~Scene();
 
@@ -23,22 +23,22 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Render(ID2D1RenderTarget* renderTarget);
 	
-	// ¸ğµç ¾÷µ¥ÀÌÆ®°¡ ³¡³ª°í È£ÃâµÇ´Â ÇÔ¼ö
+	// ëª¨ë“  ì—…ë°ì´íŠ¸ê°€ ëë‚˜ê³  í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
 	void PostUpdate();
 	void AddPostUpdateAction(std::function<void()> action);
 
 	SceneType GetSceneType() { return _sceneType; }
 
-	// ¾À¿¡ °ü¸®µÇ´Â Actor Ãß°¡
+	// ì”¬ì— ê´€ë¦¬ë˜ëŠ” Actor ì¶”ê°€
 	void AddActor(class Actor* actor);
 
-	// ¾À¿¡¼­ °ü¸®µÇ´Â ActorÁß¿¡ ÇÏ³ª »èÁ¦ÇØ´Ş¶ó°í ¿äÃ»
+	// ì”¬ì—ì„œ ê´€ë¦¬ë˜ëŠ” Actorì¤‘ì— í•˜ë‚˜ ì‚­ì œí•´ë‹¬ë¼ê³  ìš”ì²­
 	void DeleteActor(class Actor* actor);
 	// void DeleteActorByCell(Cell cell);	grid
 	
 	Actor* FindActorByType(ActorType type) const;
 
-	// ÀüºÎ´Ù Áö¿ì±â
+	// ì „ë¶€ë‹¤ ì§€ìš°ê¸°
 	void RemoveAllActor();
 
 	void CreateEffect(Vector pos);
@@ -50,6 +50,8 @@ public:
 
 	const vector<Actor*>& GetActors() { return _actors; }
 	class Actor* FindActorByType(ActorType type);
+
+	Actor* SpawnActorFromInitialData(const string& name);
 
 public:
 	const vector<Actor*>& GetRenderList(RenderLayer layer) const;
@@ -63,41 +65,43 @@ protected:
 	virtual void createObjects();
 	virtual void createUI() {};
 
-	// actor List / render List ÀÇ µ¿±âÈ­¸¦ ¸ÂÃçÁÖ±â À§ÇØ¼­, Ç×»ó È£ÃâµÇ´Â ÇÔ¼ö
+	// actor List / render List ì˜ ë™ê¸°í™”ë¥¼ ë§ì¶°ì£¼ê¸° ìœ„í•´ì„œ, í•­ìƒ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
 	void registerActor(Actor* actor);
 	void removeActor(Actor* actor);
 
 	// bool isValidCell(Cell cell) const;
 
 protected:
-	// ¸ğµç Å¬·¡½º¸¦ °ü¸®ÇÏ´Â °øÅë ÀÚ·á±¸Á¶¸¦ ¼±¾ğ
-	vector<Actor*> _actors;	 // ¿©±â°¡ ÁøÂ¥ Update,RenderÇÏ´Â °´Ã¼µé
+	// ëª¨ë“  í´ë˜ìŠ¤ë¥¼ ê´€ë¦¬í•˜ëŠ” ê³µí†µ ìë£Œêµ¬ì¡°ë¥¼ ì„ ì–¸
+	vector<Actor*> _actors;	 // ì—¬ê¸°ê°€ ì§„ì§œ Update,Renderí•˜ëŠ” ê°ì²´ë“¤
 
-	// ·»´õ¸µ ¼ø¼­¸¦ À§ÇÑ list
+	// ë Œë”ë§ ìˆœì„œë¥¼ ìœ„í•œ list
 	vector<Actor*> _renderList[(int32)RenderLayer::Count];
 	
-	// Áö¿¬ ½Ã½ºÅÛ
+	// ì§€ì—° ì‹œìŠ¤í…œ
 	vector<Actor*>		_reservedAdd;	
 
-	// Á¦°Å ¿äÃ»À» Áßº¹Ã³¸®ÇÏÁö ¾Ê±â À§ÇØ, set ÀÚ·á±¸Á¶
+	// ì œê±° ìš”ì²­ì„ ì¤‘ë³µì²˜ë¦¬í•˜ì§€ ì•Šê¸° ìœ„í•´, set ìë£Œêµ¬ì¡°
 	unordered_set<Actor*>	 _reservedRemove;		// vector vs map
 
-	// ÇÑÇÁ·¹ÀÓ µÚ·Î ¹Ì·ï¼­ Æ¯Á¤ ÇÔ¼ö¸¦ È£ÃâÇØÁÖ´Â ±â´É
+	// í•œí”„ë ˆì„ ë’¤ë¡œ ë¯¸ë¤„ì„œ íŠ¹ì • í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ì£¼ëŠ” ê¸°ëŠ¥
 	std::vector<std::function<void()>> _postUpdateActions;
 
-	// º»ÀÎÀÇ Å¸ÀÔ
+	// ë³¸ì¸ì˜ íƒ€ì…
 	SceneType _sceneType = SceneType::Max;
+
+	unordered_map<string, json> _initialActorJsonData;
 
 
 
 private:
 	std::map<string, std::function<class Actor* ()>> _actorFactory;
 
-	// ÆÑÅä¸®¿¡ ½±°Ô µî·ÏÇÏ±â À§ÇÑ ÅÆÇÃ¸´ ÇÔ¼ö
+	// íŒ©í† ë¦¬ì— ì‰½ê²Œ ë“±ë¡í•˜ê¸° ìœ„í•œ íƒ¬í”Œë¦¿ í•¨ìˆ˜
 	template<typename T>
 	void RegisterActor(const string& name)
 	{
-		// ¶÷´ÙÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© new T()¸¦ È£ÃâÇÏ´Â ÇÔ¼ö ÀÚÃ¼¸¦ ÀúÀå
+		// ëŒë‹¤í•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ new T()ë¥¼ í˜¸ì¶œí•˜ëŠ” í•¨ìˆ˜ ìì²´ë¥¼ ì €ì¥
 		_actorFactory[name] = []() {return new T(); };
 	}
 

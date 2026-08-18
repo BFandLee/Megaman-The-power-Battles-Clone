@@ -19,19 +19,25 @@ void Blackboard::Init(Actor* owner)
 }
 void Blackboard::Update(float deltaTime)
 {
-	// 1. ÇÃ·¹ÀÌ¾î°¡ ¾ÆÁ÷ ¾øÀ¸¸é ¾À¿¡¼­ Å½»öÇÏ¿© Ä³½Ì
-	if (TargetPlayer == nullptr)
+	Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
+
+	// 1. í”Œë ˆì´ì–´ê°€ ì•„ì§ ì—†ìœ¼ë©´ ì”¬ì—ì„œ íƒìƒ‰í•˜ì—¬ ìºì‹±
+		
+	if (player != nullptr)
 	{
-		Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
-		if (player != nullptr)
-		{
-			TargetPlayer = player;
-			// TODO: player·ÎºÎÅÍ PlayerTransform°ú PlayerRigidBody¸¦ GetComponentÇÏ¿© Ä³½ÌÇÏ¼¼¿ä.
-			PlayerTransform = player->GetComponent<TransformComponent>();
-			PlayerRigidBody = player->GetComponent<RigidBodyComponent>();
-		}
+		TargetPlayer = player;
+		// TODO: playerë¡œë¶€í„° PlayerTransformê³¼ PlayerRigidBodyë¥¼ GetComponentí•˜ì—¬ ìºì‹±í•˜ì„¸ìš”.
+		PlayerTransform = player->GetComponent<TransformComponent>();
+		PlayerRigidBody = player->GetComponent<RigidBodyComponent>();
 	}
-	// 2. ÇÃ·¹ÀÌ¾î¿Í º¸½º°¡ ¸ðµÎ Á¸ÀçÇÒ °æ¿ì »ó´ë ¹æÇâ(DirXToPlayer) ÀÚµ¿ °è»ê
+	else
+	{
+		TargetPlayer = nullptr;
+		PlayerTransform = nullptr;
+		PlayerRigidBody = nullptr;
+	}
+	
+	// 2. í”Œë ˆì´ì–´ì™€ ë³´ìŠ¤ê°€ ëª¨ë‘ ì¡´ìž¬í•  ê²½ìš° ìƒëŒ€ ë°©í–¥(DirXToPlayer) ìžë™ ê³„ì‚°
 	if (PlayerTransform != nullptr && BossTransform != nullptr)
 	{
 		float playerX = PlayerTransform->GetPos().x;
@@ -39,15 +45,8 @@ void Blackboard::Update(float deltaTime)
 		DirXToPlayer = (playerX > bossX) ? 1.0f : -1.0f;
 	}
 
-	// º¸½º Å¬·Ð ¾À¿¡¼­ Å½»öÇÏ¿© Ä³½Ì
-	if (BossClone == nullptr)
-	{
-		Actor* clone = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::BossClone);
-		if (clone != nullptr)
-		{
-			BossClone = clone;
-		}
-	}
+	Actor* clone = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::BossClone);
+	BossClone = clone;
 }
 
 void Blackboard::SetFloat(const std::string& key, float value)

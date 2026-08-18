@@ -368,6 +368,7 @@ bool Scene::LoadScene(const string& filename)
 		for (auto& actorJson : j["Actors"])
 		{
 			string name = actorJson["name"];
+			_initialActorJsonData[name] = actorJson;
 			Actor* newActor = nullptr;
 
 			// 팩토리 맵에 해당 이름이 등록되어 있는지 확인
@@ -411,4 +412,21 @@ Actor* Scene::FindActorByType(ActorType type)
 	}
 
 	return nullptr;
+}
+
+Actor* Scene::SpawnActorFromInitialData(const string& name)
+{
+	if (!_initialActorJsonData.contains(name) || !_actorFactory.contains(name))
+	{
+		return nullptr;
+	}
+
+	Actor* newActor = _actorFactory[name]();
+	if (newActor != nullptr)
+	{
+		newActor->Init();
+		newActor->FromJson(_initialActorJsonData[name]);
+	}
+
+	return newActor;
 }
