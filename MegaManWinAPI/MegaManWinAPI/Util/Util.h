@@ -94,7 +94,12 @@ enum class MissileType
 	Razer
 };
 
-
+enum class HpBarPart
+{
+	Head,
+	Body,
+	Tail
+};
 
 
 

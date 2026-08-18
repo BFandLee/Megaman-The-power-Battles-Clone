@@ -8,5 +8,6 @@ public:
 protected:
 	virtual void loadResources() override;
 	virtual void createObjects() override;
+	virtual void createUI() override;
 };
 

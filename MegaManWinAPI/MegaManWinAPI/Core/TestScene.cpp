@@ -10,6 +10,9 @@
 #include "PlayerBullet.h"
 #include "Boss.h"
 
+#include "BossHpBarUI.h"
+#include "UIManager.h"
+
 void TestScene::loadResources()
 {
 	ResourceManager::GetInstance().LoadAllTexturesInDirectory(L"../Resources/sprites");
@@ -52,9 +55,26 @@ void TestScene::createObjects()
 	PlayerBullet* bullet = new PlayerBullet();
 	bullet->SetPos(player->GetPos());
 
-	// 테스트 샌드백
+	// 보스
 	Boss* boss = new Boss();
 	boss->Init();
 	boss->SetPos(Vector(600, 300));
 	AddActor(boss);
+}
+
+void TestScene::createUI()
+{
+	// 1. 씬에 등록된 액터 중 Boss 탐색
+	Boss* boss = static_cast<Boss*>(FindActorByType(ActorType::Boss));
+	
+	// 2. 보스 체력 바 생성 및 등록
+	if (boss != nullptr)
+	{
+		BossHpBarUI* hpBar = new BossHpBarUI();
+		hpBar->Init();
+		hpBar->SetPos(Vector(450.0f, 605.0f)); // 화면 상단 위치
+		hpBar->SetScale(Vector(0.7f, 0.7f));  // 도트 2배 확대
+		hpBar->SetTarget(boss);
+		UIManager::GetInstance().AddUI(hpBar);
+	}
 }

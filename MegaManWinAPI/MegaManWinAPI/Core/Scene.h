@@ -49,6 +49,7 @@ public:
 	bool LoadScene(const string& filename);
 
 	const vector<Actor*>& GetActors() { return _actors; }
+	class Actor* FindActorByType(ActorType type);
 
 public:
 	const vector<Actor*>& GetRenderList(RenderLayer layer) const;
@@ -60,6 +61,7 @@ public:
 protected:
 	virtual void loadResources();
 	virtual void createObjects();
+	virtual void createUI() {};
 
 	// actor List / render List 의 동기화를 맞춰주기 위해서, 항상 호출되는 함수
 	void registerActor(Actor* actor);
@@ -85,6 +87,8 @@ protected:
 
 	// 본인의 타입
 	SceneType _sceneType = SceneType::Max;
+
+
 
 private:
 	std::map<string, std::function<class Actor* ()>> _actorFactory;

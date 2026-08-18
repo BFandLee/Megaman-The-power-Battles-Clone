@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "TimeManager.h"
 #include "CollisionManager.h"
+#include "UIManager.h"
 //#include "Effect.h"
 //#include "DataManager.h"
 //#include "ResourceData.h"
@@ -47,7 +48,7 @@ void Scene::Init()
 		createObjects();
 	}
 
-
+	createUI();
 }
 
 void Scene::Cleanup()
@@ -62,6 +63,8 @@ void Scene::Cleanup()
 		}
 	}
 	_actors.clear();
+
+	UIManager::GetInstance().Cleanup();
 }
 
 void Scene::Update(float deltaTime)
@@ -75,6 +78,8 @@ void Scene::Update(float deltaTime)
 		
 		actor->Update(deltaTime);
 	}
+
+	UIManager::GetInstance().Update(deltaTime);
 
 	std::erase_if(_actors, [this](Actor* actor)
 		{
@@ -128,6 +133,8 @@ void Scene::Render(ID2D1RenderTarget* renderTarget)
 			actor->Render(renderTarget);
 		}
 	}
+
+	UIManager::GetInstance().Render(renderTarget);
 
 }
 
@@ -385,4 +392,23 @@ bool Scene::LoadScene(const string& filename)
 	}
 
 	return true;
+}
+
+Actor* Scene::FindActorByType(ActorType type)
+{
+	// 1. 활성화된 액터 목록 검색
+	for (auto* actor : _actors)
+	{
+		if (actor && actor->GetActorType() == type)
+			return actor;
+	}
+
+	// 2. 생성 예약 목록(_reservedAdd) 검색
+	for (auto* actor : _reservedAdd)
+	{
+		if (actor && actor->GetActorType() == type)
+			return actor;
+	}
+
+	return nullptr;
 }

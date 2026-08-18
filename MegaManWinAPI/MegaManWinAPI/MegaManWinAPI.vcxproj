@@ -110,7 +110,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\BT;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\FSM\Boss;$(ProjectDir)Entity\FSM\Player;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\AI;$(ProjectDir)Entity\Factory;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)External\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\BT;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\FSM\Boss;$(ProjectDir)Entity\FSM\Player;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\AI;$(ProjectDir)Entity\Factory;$(ProjectDir)External\ImGui;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4828</DisableSpecificWarnings>
     </ClCompile>
@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="UI\BossHpBarUI.h" />
     <ClInclude Include="Entity\BT\CheckCloneDurationDecorator.h" />
     <ClInclude Include="Entity\BT\CheckCloneDecorator.h" />
     <ClInclude Include="Entity\BT\CheckPlayerAttackingDecorator.h" />
@@ -207,6 +208,8 @@
     <ClInclude Include="Entity\BT\Sequence.h" />
     <ClInclude Include="Entity\BT\Selector.h" />
     <ClInclude Include="Entity\BT\SucceederDecorator.h" />
+    <ClInclude Include="Manager\UIManager.h" />
+    <ClInclude Include="UI\UIElement.h" />
     <ClInclude Include="Util\FileDialog.h" />
     <ClInclude Include="Util\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
@@ -226,6 +229,7 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="UI\BossHpBarUI.cpp" />
     <ClCompile Include="Entity\BT\CheckCloneDurationDecorator.cpp" />
     <ClCompile Include="Entity\BT\CheckCloneDecorator.cpp" />
     <ClCompile Include="Entity\BT\CheckPlayerAttackingDecorator.cpp" />
@@ -301,6 +305,8 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="Entity\Component\TransformComponent.cpp" />
+    <ClCompile Include="Manager\UIManager.cpp" />
+    <ClCompile Include="UI\UIElement.cpp" />
     <ClCompile Include="Util\FileDialog.cpp" />
     <ClCompile Include="Util\Util.cpp" />
     <ClCompile Include="External\ImGui\imgui.cpp">

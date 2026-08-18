@@ -24,6 +24,8 @@ public:
 
 	void SetApplyCenter(bool apply) { _applyCenter = apply; }
 
+	ID2D1Bitmap* GetBitmap() const { return _bitmap; }
+
 private:
 	ID2D1Bitmap* _bitmap = nullptr;
 	int32		_transparent = -1;
