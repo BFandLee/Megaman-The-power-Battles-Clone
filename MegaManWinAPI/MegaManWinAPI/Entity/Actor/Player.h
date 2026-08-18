@@ -26,6 +26,7 @@ public:
 	virtual void TakeDamage(int damage, float hitDirX = 0.0f) override;
 	int GetHp() const { return _hp; }
 	void SetHp(int hp) { _hp = hp; }
+	int GetMaxHp() const { return _maxHp; }
 	float GetHitDirX() { return _hitdirX; }
 
 	void SetInvincible(bool isInvincible) { _isInvincible = isInvincible; }

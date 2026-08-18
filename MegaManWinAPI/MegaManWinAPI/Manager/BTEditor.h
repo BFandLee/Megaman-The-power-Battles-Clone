@@ -32,6 +32,9 @@ public:
     void ReportNodeState(int32 nodeId, NodeState state);
 
 private:
+    float _zoomScale = 0.8f;
+    float _prevZoomScale = 1.0f;
+    map<int32, ImVec2> _baseNodePos;
     bool _isOpen = false;
     vector<class BTNode*> _testNodes;
     map<string, map<string, CreateNodeFunc>> _nodeRegistry;
@@ -43,5 +46,6 @@ private:
     ImVec2 _spawnPos;
     // [NodeID -> 디버그 정보] 맵
     map<int32, NodeDebugInfo> _debugStateMap;
+    void UpdateZoomLayout();
 
 };

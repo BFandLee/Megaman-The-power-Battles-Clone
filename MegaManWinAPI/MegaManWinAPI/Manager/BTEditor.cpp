@@ -136,7 +136,7 @@ void BTEditor::Update()
     ImGui::GetStyle().AntiAliasedLines = false;
     ImGui::GetStyle().AntiAliasedFill = false;
 
-    const int32 EDITOR_WIDTH = 600; // 에디터 패널의 가로 폭
+    const int32 EDITOR_WIDTH = 768; // 에디터 패널의 가로 폭
 
     if (InputManager::GetInstance().GetButtonDown(KeyType::Tilde))
     {
@@ -165,6 +165,15 @@ void BTEditor::Update()
         | ImGuiWindowFlags_NoCollapse;
 
     ImGui::Begin("BT Live Visualizer", &_isOpen, windowFlags);
+
+    ImGuiIO& io = ImGui::GetIO();
+    if (ImGui::IsWindowHovered() && io.KeyCtrl && io.MouseWheel != 0.0f)
+    {
+        _zoomScale += io.MouseWheel * 0.05f;
+        _zoomScale = std::clamp(_zoomScale, 0.5f, 1.5f);
+    }
+
+    ImGui::SetWindowFontScale(_zoomScale);
 
     float dt = TimeManager::GetInstance().GetDT();
     for (auto& pair : _debugStateMap)
@@ -239,6 +248,16 @@ void BTEditor::Update()
         }
     }
 
+    ImGui::SameLine();
+    ImGui::PushItemWidth(100.0f);
+    ImGui::SliderFloat("Zoom", &_zoomScale, 0.5f, 1.5f, "%.2fx");
+    ImGui::PopItemWidth();
+    ImGui::SameLine();
+    if (ImGui::Button("Reset Zoom"))
+    {
+        _zoomScale = 1.0f;
+    }
+
     if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
     {
         _spawnPos = ImGui::GetMousePos();
@@ -273,6 +292,10 @@ void BTEditor::Update()
         ImGui::EndPopup();
     }
 
+    ImNodes::PushStyleVar(ImNodesStyleVar_NodePadding, ImVec2(8.0f * _zoomScale, 5.0f * _zoomScale));
+    ImNodes::PushStyleVar(ImNodesStyleVar_PinCircleRadius, 4.0f * _zoomScale);
+    ImNodes::PushStyleVar(ImNodesStyleVar_PinHoverRadius, 8.0f * _zoomScale);
+    
     // imnodes 캔버스를 시작하고 종료
     ImNodes::BeginNodeEditor();
     
@@ -306,6 +329,8 @@ void BTEditor::Update()
     }
 
     ImNodes::EndNodeEditor();
+
+    ImNodes::PopStyleVar(3);
 
     // 삭제 기믹 수행
     int destoryedLinkId;
@@ -383,6 +408,11 @@ void BTEditor::Update()
         _nextLinkId++;
     }
 
+    if (_zoomScale != _prevZoomScale)
+    {
+        UpdateZoomLayout();
+        _prevZoomScale = _zoomScale;
+    }
     
 
     // 윈도우 창 닫기
@@ -433,7 +463,7 @@ void BTEditor::DrawNode(BTNode* node)
 
     char buffer[256];
     strcpy_s(buffer, sizeof(buffer), node->GetName().c_str());
-    ImGui::PushItemWidth(120.0f);
+    ImGui::PushItemWidth(120.0f * _zoomScale);
     if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
     {
         node->SetName(buffer);
@@ -473,13 +503,24 @@ void BTEditor::LoadBTFromFile(const string& filePath)
         delete it;
     _testNodes.clear();
     _links.clear();
+    _baseNodePos.clear();
+
     // 2. 새로운 JSON 파일 로드
     BTSerializer::LoadFromJSON(filePath, &_testNodes, &_links);
+
     // 3. ID 카운터 동기화
     for (auto& node : _testNodes)
+    {
         if (node->GetNodeID() >= _nextNodeId) _nextNodeId = node->GetNodeID() + 1;
+
+        int32 id = node->GetNodeID();
+        _baseNodePos[id] = ImNodes::GetNodeEditorSpacePos(id);
+    }
     for (auto& link : _links)
         if (link.linkId >= _nextLinkId) _nextLinkId = link.linkId + 1;
+
+    _zoomScale = 1.0f;
+    _prevZoomScale = 1.0f;
 }
 
 void BTEditor::ReportNodeState(int32 nodeId, NodeState state)
@@ -489,4 +530,30 @@ void BTEditor::ReportNodeState(int32 nodeId, NodeState state)
 
     _debugStateMap[nodeId].lastState = state;
     _debugStateMap[nodeId].holdTimer = 0.3f; // 0.3초 동안 색상 유지
+}
+
+void BTEditor::UpdateZoomLayout()
+{
+    if (_testNodes.empty()) return;
+    int32 rootId = _testNodes[0]->GetNodeID();
+    ImVec2 pivot = _baseNodePos[rootId];
+
+    // 1. 가로(X)는 줌 배율대로 시원하게 압축
+    float scaleX = _zoomScale;
+    
+    // 2. 세로(Y)는 겹침 방지를 위해 완만하게만 축소 (0.5x 줌일 때도 0.85x 유지)
+    float scaleY = 0.85f + (_zoomScale - 0.5f) * 0.3f;
+    for (auto node : _testNodes)
+    {
+        int32 id = node->GetNodeID();
+        if (_baseNodePos.find(id) != _baseNodePos.end())
+        {
+            ImVec2 base = _baseNodePos[id];
+            ImVec2 newPos = ImVec2(
+                pivot.x + (base.x - pivot.x) * scaleX,
+                pivot.y + (base.y - pivot.y) * scaleY
+            );
+            ImNodes::SetNodeEditorSpacePos(id, newPos);
+        }
+    }
 }

@@ -38,6 +38,7 @@ enum class KeyType
 	F2 = VK_F2,
 	F3 = VK_F3,
 	Tilde = VK_OEM_3,
+	ENTER = VK_RETURN	
 };
 
 enum class KeyState

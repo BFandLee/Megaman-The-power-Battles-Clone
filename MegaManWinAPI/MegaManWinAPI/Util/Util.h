@@ -101,5 +101,20 @@ enum class HpBarPart
 	Tail
 };
 
+enum class ReadyGoState
+{
+	Ready,      
+	Go,         
+	Finished    
+};
+
+enum class ContinueState
+{
+	Inactive,
+	Counting,
+	Continued,
+	TimeOut
+};
+
 
 

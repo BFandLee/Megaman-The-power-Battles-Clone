@@ -22,7 +22,10 @@ void UIManager::Update(float deltaTime)
 	{
 		if (elem != nullptr)
 		{
-			elem->Update(deltaTime);
+			if (elem->IsVisible() == true)
+			{
+				elem->Update(deltaTime);
+			}
 		}
 	}
 }
@@ -33,7 +36,10 @@ void UIManager::Render(ID2D1RenderTarget* renderTarget)
 	{
 		if (elem != nullptr)
 		{
-			elem->Render(renderTarget);
+			if (elem->IsVisible() == true)
+			{
+				elem->Render(renderTarget);
+			}
 		}
 	}
 }

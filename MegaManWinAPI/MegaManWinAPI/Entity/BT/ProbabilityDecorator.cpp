@@ -14,9 +14,11 @@ bool ProbabilityDecorator::checkCondition(Blackboard* bb)
 
 void ProbabilityDecorator::DrawProperty()
 {
-    ImGui::PushItemWidth(150.0f);
-    ImGui::SliderFloat("Probability (%)", &_probability, 0.0f, 100.0f);
+    ImGui::PushItemWidth(60.0f);
+    ImGui::SliderFloat("##Prob", &_probability, 0.0f, 100.0f, "%.0f%%");
     ImGui::PopItemWidth();
+    ImGui::SameLine();
+    ImGui::Text("Prob");
 }
 
 void ProbabilityDecorator::SaveProperty(json& j)

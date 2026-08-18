@@ -1,51 +1,60 @@
-# 보스 AI(Magnet Man) FSM 및 Phase 1 구현 계획 (최종)
+# 플레이어 체력바 (PlayerHpBarUI) 구현 계획
 
-`/grill-me` 인터뷰를 통해 보스 AI의 아키텍처 방향성이 모두 확정되었습니다.
+플레이어의 타원형 체력바를 `UIElement` 기반의 클래스로 설계하고 구현합니다.
+8개 세그먼트(칸)와 3단 레이어(투명 베이스, 빨간색, 노란색) 구조를 바탕으로 록맨 파워배틀 원작 방식의 체력 연출 및 25% 이하 위기 깜빡임 연출을 구성합니다.
 
-## 📌 최종 확정된 아키텍처 설계
-* **매크로 상태 관리 (FSM)**
-  * `SpawnState` -> `Phase1State` -> (HP <= 50%) -> `Phase2State` -> (HP == 0) -> `DeadState`
-  * 최상위 흐름만 통제합니다.
-* **마이크로 패턴 제어 (Behavior Tree)**
-  * `Phase1State`, `Phase2State` 내부에 탑재되어 세부 공격/이동 패턴을 결정합니다.
-* **로직 캡슐화 (Option A 채택)**
-  * 보스의 실제 행위(무적, 플레이어 끌어당기기, 점프 물리력 가하기 등)는 `Boss` 액터 클래스 내부의 멤버 함수(예: `SetInvincible()`, `PullPlayer()`)로 구현됩니다.
-  * C++ BT Action 노드는 오직 이 함수들을 호출(위임)만 수행합니다.
-* **블랙보드(Blackboard) 패턴 도입**
-  * 여러 노드(공용 노드 포함) 간의 데이터 공유와 결합도 감축을 위해 `Blackboard` 클래스를 도입합니다.
-  * C++의 캐스팅 에러를 방지하기 위해, `map<string, float>`, `map<string, Vector>`, `map<string, Object*>` 등 데이터 타입별로 맵(Map)을 나누어 관리합니다.
-* **BT 노드의 3단계 모듈화 (Categorization)**
-  * 범용성에 따라 노드들을 3가지로 분류하며, 클래스명 접두사 및 폴더로 명확히 구분합니다.
-    1. **공용 (Common):** 모든 몬스터가 사용할 수 있는 노드 (예: `BTAction_Common_MoveToTarget`)
-    2. **보스 전용 (Boss):** 특정 보스의 여러 페이즈에서 재사용되는 노드 (예: `BTAction_Boss_Shield`)
-    3. **페이즈 전용 (Phase):** 특정 페이즈에서만 쓰이는 단발성 패턴 (예: `BTAction_Phase1_MagnetPull`)
-* **BT 실행 방식**
-  * Action 노드는 애니메이션이나 이동이 끝날 때까지 `Running`을 리턴하다가 끝나면 `Success`를 리턴합니다.
-  * BT 트리 자체는 ImGui 에디터에서 조립하고 JSON으로 저장하여 사용합니다.
+---
 
-## Proposed Changes (실행할 스켈레톤 작업들)
+## 📐 핵심 설계 사항
 
-### 1. Boss Actor (Magnet Man) 생성
-* `Actor`를 상속받는 `Boss` 클래스 생성
-* `FSMComponent`, `BTComponent` 부착
-* 체력(HP) 변수 추가 및 `TakeDamage` 재정의
-* **(추가됨) 패턴용 인터페이스 함수 선언:** `SetInvincible(bool)`, `PullPlayer()`, `ShootMagnetMissile()`, `JumpTo(Vector dest)` 등
+### 1. 3단 레이어 및 8개 세그먼트 메커니즘
+- **레이어 계층**:
+  1. **맨 밑**: 투명/빈 베이스 프레임 (`Hpbar_1`)
+  2. **중간**: 빨간색 게이지 (`Hpbar_2`)
+  3. **제일 위**: 노란색 게이지 (`Hpbar_3`)
+- **8개 세그먼트(칸) & 총 16단계 HP 해상도**:
+  - 타원 링을 구성하는 8개 블록 (총 16개 세부 스텝)
+- **등장 연출 (Fill-up Animation)**:
+  - 씬 시작 시 투명 베이스 틀 위에 **반시계 방향**으로 한 칸씩 `[투명] -> [빨간색] -> [노란색]` 순서로 게이지가 차오름.
+- **체력 감소 연출 (Depletion)**:
+  - 피격 시 **시계 방향**으로 한 칸씩 `[노란색] -> [빨간색] -> [투명]` 순서로 게이지가 소모됨.
+- **위기 상태 (HitBar) 연출**:
+  - 체력이 **25% 이하**일 때 붉은색 외곽 링 테두리(`HitBar_1`)가 주기적으로 깜빡임(Blink).
 
-### 2. FSM Component & Macro States
-* `BossSpawnState`, `BossPhase1State`, `BossPhase2State`, `BossDeadState` 생성
-* FSM 업데이트 시 HP에 따른 Phase 전환 로직 작성
+---
 
-### 3. Phase 1 커스텀 BT Node 클래스 생성 (새로운 분류 체계 적용)
-* 하드코딩된 트리 구조 대신, ImGui에서 꺼내 쓸 수 있도록 개별 **노드 클래스(Node Class)**를 스켈레톤으로 생성합니다.
-* **생성할 노드 클래스 (예시):**
-  * **(공용)** `BTCheck_Common_Cooldown` (Condition 노드)
-  * **(공용)** `BTAction_Common_JumpTo` (Action 노드 - 타겟이나 특정 좌표로 점프)
-  * **(보스 전용)** `BTAction_Boss_MagnetShield` (Action 노드 - 보스의 공통 방어 로직)
-  * **(페이즈 전용)** `BTAction_Phase1_MagnetPull` (Action 노드 - Phase1 특수 끌어당기기)
-  * **(페이즈 전용)** `BTAction_Phase1_MagnetMissile` (Action 노드)
+## 🛠️ 제안된 변경 사항
 
-## Verification Plan
-1. 사용자께서 위 작업(클래스 스켈레톤 및 구체 로직 작성)을 진행합니다.
-2. 씬(Scene)에 `Boss`를 배치합니다.
-3. ImGui BT 에디터를 열고 생성해둔 커스텀 노드들을 사용해 Phase 1 트리를 시각적으로 조립합니다.
-4. 보스가 `Phase1State`에 진입했을 때, 에디터에서 만든 트리가 `Running` 상태를 잘 유지하며 패턴을 수행하는지 확인합니다.
+### [UI 컴포넌트 추가]
+
+#### [NEW] [PlayerHpBarUI.h](file:///D:/Megaman-The-power-Battles-Clone/MegaManWinAPI/MegaManWinAPI/UI/PlayerHpBarUI.h)
+- `UIElement`를 상속받는 `PlayerHpBarUI` 클래스 선언
+- 8개 세그먼트의 Source Bounding Box 좌표 정의 (반시계/시계 인덱스 매핑)
+- 세그먼트 상태 (`Empty`, `Half_Red`, `Full_Yellow`)
+- 텍스처 포인터 (`_baseTexture`, `_redTexture`, `_yellowTexture`, `_hitBarTexture`)
+- 플레이어 타겟 포인터 (`_player`), 애니메이션/깜빡임 관련 상태 변수
+
+#### [NEW] [PlayerHpBarUI.cpp](file:///D:/Megaman-The-power-Battles-Clone/MegaManWinAPI/MegaManWinAPI/UI/PlayerHpBarUI.cpp)
+- `Init()`: `ResourceManager`를 통해 관련 텍스처 획득
+- `Update(float deltaTime)`:
+  - 플레이어의 체력 계산 및 등장 Fill-up 보간 (`_displayHpRatio`)
+  - 25% 이하 시 HitBar 깜빡임 타이머 갱신
+- `Render(ID2D1RenderTarget* renderTarget)`:
+  - 1단계: 베이스 틀(`Hpbar_1`) 렌더링
+  - 2단계: `_displayHpRatio`에 따라 반시계/시계 방향 순서로 8개 칸의 빨간색/노란색 세그먼트 부분 렌더링
+  - 3단계: 체력 25% 이하 시 깜빡임 주기에 맞춰 `HitBar_1` 렌더링
+
+#### [MODIFY] [TestScene.cpp](file:///D:/Megaman-The-power-Battles-Clone/MegaManWinAPI/MegaManWinAPI/Core/TestScene.cpp)
+- `PlayerHpBarUI` 인스턴스 생성 및 플레이어 타겟 연결 (`SetTarget(player)`)
+- `UIManager::GetInstance().AddUI(playerHpBar)` 등록
+
+---
+
+## 🔍 검증 계획
+
+1. **빌드 검증**:
+   - 솔루션 빌드 오류 없이 컴파일되는지 확인
+2. **동작 검증**:
+   - 게임 시작 시 투명 베이스 틀 위에 반시계 방향으로 `[투명 -> 빨강 -> 노랑]` 순으로 차오르는지 확인
+   - 피격 시 시계 방향으로 `[노랑 -> 빨강 -> 투명]` 순으로 소모되는지 확인
+   - 체력 25% 이하 시 붉은 외곽 HitBar 링이 깜빡거리는지 확인

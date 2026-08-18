@@ -46,7 +46,7 @@ void BossSpawn::Update(float deltaTime)
         _pAnimator->Play(L"Spawn");
 
         _pAnimator->SetEndEvent(L"Spawn", [this]() {
-            m_pOwnerFSM->ChangeState("Phase1");
+            _pAnimator->Play(L"Idle", true);
             });
     }
 }

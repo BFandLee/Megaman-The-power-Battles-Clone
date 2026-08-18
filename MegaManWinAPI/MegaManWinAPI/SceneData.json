@@ -98,10 +98,10 @@
         {
             "Components": [
                 {
-                    "PosX": 164.2724609375,
-                    "PosY": 472.0,
+                    "PosX": 591.2420654296875,
+                    "PosY": 472.0000305175781,
                     "Rotation": 0.0,
-                    "ScaleX": 2.0,
+                    "ScaleX": -2.0,
                     "ScaleY": 2.0,
                     "name": "TransformComponent"
                 },
@@ -117,7 +117,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": 350.0,
+                    "VelocityX": -350.0,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 },
@@ -142,7 +142,7 @@
         {
             "Components": [
                 {
-                    "PosX": 914.2120361328125,
+                    "PosX": 873.09033203125,
                     "PosY": 518.2000122070313,
                     "Rotation": 0.0,
                     "ScaleX": 2.200000047683716,
@@ -162,7 +162,7 @@
                 },
                 {
                     "Gravity": 980.0,
-                    "VelocityX": -0.007287078071385622,
+                    "VelocityX": -3.8152036666870117,
                     "VelocityY": 0.0,
                     "name": "RigidBodyComponent"
                 }
@@ -172,8 +172,61 @@
         {
             "Components": [
                 {
-                    "PosX": 826.6207275390625,
+                    "PosX": 277.4202880859375,
+                    "PosY": 529.0,
+                    "Rotation": 0.0,
+                    "ScaleX": -2.200000047683716,
+                    "ScaleY": 2.200000047683716,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                },
+                {
+                    "Height": 81.0,
+                    "OffsetX": 0.0,
+                    "OffsetY": 0.0,
+                    "Width": 73.0,
+                    "name": "Collider"
+                },
+                {
+                    "Gravity": 980.0,
+                    "VelocityX": 3.8152036666870117,
+                    "VelocityY": 0.0,
+                    "name": "RigidBodyComponent"
+                },
+                null
+            ],
+            "name": "BossClone"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 721.5233154296875,
                     "PosY": 518.2000122070313,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Height": 9.0,
+                    "OffsetX": -52.20000076293945,
+                    "OffsetY": 0.0,
+                    "Width": 30.0,
+                    "name": "Collider"
+                },
+                {
+                    "name": "AnimatorComponent"
+                }
+            ],
+            "name": "BossMissile"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 428.9872741699219,
+                    "PosY": 529.0,
                     "Rotation": 0.0,
                     "ScaleX": 2.0,
                     "ScaleY": 2.0,

@@ -31,9 +31,11 @@ bool CheckCloneDurationDecorator::checkCondition(Blackboard* bb)
 
 void CheckCloneDurationDecorator::DrawProperty()
 {
-    ImGui::PushItemWidth(150.0f);
-    ImGui::InputFloat("Min Duration (sec)", &_minDuration);
+    ImGui::PushItemWidth(60.0f);
+    ImGui::InputFloat("##Duration", &_minDuration, 0.0f, 0.0f, "%.1fs");
     ImGui::PopItemWidth();
+    ImGui::SameLine();
+    ImGui::Text("Dur");
 }
 
 void CheckCloneDurationDecorator::SaveProperty(json& j)
