@@ -30,8 +30,7 @@ void BossPhase2State::Update(float deltaTime)
 {
     if (_boss == nullptr || m_pOwnerFSM == nullptr) return;
     BossBlackboard* bb = _boss->GetBlackboard();
-    if (bb == nullptr || bb->PlayerTransform == nullptr 
-        || bb->BossTransform == nullptr) return;
+    if (bb == nullptr || bb->BossTransform == nullptr) return;
 
     if (_boss->IsHit()) return;
 

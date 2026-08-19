@@ -1,0 +1,21 @@
+{
+  "bLoop": true,
+  "frames": [
+    {
+      "duration": 0.05,
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "size": {
+        "x": 64.0,
+        "y": 64.0
+      },
+      "startPos": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    }
+  ],
+  "texturePath": "_BaseHit_Sheet"
+}

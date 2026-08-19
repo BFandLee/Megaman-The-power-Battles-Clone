@@ -15,10 +15,10 @@ public:
 	// vector<T> 풀에서 사용하는 Enemy,Bullet 값자체를 전방선언으로 해결하기 위해
 	// Scene의 생성자와 소멸자는 cpp 쪽에 구현을 해야한다.
 	Scene();
-	~Scene();
+	virtual ~Scene();
 
-	void Init();
-	void Cleanup();
+	virtual void Init();
+	virtual void Cleanup();
 
 	virtual void Update(float deltaTime);
 	virtual void Render(ID2D1RenderTarget* renderTarget);

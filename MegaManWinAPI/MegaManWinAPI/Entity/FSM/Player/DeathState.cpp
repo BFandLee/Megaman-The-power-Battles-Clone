@@ -6,6 +6,7 @@
 #include "RigidBodyComponent.h"
 #include "Player.h"
 #include "BoxCollider.h"
+#include "SoundManager.h"
 
 DeathState::DeathState(FSMComponent* fsm) : State(fsm)
 {
@@ -19,7 +20,10 @@ void DeathState::Enter()
 {
 	_deathTimer = 0.0f;
 
-	// TODO 1: 죽음(폭발) 애니메이션 재생
+	SoundManager::GetInstance().StopSFX(L"megaman_charge");
+	SoundManager::GetInstance().StopSFX(L"megaman_chargeend");
+	SoundManager::GetInstance().PlaySFX(L"megaman_death");
+
 	_pAnimator = m_pOwnerFSM->GetOwner()->GetComponent<AnimatorComponent>();
 	if (_pAnimator != nullptr)
 	{

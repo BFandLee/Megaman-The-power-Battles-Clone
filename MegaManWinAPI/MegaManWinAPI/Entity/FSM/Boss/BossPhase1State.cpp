@@ -45,7 +45,7 @@ void BossPhase1State::Update(float deltaTime)
         return;
     }
 
-    if (bb->PlayerTransform == nullptr || bb->BossTransform == nullptr)
+    if (bb->BossTransform == nullptr)
         return;
     
     if (_boss->IsHit())

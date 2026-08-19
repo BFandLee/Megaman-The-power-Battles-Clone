@@ -5,10 +5,11 @@
 #include "InputManager.h"
 #include "ObjectPoolManager.h"
 #include "SceneManager.h"
+#include "SoundManager.h"
 #include "Scene.h"
 #include "AnimatorComponent.h"
 #include "ChargeEffectActor.h"
-#include <Player.h>
+#include "Player.h"
 
 WeaponComponent::WeaponComponent() : Component("WeaponComponent")
 {
@@ -59,8 +60,7 @@ void WeaponComponent::Update(float deltaTime)
         if (_currentAnimTimer <= 0) _isAttacking = false;
     }
 
-
-    // 1. 일반 발사 (ButtonDown) - 기존 로직 유지
+    // 1. 일반 발사 및 차징 시작 (ButtonDown)
     if (InputManager::GetInstance().GetButtonDown(KeyType::A) && _currentCooldown <= 0.0f)
     {
         _currentWeapon->Fire(ChargeLevel::Normal);
@@ -68,77 +68,84 @@ void WeaponComponent::Update(float deltaTime)
         _currentAnimTimer = _attackAnimDuration;
         _currentBurstCount--;
         _currentCooldown = (_currentBurstCount != 0) ? _attackInterval : _reloadCooldown;
-        
-        // 차지 타이머 초기화 및 차지 시작
+
+        // 차징 상태 및 플래그 초기화
         _chargeTimer = 0.0f;
         _isCharging = true;
+        _isMidSoundPlayed = false;
+        _isMaxSoundPlayed = false;
     }
 
-    // 2. 차지 진행 (Button)
+    // 2. 차징 진행 (ButtonPressed)
     if (InputManager::GetInstance().GetButtonPressed(KeyType::A))
     {
         if (_isCharging)
         {
             _chargeTimer += deltaTime;
-            if (!_chargeEffect->GetActive() && _chargeTimer > _midChargeTime)
+
+            // [1단계] Mid 차징 진입 -> megaman_charge (차징 시작음) 루프 재생
+            if (_chargeTimer >= _midChargeTime && !_isMidSoundPlayed)
             {
+                _isMidSoundPlayed = true;
                 _chargeEffect->SetActive(true);
+                _chargeEffect->SetChargeLevel((int32)ChargeLevel::Mid);
+
+                SoundManager::GetInstance().PlaySFX(L"megaman_charge", true);
             }
-            if (_chargeEffect != nullptr)
+
+            // [2단계] Max 풀차지 도달 -> megaman_charge 정지 후 megaman_chargeend (풀차지 완료음) 루프 재생
+            if (_chargeTimer >= MAX_CHARGE_TIME && !_isMaxSoundPlayed)
             {
-                // 이펙트 위치 업데이트
+                _isMaxSoundPlayed = true;
+                _chargeEffect->SetChargeLevel((int32)ChargeLevel::Max);
+
+                SoundManager::GetInstance().StopSFX(L"megaman_charge");
+                SoundManager::GetInstance().PlaySFX(L"megaman_chargeend", true);
+            }
+
+            // 차징 이펙트 위치 및 방향 갱신
+            if (_chargeEffect != nullptr && _chargeEffect->GetActive())
+            {
                 Vector pos = GetOwner()->GetPos();
                 _chargeEffect->SetPos(pos);
 
-                // FlipX 구현
                 Player* player = static_cast<Player*>(GetOwner());
                 float dirX = player->GetLookDirX();
                 _chargeEffect->SetScale(Vector(dirX, 1.0f));
-
-                // 2. 차지 시간에 따른 레벨(애니메이션) 업데이트
-                if (_chargeTimer >= MAX_CHARGE_TIME)
-                {
-                    _chargeEffect->SetChargeLevel((int32)ChargeLevel::Max);
-                }
-                else if (_chargeTimer >= _midChargeTime)
-                {
-                    _chargeEffect->SetChargeLevel((int32)ChargeLevel::Mid);
-                }
             }
         }
     }
 
-    // 3. 차지 샷 발사 (ButtonUp)
+    // 3. 차징 후 발사 및 버튼 해제 (ButtonUp)
     if (InputManager::GetInstance().GetButtonUp(KeyType::A))
     {
+        // 🎵 모든 차징 사운드 즉시 정지
+        SoundManager::GetInstance().StopSFX(L"megaman_charge");
+        SoundManager::GetInstance().StopSFX(L"megaman_chargeend");
+
         if (_isCharging && _chargeTimer >= _midChargeTime)
         {
             ChargeLevel level = ChargeLevel::None;
             if (_chargeTimer >= MAX_CHARGE_TIME)
             {
                 level = ChargeLevel::Max;
-                
             }
             else if (_chargeTimer >= _midChargeTime)
             {
                 level = ChargeLevel::Mid;
             }
 
-            // 발사 및 모션 재생
+            // 차지샷 발사 (Buster::Fire 내부에서 Min/Max 발사 SFX 재생됨)
             _currentWeapon->Fire(level);
             _isAttacking = true;
             _currentAnimTimer = _attackAnimDuration;
-
-            
         }
+
         _chargeEffect->SetActive(false);
-
-
-
-        
-        // 차지 상태 초기화
         _isCharging = false;
         _chargeTimer = 0.0f;
+        _isMidSoundPlayed = false;
+        _isMaxSoundPlayed = false;
     }
 }
 

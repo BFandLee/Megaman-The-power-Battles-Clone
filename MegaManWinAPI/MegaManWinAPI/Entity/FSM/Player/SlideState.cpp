@@ -7,6 +7,7 @@
 #include "RigidBodyComponent.h"
 #include "BoxCollider.h"
 #include "MovementComponent.h"
+#include "SoundManager.h"
 
 SlideState::SlideState(FSMComponent* pOwner) : State(pOwner)
 {
@@ -22,6 +23,7 @@ SlideState::~SlideState()
 
 void SlideState::Enter()
 {
+    SoundManager::GetInstance().PlaySFX(L"megaman_slide");
     _pAnimator = m_pOwnerFSM->GetOwner()->GetComponent<AnimatorComponent>();
     
     _pAnimator->Play(L"Sliding");

@@ -37,6 +37,13 @@ namespace fs = std::filesystem;
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "windowscodecs.lib")
+
+// 사운드 관련 헤더 및 라이브러리 (MCI & DirectSound)
+#include <mmsystem.h>
+#include <dsound.h>
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
+
 // 정수형 변수
 using json = nlohmann::json;
 

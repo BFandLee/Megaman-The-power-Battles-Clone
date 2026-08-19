@@ -18,6 +18,7 @@ public:
 private:
     Vector _dir;
     BulletState _state;
+    ChargeLevel _chargeLevel = ChargeLevel::Normal;
     float _lifeTime = 0.0f;
 };
 

@@ -45,19 +45,42 @@ void BossClone::Init()
 
 void BossClone::Update(float deltaTime)
 {
-	Super::Update(deltaTime);
-
 	RigidBodyComponent* rigid = GetComponent<RigidBodyComponent>();
 	AnimatorComponent* animator = GetComponent<AnimatorComponent>();
 	BoxCollider* collider = GetComponent<BoxCollider>();
+	BoxCollider* bossCollider = _ownerBoss->GetComponent<BoxCollider>();
+	
+	if (rigid && _ownerBoss->GetComponent<RigidBodyComponent>())
+	{
+		Vector bossVelocity = _ownerBoss->GetComponent<RigidBodyComponent>()->GetVelocity();
+		if (bossVelocity.y < -10.0f && rigid->IsGrounded())
+		{
+			rigid->SetVelocity(Vector(-bossVelocity.x, bossVelocity.y));
+			rigid->SetGrounded(false);
 
-	Vector bossVelocity = _ownerBoss->GetComponent<RigidBodyComponent>()->GetVelocity();
-	rigid->SetVelocity(Vector(-bossVelocity.x, bossVelocity.y));
+		}
+		else
+		{
+			rigid->SetVelocity(Vector(-bossVelocity.x, rigid->GetVelocity().y));
+		}
+	}
 
-	collider->SetSize(_ownerBoss->GetComponent<BoxCollider>()->GetWidth(), _ownerBoss->GetComponent<BoxCollider>()->GetHeight());
+	if (collider && bossCollider)
+	{
+		collider->SetSize(_ownerBoss->GetComponent<BoxCollider>()->GetWidth(), _ownerBoss->GetComponent<BoxCollider>()->GetHeight());
+		collider->SetOffset(_ownerBoss->GetComponent<BoxCollider>()->GetOffset());
+	}
 
-	wstring state = _ownerBoss->GetComponent<AnimatorComponent>()->GetCurrentClipName();
-	animator->Play(state);
+	if (animator && _ownerBoss->GetComponent<AnimatorComponent>())
+	{
+		wstring state = _ownerBoss->GetComponent<AnimatorComponent>()->GetCurrentClipName();
+		if (animator->GetCurrentClipName() != state)
+		{
+			animator->Play(state);
+		}
+	}
+
+	Super::Update(deltaTime);
 
 	Actor* player = SceneManager::GetInstance().GetScene()->FindActorByType(ActorType::Player);
 	if (player != nullptr)
@@ -118,7 +141,6 @@ void BossClone::OnStay(Actor* other, const HitResult& hit)
 	Vector pos = GetPos();
 	bool isWall = (other->GetActorType() == ActorType::WALL);
 	bool isGround = (other->GetActorType() == ActorType::Ground);
-	bool isPlayer = (other->GetActorType() == ActorType::Player);
 	bool isPlayerBullet = (other->GetActorType() == ActorType::PlayerBullet);
 
 	BoxCollider* myCol = GetComponent<BoxCollider>();
@@ -182,7 +204,7 @@ void BossClone::OnStay(Actor* other, const HitResult& hit)
 		}
 	}
 
-	if ((isPlayer || isPlayerBullet))
+	if ((isPlayerBullet))
 	{
 		float diffX = this->GetPos().x - other->GetPos().x;
 

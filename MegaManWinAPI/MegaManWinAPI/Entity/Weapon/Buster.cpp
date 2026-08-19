@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "PlayerBullet.h"
 #include "ObjectPoolManager.h"
+#include "SoundManager.h"
 #include "Player.h"
 #include "MuzzleFlash.h"
 
@@ -19,6 +20,19 @@ Buster::~Buster()
 
 void Buster::Fire(ChargeLevel level)
 {
+    switch (level)
+    {
+    case ChargeLevel::Normal:
+        SoundManager::GetInstance().PlaySFX(L"megaman_shoot");
+        break;
+    case ChargeLevel::Mid:
+        SoundManager::GetInstance().PlaySFX(L"megaman_chargeshotsmall");
+        break;
+    case ChargeLevel::Max:
+        SoundManager::GetInstance().PlaySFX(L"megaman_chargeshotbig");
+        break;
+    }
+
     // 1. 오브젝트 풀에서 꺼내기
     PlayerBullet* bullet = ObjectPoolManager::GetInstance().GetPlayerBulletPool()->Acquire();
     MuzzleFlash* flash = nullptr;

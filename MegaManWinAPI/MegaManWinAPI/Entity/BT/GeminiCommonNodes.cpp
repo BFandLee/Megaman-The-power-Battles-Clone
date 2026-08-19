@@ -13,13 +13,11 @@
 
 NodeState BTAction_Gemini_Jump::Tick(Blackboard* bb)
 {
-    Actor* player = bb->TargetPlayer;
-    Actor* boss = bb->OwnerBoss;
-
-    if (player == nullptr)
+    if (bb->OwnerBoss == nullptr || bb->BossAnimation == nullptr || bb->BossRigidBody == nullptr)
     {
         return NodeState::Failure;
     }
+
 
     if (!_isJumpStarted)
     {
@@ -51,12 +49,7 @@ NodeState BTAction_Gemini_Jump::Tick(Blackboard* bb)
 NodeState BTAction_Gemini_BaseMissile::Tick(Blackboard* bb)
 {
 
-    if (bb->TargetPlayer == nullptr || bb->OwnerBoss == nullptr)
-    {
-        return NodeState::Failure;
-    }
-
-    if (bb->OwnerBoss->GetComponent<AnimatorComponent>() == nullptr)
+    if (bb->OwnerBoss == nullptr || bb->BossAnimation == nullptr || bb->BossTransform == nullptr)
     {
         return NodeState::Failure;
     }
@@ -82,16 +75,21 @@ NodeState BTAction_Gemini_BaseMissile::Tick(Blackboard* bb)
         SceneManager::GetInstance().GetScene()->AddActor(Missile);
 
         // 클론 총알
-        if (bb->GetActor("BossClone", bb->BossClone) && bb->BossClone != nullptr)
+        if (bb->BossClone != nullptr && bb->BossClone->GetActive())
         {
-            Vector playerPos = bb->PlayerTransform->GetPos();
             Vector clonePos = bb->BossClone->GetComponent<TransformComponent>()->GetPos();
-            float cloneDirX = (playerPos.x >= clonePos.x) ? 1.0f : -1.0f;
-
-            if (bb->BossClone != nullptr)
+            float cloneDirX = 1.0f;
+            if (bb->PlayerTransform != nullptr)
             {
-                bb->BossClone->SetLookDirX(cloneDirX);
+                Vector playerPos = bb->PlayerTransform->GetPos();
+                cloneDirX = (playerPos.x >= clonePos.x) ? 1.0f : -1.0f;
             }
+            else
+            {
+                // 플레이어가 없을 땐 본체의 반대 방향(기본 대칭 방향) 유지
+                cloneDirX = -bb->DirXToPlayer;
+            }
+            bb->BossClone->SetLookDirX(cloneDirX);
             BossMissile* CloneMissile = new BossMissile();
             CloneMissile->Init();
             CloneMissile->Fire(
@@ -126,15 +124,11 @@ NodeState BTAction_Gemini_BaseMissile::Tick(Blackboard* bb)
 
 NodeState BTAction_Gemini_Idle::Tick(Blackboard* bb)
 {
-    if (bb->OwnerBoss != nullptr)
-    {
-        bb->OwnerBoss->SetLookDirX(bb->DirXToPlayer);
-    }
-
-    if (bb->TargetPlayer == nullptr)
+    if (bb->OwnerBoss == nullptr || bb->BossAnimation == nullptr || bb->BossRigidBody == nullptr)
     {
         return NodeState::Failure;
     }
+    bb->OwnerBoss->SetLookDirX(bb->DirXToPlayer);
 
     if (!_isIdleStarted)
     {
@@ -159,7 +153,7 @@ NodeState BTAction_Gemini_Idle::Tick(Blackboard* bb)
 
 NodeState BTAction_Gemini_Move::Tick(Blackboard* bb)
 {
-    if (bb->TargetPlayer == nullptr)
+    if (bb->OwnerBoss == nullptr || bb->BossAnimation == nullptr || bb->BossRigidBody == nullptr)
     {
         _isMoveStarted = false;
         return NodeState::Failure;

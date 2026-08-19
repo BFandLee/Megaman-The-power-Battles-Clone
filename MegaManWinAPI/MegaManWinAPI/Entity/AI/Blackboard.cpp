@@ -89,7 +89,7 @@ void Blackboard::SetActor(const string& key, Actor* value)
 bool Blackboard::GetActor(const string& key, Actor*& outValue)
 {
 	auto it = ActorData.find(key);
-	if (it != ActorData.end())
+	if (it != ActorData.end() && it->second != nullptr)
 	{
 		outValue = ActorData[key];
 		return true;

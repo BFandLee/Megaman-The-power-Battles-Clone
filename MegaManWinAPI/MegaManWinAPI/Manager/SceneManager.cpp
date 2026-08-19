@@ -1,15 +1,14 @@
 #include "pch.h"
 #include "SceneManager.h"
 #include "Scene.h"
-//#include "GameScene.h"
-//#include "EditorScene.h"
-//#include "LobbyScene.h"
-//#include "PlayerScene.h"
+#include "LobbyScene.h"
 #include "TestScene.h"
+#include "GameOverScene.h"
+#include "GameClearScene.h"
 
 void SceneManager::Init()
 {
-	_scene = createScene(SceneType::Test);
+	_scene = createScene(SceneType::Lobby);
 	_scene->Init();
 }
 
@@ -31,10 +30,7 @@ void SceneManager::Update(float deltaTime)
 	{
 		_scene->Update(deltaTime); 
 
-		// 모든 Update 끝난후 필요한것들 수행
 		_scene->PostUpdate();
-		   // ->ChangeScene
-		  //              delete _scene;
 	}
 }
 
@@ -48,8 +44,6 @@ void SceneManager::Render(ID2D1HwndRenderTarget* renderTarget)
 
 void SceneManager::ChangeScene(SceneType type)
 {
-	//delete _scene;
-	//_scene = new GameScene();
 	_nextSceneType = type;
 }
 
@@ -57,11 +51,10 @@ Scene* SceneManager::createScene(SceneType type)
 {
 	switch (type)
 	{
-	/*case SceneType::Lobby:	return new LobbyScene();
-	case SceneType::Game:	return new GameScene();
-	case SceneType::Editor:	return new EditorScene();
-	case SceneType::AStar:	return new PlayerScene();*/
+	case SceneType::Lobby: return new LobbyScene();
 	case SceneType::Test: return new TestScene();
+	case SceneType::GameOver: return new GameOverScene();
+	case SceneType::GameClear: return new GameClearScene();
 	}
 
 	return nullptr;
@@ -81,7 +74,6 @@ void SceneManager::applySceneChange()
 	_scene = createScene(_nextSceneType);
 	_scene->Init();
 
-	// 전환이 종료되었으니, None 초기화
 	_nextSceneType = SceneType::Max;
 }
 

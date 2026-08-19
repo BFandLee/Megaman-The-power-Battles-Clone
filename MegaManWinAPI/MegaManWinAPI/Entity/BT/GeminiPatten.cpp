@@ -77,7 +77,7 @@ NodeState BTAction_Gemini_CloneActivate::Tick(Blackboard* bb)
 
 NodeState BTAction_Gemini_CloneDeactivate::Tick(Blackboard* bb)
 {
-    if (bb->GetActor("BossClone", bb->BossClone) && bb->BossClone != nullptr)
+    if (bb->BossClone != nullptr)
     {
         SceneManager::GetInstance().GetScene()->DeleteActor(bb->BossClone);
         bb->SetActor("BossClone", nullptr);
@@ -89,7 +89,7 @@ NodeState BTAction_Gemini_CloneDeactivate::Tick(Blackboard* bb)
 
 NodeState BTAction_Gemini_LaserMissile::Tick(Blackboard* bb)
 {
-    if (bb->TargetPlayer == nullptr || bb->OwnerBoss == nullptr)
+    if (bb->OwnerBoss == nullptr || bb->BossAnimation == nullptr || bb->BossTransform == nullptr)
     {
         return NodeState::Failure;
     }
@@ -104,7 +104,7 @@ NodeState BTAction_Gemini_LaserMissile::Tick(Blackboard* bb)
 
         bb->BossAnimation->Play(L"Attack");
 
-        Vector fireDir = Vector(bb->DirXToPlayer, 1.0f);
+        Vector fireDir = Vector(bb->DirXToPlayer, -1.0f);
         fireDir.Normalize();
 
         BossMissile* missile = new BossMissile();

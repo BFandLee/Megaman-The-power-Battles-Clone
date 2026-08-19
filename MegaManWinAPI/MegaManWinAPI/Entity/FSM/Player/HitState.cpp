@@ -6,6 +6,7 @@
 #include "RigidBodyComponent.h"
 #include "Player.h"
 #include "InputManager.h"
+#include "SoundManager.h"
 
 HitState::HitState(FSMComponent* fsm) : State(fsm)
 {
@@ -17,6 +18,7 @@ HitState::~HitState()
 
 void HitState::Enter()
 {
+	SoundManager::GetInstance().PlaySFX(L"megaman_Hit");
 	_hitTimer = 0.0f;
 	
 

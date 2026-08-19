@@ -15,10 +15,12 @@ public:
 	virtual RenderLayer GetRenderLayer() override;
 	virtual ActorType GetActorType() override;
 
+	void SetActorType(ActorType type) { _actorType = type; }
+
 	// 벽의 크기를 설정합니다.
 	void SetSize(float width, float height);
 
 private:
-	
+	ActorType _actorType = ActorType::WALL;
 	class BoxCollider* _boxCollider = nullptr;
 };

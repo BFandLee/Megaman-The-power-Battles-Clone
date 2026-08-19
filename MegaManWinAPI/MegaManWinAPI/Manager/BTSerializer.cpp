@@ -54,7 +54,7 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>*
         return nullptr;
     }
 
-    unordered_set<int> childNodeIDs;
+    
 
     if (j.contains("Nodes") && j["Nodes"].is_array())
     {
@@ -99,76 +99,70 @@ BTNode* BTSerializer::LoadFromJSON(const std::string& filepath, vector<BTNode*>*
         }
     }
 
+    // 임시 맵
+    map<BTNode*, vector<BTNode*>> parentToChildren;
+    unordered_set<int> childNodeIDs;
+
     if (j.contains("Links") && j["Links"].is_array())
     {
+        // 2. 전체 링크 관계 수집
         for (const auto& linkData : j["Links"])
         {
             int startAttr = linkData["StartAttrID"];
             int endAttr = linkData["EndAttrID"];
-
-            // 원본 노드 ID 복원
             int parentId = startAttr / 100;
             int childId = endAttr / 100;
-
-            // map에서 부모와 자식 노드 검색
             auto parentIt = nodeMap.find(parentId);
             auto childIt = nodeMap.find(childId);
-
-            // 임시 맵
-            map<BTNode*, vector<BTNode*>> parentToChildren;
-
-            // 두 노드 모두 성공적으로 찾았으면 연결
             if (parentIt != nodeMap.end() && childIt != nodeMap.end())
             {
                 BTNode* parentNode = parentIt->second;
                 BTNode* childNode = childIt->second;
                 childNodeIDs.insert(childNode->GetNodeID());
-
                 parentToChildren[parentNode].push_back(childNode);
-
-                for (auto& pair : parentToChildren)
-                {
-                    BTNode* parent = pair.first;
-                    vector<BTNode*> children = pair.second;
-
-                    sort(children.begin(), children.end(), [&](BTNode* nodeA, BTNode* nodeB)
-                        {
-                            float PosY_A = nodePosYMap[nodeA->GetNodeID()];
-                            float PosY_B = nodePosYMap[nodeB->GetNodeID()];
-
-                            return PosY_A < PosY_B;
-                        });
-
-                    for (BTNode* child : children)
-                    {
-                        parent->AddChild(child);
-                    }
-                }
             }
-
             if (outLinks != nullptr)
             {
                 NodeLink newLink;
                 newLink.linkId = linkData["LinkID"];
                 newLink.startAttrId = startAttr;
                 newLink.endAttrId = endAttr;
-
                 outLinks->push_back(newLink);
             }
-
-
         }
-    }
-
-    for (auto& iter : nodeMap)
-    {
-        auto it = childNodeIDs.find(iter.first);
-
-        if (it == childNodeIDs.end())
+        // 3. 수집 완료 후 각 부모별 자식들을 PosY(위->아래) 순서로 정렬하여 AddChild
+        for (auto& pair : parentToChildren)
         {
-            return iter.second;
+            BTNode* parent = pair.first;
+            vector<BTNode*>& children = pair.second;
+            sort(children.begin(), children.end(), [&](BTNode* nodeA, BTNode* nodeB)
+                {
+                    float PosY_A = nodePosYMap[nodeA->GetNodeID()];
+                    float PosY_B = nodePosYMap[nodeB->GetNodeID()];
+                    return PosY_A < PosY_B;
+                });
+            for (BTNode* child : children)
+            {
+                parent->AddChild(child);
+            }
         }
-    }
 
-    return nullptr;
+        // 1순위: Type이 "Root"인 노드를 최우선으로 루트 반환
+        for (auto& iter : nodeMap)
+        {
+            if (iter.second != nullptr && iter.second->GetType() == "Root")
+            {
+                return iter.second;
+            }
+        }
+        // 2순위: 부모가 없는 최상위 노드 반환
+        for (auto& iter : nodeMap)
+        {
+            if (iter.second != nullptr && childNodeIDs.find(iter.first) == childNodeIDs.end())
+            {
+                return iter.second;
+            }
+        }
+        return nullptr;
+    }
 }

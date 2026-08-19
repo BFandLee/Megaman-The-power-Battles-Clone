@@ -1,0 +1,21 @@
+{
+  "texturePath": "_MinHit_Sheet",
+  "bLoop": true,
+  "frames": [
+    {
+      "startPos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "size": {
+        "x": 64.0,
+        "y": 64.0
+      },
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "duration": 0.05
+    }
+  ]
+}

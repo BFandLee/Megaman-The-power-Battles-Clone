@@ -85,10 +85,7 @@ void Game::Init(HWND hwnd)
 	DWORD length = ::GetCurrentDirectory(MAX_PATH, buffer);
 	fs::path currentPath = fs::path(buffer) / L"../Resources/";
 	ResourceManager::GetInstance().Init(hwnd, currentPath);
-
-	// DataManager 초기화
-	// DataManager::GetInstance().Init(currentPath);
-	// DataManager::GetInstance().Load();
+	ResourceManager::GetInstance().LoadAllSoundsInDirectory(L"../Resources/Sounds");
 
 	// Scene 초기화
 	SceneManager::GetInstance().Init();

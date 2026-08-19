@@ -4,9 +4,6 @@
 #include "TimeManager.h"
 #include "CollisionManager.h"
 #include "UIManager.h"
-//#include "Effect.h"
-//#include "DataManager.h"
-//#include "ResourceData.h"
 #include "Background.h"
 #include "Actor.h"
 #include "Player.h"
@@ -15,6 +12,9 @@
 #include "ActorFactory.h"
 #include "PlayerFactory.h"
 #include "Boss.h"
+#include "Effect.h"
+#include "AnimatorComponent.h"
+
 
 Scene::Scene() 
 {
@@ -53,7 +53,19 @@ void Scene::Init()
 
 void Scene::Cleanup()
 {
-	// 씬에 등장하는 모든 객체들의 delete 담당
+	// 예약된 추가 리스트 정리
+	for (auto actor : _reservedAdd)
+	{
+		if (actor->GetPool() == nullptr)
+		{
+			delete actor;
+		}
+	}
+	_reservedAdd.clear();
+	_reservedRemove.clear();
+	_postUpdateActions.clear();
+
+	// 씬에 존재하는 모든 객체들의 delete 담당
 	for (auto iter : _actors)
 	{
 		// Scene이 new 한 객체는 delete 해도 된다.
@@ -64,22 +76,30 @@ void Scene::Cleanup()
 	}
 	_actors.clear();
 
+	for (auto& iter : _renderList)
+	{
+		iter.clear();
+	}
+
+	// 씬 전환 시 충돌 매니저 내부 등록 목록 완전히 클리어
+	CollisionManager::GetInstance().Clear();
+
 	UIManager::GetInstance().Cleanup();
 }
 
 void Scene::Update(float deltaTime)
 {
-	if (_isPaused)
-		return;
-	for (auto actor : _actors)
+	if(!_isPaused)
 	{
-		if (!actor->GetActive())
-			continue;
-		
-		actor->Update(deltaTime);
-	}
+		for (auto actor : _actors)
+		{
+			if (!actor->GetActive())
+				continue;
 
-	UIManager::GetInstance().Update(deltaTime);
+			actor->Update(deltaTime);
+		}
+		UIManager::GetInstance().Update(deltaTime);
+	}
 
 	std::erase_if(_actors, [this](Actor* actor)
 		{

@@ -32,7 +32,7 @@ public:
     void ReportNodeState(int32 nodeId, NodeState state);
 
 private:
-    float _zoomScale = 0.8f;
+    float _zoomScale = 1.0f;
     float _prevZoomScale = 1.0f;
     map<int32, ImVec2> _baseNodePos;
     bool _isOpen = false;

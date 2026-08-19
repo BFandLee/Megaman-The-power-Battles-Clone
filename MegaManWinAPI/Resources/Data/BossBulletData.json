@@ -21,8 +21,8 @@
         "animationPath": "../Resources/sprites/BossBullet/Animation/Razer.json",
         "damage": 10.0,
         "maxLifeTime": 3.0,
-        "scaleX": 1.0,
-        "scaleY": 1.0,
+        "scaleX": 1.5,
+        "scaleY": 1.5,
         "speed": 500.0
     }
 }

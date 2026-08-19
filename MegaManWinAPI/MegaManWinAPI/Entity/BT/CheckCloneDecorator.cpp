@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CheckCloneDecorator.h"
 #include "Blackboard.h"
+#include "Actor.h"
 
 CheckCloneDecorator::CheckCloneDecorator()
 {
@@ -9,14 +10,7 @@ CheckCloneDecorator::CheckCloneDecorator()
 
 bool CheckCloneDecorator::checkCondition(Blackboard* bb)
 {
-    bool isExist = false;
-    if (bb->GetActor("BossClone", _clonePtr))
-    {
-        if (_clonePtr != nullptr)
-        {
-            isExist = true;
-        }
-    }
+    bool isExist = (bb->BossClone != nullptr && bb->BossClone->GetActive());
     return isExist == _checkExist;
 }
 

@@ -15,7 +15,10 @@ Actor::Actor(string name) : _name(name)
 
 Actor::~Actor()
 {
-	// new Component µé.. ¸Ş¸ğ¸® ÇØÁ¦.
+	// ì¶©ëŒ ë§¤ë‹ˆì €ì—ì„œ í™•ì‹¤íˆ ì œê±°í•˜ì—¬ ì”¬ ì „í™˜ ë° ì‚­ì œ ì‹œ ëŒ•ê¸€ë§ í¬ì¸í„° ë°©ì§€
+	CollisionManager::GetInstance().RemoveActor(this);
+
+	// new Component ë“¤.. ë©”ëª¨ë¦¬ í•´ì œ.
 	for (auto component : _components)
 	{
 		delete component;
@@ -28,13 +31,13 @@ void Actor::Init()
 	_transform = AddComponent<TransformComponent>();
 }
 
-// Actor ÆÄ±«(»èÁ¦) ½ÍÀ¸¸é, ¹«Á¶°Ç Scene¿¡ ¿¹¾àÀ» °É¾î¼­ Ã³¸®ÇÑ´Ù.
+// Actor íŒŒê´´(ì‚­ì œ) ì‹¶ìœ¼ë©´, ë¬´ì¡°ê±´ Sceneì— ì˜ˆì•½ì„ ê±¸ì–´ì„œ ì²˜ë¦¬í•œë‹¤.
 void Actor::Destroy()
 {
-	// 1¹ø ¹æ½Ä
-	//_pendingKill = true; // »èÁ¦ ¿¹¾à »óÅÂ flag Ãß°¡ÇØµµ µÈ´Ù.
+	// 1ë²ˆ ë°©ì‹
+	//_pendingKill = true; // ì‚­ì œ ì˜ˆì•½ ìƒíƒœ flag ì¶”ê°€í•´ë„ ëœë‹¤.
 	
-	// 2¹ø ¹æ½Ä
+	// 2ë²ˆ ë°©ì‹
 	SceneManager::GetInstance().GetScene()->DeleteActor(this);
 
 	CollisionManager::GetInstance().RemoveActor(this);
@@ -60,7 +63,7 @@ Vector Actor::GetPos() const
 {
 	return _transform ? _transform->GetPos() : Vector(0, 0);
 }
-// À§Ä¡°¡ º¯°æµÇ¾úÀ¸´Ï grid °»½Åµµ °°ÀÌ ÇØÁÖÀÚ.
+// ìœ„ì¹˜ê°€ ë³€ê²½ë˜ì—ˆìœ¼ë‹ˆ grid ê°±ì‹ ë„ ê°™ì´ í•´ì£¼ì.
 void Actor::SetPos(Vector pos)
 {
 	if (_transform) _transform->SetPos(pos);
@@ -80,7 +83,7 @@ void Actor::cacheCollider(Component* component)
 	Collider* collider = dynamic_cast<Collider*>(component);
 	if (collider)
 	{
-		_collider = collider;	// ÇÑ¹ø Ä³½ÌÇØµĞ´Ù.
+		_collider = collider;	// í•œë²ˆ ìºì‹±í•´ë‘”ë‹¤.
 	}
 }
 
@@ -106,7 +109,7 @@ json Actor::ToJson()
 	json j;
 	j["name"] = _name;
 
-	// ³»°¡ °¡Áø ÄÄÆ÷³ÍÆ®µéÀ» ¹è¿­·Î ¹­¾î¼­ ÀúÀå
+	// ë‚´ê°€ ê°€ì§„ ì»´í¬ë„ŒíŠ¸ë“¤ì„ ë°°ì—´ë¡œ ë¬¶ì–´ì„œ ì €ì¥
 	json componentsArray = json::array();
 
 	for (auto comp : _components)
@@ -122,11 +125,11 @@ void Actor::FromJson(const json& j)
 {
 	if (j.contains("name")) _name = j["name"];
 
-	// ÀúÀåµÈ ÄÄÆ÷³ÍÆ® ¹è¿­À» ÀĞ¾î¿Í¼­ µ¤¾î¾¹´Ï´Ù.
+	// ì €ì¥ëœ ì»´í¬ë„ŒíŠ¸ ë°°ì—´ì„ ì½ì–´ì™€ì„œ ë®ì–´ì”ë‹ˆë‹¤.
 	int index = 0;
 	for (const auto& compJson : j["Components"])
 	{
-		// ¿¢ÅÍ°¡ init() µÇ¸é¼­ »ı¼ºÇØµĞ ÄÄÆ÷³ÍÆ® °³¼ö¸¦ ÃÊ°úÇÏÁö ¾Ê´ÂÁö ¾ÈÀü°Ë»ç
+		// ì—‘í„°ê°€ init() ë˜ë©´ì„œ ìƒì„±í•´ë‘” ì»´í¬ë„ŒíŠ¸ ê°œìˆ˜ë¥¼ ì´ˆê³¼í•˜ì§€ ì•ŠëŠ”ì§€ ì•ˆì „ê²€ì‚¬
 		if (index < _components.size())
 		{
 			_components[index]->FromJson(compJson);

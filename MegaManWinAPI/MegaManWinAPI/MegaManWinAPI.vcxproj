@@ -140,6 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Core\GameOverScene.h" />
+    <ClInclude Include="Core\GameClearScene.h" />
+    <ClInclude Include="Core\LobbyScene.h" />
+    <ClInclude Include="Entity\Actor\Effect.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="UI\ContinueUI.h" />
     <ClInclude Include="UI\ReadyGoUI.h" />
     <ClInclude Include="UI\PlayerHpBarUI.h" />
@@ -238,6 +243,11 @@
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\GameOverScene.cpp" />
+    <ClCompile Include="Core\GameClearScene.cpp" />
+    <ClCompile Include="Core\LobbyScene.cpp" />
+    <ClCompile Include="Entity\Actor\Effect.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="UI\ContinueUI.cpp" />
     <ClCompile Include="UI\ReadyGoUI.cpp" />
     <ClCompile Include="UI\PlayerHpBarUI.cpp" />

@@ -23,9 +23,17 @@ public:
 
 
 	// 사운드
-	Sound* GetSound(const wstring& key) { return _sounds[key]; }
-	Sound* LoadSound(const wstring& key, const wstring& path);
-
+	Sound* GetSound(const wstring& key)
+	{
+		auto it = _sounds.find(key);
+		return (it != _sounds.end()) ? it->second : nullptr;
+	}
+	wstring GetBGMPath(const wstring& key)
+	{
+		auto it = _bgmPaths.find(key);
+		return (it != _bgmPaths.end()) ? it->second : L"";
+	}
+	void LoadAllSoundsInDirectory(const wstring& directoryPath);
 
 	// 폰트
 	void LoadFont();
@@ -45,6 +53,8 @@ public:
 
 	// 자동 파일 Load
 	void LoadAllTexturesInDirectory(const wstring& directoryPath);
+	
+	
 
 private:
 	// 아무나 생성못하게 생성자/소멸자를 숨기자
@@ -67,5 +77,7 @@ private:
 
 	// Pen
 	HPEN _redPen;
+
+	unordered_map<wstring, wstring> _bgmPaths;
 };
 

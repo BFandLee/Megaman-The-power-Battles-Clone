@@ -30,6 +30,7 @@ enum class KeyType
 	Q = 'Q',
 	E = 'E',
 	X = 'X',
+	R = 'R',
 	LeftBracket = VK_OEM_4,  // '[' Ű
 	RightBracket = VK_OEM_6, // ']' Ű
 	LeftCtrl = VK_LCONTROL,

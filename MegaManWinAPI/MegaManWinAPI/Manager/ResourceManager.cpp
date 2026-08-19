@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ResourceManager.h"
 #include "Texture.h"
-// #include "Sound.h"
+#include "Sound.h"
 
 void ResourceManager::Init(HWND hwnd, fs::path directory)
 {
@@ -25,6 +25,13 @@ void ResourceManager::Cleanup()
 
 	// 자료구조도 싹 비우고
 	_textures.clear();
+
+	for (auto& pair : _sounds)
+	{
+		delete pair.second;
+	}
+	_sounds.clear();
+	_bgmPaths.clear();
 }
 
 void ResourceManager::LoadTexture(wstring key, wstring texturePath, int32 row,
@@ -68,6 +75,38 @@ Texture* ResourceManager::GetTexture(wstring key)
 //
 //	return sound;
 //}
+
+void ResourceManager::LoadAllSoundsInDirectory(const wstring& directoryPath)
+{
+	fs::path path = directoryPath;
+	if (!fs::exists(path) || !fs::is_directory(path))
+		return;
+	for (const auto& entry : fs::recursive_directory_iterator(path))
+	{
+		if (entry.is_regular_file())
+		{
+			fs::path filePath = entry.path();
+			wstring ext = filePath.extension().wstring();
+			wstring key = filePath.stem().wstring(); // 파일명을 키로 사용 (예: "Gemini Man", "megaman_death")
+			if (ext == L".wav")
+			{
+				Sound* sound = new Sound();
+				if (sound->LoadWave(filePath))
+				{
+					_sounds[key] = sound;
+				}
+				else
+				{
+					delete sound;
+				}
+			}
+			else if (ext == L".mp3")
+			{
+				_bgmPaths[key] = filePath.wstring();
+			}
+		}
+	}
+}
 
 void ResourceManager::LoadFont()
 {

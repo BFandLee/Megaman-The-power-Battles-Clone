@@ -4,6 +4,11 @@
 
 NodeState BTNode::Execute(Blackboard* bb)
 {
+    if (this == nullptr)
+    {
+        return NodeState::Failure;
+    }
+
     // 1. 실제 노드의 고유 로직(가상 함수) 실행
     _nodeState = Tick(bb);
     // 2. 에디터에 내 NodeID와 상태 보고

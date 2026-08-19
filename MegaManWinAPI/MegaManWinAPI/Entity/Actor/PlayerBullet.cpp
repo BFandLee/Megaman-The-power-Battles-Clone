@@ -3,8 +3,11 @@
 #include "CircleCollider.h"
 #include "AnimatorComponent.h"
 #include "Texture.h"
+#include "Effect.h"
+#include "SceneManager.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
+#include "Scene.h"
 void PlayerBullet::Init()
 {
     Super::Init();
@@ -40,7 +43,39 @@ void PlayerBullet::OnEnter(Actor* other, const HitResult& hit)
 
     if (isEnemy)
     {
-        other->TakeDamage(_state.damage, _dir.x);
+        //_state.damage
+        other->TakeDamage(100, _dir.x);
+
+        Effect* effect = new Effect();
+        effect->Init();
+        Vector hitPos = (other->GetCollider() != nullptr) 
+            ? other->GetCollider()->GetColliderPos() 
+            : other->GetPos();
+
+        Vector effectOffset = Vector(0.0f, 0.0f);
+
+        const float HIT_EFFECT_OFFSET_Y = 20.0f;
+        
+        if (_chargeLevel == ChargeLevel::Normal)
+        {
+            effectOffset = Vector(0.0f, 10.0f);
+            effect->PlayEffect(L"BaseHit", L"../Resources/sprites/BossHit/Animation/BaseHit.json", Vector(2.0f, 2.0f));
+        }
+        else if (_chargeLevel == ChargeLevel::Mid)
+        {
+            effectOffset = Vector(0.0f, 15.0f);
+            effect->PlayEffect(L"MinHit", L"../Resources/sprites/BossHit/Animation/MinHit.json", Vector(2.0f, 2.0f));
+        }
+        else if (_chargeLevel == ChargeLevel::Max)
+        {
+            effectOffset = Vector(30.0f, 15.0f);
+            effect->PlayEffect(L"MaxHit", L"../Resources/sprites/BossHit/Animation/MaxHit.json", Vector(1.0f, 1.0f));
+        }
+
+        effect->SetPos(hitPos + effectOffset);
+
+        SceneManager::GetInstance().GetScene()->AddActor(effect);
+
 
         if (!_state.isPiercing)
         {
@@ -54,6 +89,7 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
     this->SetPos(startPos);
     _dir = dir;
     _lifeTime = 0;
+    _chargeLevel = level;
 
     Vector scale = this->GetScale();
     scale.x = abs(scale.x)* dir.x;
@@ -87,7 +123,6 @@ void PlayerBullet::Reset(Vector startPos, Vector dir, ChargeLevel level)
 
     // 원 콜라이더 오프셋
     Vector offset = Vector(statData["offset"][0], statData["offset"][1]);
-    // offset.x *= dir.x;
     this->GetCollider()->SetOffset(offset);
 
     AnimatorComponent* animator = GetComponent<AnimatorComponent>();

@@ -35,7 +35,7 @@ RenderLayer WallActor::GetRenderLayer()
 
 ActorType WallActor::GetActorType()
 {
-	return ActorType::WALL;
+	return _actorType;
 }
 
 void WallActor::SetSize(float width, float height)

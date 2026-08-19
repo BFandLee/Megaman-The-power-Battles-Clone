@@ -413,8 +413,30 @@ void BTEditor::Update()
         UpdateZoomLayout();
         _prevZoomScale = _zoomScale;
     }
-    
+    else if (!_testNodes.empty())
+    {
+        // 줌을 조작 중이 아닐 때는 사용자가 마우스로 드래그한 위치를 역산하여 _baseNodePos에 저장
+        int32 rootId = _testNodes[0]->GetNodeID();
+        if (_baseNodePos.find(rootId) != _baseNodePos.end())
+        {
+            float scaleX = 0.75f + (_zoomScale - 0.5f) * 0.5f;
+            float scaleY = 0.80f + (_zoomScale - 0.5f) * 0.4f;
 
+            // 루트 노드가 이동했을 수 있으므로 루트 먼저 갱신
+            ImVec2 currentRootPos = ImNodes::GetNodeEditorSpacePos(rootId);
+            _baseNodePos[rootId] = currentRootPos;
+            ImVec2 pivot = currentRootPos;
+            for (size_t i = 1; i < _testNodes.size(); ++i)
+            {
+                int32 id = _testNodes[i]->GetNodeID();
+                ImVec2 curPos = ImNodes::GetNodeEditorSpacePos(id);
+                _baseNodePos[id] = ImVec2(
+                    pivot.x + (curPos.x - pivot.x) / scaleX,
+                    pivot.y + (curPos.y - pivot.y) / scaleY
+                );
+            }
+        }
+    }
     // 윈도우 창 닫기
     ImGui::End();
 
@@ -459,18 +481,26 @@ void BTEditor::DrawNode(BTNode* node)
     }
     ImNodes::BeginNode(node->GetNodeID());
     ImNodes::BeginNodeTitleBar();
-    ImGui::PushID(node->GetNodeID());
 
-    char buffer[256];
-    strcpy_s(buffer, sizeof(buffer), node->GetName().c_str());
-    ImGui::PushItemWidth(120.0f * _zoomScale);
-    if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
+    if (_zoomScale > 0.75f)
     {
-        node->SetName(buffer);
+        ImGui::PushID(node->GetNodeID());
+
+        char buffer[256];
+        strcpy_s(buffer, sizeof(buffer), node->GetName().c_str());
+        ImGui::PushItemWidth(120.0f * _zoomScale);
+        if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
+        {
+            node->SetName(buffer);
+        }
+        ImGui::PopItemWidth();
+        ImGui::PopID();
+        node->DrawProperty();
     }
-    ImGui::PopItemWidth();
-    ImGui::PopID();
-    node->DrawProperty();
+    else
+    {
+        ImGui::TextUnformatted(node->GetName().c_str());
+    }
     ImNodes::EndNodeTitleBar();
 
     ImNodes::BeginInputAttribute(node->GetNodeID() * 100);
@@ -536,13 +566,14 @@ void BTEditor::UpdateZoomLayout()
 {
     if (_testNodes.empty()) return;
     int32 rootId = _testNodes[0]->GetNodeID();
+    if (_baseNodePos.find(rootId) == _baseNodePos.end()) return;
+
     ImVec2 pivot = _baseNodePos[rootId];
 
-    // 1. 가로(X)는 줌 배율대로 시원하게 압축
-    float scaleX = _zoomScale;
+    // 0.5x 줌일 때도 최소 75% 이상의 간격을 유지하여 겹침 방지
+    float scaleX = 0.75f + (_zoomScale - 0.5f) * 0.5f;
+    float scaleY = 0.80f + (_zoomScale - 0.5f) * 0.4f;
     
-    // 2. 세로(Y)는 겹침 방지를 위해 완만하게만 축소 (0.5x 줌일 때도 0.85x 유지)
-    float scaleY = 0.85f + (_zoomScale - 0.5f) * 0.3f;
     for (auto node : _testNodes)
     {
         int32 id = node->GetNodeID();

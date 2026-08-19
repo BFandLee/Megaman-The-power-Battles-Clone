@@ -3,8 +3,13 @@
 
 NodeState Selector::Tick(Blackboard* bb)
 {
-    for (int i = _currentNodeIndex; i < _children.size(); ++i)
+    for (size_t i = _currentNodeIndex; i < _children.size(); ++i)
     {
+        if (_children[i] == nullptr)
+        {
+            continue;
+        }
+
         switch (_children[i]->Execute(bb))
         {
         case NodeState::Success:
@@ -16,7 +21,7 @@ NodeState Selector::Tick(Blackboard* bb)
             continue;
         
         case NodeState::Running:
-            _currentNodeIndex = i;
+            _currentNodeIndex = (int)i;
             return NodeState::Running;
         
         default:

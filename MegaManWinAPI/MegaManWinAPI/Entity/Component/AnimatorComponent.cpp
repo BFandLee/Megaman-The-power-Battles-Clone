@@ -167,20 +167,25 @@ void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 {
 	if (_bIsEditMode == true)
 		return;
+
 	// map에서 stateName 키가 존재하는지 찾기
 	auto it = _clips.find(stateName);
-
-	// 찾지 못했다면 함수 종료
 	if (it == _clips.end())
 	{
 		return;
 	}
 
-	// 찾았다면 _currentClip을 교체하고, 프레임과 누적 시간 초기화
 	if (_currentClip == it->second)
 	{
+		if (!keepFrame)
+		{
+			_currentFrame = 0;
+			_accmulatedTime = 0.0f;
+			_bisFinished = false;
+		}
 		return;
 	}
+
 	_currentClip = it->second;
 	_currentClipName = stateName;
 	_bisFinished = false;
@@ -189,6 +194,7 @@ void AnimatorComponent::Play(const wstring& stateName, bool keepFrame)
 	{
 		_currentFrame = 0;
 		_accmulatedTime = 0.0f;
+
 	}
 
 	// Exception Index Gude

@@ -33,6 +33,11 @@ void ContinueUI::Update(float deltaTime)
 			}
 		}
 	}
+
+	if (_smallSheetTexture)
+	{
+		_smallSheetTexture->SetApplyCenter(false);
+	}
 }
 
 void ContinueUI::Render(ID2D1RenderTarget* renderTarget)
@@ -42,8 +47,10 @@ void ContinueUI::Render(ID2D1RenderTarget* renderTarget)
 
 	// SmallContinue
 	Vector basePos = GetPos();
-	Vector scale = Vector(2.0f, 2.0f);
-	float offsetX = 100.0f * scale.x;
+	Vector scale = Vector(1.0f, 1.0f);
+
+	float padding = 15.0f;
+	float offsetX = (100.0f + padding) * scale.x;
 	
 	Vector textPos = basePos;
 	Vector textSrcPos = Vector(0.0f, 0.0f);

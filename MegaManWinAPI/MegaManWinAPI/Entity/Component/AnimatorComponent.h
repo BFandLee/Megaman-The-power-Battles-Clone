@@ -71,6 +71,15 @@ public:
 		_endEvents[stateName] = callback;
 	}
 
+	void SetCurrentFrameOffset(Vector offset)
+	{
+		if (_currentClip != nullptr && !_currentClip->frames.empty())
+		{
+			_currentClip->frames[_currentFrame].offset = offset;
+		}
+	}
+	AnimationClip* GetCurrentClip() { return _currentClip; }
+
 	const wstring& GetCurrentClipName() const { return _currentClipName; }
 
 };

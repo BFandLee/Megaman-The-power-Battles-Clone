@@ -13,6 +13,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Player.h"
+#include "SoundManager.h"
 
 Boss::Boss() : Super("Boss")
 {
@@ -114,6 +115,7 @@ void Boss::TakeDamage(int damage, float hitDirX)
 		_isInvincible = true;
 		_invincibleTimer = 0.0f;
 		this->GetComponent<AnimatorComponent>()->Play(L"Hit");
+		SoundManager::GetInstance().PlaySFX(L"geminiman_hit");
 	}
 	
 	if (_hp <= 0)

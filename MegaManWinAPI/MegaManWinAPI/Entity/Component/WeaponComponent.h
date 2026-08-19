@@ -45,4 +45,7 @@ private:
     float _midChargeTime = 0.75f;
     float _maxChargeTime = 1.3f;
 
+    bool _isMidSoundPlayed = false;
+    bool _isMaxSoundPlayed = false;
+
 };

@@ -7,9 +7,9 @@ enum class RenderLayer
 {
 	// 아래 순서대로 렌더링이 실행된다.
 	Background, // 제일 아래
+	Bullet,
 	Enemy,
 	Player,
-	Bullet,
 	Boss,
 	Effect, // 제일 위
 	WALL,
@@ -42,8 +42,8 @@ enum class SceneType
 	Lobby,
 	Game,
 	Test,
-
-
+	GameOver,
+	GameClear,
 
 	Max,
 };
