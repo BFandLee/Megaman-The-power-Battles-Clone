@@ -3,115 +3,267 @@
 #include "Game.h"
 #include "Scene.h"
 
-void Texture::Load(wstring texturePath, int32 transparent, int32 row, int32 col, float dur, bool enableFlip)
+void Texture::Load(wstring texturePath, int32 row, int32 col, float dur, bool enableFlip)
 {
-	HDC hdc = ::GetDC(Game::GetInstance().GetHwnd());
+	// 1. ë§Œë“¤ì–´ë‘” íŒ©í† ë¦¬ì™€ renderTarget ê°€ì ¸ì˜¤ê¸°
+	IWICImagingFactory* wicFactory = Game::GetInstance().GetWICFactory();
+	ID2D1HwndRenderTarget* renderTarget = Game::GetInstance().GetRenderTarget();
 
-	_bitmapHdc = ::CreateCompatibleDC(hdc);
-	_bitmap = (HBITMAP)::LoadImageW(
-		nullptr,
-		texturePath.c_str(),
-		IMAGE_BITMAP,
-		0,
-		0,
-		LR_LOADFROMFILE | LR_CREATEDIBSECTION
+	if (!wicFactory || !renderTarget) return;
+
+	// 2. ë””ì½”ë” ìƒì„±(ì´ë¯¸ì§€ íŒŒì¼ ì—´ê¸°)
+	IWICBitmapDecoder* decoder = nullptr;
+	HRESULT hr = wicFactory->CreateDecoderFromFilename(
+		texturePath.c_str(), nullptr, GENERIC_READ,
+		WICDecodeMetadataCacheOnLoad, &decoder
 	);
-
-	// Åõ¸íÇÏ°Ô º¸¿©¾ßÇÏ´Â »ö»ó°ª
-	_transparent = transparent;
-
-	if (_bitmap == 0)
+	// [ë°©ì–´ ì½”ë“œ] ë””ì½”ë” ìƒì„±ì— ì‹¤íŒ¨í–ˆê±°ë‚˜ decoderê°€ nullptrì´ë©´ ì•ˆì „í•˜ê²Œ ì¤‘ë‹¨!
+	if (FAILED(hr) || !decoder)
 	{
-		::MessageBox(Game::GetInstance().GetHwnd(), texturePath.c_str(), L"Invalid Texture Load", MB_OK);
+		// ë””ë²„ê·¸ ì¶œë ¥ ì°½ì— ì‹¤íŒ¨í•œ íŒŒì¼ ê²½ë¡œ ì¶œë ¥
+		::OutputDebugString(L"[Texture Error] Failed to load image path: ");
+		::OutputDebugString(texturePath.c_str());
+		::OutputDebugString(L"\n");
 		return;
 	}
 
-	HBITMAP prev = (HBITMAP)::SelectObject(_bitmapHdc, _bitmap);
-	::DeleteObject(prev);
+	// 3. 1ë²ˆì§¸ í”„ë ˆì„ ê°€ì ¸ì˜¤ê¸°( ì¼ë°˜ ì´ë¯¸ì§€: í”„ë ˆì„ 1ê°œ)
+	IWICBitmapFrameDecode* frame = nullptr;
+	decoder->GetFrame(0, &frame);
 
-	BITMAP bit = {};
-	::GetObject(_bitmap, sizeof(BITMAP), &bit);
+	// 4. 32ë¹„íŠ¸ ì´ˆê¸°í™”
+	IWICFormatConverter* converter = nullptr;
+	wicFactory->CreateFormatConverter(&converter);
 
-	_bitmapSizeX = bit.bmWidth;
-	_bitmapSizeY = bit.bmHeight;
+	converter->Initialize(
+		frame,
+		GUID_WICPixelFormat32bppPBGRA,
+		WICBitmapDitherTypeNone,
+		nullptr, 0.0f, WICBitmapPaletteTypeCustom
+	);
 
-	// Çà/¿­·Î ÂÉ°³Áø sprite 
+	// 5. Direct2D ì „ìš© ë¹„íŠ¸ë§µ ìƒì„±
+	renderTarget->CreateBitmapFromWicBitmap(converter, nullptr, &_bitmap);
+
+	_bitmapSizeX = (uint32)_bitmap->GetSize().width;
+	_bitmapSizeY = (uint32)_bitmap->GetSize().height;
+
+	// í–‰/ì—´ë¡œ ìª¼ê°œì§„ sprite 
 	_col = col;
 	_row = row;
 	_dur = dur;
 
-	// ÂÉ°³Áø 1°³ÀÇ frame size
+	// ìª¼ê°œì§„ 1ê°œì˜ frame size
 	_frameSizeX = _bitmapSizeX / _col;
 	_frameSizeY = _bitmapSizeY / _row;
 
-	// µğÆúÆ® °ªÀ¸·Î´Â ¿øº» ºñÆ®¸ÊÀÇ Å©±â·Î ¼³Á¤
+	// ë””í´íŠ¸ ê°’ìœ¼ë¡œëŠ” ì›ë³¸ ë¹„íŠ¸ë§µì˜ í¬ê¸°ë¡œ ì„¤ì •
 	_sizeX = _frameSizeX;
 	_sizeY = _frameSizeY;
 
-	// ÁÂ¿ì ¹İÀüµÈ ÅØ½ºÃ³°¡ ÇÊ¿äÇÏ´Ù¸é ¹Ì¸® »ı¼ºÇØµĞ´Ù
-	if (enableFlip && _bitmapHdc)
+	// 7. ë©”ëª¨ë¦¬ í•´ì œ
+	converter->Release();
+	frame->Release();
+	decoder->Release();
+}
+
+void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale, bool flipX, float rotation)
+{
+	if (!_bitmap) return;
+
+	float destWidth = (float)_frameSizeX * scale.x;
+	float destHeight = (float)_frameSizeY * scale.y;
+
+	float left = worldPos.x;
+	float top = worldPos.y;
+	if (_applyCenter)
 	{
-		_flipBitmapHdc = ::CreateCompatibleDC(hdc);
-		_flipBitmap = ::CreateCompatibleBitmap(hdc, _bitmapSizeX, _bitmapSizeY);
-		::SelectObject(_flipBitmapHdc, _flipBitmap);
-		::StretchBlt(_flipBitmapHdc,
-			_bitmapSizeX - 1, 0, -(int32)_bitmapSizeX, _bitmapSizeY,
-			_bitmapHdc, 0, 0, _bitmapSizeX, _bitmapSizeY,
-			SRCCOPY);
+		left -= (destWidth * 0.5f);
+		top -= (destHeight * 0.5f);
+	}
+
+	D2D1_RECT_F destRect = D2D1::RectF(left, top, left + destWidth, top + destHeight);
+	D2D1_RECT_F srcRect = D2D1::RectF(
+		srcPos.x,
+		srcPos.y,
+		srcPos.x + _frameSizeX,
+		srcPos.y + _frameSizeY
+	);
+
+	if (flipX)
+	{
+		D2D1_MATRIX_3X2_F scaleMatrix = D2D1::Matrix3x2F::Scale(
+			D2D1::SizeF(-1.0f, 1.0f),
+			D2D1::Point2F(worldPos.x, worldPos.y)
+		);
+		renderTarget->SetTransform(scaleMatrix);
+	}
+
+	renderTarget->DrawBitmap(
+		_bitmap,
+		destRect,
+		1.0f,
+		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+		srcRect
+	);
+
+	if (flipX)
+	{
+		renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	}
 }
 
-void Texture::Render(ID2D1HwndRenderTarget* renderTarget, Vector worldPos, Vector srcPos, bool flipX)
+void Texture::Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale, bool flipX, float rotation)
 {
-	// °¡¿îµ¥ ÁÂÇ¥±âÁØÀ¸·Î ±×¸²ÀÌ ±×·ÁÁö°Ô º¸Á¤ÇØÁÖÀÚ.
-	Vector renderPos = worldPos;
+	if (!_bitmap) return;
+
+	float destWidth = size.x * scale.x;
+	float destHeight = size.y * scale.y;
+
+	// ê°€ìš´ë° ì¢Œí‘œê¸°ì¤€ìœ¼ë¡œ ê·¸ë¦¼ì´ ê·¸ë ¤ì§€ê²Œ ë³´ì •í•´ì£¼ì.
+	Vector renderPos = worldPos + offset;
 	
+	float left = renderPos.x;
+	float top = renderPos.y;
 	if (_applyCenter)
 	{
-		renderPos.x -= (_sizeX * 0.5f);
-		renderPos.y -= (_sizeY * 0.5f);
+		left -= (destWidth * 0.5f);
+		top -= (destHeight * 0.5f);
 	}
 
-	HDC   srcDC = _bitmapHdc;
+	// ë„ì°©ì§€
+	D2D1_RECT_F destRect = D2D1::RectF(left, top, left + destWidth, top + destHeight);
+
+	// ì¶œë°œì§€(ì›ë³¸ ìŠ¤í”„ë¼ì´íŠ¸ ì‹œíŠ¸ì—ì„œ ì˜ë¼ë‚¼ ì‚¬ê°í˜• ì˜ì—­)
+	D2D1_RECT_F srcRect = D2D1::RectF(
+		srcPos.x,
+		srcPos.y,
+		srcPos.x + size.x,
+		srcPos.y + size.y
+	);
+
+	
+	bool needTransform = flipX || (rotation != 0.0f);
+	if (needTransform)
+	{
+
+		// worldPosì„ ê¸°ì¤€ìœ¼ë¡œ xì¶• ë°°ìœ¨ì„ -1ë¡œ ê³±í•´ ê±°ìš¸ ë°˜ì „ì„ ë§Œë“¦
+		D2D1_MATRIX_3X2_F matrix = D2D1::Matrix3x2F::Identity();
+		
+		// ì¢Œìš° ë°˜ì „
+		if (flipX)
+		{
+			matrix = matrix * D2D1::Matrix3x2F::Scale(
+				D2D1::SizeF(-1.0f, 1.0f),
+				D2D1::Point2F(worldPos.x, worldPos.y)
+			);
+		}
+
+		// íšŒì „ ì ìš©
+		if (rotation != 0.0f)
+		{
+			matrix = matrix * D2D1::Matrix3x2F::Rotation(
+				rotation,
+				D2D1::Point2F(worldPos.x, worldPos.y)
+			);
+		}
+		
+		renderTarget->SetTransform(matrix);
+	}
+
+	// ìµœì¢… ê·¸ë¦¬ê¸°
+	renderTarget->DrawBitmap(
+		_bitmap,
+		destRect,	// ë„ì°©ì§€
+		1.0f,	   // íˆ¬ëª…ë„
+		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+		srcRect	   // ì¶œë°œì§€
+	);
+
+	// ì¢Œìš°ë°˜ì „ í–ˆë‹¤ë©´ ì›ìƒë³µêµ¬
+	if (needTransform)
+	{
+		renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+	}
+
 	int32 srcX = (int32)srcPos.x;
 	int32 srcY = (int32)srcPos.y;
 
-	if (flipX && _flipBitmapHdc)
-	{
-		srcDC = _flipBitmapHdc;
-		srcX = _bitmapSizeX - (int32)srcPos.x - _frameSizeX;
-	}
+	
 
-	if (_transparent == -1)
-	{
-		::BitBlt(hdc,
-			(int32)renderPos.x,
-			(int32)renderPos.y,
-			_sizeX,
-			_sizeY,
-			srcDC,
-			srcX, //0,
-			srcY, //0,
-			SRCCOPY);
-	}
-	else
-	{
-		::TransparentBlt(hdc,
-			(int32)renderPos.x,	// À©µµ¿ì ÁÂÇ¥ ¾îµğ¿¡ ±×¸±Áö
-			(int32)renderPos.y, // À©µµ¿ì ÁÂÇ¥ ¾îµğ¿¡ ±×¸±Áö
-			_sizeX, //_bitmapSizeX,       // À©µµ¿ì ÁÂÇ¥¿¡ ±×·ÁÁú ÃÖÁ¾ Å©±â
-			_sizeY, //_bitmapSizeY,		// À©µµ¿ì ÁÂÇ¥¿¡ ±×·ÁÁú ÃÖÁ¾ Å©±â
-			srcDC,			// ÇØ´ç ºñÆ®¸ÊÀ» ±×·ÁÁà
-			srcX, //0,					// ±×¸®°í ½ÍÀº ºñÆ®¸ÊÀÇ ÁÂÇ¥
-			srcY, //0,					// ±×¸®°í ½ÍÀº ºñÆ®¸ÊÀÇ ÁÂÇ¥
-			_frameSizeX, //_bitmapSizeX,		// ±×¸®°í ½ÍÀº ºñÆ®¸ÊÀÇ Å©±â
-			_frameSizeY, //_bitmapSizeY,		// ±×¸®°í ½ÍÀº ºñÆ®¸ÊÀÇ Å©±â
-			_transparent);		// Åõ¸í Å°°ª(RGB)
-	}
 }
 
 
-void Texture::RenderScreen(HDC hdc, Vector screenPos, Vector srcPos)
+
+void Texture::LoadWithPaletteSwap(wstring texturePath, const unordered_map<uint32, uint32>& colorMap, int32 row, int32 col, float dur, bool enableFlip)
+{
+	IWICImagingFactory* wicFactory = Game::GetInstance().GetWICFactory();
+	ID2D1HwndRenderTarget* renderTarget = Game::GetInstance().GetRenderTarget();
+	if (!wicFactory || !renderTarget) return;
+
+	// 1. ë””ì½”ë” ìƒì„± ë° í”„ë ˆì„(ì›ë³¸ ì´ë¯¸ì§€) ê°€ì ¸ì˜¤ê¸°
+	IWICBitmapDecoder* decoder = nullptr;
+	wicFactory->CreateDecoderFromFilename(texturePath.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &decoder);
+	if (!decoder) return;
+
+	IWICBitmapFrameDecode* frame = nullptr;
+	decoder->GetFrame(0, &frame);
+
+	// 2. 32ë¹„íŠ¸ í¬ë§· ë³€í™˜ê¸° ìƒì„± (Direct2Dì—ì„œ ì‚¬ìš©í•˜ëŠ” í¬ë§·ì¸ BGRA í¬ë§·ìœ¼ë¡œ í†µì¼)
+	IWICFormatConverter* converter = nullptr;
+	wicFactory->CreateFormatConverter(&converter);
+	converter->Initialize(frame, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, nullptr, 0.0f, WICBitmapPaletteTypeCustom);
+
+	// 3. ìˆ˜ì • ê°€ëŠ¥í•œ WICBitmap ìƒì„± (ì›ë³¸ í”„ë ˆì„ì€ ì½ê¸° ì „ìš©ì´ë¼ ìˆ˜ì • ë¶ˆê°€ëŠ¥!)
+	IWICBitmap* wicBitmap = nullptr;
+	wicFactory->CreateBitmapFromSource(converter, WICBitmapCacheOnDemand, &wicBitmap);
+
+	// 4. í”½ì…€ ë°ì´í„° ì ‘ê·¼ì„ ìœ„í•´ Lock (ë©”ëª¨ë¦¬ ì ê¸ˆ) ê±¸ê¸°
+	IWICBitmapLock* lock = nullptr;
+	WICRect rect = { 0, 0, (INT)0, (INT)0 };
+	wicBitmap->GetSize((UINT*)&rect.Width, (UINT*)&rect.Height);
+	wicBitmap->Lock(&rect, WICBitmapLockWrite, &lock);
+
+	// 5. í”½ì…€ ë²„í¼ ë°°ì—´ê³¼ ë²„í¼ì˜ ì´ í¬ê¸°(ë°”ì´íŠ¸) ê°€ì ¸ì˜¤ê¸°
+	UINT bufferSize = 0;
+	BYTE* pixels = nullptr;
+	lock->GetDataPointer(&bufferSize, &pixels);
+
+	uint32* uPixels = (uint32*)pixels;
+
+	// í”½ì…€ì„ ìˆœíšŒí•˜ë©´ì„œ, í˜„ì¬ í”½ì…€ ìƒ‰ìƒì´ colorMapì— ë“±ë¡ë˜ì–´ ìˆëŠ”ì§€ ê²€ì‚¬í•©ë‹ˆë‹¤.
+	for (int i = 0; i < (bufferSize / 4); ++i)
+	{
+		auto it = colorMap.find(uPixels[i]);
+		// colorMapì—ì„œ í˜„ì¬ í”½ì…€ ìƒ‰ìƒì„ ì°¾ì•˜ë‹¤ë©´!
+		if (it != colorMap.end())
+		{
+			// í•´ë‹¹ í”½ì…€ì„ ë§µì— ì§€ì •ëœ êµì²´ ìƒ‰ìƒìœ¼ë¡œ ë°”ê¿‰ë‹ˆë‹¤.
+			uPixels[i] = it->second;
+		}
+	}
+	
+	// ----------------------
+
+	// 6. Lock í•´ì œ ë° ì¡°ì‘ëœ WIC ë¹„íŠ¸ë§µì„ Direct2D ë¹„íŠ¸ë§µ(_bitmap)ìœ¼ë¡œ ìµœì¢… ë³€í™˜
+	lock->Release();
+	renderTarget->CreateBitmapFromWicBitmap(wicBitmap, nullptr, &_bitmap);
+
+	// 7. í…ìŠ¤ì²˜ í¬ê¸°(Size) ë©¤ë²„ ë³€ìˆ˜ ì„¸íŒ… ë° COM ê°ì²´ ë©”ëª¨ë¦¬ í•´ì œ
+	_bitmapSizeX = (uint32)_bitmap->GetSize().width;
+	_bitmapSizeY = (uint32)_bitmap->GetSize().height;
+	_col = col; _row = row; _dur = dur;
+	_frameSizeX = _bitmapSizeX / _col; _frameSizeY = _bitmapSizeY / _row;
+	_sizeX = _frameSizeX; _sizeY = _frameSizeY;
+
+	wicBitmap->Release();
+	converter->Release();
+	frame->Release();
+	decoder->Release();
+}
+
+// UIìš©
+void Texture::RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos)
 {
 	if (_applyCenter)
 	{
@@ -119,30 +271,4 @@ void Texture::RenderScreen(HDC hdc, Vector screenPos, Vector srcPos)
 		screenPos.y -= (_frameSizeX * 0.5f);
 	}
 
-	if (_transparent == -1)
-	{
-		::BitBlt(hdc,
-			(int32)screenPos.x,
-			(int32)screenPos.y,
-			_frameSizeX,
-			_frameSizeY,
-			_bitmapHdc,
-			(int32)srcPos.x,
-			(int32)srcPos.y,
-			SRCCOPY);
-	}
-	else
-	{
-		::TransparentBlt(hdc,
-			(int32)screenPos.x,
-			(int32)screenPos.y,
-			_frameSizeX,
-			_frameSizeY,
-			_bitmapHdc,
-			(int32)srcPos.x,
-			(int32)srcPos.y,
-			_frameSizeX,
-			_frameSizeY,
-			_transparent);
-	}
 }

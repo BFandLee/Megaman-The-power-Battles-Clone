@@ -1,0 +1,250 @@
+{
+    "Links": [
+        {
+            "EndAttrID": 4500,
+            "LinkID": 100052,
+            "StartAttrID": 4301
+        },
+        {
+            "EndAttrID": 2900,
+            "LinkID": 100047,
+            "StartAttrID": 4301
+        },
+        {
+            "EndAttrID": 3300,
+            "LinkID": 100036,
+            "StartAttrID": 2901
+        },
+        {
+            "EndAttrID": 3100,
+            "LinkID": 100045,
+            "StartAttrID": 3001
+        },
+        {
+            "EndAttrID": 3200,
+            "LinkID": 100046,
+            "StartAttrID": 3101
+        },
+        {
+            "EndAttrID": 3400,
+            "LinkID": 100048,
+            "StartAttrID": 4301
+        },
+        {
+            "EndAttrID": 3500,
+            "LinkID": 100038,
+            "StartAttrID": 3401
+        },
+        {
+            "EndAttrID": 3600,
+            "LinkID": 100039,
+            "StartAttrID": 3501
+        },
+        {
+            "EndAttrID": 3700,
+            "LinkID": 100049,
+            "StartAttrID": 4301
+        },
+        {
+            "EndAttrID": 3800,
+            "LinkID": 100041,
+            "StartAttrID": 3701
+        },
+        {
+            "EndAttrID": 4400,
+            "LinkID": 100051,
+            "StartAttrID": 3801
+        },
+        {
+            "EndAttrID": 3900,
+            "LinkID": 100042,
+            "StartAttrID": 3701
+        },
+        {
+            "EndAttrID": 4100,
+            "LinkID": 100043,
+            "StartAttrID": 3901
+        },
+        {
+            "EndAttrID": 7300,
+            "LinkID": 100094,
+            "StartAttrID": 4501
+        },
+        {
+            "EndAttrID": 4600,
+            "LinkID": 100095,
+            "StartAttrID": 7301
+        },
+        {
+            "EndAttrID": 7500,
+            "LinkID": 100097,
+            "StartAttrID": 4601
+        },
+        {
+            "EndAttrID": 7400,
+            "LinkID": 100098,
+            "StartAttrID": 7501
+        },
+        {
+            "EndAttrID": 7600,
+            "LinkID": 100099,
+            "StartAttrID": 2901
+        },
+        {
+            "EndAttrID": 3000,
+            "LinkID": 100100,
+            "StartAttrID": 7601
+        }
+    ],
+    "Nodes": [
+        {
+            "ID": 43,
+            "Name": "Root",
+            "PosX": 50.0,
+            "PosY": 405.0,
+            "Type": "Root"
+        },
+        {
+            "ID": 45,
+            "Name": "CloneOff",
+            "PosX": 310.0,
+            "PosY": 80.0,
+            "Type": "Sequence"
+        },
+        {
+            "ID": 46,
+            "Name": "Probability",
+            "PosX": 830.0,
+            "PosY": 80.0,
+            "Probability": 55.0,
+            "Type": "Probability"
+        },
+        {
+            "ID": 29,
+            "Name": "BaseJump",
+            "PosX": 310.0,
+            "PosY": 275.0,
+            "Type": "Sequence"
+        },
+        {
+            "ID": 33,
+            "Name": "Jump",
+            "PosX": 570.0,
+            "PosY": 210.0,
+            "Type": "Jump"
+        },
+        {
+            "ID": 30,
+            "Name": "Probability",
+            "PosX": 830.0,
+            "PosY": 340.0,
+            "Probability": 29.85099983215332,
+            "Type": "Probability"
+        },
+        {
+            "CooldownTime": 5.0,
+            "ID": 31,
+            "Name": "Cooldown",
+            "PosX": 1090.0,
+            "PosY": 340.0,
+            "Type": "Cooldown"
+        },
+        {
+            "ID": 32,
+            "Name": "Clone",
+            "PosX": 1350.0,
+            "PosY": 340.0,
+            "Type": "Clone"
+        },
+        {
+            "ID": 34,
+            "Name": "BaseMissile",
+            "PosX": 310.0,
+            "PosY": 470.0,
+            "Type": "Sequence"
+        },
+        {
+            "CooldownTime": 3.0,
+            "ID": 35,
+            "Name": "Cooldown",
+            "PosX": 570.0,
+            "PosY": 470.0,
+            "Type": "Cooldown"
+        },
+        {
+            "ID": 36,
+            "Name": "BaseMissile",
+            "PosX": 830.0,
+            "PosY": 470.0,
+            "Type": "BaseMissile"
+        },
+        {
+            "ID": 37,
+            "Name": "BaseMove",
+            "PosX": 310.0,
+            "PosY": 665.0,
+            "Type": "Sequence"
+        },
+        {
+            "CheckExist": true,
+            "ID": 38,
+            "Name": "CheckClone",
+            "PosX": 570.0,
+            "PosY": 600.0,
+            "Type": "CheckClone"
+        },
+        {
+            "ID": 44,
+            "Name": "Move",
+            "PosX": 830.0,
+            "PosY": 600.0,
+            "Type": "Move"
+        },
+        {
+            "ID": 39,
+            "Name": "Probability",
+            "PosX": 570.0,
+            "PosY": 730.0,
+            "Probability": 31.343000411987305,
+            "Type": "Probability"
+        },
+        {
+            "ID": 41,
+            "Name": "BaseMissile",
+            "PosX": 830.0,
+            "PosY": 730.0,
+            "Type": "BaseMissile"
+        },
+        {
+            "CheckExist": true,
+            "ID": 73,
+            "Name": "CheckClone",
+            "PosX": 570.0,
+            "PosY": 80.0,
+            "Type": "CheckClone"
+        },
+        {
+            "ID": 74,
+            "Name": "CloneDeactivate",
+            "PosX": 1350.0,
+            "PosY": 80.0,
+            "Type": "CloneDeactivate"
+        },
+        {
+            "ID": 75,
+            "MinDuration": 10.0,
+            "Name": "CheckCloneDuration",
+            "PosX": 1090.0,
+            "PosY": 80.0,
+            "Type": "CheckCloneDuration"
+        },
+        {
+            "CheckExist": false,
+            "ID": 76,
+            "Name": "CheckClone",
+            "PosX": 570.0,
+            "PosY": 340.0,
+            "Type": "CheckClone"
+        }
+    ]
+}

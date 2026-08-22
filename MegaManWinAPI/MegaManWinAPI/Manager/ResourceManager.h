@@ -1,0 +1,105 @@
+#pragma once
+
+#include "Singleton.h"
+
+class Sound;
+
+// 텍스처 로드&관리
+// 사운드 로드&관리
+// 폰트 로드&관리
+class ResourceManager : public Singleton<ResourceManager>
+{
+	// Singleton 객체를 '친구'로 선언해서 private 접근 가능하게 열어준다.
+	friend Singleton<ResourceManager>;
+
+public:
+	void Init(HWND hwnd, fs::path directory);
+	void Cleanup();
+
+	// 텍스처
+	void LoadTexture(wstring key, wstring texturePath, int32 row = 1, 
+		int32 col = 1, float dur = 0, bool flip = false);
+	class Texture* GetTexture(wstring key);
+
+
+	// 사운드
+	Sound* GetSound(const wstring& key)
+	{
+		auto it = _sounds.find(key);
+		return (it != _sounds.end()) ? it->second : nullptr;
+	}
+	wstring GetBGMPath(const wstring& key)
+	{
+		auto it = _bgmPaths.find(key);
+		return (it != _bgmPaths.end()) ? it->second : L"";
+	}
+	void LoadAllSoundsInDirectory(const wstring& directoryPath);
+
+	// 폰트
+	void LoadFont();
+	HFONT GetFont(FontSize size)
+	{
+		if (_fonts.find(size) != _fonts.end())
+		{
+			return _fonts[size];
+		}
+		return nullptr;
+	}
+
+	// 펜
+	HPEN GetRedPen() { return _redPen; }
+
+	fs::path GetResourcePath() { return _resourcePath; }
+
+	// Scene 경로 관리
+	fs::path GetSceneDirectory() const { return _resourcePath / L"Scene"; }
+	string GetScenePath(const string& filename) const
+	{
+		return (GetSceneDirectory() / fs::path(filename)).string();
+	}
+	wstring GetScenePath(const wstring& filename) const
+	{
+		return (GetSceneDirectory() / fs::path(filename)).wstring();
+	}
+
+	// BT 경로 관리
+	fs::path GetBTDirectory() const { return _resourcePath / L"BT"; }
+	string GetBTPath(const string& filename) const
+	{
+		return (GetBTDirectory() / fs::path(filename)).string();
+	}
+	wstring GetBTPath(const wstring& filename) const
+	{
+		return (GetBTDirectory() / fs::path(filename)).wstring();
+	}
+
+	// 자동 파일 Load
+	void LoadAllTexturesInDirectory(const wstring& directoryPath);
+	
+	
+
+private:
+	// 아무나 생성못하게 생성자/소멸자를 숨기자
+	ResourceManager() = default;
+	~ResourceManager() = default;
+
+private:
+	// 모든 texture 리소스 폴더내에 있을꺼라, 루트 디렉터리 정보를 미리 만들어두자.
+	fs::path _resourcePath;
+
+	// 키 : path
+	// Texture*
+	unordered_map<wstring, Texture*> _textures;
+
+	// sound
+	unordered_map<wstring, Sound*> _sounds;
+
+	// font
+	unordered_map<FontSize, HFONT> _fonts;
+
+	// Pen
+	HPEN _redPen;
+
+	unordered_map<wstring, wstring> _bgmPaths;
+};
+

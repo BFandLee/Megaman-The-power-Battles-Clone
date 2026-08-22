@@ -3,9 +3,16 @@
 class Texture
 {
 public:
-	void Load(wstring texturePath, int32 transparent, int32 row, int32 col, float dur, bool enableFlip);
-	void Render(ID2D1HwndRenderTarget* renderTarget, Vector pos, Vector srcPos = Vector(0,0), bool flipX = false);
-	void RenderScreen(HDC hdc, Vector screenPos, Vector srcPos = Vector(0,0));
+	void Load(wstring texturePath, int32 row, int32 col, float dur, bool enableFlip);
+
+	// íŒ”ë ˆíŠ¸ ìŠ¤ì™‘ì„ ìœ„í•œ ìƒˆ ë¡œë“œ í•¨ìˆ˜ ì„ ì–¸
+	void LoadWithPaletteSwap(wstring texturePath, const unordered_map<uint32, uint32>& colorMap, int32 row, int32 col, float dur, bool enableFlip);
+
+	// Animation ì „ìš©
+	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector size, Vector offset, Vector scale = Vector(1.0f, 1.0f), bool flipX = false, float rotation = 0.0f);
+	// ImageRender ì „ìš©
+	void Render(ID2D1RenderTarget* renderTarget, Vector worldPos, Vector srcPos, Vector scale = Vector(1.0f, 1.0f), bool flipX = false, float rotation = 0.0f);
+	void RenderScreen(ID2D1RenderTarget* renderTarget, Vector screenPos, Vector srcPos = Vector(0,0));
 
 	uint32 GetSizeX() const { return _sizeX; }
 	uint32 GetSizeY() const { return _sizeY; }
@@ -17,30 +24,25 @@ public:
 
 	void SetApplyCenter(bool apply) { _applyCenter = apply; }
 
+	ID2D1Bitmap* GetBitmap() const { return _bitmap; }
+
 private:
-	HDC			_bitmapHdc = 0;
-	HBITMAP		_bitmap = 0;
-
-	// WinAPI ±âº» ·»´õ¸µ ÇÔ¼ö´Â ÁÂ¿ì¹İÀü(Flip)À» Áö¿øÇÏÁö ¾ÊÀ¸´Ï
-	// ¹İÀüµÈ ÀÌ¹ÌÁö¸¦ µû·Î ÀúÀåÇØµĞ´Ù.
-	HDC			_flipBitmapHdc = 0;
-	HBITMAP		_flipBitmap = 0;
-
+	ID2D1Bitmap* _bitmap = nullptr;
 	int32		_transparent = -1;
 	uint32		_bitmapSizeX = 0;
 	uint32		_bitmapSizeY = 0;
 
-	bool		_applyCenter = true;	// ±×¸²À» ±×¸±¶§ °¡¿îµ¥ ÁÂÇ¥±âÁØÀ¸·Î º¸Á¤ÇØ´Ş¶ó.
+	bool		_applyCenter = true;	// ê·¸ë¦¼ì„ ê·¸ë¦´ë•Œ ê°€ìš´ë° ì¢Œí‘œê¸°ì¤€ìœ¼ë¡œ ë³´ì •í•´ë‹¬ë¼.
 
 
-	// sprite·Î ÂÉ°³Áø ÅØ½ºÃ³ÀÇ °æ¿ì, Çà/¿­ °³¼ö¸¦ ÀúÀåÇÑ´Ù.
+	// spriteë¡œ ìª¼ê°œì§„ í…ìŠ¤ì²˜ì˜ ê²½ìš°, í–‰/ì—´ ê°œìˆ˜ë¥¼ ì €ì¥í•œë‹¤.
 	int32		_col = 0;
 	int32		_row = 0;
 	int32		_frameSizeX = 0;
 	int32		_frameSizeY = 0;
 	float		_dur = 0;
 
-	// »ç¿ëÀÚ°¡ ¿øÇÏ´Â Å©±â
+	// ì‚¬ìš©ìê°€ ì›í•˜ëŠ” í¬ê¸°
 	int32		_sizeX = 0;
 	int32		_sizeY = 0;
 };

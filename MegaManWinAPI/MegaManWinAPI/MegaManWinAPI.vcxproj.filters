@@ -1,166 +1,643 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <ItemGroup>
-    <Filter Include="소스 파일">
+    <Filter Include="?뚯뒪 ?뚯씪">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="헤더 파일">
+    <Filter Include="?ㅻ뜑 ?뚯씪">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
+    <Filter Include="由ъ냼???뚯씪">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Core">
+    <Filter Include="?뚯뒪 ?뚯씪\Core">
       <UniqueIdentifier>{0f9ba775-67c2-44bd-a1b2-adef0805baba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Entity">
+    <Filter Include="?뚯뒪 ?뚯씪\Entity">
       <UniqueIdentifier>{7470e225-801b-43d1-b653-142d8883c31f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager">
+    <Filter Include="?뚯뒪 ?뚯씪\Manager">
       <UniqueIdentifier>{9bf406c0-52e5-44b8-b9eb-7c475e9304df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Renderer">
+    <Filter Include="?뚯뒪 ?뚯씪\Renderer">
       <UniqueIdentifier>{4820f701-03ef-49ae-bd79-41ceb0ed35da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Util">
+    <Filter Include="?뚯뒪 ?뚯씪\Util">
       <UniqueIdentifier>{ab8490dc-347c-4a3e-b39f-7ba739277b62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component">
+    <Filter Include="?뚯뒪 ?뚯씪\Component">
       <UniqueIdentifier>{43a1de8a-bab3-46f7-bf59-e10310ab4ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="?뚯뒪 ?뚯씪\Test">
+      <UniqueIdentifier>{437368ac-bd44-46bb-abe7-90773ed3b9e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="?뚯뒪 ?뚯씪\Entity\Actor">
+      <UniqueIdentifier>{6bbf8bd5-b8f0-4e62-b74d-3c5f38993f23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\AI\BossBlackboard.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\Boss.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\ConditionDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CooldownDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\ProbabilityDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossDead.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossPhase1State.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossPhase2State.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Boss\BossSpawn.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\DeathState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\HitState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\IdleState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\JumpState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\MoveState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\SlideState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\Player\SpawnState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
     <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
     </ClInclude>
     <ClInclude Include="MegaManWinAPI.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>소스 파일\Core</Filter>
+    <ClInclude Include="Core\Game.h">
+      <Filter>?뚯뒪 ?뚯씪\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>소스 파일\Core</Filter>
+    <ClInclude Include="Core\Scene.h">
+      <Filter>?뚯뒪 ?뚯씪\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>소스 파일\Entity</Filter>
+    <ClInclude Include="Entity\Actor\Actor.h">
+      <Filter>?뚯뒪 ?뚯씪\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>소스 파일\Entity</Filter>
+    <ClInclude Include="Entity\Component\Component.h">
+      <Filter>?뚯뒪 ?뚯씪\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>소스 파일\Manager</Filter>
+    <ClInclude Include="Manager\CollisionManager.h">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>소스 파일\Manager</Filter>
+    <ClInclude Include="Manager\InputManager.h">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>소스 파일\Manager</Filter>
+    <ClInclude Include="Manager\ResourceManager.h">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="SoundManager.h">
-      <Filter>소스 파일\Manager</Filter>
+    <ClInclude Include="Manager\SoundManager.h">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>소스 파일\Manager</Filter>
+    <ClInclude Include="Manager\TimeManager.h">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ImageRenderer.h">
-      <Filter>소스 파일\Renderer</Filter>
+    <ClInclude Include="Renderer\ImageRenderer.h">
+      <Filter>?뚯뒪 ?뚯씪\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRenderer.h">
-      <Filter>소스 파일\Renderer</Filter>
+    <ClInclude Include="Renderer\SpriteRenderer.h">
+      <Filter>?뚯뒪 ?뚯씪\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>소스 파일\Util</Filter>
+    <ClInclude Include="Util\Singleton.h">
+      <Filter>?뚯뒪 ?뚯씪\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>소스 파일\Util</Filter>
+    <ClInclude Include="Util\Util.h">
+      <Filter>?뚯뒪 ?뚯씪\Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>소스 파일\Manager</Filter>
+    <ClInclude Include="Manager\SceneManager.h">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>소스 파일\Util</Filter>
+      <Filter>?뚯뒪 ?뚯씪\Util</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatorComponent.h">
-      <Filter>소스 파일\Component</Filter>
+    <ClInclude Include="Entity\Component\AnimatorComponent.h">
+      <Filter>?뚯뒪 ?뚯씪\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ObjectPool.h">
+      <Filter>?뚯뒪 ?뚯씪\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\Background.h">
+      <Filter>?뚯뒪 ?뚯씪\Entity\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TestScene.h">
+      <Filter>?뚯뒪 ?뚯씪\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\Player.h">
+      <Filter>?뚯뒪 ?뚯씪\Entity\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component\TransformComponent.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\Ground.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\WallActor.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Collider\BoxCollider.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Collider\CircleCollider.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Collider\Collider.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imconfig.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imgui.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imgui_impl_d2d.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imgui_impl_win32.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imgui_internal.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imstb_rectpack.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imstb_textedit.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imstb_truetype.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component\RigidBodyComponent.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component\FSMComponent.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component\WeaponComponent.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\FSM\State.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Weapon\Buster.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Weapon\Weapon.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\PlayerBullet.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ObjectPoolManager.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\ChargeEffectActor.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\MuzzleFlash.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Factory\PlayerFactory.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Factory\ActorFactory.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component\MovementComponent.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\AI\Blackboard.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\AI\BTState.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\BTNode.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CompositeNode.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\Sequence.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\Selector.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imnodes.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="External\ImGui\imnodes_internal.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\BTEditor.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\BTSerializer.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Factory\BTNodeFactory.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\DecoratorNode.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\ActionNode.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\FileDialog.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\GeminiCommonNodes.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\GeminiPatten.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\BossMissile.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\BossClone.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CheckCloneDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CheckPlayerAttackingDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\SucceederDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BT\CheckCloneDurationDecorator.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIElement.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\UIManager.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BossHpBarUI.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ContinueUI.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ReadyGoUI.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PlayerHpBarUI.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameOverScene.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameClearScene.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LobbyScene.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Actor\Effect.h">
+      <Filter>?ㅻ뜑 ?뚯씪</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\AI\BossBlackboard.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\Boss.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\ConditionDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CooldownDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\ProbabilityDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossDead.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossPhase1State.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossPhase2State.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Boss\BossSpawn.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\DeathState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\HitState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\IdleState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\JumpState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\MoveState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\SlideState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FSM\Player\SpawnState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
     <ClCompile Include="MegaManWinAPI.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>?뚯뒪 ?뚯씪</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>소스 파일\Core</Filter>
+    <ClCompile Include="Core\Game.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Core</Filter>
+    <ClCompile Include="Core\Scene.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>소스 파일\Entity</Filter>
+    <ClCompile Include="Entity\Actor\Actor.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>소스 파일\Entity</Filter>
+    <ClCompile Include="Entity\Component\Component.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+    <ClCompile Include="Manager\CollisionManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+    <ClCompile Include="Manager\InputManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+    <ClCompile Include="Manager\ResourceManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+    <ClCompile Include="Manager\SoundManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+    <ClCompile Include="Manager\TimeManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ImageRenderer.cpp">
-      <Filter>소스 파일\Renderer</Filter>
+    <ClCompile Include="Renderer\ImageRenderer.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
-      <Filter>소스 파일\Renderer</Filter>
+    <ClCompile Include="Renderer\SpriteRenderer.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Util.cpp">
-      <Filter>소스 파일\Util</Filter>
+    <ClCompile Include="Util\Util.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>?뚯뒪 ?뚯씪</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+    <ClCompile Include="Manager\SceneManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>소스 파일\Util</Filter>
+      <Filter>?뚯뒪 ?뚯씪\Util</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatorComponent.cpp">
-      <Filter>소스 파일\Component</Filter>
+    <ClCompile Include="Entity\Component\AnimatorComponent.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\ObjectPool.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\Background.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Entity\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\TestScene.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\Player.cpp">
+      <Filter>?뚯뒪 ?뚯씪\Entity\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\TransformComponent.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\Ground.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\WallActor.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Collider\BoxCollider.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Collider\CircleCollider.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Collider\Collider.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_draw.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_impl_d2d.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_impl_win32.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_tables.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_widgets.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_demo.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\RigidBodyComponent.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\FSMComponent.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\WeaponComponent.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Weapon\Buster.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\PlayerBullet.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ObjectPoolManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\ChargeEffectActor.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\MuzzleFlash.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Factory\PlayerFactory.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Factory\ActorFactory.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Component\MovementComponent.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\AI\BTState.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\BTNode.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CompositeNode.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\Sequence.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\Selector.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imnodes.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\BTEditor.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\BTSerializer.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Factory\BTNodeFactory.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\DecoratorNode.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\ActionNode.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\AI\Blackboard.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\FileDialog.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\GeminiCommonNodes.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\GeminiPatten.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\BossMissile.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\BossClone.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CheckCloneDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CheckPlayerAttackingDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\SucceederDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BT\CheckCloneDurationDecorator.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIElement.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\UIManager.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BossHpBarUI.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ContinueUI.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ReadyGoUI.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PlayerHpBarUI.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameOverScene.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameClearScene.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\LobbyScene.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Actor\Effect.cpp">
+      <Filter>?뚯뒪 ?뚯씪</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MegaManWinAPI.rc">
-      <Filter>리소스 파일</Filter>
+      <Filter>由ъ냼???뚯씪</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>由ъ냼???뚯씪</Filter>
     </Image>
     <Image Include="MegaManWinAPI.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>由ъ냼???뚯씪</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
 </Project>

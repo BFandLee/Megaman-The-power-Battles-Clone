@@ -1,0 +1,21 @@
+{
+    "bLoop": false,
+    "frames": [
+        {
+            "duration": 0.3,
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "size": {
+                "x": 64.0,
+                "y": 64.0
+            },
+            "startPos": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    ],
+    "texturePath": "Boss_Hit_Sheet"
+}

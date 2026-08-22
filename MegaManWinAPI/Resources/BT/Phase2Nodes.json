@@ -1,0 +1,434 @@
+{
+    "Links": [
+        {
+            "EndAttrID": 200,
+            "LinkID": 100000,
+            "StartAttrID": 101
+        },
+        {
+            "EndAttrID": 600,
+            "LinkID": 100001,
+            "StartAttrID": 201
+        },
+        {
+            "EndAttrID": 7100,
+            "LinkID": 100087,
+            "StartAttrID": 601
+        },
+        {
+            "EndAttrID": 700,
+            "LinkID": 100088,
+            "StartAttrID": 7101
+        },
+        {
+            "EndAttrID": 800,
+            "LinkID": 100003,
+            "StartAttrID": 701
+        },
+        {
+            "EndAttrID": 500,
+            "LinkID": 100005,
+            "StartAttrID": 101
+        },
+        {
+            "EndAttrID": 1200,
+            "LinkID": 100009,
+            "StartAttrID": 501
+        },
+        {
+            "EndAttrID": 1300,
+            "LinkID": 100010,
+            "StartAttrID": 1201
+        },
+        {
+            "EndAttrID": 6900,
+            "LinkID": 100083,
+            "StartAttrID": 1201
+        },
+        {
+            "EndAttrID": 6100,
+            "LinkID": 100084,
+            "StartAttrID": 6901
+        },
+        {
+            "EndAttrID": 6200,
+            "LinkID": 100074,
+            "StartAttrID": 6101
+        },
+        {
+            "EndAttrID": 6300,
+            "LinkID": 100075,
+            "StartAttrID": 6201
+        },
+        {
+            "EndAttrID": 7000,
+            "LinkID": 100085,
+            "StartAttrID": 6101
+        },
+        {
+            "EndAttrID": 6500,
+            "LinkID": 100086,
+            "StartAttrID": 7001
+        },
+        {
+            "EndAttrID": 6600,
+            "LinkID": 100078,
+            "StartAttrID": 6501
+        },
+        {
+            "EndAttrID": 4700,
+            "LinkID": 100054,
+            "StartAttrID": 101
+        },
+        {
+            "EndAttrID": 7200,
+            "LinkID": 100089,
+            "StartAttrID": 4701
+        },
+        {
+            "EndAttrID": 5300,
+            "LinkID": 100091,
+            "StartAttrID": 7201
+        },
+        {
+            "EndAttrID": 4800,
+            "LinkID": 100092,
+            "StartAttrID": 5301
+        },
+        {
+            "EndAttrID": 4900,
+            "LinkID": 100093,
+            "StartAttrID": 4801
+        },
+        {
+            "EndAttrID": 5000,
+            "LinkID": 100063,
+            "StartAttrID": 101
+        },
+        {
+            "EndAttrID": 5400,
+            "LinkID": 100064,
+            "StartAttrID": 5001
+        },
+        {
+            "EndAttrID": 5700,
+            "LinkID": 100069,
+            "StartAttrID": 101
+        },
+        {
+            "EndAttrID": 5900,
+            "LinkID": 100070,
+            "StartAttrID": 5701
+        },
+        {
+            "EndAttrID": 5800,
+            "LinkID": 100071,
+            "StartAttrID": 5701
+        },
+        {
+            "EndAttrID": 7500,
+            "LinkID": 100098,
+            "StartAttrID": 5401
+        },
+        {
+            "EndAttrID": 5600,
+            "LinkID": 100099,
+            "StartAttrID": 7501
+        },
+        {
+            "EndAttrID": 7600,
+            "LinkID": 100100,
+            "StartAttrID": 7501
+        },
+        {
+            "EndAttrID": 7700,
+            "LinkID": 100101,
+            "StartAttrID": 7601
+        },
+        {
+            "EndAttrID": 5500,
+            "LinkID": 100102,
+            "StartAttrID": 7701
+        },
+        {
+            "EndAttrID": 7800,
+            "LinkID": 100103,
+            "StartAttrID": 5501
+        },
+        {
+            "EndAttrID": 7900,
+            "LinkID": 100104,
+            "StartAttrID": 7701
+        },
+        {
+            "EndAttrID": 8000,
+            "LinkID": 100105,
+            "StartAttrID": 7901
+        },
+        {
+            "EndAttrID": 8200,
+            "LinkID": 100107,
+            "StartAttrID": 8001
+        }
+    ],
+    "Nodes": [
+        {
+            "ID": 1,
+            "Name": "Root",
+            "PosX": 50.0,
+            "PosY": 665.0,
+            "Type": "Root"
+        },
+        {
+            "ID": 2,
+            "Name": "CloneDeactivate",
+            "PosX": 310.0,
+            "PosY": 80.0,
+            "Type": "Sequence"
+        },
+        {
+            "CheckExist": true,
+            "ID": 6,
+            "Name": "CheckClone",
+            "PosX": 570.0,
+            "PosY": 80.0,
+            "Type": "CheckClone"
+        },
+        {
+            "ID": 71,
+            "MinDuration": 5.0,
+            "Name": "CheckCloneDuration",
+            "PosX": 830.0,
+            "PosY": 80.0,
+            "Type": "CheckCloneDuration"
+        },
+        {
+            "ID": 7,
+            "Name": "Probability",
+            "PosX": 1009.0,
+            "PosY": 91.0,
+            "Probability": 14.0,
+            "Type": "Probability"
+        },
+        {
+            "ID": 8,
+            "Name": "CloneDeactivate",
+            "PosX": 1202.0,
+            "PosY": 118.0,
+            "Type": "CloneDeactivate"
+        },
+        {
+            "ID": 5,
+            "Name": "BaseMissile",
+            "PosX": 310.0,
+            "PosY": 340.0,
+            "Type": "Sequence"
+        },
+        {
+            "CooldownTime": 4.0,
+            "ID": 12,
+            "Name": "Cooldown",
+            "PosX": 570.0,
+            "PosY": 340.0,
+            "Type": "Cooldown"
+        },
+        {
+            "ID": 13,
+            "Name": "BaseMissile",
+            "PosX": 803.0,
+            "PosY": 289.0,
+            "Type": "BaseMissile"
+        },
+        {
+            "ID": 69,
+            "Name": "Succeeder",
+            "PosX": 830.0,
+            "PosY": 405.0,
+            "Type": "Succeeder"
+        },
+        {
+            "ID": 61,
+            "Name": "Burst fire",
+            "PosX": 1090.0,
+            "PosY": 405.0,
+            "Type": "Sequence"
+        },
+        {
+            "ID": 62,
+            "Name": "Probability",
+            "PosX": 1350.0,
+            "PosY": 340.0,
+            "Probability": 50.0,
+            "Type": "Probability"
+        },
+        {
+            "ID": 63,
+            "Name": "BaseMissile",
+            "PosX": 1610.0,
+            "PosY": 340.0,
+            "Type": "BaseMissile"
+        },
+        {
+            "ID": 70,
+            "Name": "Succeeder",
+            "PosX": 1350.0,
+            "PosY": 470.0,
+            "Type": "Succeeder"
+        },
+        {
+            "ID": 65,
+            "Name": "Probability",
+            "PosX": 1610.0,
+            "PosY": 470.0,
+            "Probability": 20.895999908447266,
+            "Type": "Probability"
+        },
+        {
+            "ID": 66,
+            "Name": "BaseMissile",
+            "PosX": 1870.0,
+            "PosY": 470.0,
+            "Type": "BaseMissile"
+        },
+        {
+            "ID": 47,
+            "Name": "CreateClone",
+            "PosX": 310.0,
+            "PosY": 600.0,
+            "Type": "Sequence"
+        },
+        {
+            "CheckExist": false,
+            "ID": 72,
+            "Name": "CheckClone",
+            "PosX": 570.0,
+            "PosY": 600.0,
+            "Type": "CheckClone"
+        },
+        {
+            "CooldownTime": 3.0,
+            "ID": 53,
+            "Name": "Cooldown",
+            "PosX": 830.0,
+            "PosY": 600.0,
+            "Type": "Cooldown"
+        },
+        {
+            "ID": 48,
+            "Name": "Probability",
+            "PosX": 1090.0,
+            "PosY": 600.0,
+            "Probability": 32.09000015258789,
+            "Type": "Probability"
+        },
+        {
+            "ID": 49,
+            "Name": "Clone",
+            "PosX": 1350.0,
+            "PosY": 600.0,
+            "Type": "Clone"
+        },
+        {
+            "ID": 50,
+            "Name": "Behavior",
+            "PosX": 310.0,
+            "PosY": 860.0,
+            "Type": "Sequence"
+        },
+        {
+            "CheckExist": true,
+            "ID": 54,
+            "Name": "CheckClone",
+            "PosX": 570.0,
+            "PosY": 860.0,
+            "Type": "CheckClone"
+        },
+        {
+            "ID": 55,
+            "Name": "Probability",
+            "PosX": 1610.0,
+            "PosY": 860.0,
+            "Probability": 59.70100021362305,
+            "Type": "Probability"
+        },
+        {
+            "ID": 56,
+            "Name": "LaserMissile",
+            "PosX": 1090.0,
+            "PosY": 730.0,
+            "Type": "LaserMissile"
+        },
+        {
+            "ID": 57,
+            "Name": "Move&Jump",
+            "PosX": 310.0,
+            "PosY": 1185.0,
+            "Type": "Sequence"
+        },
+        {
+            "ID": 59,
+            "Name": "Move",
+            "PosX": 570.0,
+            "PosY": 1120.0,
+            "Type": "Move"
+        },
+        {
+            "ID": 58,
+            "Name": "Jump",
+            "PosX": 570.0,
+            "PosY": 1250.0,
+            "Type": "Jump"
+        },
+        {
+            "CooldownTime": 2.0,
+            "ID": 75,
+            "Name": "Cooldown",
+            "PosX": 830.0,
+            "PosY": 860.0,
+            "Type": "Cooldown"
+        },
+        {
+            "ID": 76,
+            "Name": "Succeeder",
+            "PosX": 1090.0,
+            "PosY": 925.0,
+            "Type": "Succeeder"
+        },
+        {
+            "ID": 77,
+            "Name": "Burst Razer",
+            "PosX": 1350.0,
+            "PosY": 925.0,
+            "Type": "Sequence"
+        },
+        {
+            "ID": 78,
+            "Name": "LaserMissile",
+            "PosX": 1870.0,
+            "PosY": 860.0,
+            "Type": "LaserMissile"
+        },
+        {
+            "ID": 79,
+            "Name": "Succeeder",
+            "PosX": 1610.0,
+            "PosY": 990.0,
+            "Type": "Succeeder"
+        },
+        {
+            "ID": 80,
+            "Name": "Probability",
+            "PosX": 1870.0,
+            "PosY": 990.0,
+            "Probability": 23.0,
+            "Type": "Probability"
+        },
+        {
+            "ID": 82,
+            "Name": "BaseMissile",
+            "PosX": 2130.0,
+            "PosY": 990.0,
+            "Type": "BaseMissile"
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 #pragma once
 
 #define NOMINMAX 
-#include <windows.h>	// min/max À¯Æ¿ÇÔ¼ö°¡ ¶Ç ±¸Çö. 
+#include <windows.h>	// min/max ìœ í‹¸í•¨ìˆ˜ê°€ ë˜ êµ¬í˜„. 
 #include <vector>
 #include <set>
 #include <map>
@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <windowsx.h>
 #include <queue>
+#include <cmath>
 
 // C++ 20 std::format
 #include <format>
@@ -22,26 +23,39 @@ namespace fs = std::filesystem;
 
 // Json
 #include <fstream>
-#include "Json/nlohmann/json.hpp" // nlohmann/json Çì´õ ÆÄÀÏ
+#include "Json/nlohmann/json.hpp" // nlohmann/json í—¤ë” íŒŒì¼
 
-// Direct2D ¹× WIC Çì´õ
+// ImGui
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include "imgui.h"
+#include "imnodes.h"
+#include "FileDialog.h"
+
+// Direct2D ë° WIC í—¤ë”
 #include <d2d1.h>
 #include <wincodec.h>
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "windowscodecs.lib")
-// Á¤¼öÇü º¯¼ö
+
+// ì‚¬ìš´ë“œ ê´€ë ¨ í—¤ë” ë° ë¼ì´ë¸ŒëŸ¬ë¦¬ (MCI & DirectSound)
+#include <mmsystem.h>
+#include <dsound.h>
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
+
+// ì •ìˆ˜í˜• ë³€ìˆ˜
 using json = nlohmann::json;
 
-using int8 = char;		// 1byte Á¤¼öÇü
-using int16 = short;	// 2byte Á¤¼öÇü
-using int32 = int;		// 4byte Á¤¼öÇü
-using int64 = long long;// 8byte Á¤¼öÇü
+using int8 = char;		// 1byte ì •ìˆ˜í˜•
+using int16 = short;	// 2byte ì •ìˆ˜í˜•
+using int32 = int;		// 4byte ì •ìˆ˜í˜•
+using int64 = long long;// 8byte ì •ìˆ˜í˜•
 
-using uint8 = unsigned char;		// 1byte Á¤¼öÇü
-using uint16 = unsigned short;	// 2byte Á¤¼öÇü
-using uint32 = unsigned int;		// 4byte Á¤¼öÇü
-using uint64 = unsigned long long;// 8byte Á¤¼öÇü
+using uint8 = unsigned char;		// 1byte ì •ìˆ˜í˜•
+using uint16 = unsigned short;	// 2byte ì •ìˆ˜í˜•
+using uint32 = unsigned int;		// 4byte ì •ìˆ˜í˜•
+using uint64 = unsigned long long;// 8byte ì •ìˆ˜í˜•
 
 using namespace std;
 
@@ -108,10 +122,10 @@ struct Vector
 	}
 
 
-	// ³»Àû
-	// ¿ÜÀû
-	// Á¤±ÔÈ­
-	// Å©±â
+	// ë‚´ì 
+	// ì™¸ì 
+	// ì •ê·œí™”
+	// í¬ê¸°
 	float LengthSquared()
 	{
 		return x * x + y * y;
@@ -131,15 +145,15 @@ struct Vector
 		y /= length;
 	}
 
-	// Dot ³»Àû
+	// Dot ë‚´ì 
 	// float = cos(A)
 	float Dot(Vector other) const
 	{
 		return x * other.x + y * other.y;
 	}
 
-	// Cross ¿ÜÀû
-	// °á°ú°¡ 3D º¤ÅÍ¿©¾ßÇÏ´Âµ¥, 2D ÁÂÇ¥°è¶ó¼­ Z=0, float ÇÏ³ª¸¦ ¸®ÅÏ½ÃÅ²´Ù. (0,0,x)
+	// Cross ì™¸ì 
+	// ê²°ê³¼ê°€ 3D ë²¡í„°ì—¬ì•¼í•˜ëŠ”ë°, 2D ì¢Œí‘œê³„ë¼ì„œ Z=0, float í•˜ë‚˜ë¥¼ ë¦¬í„´ì‹œí‚¨ë‹¤. (0,0,x)
 	float Cross(Vector other)
 	{
 		return x * other.y - y * other.x;
@@ -158,3 +172,28 @@ struct Vector
 		return *this - normal * (2.f * Dot(normal));
 	}
 };
+
+struct NodeLink
+{
+	int32 linkId;
+	int32 startAttrId;
+	int32 endAttrId;
+};
+
+struct BulletState
+{
+	float damage;
+	float speed;
+	bool isPiercing;    // ê´€í†µ ì—¬ë¶€
+	float maxLifeTime = 1.0f;
+};
+
+const int GWinSizeX = 1152;
+const int GWinSizeY = 672;
+
+constexpr float KNOCKBACK = 300.0f;
+constexpr float RESTORING = -250.0f;
+constexpr float MAX_CHARGE_TIME = 1.3f;
+
+constexpr float BOSS_KNOCKBACK = 150.0f;
+constexpr float BOSS_RESTORING = -100.0f;

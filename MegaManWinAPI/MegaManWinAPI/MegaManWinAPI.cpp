@@ -1,9 +1,15 @@
-﻿// MegaManWinAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+// MegaManWinAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-
+#include "pch.h"
+#include "Resource.h"
 #include "framework.h"
 #include "MegaManWinAPI.h"
 #include "Game.h"
+#ifdef _DEBUG
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#endif
+
 
 #define MAX_LOADSTRING 100
 
@@ -57,8 +63,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            // Game::GetInstance()->Update();
-            // Game::GetInstance().Render();
+            Game::GetInstance().Update();
+            Game::GetInstance().Render();
         }
     }
 
@@ -107,8 +113,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
+   RECT windowRect = { 0,0,GWinSizeX, GWinSizeY };
+   AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);
+
+   int width = windowRect.right - windowRect.left;
+   int height = windowRect.bottom - windowRect.top;
+
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, width, height, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -117,6 +129,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
+
+   Game::GetInstance().Init(hWnd);
 
    return TRUE;
 }
@@ -131,8 +145,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+#ifdef _DEBUG
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#endif
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef _DEBUG
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
+#endif
+
     switch (message)
     {
     case WM_COMMAND:
@@ -156,7 +179,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
             EndPaint(hWnd, &ps);
         }
         break;

@@ -1,0 +1,21 @@
+{
+  "texturePath": "PlayerUI_HitBar_Sheet",
+  "bLoop": true,
+  "frames": [
+    {
+      "startPos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "size": {
+        "x": 162.0,
+        "y": 123.0
+      },
+      "offset": {
+        "x": 0.0,
+        "y": 123.0
+      },
+      "duration": 0.2
+    }
+  ]
+}

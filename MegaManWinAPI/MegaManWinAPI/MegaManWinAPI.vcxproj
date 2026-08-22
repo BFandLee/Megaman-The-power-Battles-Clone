@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PublicIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util</PublicIncludeDirectories>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -105,11 +108,19 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\BT;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\FSM\Boss;$(ProjectDir)Entity\FSM\Player;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\AI;$(ProjectDir)Entity\Factory;$(ProjectDir)External\ImGui;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4828</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources\" /E /I /Y /D</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -119,55 +130,235 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Core;$(ProjectDir)Entity;$(ProjectDir)Entity\Actor;$(ProjectDir)Entity\Collider;$(ProjectDir)Entity\Component;$(ProjectDir)Entity\BT;$(ProjectDir)Entity\FSM;$(ProjectDir)Entity\FSM\Boss;$(ProjectDir)Entity\FSM\Player;$(ProjectDir)Entity\Weapon;$(ProjectDir)Entity\AI;$(ProjectDir)Entity\Factory;$(ProjectDir)External\ImGui;$(ProjectDir)Manager;$(ProjectDir)Renderer;$(ProjectDir)Util;$(ProjectDir)UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4828</DisableSpecificWarnings>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Resources" "$(TargetDir)Resources\" /E /I /Y /D</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="AnimatorComponent.h" />
-    <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="Core\GameOverScene.h" />
+    <ClInclude Include="Core\GameClearScene.h" />
+    <ClInclude Include="Core\LobbyScene.h" />
+    <ClInclude Include="Entity\Actor\Effect.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="UI\ContinueUI.h" />
+    <ClInclude Include="UI\ReadyGoUI.h" />
+    <ClInclude Include="UI\PlayerHpBarUI.h" />
+    <ClInclude Include="UI\BossHpBarUI.h" />
+    <ClInclude Include="Entity\BT\CheckCloneDurationDecorator.h" />
+    <ClInclude Include="Entity\BT\CheckCloneDecorator.h" />
+    <ClInclude Include="Entity\BT\CheckPlayerAttackingDecorator.h" />
+    <ClInclude Include="Entity\Actor\BossClone.h" />
+    <ClInclude Include="Entity\Actor\BossMissile.h" />
+    <ClInclude Include="Entity\AI\BossBlackboard.h" />
+    <ClInclude Include="Entity\Actor\Boss.h" />
+    <ClInclude Include="Entity\BT\ConditionDecorator.h" />
+    <ClInclude Include="Entity\BT\CooldownDecorator.h" />
+    <ClInclude Include="Entity\BT\GeminiCommonNodes.h" />
+    <ClInclude Include="Entity\BT\GeminiPatten.h" />
+    <ClInclude Include="Entity\BT\ProbabilityDecorator.h" />
+    <ClInclude Include="Entity\FSM\Boss\BossDead.h" />
+    <ClInclude Include="Entity\FSM\Boss\BossPhase1State.h" />
+    <ClInclude Include="Entity\FSM\Boss\BossPhase2State.h" />
+    <ClInclude Include="Entity\FSM\Boss\BossSpawn.h" />
+    <ClInclude Include="Entity\FSM\Player\DeathState.h" />
+    <ClInclude Include="Entity\FSM\Player\HitState.h" />
+    <ClInclude Include="Entity\FSM\Player\IdleState.h" />
+    <ClInclude Include="Entity\FSM\Player\JumpState.h" />
+    <ClInclude Include="Entity\FSM\Player\MoveState.h" />
+    <ClInclude Include="Entity\FSM\Player\SlideState.h" />
+    <ClInclude Include="Entity\FSM\Player\SpawnState.h" />
+    <ClInclude Include="Entity\BT\ActionNode.h" />
+    <ClInclude Include="Entity\BT\DecoratorNode.h" />
+    <ClInclude Include="Entity\BT\CompositeNode.h" />
+    <ClInclude Include="Entity\BT\BTNode.h" />
+    <ClInclude Include="Entity\AI\BTState.h" />
+    <ClInclude Include="Entity\AI\Blackboard.h" />
+    <ClInclude Include="Entity\Factory\ActorFactory.h" />
+    <ClInclude Include="Entity\Actor\Actor.h" />
+    <ClInclude Include="Entity\Actor\ChargeEffectActor.h" />
+    <ClInclude Include="Entity\Factory\BTNodeFactory.h" />
+    <ClInclude Include="Entity\Factory\PlayerFactory.h" />
+    <ClInclude Include="Entity\Actor\Ground.h" />
+    <ClInclude Include="Entity\Actor\WallActor.h" />
+    <ClInclude Include="Entity\Component\AnimatorComponent.h" />
+    <ClInclude Include="Entity\Actor\Background.h" />
+    <ClInclude Include="Entity\Collider\BoxCollider.h" />
+    <ClInclude Include="Entity\Collider\CircleCollider.h" />
+    <ClInclude Include="Entity\Collider\Collider.h" />
+    <ClInclude Include="Entity\Component\FSMComponent.h" />
+    <ClInclude Include="Entity\Component\WeaponComponent.h" />
+    <ClInclude Include="Entity\FSM\State.h" />
+    <ClInclude Include="Entity\Weapon\Buster.h" />
+    <ClInclude Include="Entity\Weapon\Weapon.h" />
+    <ClInclude Include="External\ImGui\imnodes.h" />
+    <ClInclude Include="External\ImGui\imnodes_internal.h" />
+    <ClInclude Include="Manager\BTEditor.h" />
+    <ClInclude Include="Manager\BTSerializer.h" />
+    <ClInclude Include="Manager\CollisionManager.h" />
+    <ClInclude Include="Entity\Component\Component.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="ImageRenderer.h" />
-    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Core\Game.h" />
+    <ClInclude Include="Entity\Actor\PlayerBullet.h" />
+    <ClInclude Include="Manager\ObjectPoolManager.h" />
+    <ClInclude Include="Entity\Actor\MuzzleFlash.h" />
+    <ClInclude Include="Entity\Component\MovementComponent.h" />
+    <ClInclude Include="Renderer\ImageRenderer.h" />
+    <ClInclude Include="Manager\InputManager.h" />
     <ClInclude Include="MegaManWinAPI.h" />
+    <ClInclude Include="Entity\ObjectPool.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Entity\Actor\Player.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="Manager\ResourceManager.h" />
+    <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Manager\SceneManager.h" />
+    <ClInclude Include="Entity\Component\TransformComponent.h" />
+    <ClInclude Include="Entity\Component\RigidBodyComponent.h" />
+    <ClInclude Include="Entity\BT\Sequence.h" />
+    <ClInclude Include="Entity\BT\Selector.h" />
+    <ClInclude Include="Entity\BT\SucceederDecorator.h" />
+    <ClInclude Include="Manager\UIManager.h" />
+    <ClInclude Include="UI\UIElement.h" />
+    <ClInclude Include="Util\FileDialog.h" />
+    <ClInclude Include="Util\Singleton.h" />
+    <ClInclude Include="Manager\SoundManager.h" />
+    <ClInclude Include="Renderer\SpriteRenderer.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Core\TestScene.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TimeManager.h" />
-    <ClInclude Include="Util.h" />
+    <ClInclude Include="Manager\TimeManager.h" />
+    <ClInclude Include="Util\Util.h" />
+    <ClInclude Include="External\ImGui\imconfig.h" />
+    <ClInclude Include="External\ImGui\imgui.h" />
+    <ClInclude Include="External\ImGui\imgui_impl_d2d.h" />
+    <ClInclude Include="External\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="External\ImGui\imgui_internal.h" />
+    <ClInclude Include="External\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="External\ImGui\imstb_textedit.h" />
+    <ClInclude Include="External\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AnimatorComponent.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="ImageRenderer.cpp" />
-    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Core\GameOverScene.cpp" />
+    <ClCompile Include="Core\GameClearScene.cpp" />
+    <ClCompile Include="Core\LobbyScene.cpp" />
+    <ClCompile Include="Entity\Actor\Effect.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="UI\ContinueUI.cpp" />
+    <ClCompile Include="UI\ReadyGoUI.cpp" />
+    <ClCompile Include="UI\PlayerHpBarUI.cpp" />
+    <ClCompile Include="UI\BossHpBarUI.cpp" />
+    <ClCompile Include="Entity\BT\CheckCloneDurationDecorator.cpp" />
+    <ClCompile Include="Entity\BT\CheckCloneDecorator.cpp" />
+    <ClCompile Include="Entity\BT\CheckPlayerAttackingDecorator.cpp" />
+    <ClCompile Include="Entity\Actor\BossClone.cpp" />
+    <ClCompile Include="Entity\Actor\BossMissile.cpp" />
+    <ClCompile Include="Entity\AI\Blackboard.cpp" />
+    <ClCompile Include="Entity\AI\BossBlackboard.cpp" />
+    <ClCompile Include="Entity\Actor\Boss.cpp" />
+    <ClCompile Include="Entity\BT\ConditionDecorator.cpp" />
+    <ClCompile Include="Entity\BT\CooldownDecorator.cpp" />
+    <ClCompile Include="Entity\BT\GeminiCommonNodes.cpp" />
+    <ClCompile Include="Entity\BT\GeminiPatten.cpp" />
+    <ClCompile Include="Entity\BT\ProbabilityDecorator.cpp" />
+    <ClCompile Include="Entity\FSM\Boss\BossDead.cpp" />
+    <ClCompile Include="Entity\FSM\Boss\BossPhase1State.cpp" />
+    <ClCompile Include="Entity\FSM\Boss\BossPhase2State.cpp" />
+    <ClCompile Include="Entity\FSM\Boss\BossSpawn.cpp" />
+    <ClCompile Include="Entity\FSM\Player\DeathState.cpp" />
+    <ClCompile Include="Entity\FSM\Player\HitState.cpp" />
+    <ClCompile Include="Entity\FSM\Player\IdleState.cpp" />
+    <ClCompile Include="Entity\FSM\Player\JumpState.cpp" />
+    <ClCompile Include="Entity\FSM\Player\MoveState.cpp" />
+    <ClCompile Include="Entity\FSM\Player\SlideState.cpp" />
+    <ClCompile Include="Entity\FSM\Player\SpawnState.cpp" />
+    <ClCompile Include="Entity\BT\ActionNode.cpp" />
+    <ClCompile Include="Entity\BT\DecoratorNode.cpp" />
+    <ClCompile Include="Entity\BT\CompositeNode.cpp" />
+    <ClCompile Include="Entity\BT\BTNode.cpp" />
+    <ClCompile Include="Entity\AI\BTState.cpp" />
+    <ClCompile Include="Entity\Factory\ActorFactory.cpp" />
+    <ClCompile Include="Entity\Actor\Actor.cpp" />
+    <ClCompile Include="Entity\Actor\ChargeEffectActor.cpp" />
+    <ClCompile Include="Entity\Factory\BTNodeFactory.cpp" />
+    <ClCompile Include="Entity\Factory\PlayerFactory.cpp" />
+    <ClCompile Include="Entity\Actor\Ground.cpp" />
+    <ClCompile Include="Entity\Actor\WallActor.cpp" />
+    <ClCompile Include="Entity\Component\AnimatorComponent.cpp" />
+    <ClCompile Include="Entity\Actor\Background.cpp" />
+    <ClCompile Include="Entity\Collider\BoxCollider.cpp" />
+    <ClCompile Include="Entity\Collider\CircleCollider.cpp" />
+    <ClCompile Include="Entity\Collider\Collider.cpp" />
+    <ClCompile Include="Entity\Component\FSMComponent.cpp" />
+    <ClCompile Include="Entity\Component\WeaponComponent.cpp" />
+    <ClCompile Include="Entity\Weapon\Buster.cpp" />
+    <ClCompile Include="External\ImGui\imnodes.cpp" />
+    <ClCompile Include="Manager\BTEditor.cpp" />
+    <ClCompile Include="Manager\BTSerializer.cpp" />
+    <ClCompile Include="Manager\CollisionManager.cpp" />
+    <ClCompile Include="Entity\Component\Component.cpp" />
+    <ClCompile Include="Core\Game.cpp" />
+    <ClCompile Include="Entity\Actor\PlayerBullet.cpp" />
+    <ClCompile Include="Manager\ObjectPoolManager.cpp" />
+    <ClCompile Include="Entity\Actor\MuzzleFlash.cpp" />
+    <ClCompile Include="Entity\Component\MovementComponent.cpp" />
+    <ClCompile Include="Renderer\ImageRenderer.cpp" />
+    <ClCompile Include="Manager\InputManager.cpp" />
     <ClCompile Include="MegaManWinAPI.cpp" />
+    <ClCompile Include="Entity\ObjectPool.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
-    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="Entity\Actor\Player.cpp" />
+    <ClCompile Include="Manager\ResourceManager.cpp" />
+    <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Manager\SceneManager.cpp" />
+    <ClCompile Include="Manager\SoundManager.cpp" />
+    <ClCompile Include="Renderer\SpriteRenderer.cpp" />
+    <ClCompile Include="Core\TestScene.cpp" />
+    <ClCompile Include="Entity\Component\RigidBodyComponent.cpp" />
+    <ClCompile Include="Entity\BT\Sequence.cpp" />
+    <ClCompile Include="Entity\BT\Selector.cpp" />
+    <ClCompile Include="Entity\BT\SucceederDecorator.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Manager\TimeManager.cpp" />
+    <ClCompile Include="Entity\Component\TransformComponent.cpp" />
+    <ClCompile Include="Manager\UIManager.cpp" />
+    <ClCompile Include="UI\UIElement.cpp" />
+    <ClCompile Include="Util\FileDialog.cpp" />
+    <ClCompile Include="Util\Util.cpp" />
+    <ClCompile Include="External\ImGui\imgui.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_draw.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_impl_d2d.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_impl_win32.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_tables.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_widgets.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="External\ImGui\imgui_demo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MegaManWinAPI.rc" />
@@ -175,6 +366,9 @@
   <ItemGroup>
     <Image Include="MegaManWinAPI.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

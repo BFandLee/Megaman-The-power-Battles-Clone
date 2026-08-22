@@ -1,0 +1,157 @@
+﻿{
+    "Actors": [
+        {
+            "Components": [
+                {
+                    "PosX": 0.0,
+                    "PosY": 336.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Height": 672.0,
+                    "OffsetX": 0.0,
+                    "OffsetY": 0.0,
+                    "Width": 50.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "WallActor"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 1152.0,
+                    "PosY": 336.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 1.0,
+                    "ScaleY": 1.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "Height": 672.0,
+                    "OffsetX": 0.0,
+                    "OffsetY": 0.0,
+                    "Width": 50.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "WallActor"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 576.0,
+                    "PosY": 336.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.5714285373687744,
+                    "ScaleY": 3.096774101257324,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "ImageRenderer"
+                }
+            ],
+            "name": "Background"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 576.0,
+                    "PosY": 601.0,
+                    "Rotation": 0.0,
+                    "ScaleX": 3.0,
+                    "ScaleY": 3.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "ImageRenderer"
+                },
+                {
+                    "Height": 67.19999694824219,
+                    "OffsetX": 0.0,
+                    "OffsetY": 2.0,
+                    "Width": 1152.0,
+                    "name": "Collider"
+                }
+            ],
+            "name": "Ground"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 848.0794677734375,
+                    "PosY": 442.1980895996094,
+                    "Rotation": 0.0,
+                    "ScaleX": -2.200000047683716,
+                    "ScaleY": 2.200000047683716,
+                    "name": "TransformComponent"
+                },
+                null,
+                {
+                    "Height": 81.0,
+                    "OffsetX": 2.700000047683716,
+                    "OffsetY": 10.800000190734863,
+                    "Width": 73.0,
+                    "name": "Collider"
+                },
+                {
+                    "name": "AnimatorComponent"
+                },
+                {
+                    "Gravity": 980.0,
+                    "VelocityX": -150.0,
+                    "VelocityY": 45.46150207519531,
+                    "name": "RigidBodyComponent"
+                }
+            ],
+            "name": "Boss"
+        },
+        {
+            "Components": [
+                {
+                    "PosX": 1084.0,
+                    "PosY": 472.0000305175781,
+                    "Rotation": 0.0,
+                    "ScaleX": 2.0,
+                    "ScaleY": 2.0,
+                    "name": "TransformComponent"
+                },
+                {
+                    "name": "AnimatorComponent"
+                },
+                {
+                    "Height": 69.0,
+                    "OffsetX": 3.0,
+                    "OffsetY": 63.0,
+                    "Width": 80.0,
+                    "name": "Collider"
+                },
+                {
+                    "Gravity": 980.0,
+                    "VelocityX": 350.0,
+                    "VelocityY": 0.0,
+                    "name": "RigidBodyComponent"
+                },
+                null,
+                {
+                    "CoolDown": 0.0,
+                    "Reloading": 0.5,
+                    "attackInterval": 0.15000000596046448,
+                    "name": "WeaponComponent"
+                },
+                {
+                    "Accel": 10.0,
+                    "Friction": 1450.0,
+                    "JumpForce": 600.0,
+                    "MoveSpeed": 350.0,
+                    "Velocity": 1000.0,
+                    "name": "MovementComponent"
+                }
+            ],
+            "name": "Player"
+        }
+    ]
+}
